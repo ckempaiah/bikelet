@@ -1,0 +1,8 @@
+2013-02-01 01:36:43,395 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+2013-02-01 01:36:43,401 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+2013-02-01 01:36:43,405 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+2013-02-01 01:36:43,411 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+2013-02-01 01:36:43,416 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+2013-02-01 01:36:43,420 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+2013-02-01 01:36:43,425 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+2013-02-01 01:36:43,430 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected

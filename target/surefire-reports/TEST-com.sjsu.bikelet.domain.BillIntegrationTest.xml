@@ -1,0 +1,784 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite failures="0" time="0.105" errors="8" skipped="0" tests="9" name="com.sjsu.bikelet.domain.BillIntegrationTest">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0_27\jre\bin"/>
+    <property name="java.vm.version" value="20.2-b06"/>
+    <property name="java.vm.vendor" value="Sun Microsystems Inc."/>
+    <property name="java.vendor.url" value="http://java.sun.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="Service Pack 1"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="C:\Users\priyanka\git\bikelet"/>
+    <property name="java.runtime.version" value="1.6.0_27-b07"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="basedir" value="C:\Users\priyanka\git\bikelet"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0_27\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="surefire.real.class.path" value="C:\Users\priyanka\git\bikelet\target\surefire\surefirebooter1355183757011444332.jar"/>
+    <property name="java.io.tmpdir" value="C:\Users\priyanka\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 7"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.6.0_27\jre\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Java\jre6\bin;C:\Users\priyanka\Desktop\295B MasterProject\spring-roo-1.2.0.M1\spring-roo-1.2.0.M1\bin;C:\Program Files\Java\jdk1.6.0_27\bin; M2_HOME/bin;C:\Program Files\Java\jre6\bin;C:\Program Files\Java\jdk1.6.0_27\bin;C:\Program Files (x86)\QuickTime\QTSystem\;c:\windows\system32;C:\Program Files\Oracle\VirtualBox;C:\Users\priyanka\Downloads\apache-maven-3.0.3\bin; C:\Program Files\Java\jdk1.6.0_27\bin;C:\Users\priyanka\Desktop\SJSULearning\CMPE283VirtualizationTec\spring-roo-1.2.0.M1\spring-roo-1.2.0.M1\bin\bin;."/>
+    <property name="surefire.test.class.path" value="C:\Users\priyanka\git\bikelet\target\test-classes;C:\Users\priyanka\git\bikelet\target\classes;C:\Users\priyanka\.m2\repository\junit\junit\4.8.2\junit-4.8.2.jar;C:\Users\priyanka\.m2\repository\log4j\log4j\1.2.16\log4j-1.2.16.jar;C:\Users\priyanka\.m2\repository\org\slf4j\slf4j-api\1.6.1\slf4j-api-1.6.1.jar;C:\Users\priyanka\.m2\repository\org\slf4j\jcl-over-slf4j\1.6.1\jcl-over-slf4j-1.6.1.jar;C:\Users\priyanka\.m2\repository\org\slf4j\slf4j-log4j12\1.6.1\slf4j-log4j12-1.6.1.jar;C:\Users\priyanka\.m2\repository\org\aspectj\aspectjrt\1.6.12.M2\aspectjrt-1.6.12.M2.jar;C:\Users\priyanka\.m2\repository\org\aspectj\aspectjweaver\1.6.12.M2\aspectjweaver-1.6.12.M2.jar;C:\Users\priyanka\.m2\repository\javax\servlet\servlet-api\2.5\servlet-api-2.5.jar;C:\Users\priyanka\.m2\repository\net\sf\flexjson\flexjson\2.1\flexjson-2.1.jar;C:\Users\priyanka\.m2\repository\org\springframework\roo\org.springframework.roo.annotations\1.2.0.M1\org.springframework.roo.annotations-1.2.0.M1.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-core\3.0.6.RELEASE\spring-core-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-asm\3.0.6.RELEASE\spring-asm-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-test\3.0.6.RELEASE\spring-test-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-context\3.0.6.RELEASE\spring-context-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-beans\3.0.6.RELEASE\spring-beans-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-expression\3.0.6.RELEASE\spring-expression-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-aop\3.0.6.RELEASE\spring-aop-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\aopalliance\aopalliance\1.0\aopalliance-1.0.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-aspects\3.0.6.RELEASE\spring-aspects-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-context-support\3.0.6.RELEASE\spring-context-support-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-tx\3.0.6.RELEASE\spring-tx-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\mysql\mysql-connector-java\5.1.17\mysql-connector-java-5.1.17.jar;C:\Users\priyanka\.m2\repository\org\hibernate\hibernate-core\3.6.7.Final\hibernate-core-3.6.7.Final.jar;C:\Users\priyanka\.m2\repository\antlr\antlr\2.7.6\antlr-2.7.6.jar;C:\Users\priyanka\.m2\repository\commons-collections\commons-collections\3.1\commons-collections-3.1.jar;C:\Users\priyanka\.m2\repository\dom4j\dom4j\1.6.1\dom4j-1.6.1.jar;C:\Users\priyanka\.m2\repository\org\hibernate\hibernate-commons-annotations\3.2.0.Final\hibernate-commons-annotations-3.2.0.Final.jar;C:\Users\priyanka\.m2\repository\org\hibernate\hibernate-entitymanager\3.6.7.Final\hibernate-entitymanager-3.6.7.Final.jar;C:\Users\priyanka\.m2\repository\javassist\javassist\3.12.0.GA\javassist-3.12.0.GA.jar;C:\Users\priyanka\.m2\repository\org\hibernate\javax\persistence\hibernate-jpa-2.0-api\1.0.1.Final\hibernate-jpa-2.0-api-1.0.1.Final.jar;C:\Users\priyanka\.m2\repository\org\hibernate\hibernate-validator\4.2.0.Final\hibernate-validator-4.2.0.Final.jar;C:\Users\priyanka\.m2\repository\javax\validation\validation-api\1.0.0.GA\validation-api-1.0.0.GA.jar;C:\Users\priyanka\.m2\repository\cglib\cglib-nodep\2.2.2\cglib-nodep-2.2.2.jar;C:\Users\priyanka\.m2\repository\javax\transaction\jta\1.1\jta-1.1.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-jdbc\3.0.6.RELEASE\spring-jdbc-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-orm\3.0.6.RELEASE\spring-orm-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\commons-pool\commons-pool\1.5.4\commons-pool-1.5.4.jar;C:\Users\priyanka\.m2\repository\commons-dbcp\commons-dbcp\1.3\commons-dbcp-1.3.jar;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="50.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="6.1"/>
+    <property name="user.home" value="C:\Users\priyanka"/>
+    <property name="user.timezone" value="America/Los_Angeles"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.6"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="user.name" value="priyanka"/>
+    <property name="java.class.path" value="C:\Users\priyanka\git\bikelet\target\test-classes;C:\Users\priyanka\git\bikelet\target\classes;C:\Users\priyanka\.m2\repository\junit\junit\4.8.2\junit-4.8.2.jar;C:\Users\priyanka\.m2\repository\log4j\log4j\1.2.16\log4j-1.2.16.jar;C:\Users\priyanka\.m2\repository\org\slf4j\slf4j-api\1.6.1\slf4j-api-1.6.1.jar;C:\Users\priyanka\.m2\repository\org\slf4j\jcl-over-slf4j\1.6.1\jcl-over-slf4j-1.6.1.jar;C:\Users\priyanka\.m2\repository\org\slf4j\slf4j-log4j12\1.6.1\slf4j-log4j12-1.6.1.jar;C:\Users\priyanka\.m2\repository\org\aspectj\aspectjrt\1.6.12.M2\aspectjrt-1.6.12.M2.jar;C:\Users\priyanka\.m2\repository\org\aspectj\aspectjweaver\1.6.12.M2\aspectjweaver-1.6.12.M2.jar;C:\Users\priyanka\.m2\repository\javax\servlet\servlet-api\2.5\servlet-api-2.5.jar;C:\Users\priyanka\.m2\repository\net\sf\flexjson\flexjson\2.1\flexjson-2.1.jar;C:\Users\priyanka\.m2\repository\org\springframework\roo\org.springframework.roo.annotations\1.2.0.M1\org.springframework.roo.annotations-1.2.0.M1.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-core\3.0.6.RELEASE\spring-core-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-asm\3.0.6.RELEASE\spring-asm-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-test\3.0.6.RELEASE\spring-test-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-context\3.0.6.RELEASE\spring-context-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-beans\3.0.6.RELEASE\spring-beans-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-expression\3.0.6.RELEASE\spring-expression-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-aop\3.0.6.RELEASE\spring-aop-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\aopalliance\aopalliance\1.0\aopalliance-1.0.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-aspects\3.0.6.RELEASE\spring-aspects-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-context-support\3.0.6.RELEASE\spring-context-support-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-tx\3.0.6.RELEASE\spring-tx-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\mysql\mysql-connector-java\5.1.17\mysql-connector-java-5.1.17.jar;C:\Users\priyanka\.m2\repository\org\hibernate\hibernate-core\3.6.7.Final\hibernate-core-3.6.7.Final.jar;C:\Users\priyanka\.m2\repository\antlr\antlr\2.7.6\antlr-2.7.6.jar;C:\Users\priyanka\.m2\repository\commons-collections\commons-collections\3.1\commons-collections-3.1.jar;C:\Users\priyanka\.m2\repository\dom4j\dom4j\1.6.1\dom4j-1.6.1.jar;C:\Users\priyanka\.m2\repository\org\hibernate\hibernate-commons-annotations\3.2.0.Final\hibernate-commons-annotations-3.2.0.Final.jar;C:\Users\priyanka\.m2\repository\org\hibernate\hibernate-entitymanager\3.6.7.Final\hibernate-entitymanager-3.6.7.Final.jar;C:\Users\priyanka\.m2\repository\javassist\javassist\3.12.0.GA\javassist-3.12.0.GA.jar;C:\Users\priyanka\.m2\repository\org\hibernate\javax\persistence\hibernate-jpa-2.0-api\1.0.1.Final\hibernate-jpa-2.0-api-1.0.1.Final.jar;C:\Users\priyanka\.m2\repository\org\hibernate\hibernate-validator\4.2.0.Final\hibernate-validator-4.2.0.Final.jar;C:\Users\priyanka\.m2\repository\javax\validation\validation-api\1.0.0.GA\validation-api-1.0.0.GA.jar;C:\Users\priyanka\.m2\repository\cglib\cglib-nodep\2.2.2\cglib-nodep-2.2.2.jar;C:\Users\priyanka\.m2\repository\javax\transaction\jta\1.1\jta-1.1.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-jdbc\3.0.6.RELEASE\spring-jdbc-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\org\springframework\spring-orm\3.0.6.RELEASE\spring-orm-3.0.6.RELEASE.jar;C:\Users\priyanka\.m2\repository\commons-pool\commons-pool\1.5.4\commons-pool-1.5.4.jar;C:\Users\priyanka\.m2\repository\commons-dbcp\commons-dbcp\1.3\commons-dbcp-1.3.jar;"/>
+    <property name="java.vm.specification.version" value="1.0"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk1.6.0_27\jre"/>
+    <property name="sun.java.command" value="C:\Users\priyanka\git\bikelet\target\surefire\surefirebooter1355183757011444332.jar C:\Users\priyanka\git\bikelet\target\surefire\surefire1104041732898620595tmp C:\Users\priyanka\git\bikelet\target\surefire\surefire1986295986624569701tmp"/>
+    <property name="java.specification.vendor" value="Sun Microsystems Inc."/>
+    <property name="user.language" value="en"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.6.0_27"/>
+    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.6.0_27\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.6.0_27\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0_27\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0_27\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.6.0_27\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0_27\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0_27\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0_27\jre\lib\modules\jdk.boot.jar;C:\Program Files\Java\jdk1.6.0_27\jre\classes"/>
+    <property name="java.vendor" value="Sun Microsystems Inc."/>
+    <property name="localRepository" value="C:\Users\priyanka\.m2\repository"/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase time="0.053" classname="com.sjsu.bikelet.domain.BillIntegrationTest" name="testMarkerMethod"/>
+  <testcase time="0.008" classname="com.sjsu.bikelet.domain.BillIntegrationTest" name="testFlush">
+    <error message="org.hibernate.exception.GenericJDBCException: could not execute query; nested exception is javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query" type="org.springframework.orm.jpa.JpaSystemException">org.springframework.orm.jpa.JpaSystemException: org.hibernate.exception.GenericJDBCException: could not execute query; nested exception is javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.springframework.orm.jpa.EntityManagerFactoryUtils.convertJpaAccessExceptionIfPossible(EntityManagerFactoryUtils.java:311)
+	at org.springframework.orm.jpa.aspectj.JpaExceptionTranslatorAspect.ajc$afterThrowing$org_springframework_orm_jpa_aspectj_JpaExceptionTranslatorAspect$1$18a1ac9(JpaExceptionTranslatorAspect.aj:15)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.findBillEntries_aroundBody8(Bill_Roo_Entity.aj:75)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.ajc$interMethod$com_sjsu_bikelet_domain_Bill_Roo_Entity$com_sjsu_bikelet_domain_Bill$findBillEntries(Bill_Roo_Entity.aj:1)
+	at com.sjsu.bikelet.domain.Bill.findBillEntries(Bill.java:1)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_Bill_Roo_Entity$com_sjsu_bikelet_domain_Bill$findBillEntries(Bill_Roo_Entity.aj)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethod$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$init(BillDataOnDemand_Roo_DataOnDemand.aj:126)
+	at com.sjsu.bikelet.domain.BillDataOnDemand.init(BillDataOnDemand.java:1)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$init(BillDataOnDemand_Roo_DataOnDemand.aj)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethod$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$getRandomBill(BillDataOnDemand_Roo_DataOnDemand.aj:113)
+	at com.sjsu.bikelet.domain.BillDataOnDemand.getRandomBill(BillDataOnDemand.java:1)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$getRandomBill(BillDataOnDemand_Roo_DataOnDemand.aj)
+	at com.sjsu.bikelet.domain.BillIntegrationTest_Roo_IntegrationTest.ajc$interMethod$com_sjsu_bikelet_domain_BillIntegrationTest_Roo_IntegrationTest$com_sjsu_bikelet_domain_BillIntegrationTest$testFlush(BillIntegrationTest_Roo_IntegrationTest.aj:71)
+	at com.sjsu.bikelet.domain.BillIntegrationTest.testFlush(BillIntegrationTest.java:1)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:74)
+	at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:82)
+	at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:72)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:231)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:49)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:174)
+	at org.apache.maven.surefire.junit4.JUnit4TestSet.execute(JUnit4TestSet.java:53)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:119)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:101)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.maven.surefire.booter.ProviderFactory$ClassLoaderProxy.invoke(ProviderFactory.java:103)
+	at $Proxy0.invoke(Unknown Source)
+	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:150)
+	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcess(SurefireStarter.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:69)
+Caused by: javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1215)
+	at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1148)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:255)
+	... 46 more
+Caused by: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.hibernate.exception.SQLStateConverter.handledNonSpecificException(SQLStateConverter.java:140)
+	at org.hibernate.exception.SQLStateConverter.convert(SQLStateConverter.java:128)
+	at org.hibernate.exception.JDBCExceptionHelper.convert(JDBCExceptionHelper.java:66)
+	at org.hibernate.loader.Loader.doList(Loader.java:2536)
+	at org.hibernate.loader.Loader.listIgnoreQueryCache(Loader.java:2276)
+	at org.hibernate.loader.Loader.list(Loader.java:2271)
+	at org.hibernate.loader.hql.QueryLoader.list(QueryLoader.java:452)
+	at org.hibernate.hql.ast.QueryTranslatorImpl.list(QueryTranslatorImpl.java:363)
+	at org.hibernate.engine.query.HQLQueryPlan.performList(HQLQueryPlan.java:196)
+	at org.hibernate.impl.SessionImpl.list(SessionImpl.java:1268)
+	at org.hibernate.impl.QueryImpl.list(QueryImpl.java:102)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:246)
+	... 46 more
+Caused by: java.sql.SQLException: No database selected
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1073)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3597)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3529)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1990)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2151)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2625)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2119)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2281)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.hibernate.jdbc.AbstractBatcher.getResultSet(AbstractBatcher.java:208)
+	at org.hibernate.loader.Loader.getResultSet(Loader.java:1953)
+	at org.hibernate.loader.Loader.doQuery(Loader.java:802)
+	at org.hibernate.loader.Loader.doQueryAndInitializeNonLazyCollections(Loader.java:274)
+	at org.hibernate.loader.Loader.doList(Loader.java:2533)
+	... 54 more
+</error>
+    <system-out>2013-02-01 01:36:42,223 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+</system-out>
+  </testcase>
+  <testcase time="0.003" classname="com.sjsu.bikelet.domain.BillIntegrationTest" name="testMergeUpdate">
+    <error message="org.hibernate.exception.GenericJDBCException: could not execute query; nested exception is javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query" type="org.springframework.orm.jpa.JpaSystemException">org.springframework.orm.jpa.JpaSystemException: org.hibernate.exception.GenericJDBCException: could not execute query; nested exception is javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.springframework.orm.jpa.EntityManagerFactoryUtils.convertJpaAccessExceptionIfPossible(EntityManagerFactoryUtils.java:311)
+	at org.springframework.orm.jpa.aspectj.JpaExceptionTranslatorAspect.ajc$afterThrowing$org_springframework_orm_jpa_aspectj_JpaExceptionTranslatorAspect$1$18a1ac9(JpaExceptionTranslatorAspect.aj:15)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.findBillEntries_aroundBody8(Bill_Roo_Entity.aj:75)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.ajc$interMethod$com_sjsu_bikelet_domain_Bill_Roo_Entity$com_sjsu_bikelet_domain_Bill$findBillEntries(Bill_Roo_Entity.aj:1)
+	at com.sjsu.bikelet.domain.Bill.findBillEntries(Bill.java:1)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_Bill_Roo_Entity$com_sjsu_bikelet_domain_Bill$findBillEntries(Bill_Roo_Entity.aj)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethod$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$init(BillDataOnDemand_Roo_DataOnDemand.aj:126)
+	at com.sjsu.bikelet.domain.BillDataOnDemand.init(BillDataOnDemand.java:1)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$init(BillDataOnDemand_Roo_DataOnDemand.aj)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethod$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$getRandomBill(BillDataOnDemand_Roo_DataOnDemand.aj:113)
+	at com.sjsu.bikelet.domain.BillDataOnDemand.getRandomBill(BillDataOnDemand.java:1)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$getRandomBill(BillDataOnDemand_Roo_DataOnDemand.aj)
+	at com.sjsu.bikelet.domain.BillIntegrationTest_Roo_IntegrationTest.ajc$interMethod$com_sjsu_bikelet_domain_BillIntegrationTest_Roo_IntegrationTest$com_sjsu_bikelet_domain_BillIntegrationTest$testMergeUpdate(BillIntegrationTest_Roo_IntegrationTest.aj:85)
+	at com.sjsu.bikelet.domain.BillIntegrationTest.testMergeUpdate(BillIntegrationTest.java:1)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:74)
+	at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:82)
+	at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:72)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:231)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:49)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:174)
+	at org.apache.maven.surefire.junit4.JUnit4TestSet.execute(JUnit4TestSet.java:53)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:119)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:101)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.maven.surefire.booter.ProviderFactory$ClassLoaderProxy.invoke(ProviderFactory.java:103)
+	at $Proxy0.invoke(Unknown Source)
+	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:150)
+	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcess(SurefireStarter.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:69)
+Caused by: javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1215)
+	at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1148)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:255)
+	... 46 more
+Caused by: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.hibernate.exception.SQLStateConverter.handledNonSpecificException(SQLStateConverter.java:140)
+	at org.hibernate.exception.SQLStateConverter.convert(SQLStateConverter.java:128)
+	at org.hibernate.exception.JDBCExceptionHelper.convert(JDBCExceptionHelper.java:66)
+	at org.hibernate.loader.Loader.doList(Loader.java:2536)
+	at org.hibernate.loader.Loader.listIgnoreQueryCache(Loader.java:2276)
+	at org.hibernate.loader.Loader.list(Loader.java:2271)
+	at org.hibernate.loader.hql.QueryLoader.list(QueryLoader.java:452)
+	at org.hibernate.hql.ast.QueryTranslatorImpl.list(QueryTranslatorImpl.java:363)
+	at org.hibernate.engine.query.HQLQueryPlan.performList(HQLQueryPlan.java:196)
+	at org.hibernate.impl.SessionImpl.list(SessionImpl.java:1268)
+	at org.hibernate.impl.QueryImpl.list(QueryImpl.java:102)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:246)
+	... 46 more
+Caused by: java.sql.SQLException: No database selected
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1073)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3597)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3529)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1990)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2151)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2625)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2119)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2281)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.hibernate.jdbc.AbstractBatcher.getResultSet(AbstractBatcher.java:208)
+	at org.hibernate.loader.Loader.getResultSet(Loader.java:1953)
+	at org.hibernate.loader.Loader.doQuery(Loader.java:802)
+	at org.hibernate.loader.Loader.doQueryAndInitializeNonLazyCollections(Loader.java:274)
+	at org.hibernate.loader.Loader.doList(Loader.java:2533)
+	... 54 more
+</error>
+    <system-out>2013-02-01 01:36:42,228 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+</system-out>
+  </testcase>
+  <testcase time="0.004" classname="com.sjsu.bikelet.domain.BillIntegrationTest" name="testPersist">
+    <error message="org.hibernate.exception.GenericJDBCException: could not execute query; nested exception is javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query" type="org.springframework.orm.jpa.JpaSystemException">org.springframework.orm.jpa.JpaSystemException: org.hibernate.exception.GenericJDBCException: could not execute query; nested exception is javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.springframework.orm.jpa.EntityManagerFactoryUtils.convertJpaAccessExceptionIfPossible(EntityManagerFactoryUtils.java:311)
+	at org.springframework.orm.jpa.aspectj.JpaExceptionTranslatorAspect.ajc$afterThrowing$org_springframework_orm_jpa_aspectj_JpaExceptionTranslatorAspect$1$18a1ac9(JpaExceptionTranslatorAspect.aj:15)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.findBillEntries_aroundBody8(Bill_Roo_Entity.aj:75)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.ajc$interMethod$com_sjsu_bikelet_domain_Bill_Roo_Entity$com_sjsu_bikelet_domain_Bill$findBillEntries(Bill_Roo_Entity.aj:1)
+	at com.sjsu.bikelet.domain.Bill.findBillEntries(Bill.java:1)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_Bill_Roo_Entity$com_sjsu_bikelet_domain_Bill$findBillEntries(Bill_Roo_Entity.aj)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethod$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$init(BillDataOnDemand_Roo_DataOnDemand.aj:126)
+	at com.sjsu.bikelet.domain.BillDataOnDemand.init(BillDataOnDemand.java:1)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$init(BillDataOnDemand_Roo_DataOnDemand.aj)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethod$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$getRandomBill(BillDataOnDemand_Roo_DataOnDemand.aj:113)
+	at com.sjsu.bikelet.domain.BillDataOnDemand.getRandomBill(BillDataOnDemand.java:1)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$getRandomBill(BillDataOnDemand_Roo_DataOnDemand.aj)
+	at com.sjsu.bikelet.domain.BillIntegrationTest_Roo_IntegrationTest.ajc$interMethod$com_sjsu_bikelet_domain_BillIntegrationTest_Roo_IntegrationTest$com_sjsu_bikelet_domain_BillIntegrationTest$testPersist(BillIntegrationTest_Roo_IntegrationTest.aj:100)
+	at com.sjsu.bikelet.domain.BillIntegrationTest.testPersist(BillIntegrationTest.java:1)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:74)
+	at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:82)
+	at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:72)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:231)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:49)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:174)
+	at org.apache.maven.surefire.junit4.JUnit4TestSet.execute(JUnit4TestSet.java:53)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:119)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:101)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.maven.surefire.booter.ProviderFactory$ClassLoaderProxy.invoke(ProviderFactory.java:103)
+	at $Proxy0.invoke(Unknown Source)
+	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:150)
+	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcess(SurefireStarter.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:69)
+Caused by: javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1215)
+	at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1148)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:255)
+	... 46 more
+Caused by: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.hibernate.exception.SQLStateConverter.handledNonSpecificException(SQLStateConverter.java:140)
+	at org.hibernate.exception.SQLStateConverter.convert(SQLStateConverter.java:128)
+	at org.hibernate.exception.JDBCExceptionHelper.convert(JDBCExceptionHelper.java:66)
+	at org.hibernate.loader.Loader.doList(Loader.java:2536)
+	at org.hibernate.loader.Loader.listIgnoreQueryCache(Loader.java:2276)
+	at org.hibernate.loader.Loader.list(Loader.java:2271)
+	at org.hibernate.loader.hql.QueryLoader.list(QueryLoader.java:452)
+	at org.hibernate.hql.ast.QueryTranslatorImpl.list(QueryTranslatorImpl.java:363)
+	at org.hibernate.engine.query.HQLQueryPlan.performList(HQLQueryPlan.java:196)
+	at org.hibernate.impl.SessionImpl.list(SessionImpl.java:1268)
+	at org.hibernate.impl.QueryImpl.list(QueryImpl.java:102)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:246)
+	... 46 more
+Caused by: java.sql.SQLException: No database selected
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1073)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3597)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3529)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1990)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2151)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2625)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2119)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2281)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.hibernate.jdbc.AbstractBatcher.getResultSet(AbstractBatcher.java:208)
+	at org.hibernate.loader.Loader.getResultSet(Loader.java:1953)
+	at org.hibernate.loader.Loader.doQuery(Loader.java:802)
+	at org.hibernate.loader.Loader.doQueryAndInitializeNonLazyCollections(Loader.java:274)
+	at org.hibernate.loader.Loader.doList(Loader.java:2533)
+	... 54 more
+</error>
+    <system-out>2013-02-01 01:36:42,232 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+</system-out>
+  </testcase>
+  <testcase time="0.005" classname="com.sjsu.bikelet.domain.BillIntegrationTest" name="testRemove">
+    <error message="org.hibernate.exception.GenericJDBCException: could not execute query; nested exception is javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query" type="org.springframework.orm.jpa.JpaSystemException">org.springframework.orm.jpa.JpaSystemException: org.hibernate.exception.GenericJDBCException: could not execute query; nested exception is javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.springframework.orm.jpa.EntityManagerFactoryUtils.convertJpaAccessExceptionIfPossible(EntityManagerFactoryUtils.java:311)
+	at org.springframework.orm.jpa.aspectj.JpaExceptionTranslatorAspect.ajc$afterThrowing$org_springframework_orm_jpa_aspectj_JpaExceptionTranslatorAspect$1$18a1ac9(JpaExceptionTranslatorAspect.aj:15)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.findBillEntries_aroundBody8(Bill_Roo_Entity.aj:75)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.ajc$interMethod$com_sjsu_bikelet_domain_Bill_Roo_Entity$com_sjsu_bikelet_domain_Bill$findBillEntries(Bill_Roo_Entity.aj:1)
+	at com.sjsu.bikelet.domain.Bill.findBillEntries(Bill.java:1)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_Bill_Roo_Entity$com_sjsu_bikelet_domain_Bill$findBillEntries(Bill_Roo_Entity.aj)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethod$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$init(BillDataOnDemand_Roo_DataOnDemand.aj:126)
+	at com.sjsu.bikelet.domain.BillDataOnDemand.init(BillDataOnDemand.java:1)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$init(BillDataOnDemand_Roo_DataOnDemand.aj)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethod$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$getRandomBill(BillDataOnDemand_Roo_DataOnDemand.aj:113)
+	at com.sjsu.bikelet.domain.BillDataOnDemand.getRandomBill(BillDataOnDemand.java:1)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$getRandomBill(BillDataOnDemand_Roo_DataOnDemand.aj)
+	at com.sjsu.bikelet.domain.BillIntegrationTest_Roo_IntegrationTest.ajc$interMethod$com_sjsu_bikelet_domain_BillIntegrationTest_Roo_IntegrationTest$com_sjsu_bikelet_domain_BillIntegrationTest$testRemove(BillIntegrationTest_Roo_IntegrationTest.aj:111)
+	at com.sjsu.bikelet.domain.BillIntegrationTest.testRemove(BillIntegrationTest.java:1)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:74)
+	at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:82)
+	at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:72)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:231)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:49)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:174)
+	at org.apache.maven.surefire.junit4.JUnit4TestSet.execute(JUnit4TestSet.java:53)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:119)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:101)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.maven.surefire.booter.ProviderFactory$ClassLoaderProxy.invoke(ProviderFactory.java:103)
+	at $Proxy0.invoke(Unknown Source)
+	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:150)
+	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcess(SurefireStarter.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:69)
+Caused by: javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1215)
+	at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1148)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:255)
+	... 46 more
+Caused by: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.hibernate.exception.SQLStateConverter.handledNonSpecificException(SQLStateConverter.java:140)
+	at org.hibernate.exception.SQLStateConverter.convert(SQLStateConverter.java:128)
+	at org.hibernate.exception.JDBCExceptionHelper.convert(JDBCExceptionHelper.java:66)
+	at org.hibernate.loader.Loader.doList(Loader.java:2536)
+	at org.hibernate.loader.Loader.listIgnoreQueryCache(Loader.java:2276)
+	at org.hibernate.loader.Loader.list(Loader.java:2271)
+	at org.hibernate.loader.hql.QueryLoader.list(QueryLoader.java:452)
+	at org.hibernate.hql.ast.QueryTranslatorImpl.list(QueryTranslatorImpl.java:363)
+	at org.hibernate.engine.query.HQLQueryPlan.performList(HQLQueryPlan.java:196)
+	at org.hibernate.impl.SessionImpl.list(SessionImpl.java:1268)
+	at org.hibernate.impl.QueryImpl.list(QueryImpl.java:102)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:246)
+	... 46 more
+Caused by: java.sql.SQLException: No database selected
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1073)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3597)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3529)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1990)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2151)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2625)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2119)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2281)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.hibernate.jdbc.AbstractBatcher.getResultSet(AbstractBatcher.java:208)
+	at org.hibernate.loader.Loader.getResultSet(Loader.java:1953)
+	at org.hibernate.loader.Loader.doQuery(Loader.java:802)
+	at org.hibernate.loader.Loader.doQueryAndInitializeNonLazyCollections(Loader.java:274)
+	at org.hibernate.loader.Loader.doList(Loader.java:2533)
+	... 54 more
+</error>
+    <system-out>2013-02-01 01:36:42,237 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+</system-out>
+  </testcase>
+  <testcase time="0.007" classname="com.sjsu.bikelet.domain.BillIntegrationTest" name="testCountBills">
+    <error message="org.hibernate.exception.GenericJDBCException: could not execute query; nested exception is javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query" type="org.springframework.orm.jpa.JpaSystemException">org.springframework.orm.jpa.JpaSystemException: org.hibernate.exception.GenericJDBCException: could not execute query; nested exception is javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.springframework.orm.jpa.EntityManagerFactoryUtils.convertJpaAccessExceptionIfPossible(EntityManagerFactoryUtils.java:311)
+	at org.springframework.orm.jpa.aspectj.JpaExceptionTranslatorAspect.ajc$afterThrowing$org_springframework_orm_jpa_aspectj_JpaExceptionTranslatorAspect$1$18a1ac9(JpaExceptionTranslatorAspect.aj:15)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.findBillEntries_aroundBody8(Bill_Roo_Entity.aj:75)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.ajc$interMethod$com_sjsu_bikelet_domain_Bill_Roo_Entity$com_sjsu_bikelet_domain_Bill$findBillEntries(Bill_Roo_Entity.aj:1)
+	at com.sjsu.bikelet.domain.Bill.findBillEntries(Bill.java:1)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_Bill_Roo_Entity$com_sjsu_bikelet_domain_Bill$findBillEntries(Bill_Roo_Entity.aj)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethod$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$init(BillDataOnDemand_Roo_DataOnDemand.aj:126)
+	at com.sjsu.bikelet.domain.BillDataOnDemand.init(BillDataOnDemand.java:1)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$init(BillDataOnDemand_Roo_DataOnDemand.aj)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethod$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$getRandomBill(BillDataOnDemand_Roo_DataOnDemand.aj:113)
+	at com.sjsu.bikelet.domain.BillDataOnDemand.getRandomBill(BillDataOnDemand.java:1)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$getRandomBill(BillDataOnDemand_Roo_DataOnDemand.aj)
+	at com.sjsu.bikelet.domain.BillIntegrationTest_Roo_IntegrationTest.ajc$interMethod$com_sjsu_bikelet_domain_BillIntegrationTest_Roo_IntegrationTest$com_sjsu_bikelet_domain_BillIntegrationTest$testCountBills(BillIntegrationTest_Roo_IntegrationTest.aj:31)
+	at com.sjsu.bikelet.domain.BillIntegrationTest.testCountBills(BillIntegrationTest.java:1)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:74)
+	at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:82)
+	at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:72)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:231)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:49)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:174)
+	at org.apache.maven.surefire.junit4.JUnit4TestSet.execute(JUnit4TestSet.java:53)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:119)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:101)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.maven.surefire.booter.ProviderFactory$ClassLoaderProxy.invoke(ProviderFactory.java:103)
+	at $Proxy0.invoke(Unknown Source)
+	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:150)
+	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcess(SurefireStarter.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:69)
+Caused by: javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1215)
+	at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1148)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:255)
+	... 46 more
+Caused by: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.hibernate.exception.SQLStateConverter.handledNonSpecificException(SQLStateConverter.java:140)
+	at org.hibernate.exception.SQLStateConverter.convert(SQLStateConverter.java:128)
+	at org.hibernate.exception.JDBCExceptionHelper.convert(JDBCExceptionHelper.java:66)
+	at org.hibernate.loader.Loader.doList(Loader.java:2536)
+	at org.hibernate.loader.Loader.listIgnoreQueryCache(Loader.java:2276)
+	at org.hibernate.loader.Loader.list(Loader.java:2271)
+	at org.hibernate.loader.hql.QueryLoader.list(QueryLoader.java:452)
+	at org.hibernate.hql.ast.QueryTranslatorImpl.list(QueryTranslatorImpl.java:363)
+	at org.hibernate.engine.query.HQLQueryPlan.performList(HQLQueryPlan.java:196)
+	at org.hibernate.impl.SessionImpl.list(SessionImpl.java:1268)
+	at org.hibernate.impl.QueryImpl.list(QueryImpl.java:102)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:246)
+	... 46 more
+Caused by: java.sql.SQLException: No database selected
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1073)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3597)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3529)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1990)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2151)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2625)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2119)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2281)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.hibernate.jdbc.AbstractBatcher.getResultSet(AbstractBatcher.java:208)
+	at org.hibernate.loader.Loader.getResultSet(Loader.java:1953)
+	at org.hibernate.loader.Loader.doQuery(Loader.java:802)
+	at org.hibernate.loader.Loader.doQueryAndInitializeNonLazyCollections(Loader.java:274)
+	at org.hibernate.loader.Loader.doList(Loader.java:2533)
+	... 54 more
+</error>
+    <system-out>2013-02-01 01:36:42,245 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+</system-out>
+  </testcase>
+  <testcase time="0.004" classname="com.sjsu.bikelet.domain.BillIntegrationTest" name="testFindBill">
+    <error message="org.hibernate.exception.GenericJDBCException: could not execute query; nested exception is javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query" type="org.springframework.orm.jpa.JpaSystemException">org.springframework.orm.jpa.JpaSystemException: org.hibernate.exception.GenericJDBCException: could not execute query; nested exception is javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.springframework.orm.jpa.EntityManagerFactoryUtils.convertJpaAccessExceptionIfPossible(EntityManagerFactoryUtils.java:311)
+	at org.springframework.orm.jpa.aspectj.JpaExceptionTranslatorAspect.ajc$afterThrowing$org_springframework_orm_jpa_aspectj_JpaExceptionTranslatorAspect$1$18a1ac9(JpaExceptionTranslatorAspect.aj:15)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.findBillEntries_aroundBody8(Bill_Roo_Entity.aj:75)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.ajc$interMethod$com_sjsu_bikelet_domain_Bill_Roo_Entity$com_sjsu_bikelet_domain_Bill$findBillEntries(Bill_Roo_Entity.aj:1)
+	at com.sjsu.bikelet.domain.Bill.findBillEntries(Bill.java:1)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_Bill_Roo_Entity$com_sjsu_bikelet_domain_Bill$findBillEntries(Bill_Roo_Entity.aj)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethod$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$init(BillDataOnDemand_Roo_DataOnDemand.aj:126)
+	at com.sjsu.bikelet.domain.BillDataOnDemand.init(BillDataOnDemand.java:1)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$init(BillDataOnDemand_Roo_DataOnDemand.aj)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethod$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$getRandomBill(BillDataOnDemand_Roo_DataOnDemand.aj:113)
+	at com.sjsu.bikelet.domain.BillDataOnDemand.getRandomBill(BillDataOnDemand.java:1)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$getRandomBill(BillDataOnDemand_Roo_DataOnDemand.aj)
+	at com.sjsu.bikelet.domain.BillIntegrationTest_Roo_IntegrationTest.ajc$interMethod$com_sjsu_bikelet_domain_BillIntegrationTest_Roo_IntegrationTest$com_sjsu_bikelet_domain_BillIntegrationTest$testFindBill(BillIntegrationTest_Roo_IntegrationTest.aj:38)
+	at com.sjsu.bikelet.domain.BillIntegrationTest.testFindBill(BillIntegrationTest.java:1)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:74)
+	at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:82)
+	at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:72)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:231)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:49)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:174)
+	at org.apache.maven.surefire.junit4.JUnit4TestSet.execute(JUnit4TestSet.java:53)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:119)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:101)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.maven.surefire.booter.ProviderFactory$ClassLoaderProxy.invoke(ProviderFactory.java:103)
+	at $Proxy0.invoke(Unknown Source)
+	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:150)
+	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcess(SurefireStarter.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:69)
+Caused by: javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1215)
+	at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1148)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:255)
+	... 46 more
+Caused by: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.hibernate.exception.SQLStateConverter.handledNonSpecificException(SQLStateConverter.java:140)
+	at org.hibernate.exception.SQLStateConverter.convert(SQLStateConverter.java:128)
+	at org.hibernate.exception.JDBCExceptionHelper.convert(JDBCExceptionHelper.java:66)
+	at org.hibernate.loader.Loader.doList(Loader.java:2536)
+	at org.hibernate.loader.Loader.listIgnoreQueryCache(Loader.java:2276)
+	at org.hibernate.loader.Loader.list(Loader.java:2271)
+	at org.hibernate.loader.hql.QueryLoader.list(QueryLoader.java:452)
+	at org.hibernate.hql.ast.QueryTranslatorImpl.list(QueryTranslatorImpl.java:363)
+	at org.hibernate.engine.query.HQLQueryPlan.performList(HQLQueryPlan.java:196)
+	at org.hibernate.impl.SessionImpl.list(SessionImpl.java:1268)
+	at org.hibernate.impl.QueryImpl.list(QueryImpl.java:102)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:246)
+	... 46 more
+Caused by: java.sql.SQLException: No database selected
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1073)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3597)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3529)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1990)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2151)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2625)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2119)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2281)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.hibernate.jdbc.AbstractBatcher.getResultSet(AbstractBatcher.java:208)
+	at org.hibernate.loader.Loader.getResultSet(Loader.java:1953)
+	at org.hibernate.loader.Loader.doQuery(Loader.java:802)
+	at org.hibernate.loader.Loader.doQueryAndInitializeNonLazyCollections(Loader.java:274)
+	at org.hibernate.loader.Loader.doList(Loader.java:2533)
+	... 54 more
+</error>
+    <system-out>2013-02-01 01:36:42,250 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+</system-out>
+  </testcase>
+  <testcase time="0.005" classname="com.sjsu.bikelet.domain.BillIntegrationTest" name="testFindAllBills">
+    <error message="org.hibernate.exception.GenericJDBCException: could not execute query; nested exception is javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query" type="org.springframework.orm.jpa.JpaSystemException">org.springframework.orm.jpa.JpaSystemException: org.hibernate.exception.GenericJDBCException: could not execute query; nested exception is javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.springframework.orm.jpa.EntityManagerFactoryUtils.convertJpaAccessExceptionIfPossible(EntityManagerFactoryUtils.java:311)
+	at org.springframework.orm.jpa.aspectj.JpaExceptionTranslatorAspect.ajc$afterThrowing$org_springframework_orm_jpa_aspectj_JpaExceptionTranslatorAspect$1$18a1ac9(JpaExceptionTranslatorAspect.aj:15)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.findBillEntries_aroundBody8(Bill_Roo_Entity.aj:75)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.ajc$interMethod$com_sjsu_bikelet_domain_Bill_Roo_Entity$com_sjsu_bikelet_domain_Bill$findBillEntries(Bill_Roo_Entity.aj:1)
+	at com.sjsu.bikelet.domain.Bill.findBillEntries(Bill.java:1)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_Bill_Roo_Entity$com_sjsu_bikelet_domain_Bill$findBillEntries(Bill_Roo_Entity.aj)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethod$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$init(BillDataOnDemand_Roo_DataOnDemand.aj:126)
+	at com.sjsu.bikelet.domain.BillDataOnDemand.init(BillDataOnDemand.java:1)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$init(BillDataOnDemand_Roo_DataOnDemand.aj)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethod$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$getRandomBill(BillDataOnDemand_Roo_DataOnDemand.aj:113)
+	at com.sjsu.bikelet.domain.BillDataOnDemand.getRandomBill(BillDataOnDemand.java:1)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$getRandomBill(BillDataOnDemand_Roo_DataOnDemand.aj)
+	at com.sjsu.bikelet.domain.BillIntegrationTest_Roo_IntegrationTest.ajc$interMethod$com_sjsu_bikelet_domain_BillIntegrationTest_Roo_IntegrationTest$com_sjsu_bikelet_domain_BillIntegrationTest$testFindAllBills(BillIntegrationTest_Roo_IntegrationTest.aj:49)
+	at com.sjsu.bikelet.domain.BillIntegrationTest.testFindAllBills(BillIntegrationTest.java:1)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:74)
+	at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:82)
+	at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:72)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:231)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:49)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:174)
+	at org.apache.maven.surefire.junit4.JUnit4TestSet.execute(JUnit4TestSet.java:53)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:119)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:101)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.maven.surefire.booter.ProviderFactory$ClassLoaderProxy.invoke(ProviderFactory.java:103)
+	at $Proxy0.invoke(Unknown Source)
+	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:150)
+	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcess(SurefireStarter.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:69)
+Caused by: javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1215)
+	at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1148)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:255)
+	... 46 more
+Caused by: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.hibernate.exception.SQLStateConverter.handledNonSpecificException(SQLStateConverter.java:140)
+	at org.hibernate.exception.SQLStateConverter.convert(SQLStateConverter.java:128)
+	at org.hibernate.exception.JDBCExceptionHelper.convert(JDBCExceptionHelper.java:66)
+	at org.hibernate.loader.Loader.doList(Loader.java:2536)
+	at org.hibernate.loader.Loader.listIgnoreQueryCache(Loader.java:2276)
+	at org.hibernate.loader.Loader.list(Loader.java:2271)
+	at org.hibernate.loader.hql.QueryLoader.list(QueryLoader.java:452)
+	at org.hibernate.hql.ast.QueryTranslatorImpl.list(QueryTranslatorImpl.java:363)
+	at org.hibernate.engine.query.HQLQueryPlan.performList(HQLQueryPlan.java:196)
+	at org.hibernate.impl.SessionImpl.list(SessionImpl.java:1268)
+	at org.hibernate.impl.QueryImpl.list(QueryImpl.java:102)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:246)
+	... 46 more
+Caused by: java.sql.SQLException: No database selected
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1073)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3597)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3529)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1990)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2151)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2625)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2119)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2281)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.hibernate.jdbc.AbstractBatcher.getResultSet(AbstractBatcher.java:208)
+	at org.hibernate.loader.Loader.getResultSet(Loader.java:1953)
+	at org.hibernate.loader.Loader.doQuery(Loader.java:802)
+	at org.hibernate.loader.Loader.doQueryAndInitializeNonLazyCollections(Loader.java:274)
+	at org.hibernate.loader.Loader.doList(Loader.java:2533)
+	... 54 more
+</error>
+    <system-out>2013-02-01 01:36:42,255 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+</system-out>
+  </testcase>
+  <testcase time="0.004" classname="com.sjsu.bikelet.domain.BillIntegrationTest" name="testFindBillEntries">
+    <error message="org.hibernate.exception.GenericJDBCException: could not execute query; nested exception is javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query" type="org.springframework.orm.jpa.JpaSystemException">org.springframework.orm.jpa.JpaSystemException: org.hibernate.exception.GenericJDBCException: could not execute query; nested exception is javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.springframework.orm.jpa.EntityManagerFactoryUtils.convertJpaAccessExceptionIfPossible(EntityManagerFactoryUtils.java:311)
+	at org.springframework.orm.jpa.aspectj.JpaExceptionTranslatorAspect.ajc$afterThrowing$org_springframework_orm_jpa_aspectj_JpaExceptionTranslatorAspect$1$18a1ac9(JpaExceptionTranslatorAspect.aj:15)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.findBillEntries_aroundBody8(Bill_Roo_Entity.aj:75)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.ajc$interMethod$com_sjsu_bikelet_domain_Bill_Roo_Entity$com_sjsu_bikelet_domain_Bill$findBillEntries(Bill_Roo_Entity.aj:1)
+	at com.sjsu.bikelet.domain.Bill.findBillEntries(Bill.java:1)
+	at com.sjsu.bikelet.domain.Bill_Roo_Entity.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_Bill_Roo_Entity$com_sjsu_bikelet_domain_Bill$findBillEntries(Bill_Roo_Entity.aj)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethod$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$init(BillDataOnDemand_Roo_DataOnDemand.aj:126)
+	at com.sjsu.bikelet.domain.BillDataOnDemand.init(BillDataOnDemand.java:1)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$init(BillDataOnDemand_Roo_DataOnDemand.aj)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethod$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$getRandomBill(BillDataOnDemand_Roo_DataOnDemand.aj:113)
+	at com.sjsu.bikelet.domain.BillDataOnDemand.getRandomBill(BillDataOnDemand.java:1)
+	at com.sjsu.bikelet.domain.BillDataOnDemand_Roo_DataOnDemand.ajc$interMethodDispatch1$com_sjsu_bikelet_domain_BillDataOnDemand_Roo_DataOnDemand$com_sjsu_bikelet_domain_BillDataOnDemand$getRandomBill(BillDataOnDemand_Roo_DataOnDemand.aj)
+	at com.sjsu.bikelet.domain.BillIntegrationTest_Roo_IntegrationTest.ajc$interMethod$com_sjsu_bikelet_domain_BillIntegrationTest_Roo_IntegrationTest$com_sjsu_bikelet_domain_BillIntegrationTest$testFindBillEntries(BillIntegrationTest_Roo_IntegrationTest.aj:59)
+	at com.sjsu.bikelet.domain.BillIntegrationTest.testFindBillEntries(BillIntegrationTest.java:1)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:74)
+	at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:82)
+	at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:72)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:231)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:49)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:174)
+	at org.apache.maven.surefire.junit4.JUnit4TestSet.execute(JUnit4TestSet.java:53)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:119)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:101)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.maven.surefire.booter.ProviderFactory$ClassLoaderProxy.invoke(ProviderFactory.java:103)
+	at $Proxy0.invoke(Unknown Source)
+	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:150)
+	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcess(SurefireStarter.java:91)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:69)
+Caused by: javax.persistence.PersistenceException: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1215)
+	at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1148)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:255)
+	... 46 more
+Caused by: org.hibernate.exception.GenericJDBCException: could not execute query
+	at org.hibernate.exception.SQLStateConverter.handledNonSpecificException(SQLStateConverter.java:140)
+	at org.hibernate.exception.SQLStateConverter.convert(SQLStateConverter.java:128)
+	at org.hibernate.exception.JDBCExceptionHelper.convert(JDBCExceptionHelper.java:66)
+	at org.hibernate.loader.Loader.doList(Loader.java:2536)
+	at org.hibernate.loader.Loader.listIgnoreQueryCache(Loader.java:2276)
+	at org.hibernate.loader.Loader.list(Loader.java:2271)
+	at org.hibernate.loader.hql.QueryLoader.list(QueryLoader.java:452)
+	at org.hibernate.hql.ast.QueryTranslatorImpl.list(QueryTranslatorImpl.java:363)
+	at org.hibernate.engine.query.HQLQueryPlan.performList(HQLQueryPlan.java:196)
+	at org.hibernate.impl.SessionImpl.list(SessionImpl.java:1268)
+	at org.hibernate.impl.QueryImpl.list(QueryImpl.java:102)
+	at org.hibernate.ejb.QueryImpl.getResultList(QueryImpl.java:246)
+	... 46 more
+Caused by: java.sql.SQLException: No database selected
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1073)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3597)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3529)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1990)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2151)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2625)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2119)
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:2281)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.executeQuery(DelegatingPreparedStatement.java:96)
+	at org.hibernate.jdbc.AbstractBatcher.getResultSet(AbstractBatcher.java:208)
+	at org.hibernate.loader.Loader.getResultSet(Loader.java:1953)
+	at org.hibernate.loader.Loader.doQuery(Loader.java:802)
+	at org.hibernate.loader.Loader.doQueryAndInitializeNonLazyCollections(Loader.java:274)
+	at org.hibernate.loader.Loader.doList(Loader.java:2533)
+	... 54 more
+</error>
+    <system-out>2013-02-01 01:36:42,259 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+</system-out>
+  </testcase>
+</testsuite>

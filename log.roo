@@ -1,0 +1,197 @@
+// Spring Roo 1.2.0.M1 [rev 1fa252f] log opened at 2013-01-31 23:42:28
+project --topLevelPackage com.sjsu.bikelet
+jpa setup --provider HIBERNATE --database MYSQL
+entity --class ~.domain.Address --testAutomatically
+field number --fieldName addressId --type java.lang.Integer
+field string --fieldName addressLine1 --notNull --sizeMax 100
+field string --fieldName addressLine2 --notNull --sizeMax 100
+field string --fieldName city --notNull --sizeMin 2
+// [failed] field string --fieldName state --notNull --sizeMin 2
+field string --fieldName cState --notNull --sizeMin 2
+field string --fieldName country --notNull --sizeMin 2
+field string --fieldName zipCode --notNull --sizeMin 5 --sizeMax 5
+field string --fieldName cellphone --notNull --sizeMin 8 --sizeMax 15
+field string --fieldName address_type --notNull --sizeMax 15
+field string --fieldName workphone --notNull --sizeMin 8 --sizeMax 15
+field number --fieldName entityId --type java.lang.Integer
+field string --fieldName entityType --notNull --sizeMin 8 --sizeMax 15
+// [failed] field number --fieldName bikeheight --type java.lang.Integer
+entity --class ~.domain.Bike --testAutomatically 
+field number --fieldName bikeheight --type java.lang.Integer
+field number --fieldName bikeId --type java.lang.Integer
+field string --fieldName bikecolor --sizeMax 10
+// [failed] field string --fieldName bikeType --notNull --sizeMin 2 --sizeMax 20
+field string --fieldName bikeType --notNull --sizeMin 2 --sizeMax 20
+field date --fieldName lastServiceDate --type java.util.Date
+field string --fieldName wheelSize --sizeMax 10
+field string --fieldName bikestatus --sizeMax 10
+field number --fieldName tenantId --type java.lang.Integer
+entity --class ~.domain.BikeLocation --testAutomatically
+field string --fieldName bikeStatus --sizeMax 10
+entity --class ~.domain.Bill --testAutomatically 
+field number --fieldName billId --type java.lang.Integer
+field number --fieldName totalcharges --type java.lang.Double
+field string --fieldName description --sizeMax 100
+field date --fieldName createdDate --type java.util.Date
+field date --fieldName billStartDate --type java.util.Date
+field date --fieldName billEndDate --type java.util.Date
+field number --fieldName tenantId --type java.lang.Integer
+entity --class ~.domain.BillTransaction --testAutomatically
+field number --fieldName billTransactionId --type java.lang.Integer 
+field number --fieldName totalCost --type java.lang.Double
+field string --fieldName transactionType --sizeMax 100 
+field date --fieldName startDate --type java.util.Date
+field date --fieldName endDate --type java.util.Date 
+// [failed] field string --fieldName description --sizeMax 100 
+field string --fieldName description --sizeMax 100 
+entity --class ~.domain.LicensePolicy --testAutomatically 
+field number --fieldName licenseId --type java.lang.Integer 
+field string --fieldName licenseName --sizeMax 100 
+field number --fieldName licenseCostPerUser --type java.lang.Double 
+field number --fieldName licenseType --type java.lang.Integer 
+field number --fieldName licenseBaseCost --type java.lang.Double 
+field number --fieldName freeTrialPeriodInDays --type java.lang.Integer 
+entity --class ~.domain.Organization --testAutomatically
+field number --fieldName orgId --type java.lang.Integer
+field string --fieldName orgName --notNull --sizeMax 30
+field number --fieldName contactId --type java.lang.Integer
+// [failed] field number --fieldName column --type java.lang.Integer
+field number --fieldName orgColumn --type java.lang.Integer
+entity --class ~.domain.PaymentInfo --testAutomatically
+field number --fieldName paymentId --type java.lang.Integer
+// [failed] field string --fieldName cardNumber --notNull --sizeMin 12 --sizeMax 19
+field string --fieldName cardUserName --notNull --sizeMin 2
+field string --fieldName cardNumber --notNull --sizeMin 12 --sizeMax 19
+entity --class ~.domain.PaymentTransaction --testAutomatically
+field number --fieldName paymentTransactionId --type java.lang.Integer
+field number --fieldName status --type java.lang.Integer
+field date --fieldName dateOfTransaction --type java.lang.Date
+entity --class ~.domain.Permission --testAutomatically
+field number --fieldName permissionId --type java.lang.Integer
+field string --fieldName permissionName --sizeMax 30
+field string --fieldName description --sizeMax 100
+entity --class ~.domain.Program --testAutomatically
+field number --fieldName entityId --type java.lang.Integer
+field string --fieldName programName --sizeMax 60
+field string --fieldName description --sizeMax 255
+entity --class ~.domain.UserSubscriptionPolicy --testAutomatically
+entity --class ~.domain.UserRole --testAutomatically
+entity --class ~.domain.BikeLetUser --testAutomatically 
+field number --fieldName userId --type java.lang.Integer
+field number --fieldName programId --type java.lang.Integer
+field string --fieldName firstName --notNull --sizeMin 2 --sizeMax 30
+field string --fieldName lastName --notNull --sizeMin 2 --sizeMax 30
+field string --fieldName email --notNull --sizeMin 2 --sizeMax 40
+field string --fieldName password --notNull --sizeMin 6 --sizeMax 15
+entity --class ~.domain.TenantLicensePolicy --testAutomatically
+field date --fieldName licenseStartDate --type java.util.Date
+field date --fieldName licenseEndDate --type java.util.Date
+field number --fieldName isTrial --type java.lang.Boolean
+entity --class ~.domain.Tenant --testAutomatically 
+field string --fieldName tenantName --notNull --sizeMax 30
+field number --fieldName contactId --type java.lang.Integer
+field number --fieldName tenantId --type java.lang.Integer
+entity --class ~.domain.SubscriptionRate --testAutomatically 
+field number --fieldName rateId --type java.lang.Integer
+field number --fieldName membershipPerMonth --type java.lang.Double
+field number --fieldName organizationShare --type java.lang.Double
+field number --fieldName userShare --type java.lang.Double
+// [failed] field number --fieldName freeMinsPerDay --type java.lang.Integer
+field number --fieldName excessChargePerMin --type java.lang.Double
+field date --fieldName policyStartDate --type java.util.Date
+field date --fieldName policyEndDate --type java.util.Date
+entity --class ~.domain.SubscriptionPolicy --testAutomatically 
+field number --fieldName policyId --type java.lang.Integer
+field string --fieldName policyName --notNull --sizeMin 2
+field string --fieldName policyDescription --sizeMax 250
+// [failed] field string --fieldName policyName --notNull --sizeMin 2
+entity --class ~.domain.Station --testAutomatically 
+field number --fieldName stationId --type java.lang.Integer
+field string --fieldName location --notNull
+entity --class ~.domain.RolePermission --testAutomatically
+// [failed] entity --class ~.domain.Role --testAutomatically
+// [failed] field number --fieldName roleId --type java.lang.Integer
+// [failed] field string --fieldName roleName --notNull
+entity --class ~.domain.BikeLetRole --testAutomatically
+field number --fieldName roleId --type java.lang.Integer
+field string --fieldName roleName --notNull
+entity --class ~.domain.RentTransaction --testAutomatically
+field number --fieldName transactionId --type java.lang.Integer
+field number --fieldName fromStationId --type java.lang.Integer
+field number --fieldName toStationId --type java.lang.Integer
+field number --fieldName tenantId --type java.lang.Integer
+field date --fieldName rentStartDate --type java.util.Date
+field date --fieldName rentEndDate --type java.util.Date
+field string --fieldName status --notNull --sizeMax 10
+field string --fieldName comments --notNull --sizeMax 500
+// [failed] field number --fieldName rateId --type java.lang.Integer
+field number --fieldName rateId --type java.lang.Integer
+hint
+help
+addon search
+focus --class ~.domain.BikeLetUser
+// [failed] focus --class ~.domain.AddressInfo
+focus --class ~.domain.Address
+focus --class ~.domain.BikeLetUser
+field reference --fieldName addresses --type ~.domain.Address
+focus --class ~.domain.Bike
+focus --class ~.domain.Tenant
+field reference --fieldName bikes --type ~.domain.Bike
+focus --class ~.domain.Bike
+field reference --fieldName bikeLocation --type ~.domain.BikeLocation --cardinality ONE_TO_ONE
+focus --class ~.domain.Station
+field reference --fieldName bikeLocation --type ~.domain.BikeLocation --cardinality ONE_TO_ONE
+focus --class ~.domain.BikeLetUser
+field reference --fieldName bills --type ~.domain.Bill
+focus --class ~.domain.Bill
+field reference --fieldName billTransactions --type ~.domain.BillTransaction
+focus --class ~.domain.Tenant
+field reference --fieldName organizations --type ~.domain.Organization
+// [failed] focus --class ~.domain.User
+focus --class ~.domain.BikeLetUser
+field reference --fieldName paymentInfo --type ~.domain.PaymentInfo
+field reference --fieldName paymentTransactions --type ~.domain.PaymentTransaction
+focus --class ~.domain.PaymentInfo
+field reference --fieldName paymentTransactions --type ~.domain.PaymentTransaction
+focus --class ~.domain.Bill
+field reference --fieldName paymentTransactions --type ~.domain.PaymentTransaction --cardinality ONE_TO_ONE
+focus --class ~.domain.Tenant
+field reference --fieldName programs --type ~.domain.Program
+focus --class ~.domain.Organization
+field reference --fieldName programs --type ~.domain.Program
+focus --class ~.domain.BikeLetUser
+field reference --fieldName usp --type ~.domain.UserSubscriptionPolicy
+focus --class ~.domain.SubscriptionPolicy
+field reference --fieldName usp --type ~.domain.UserSubscriptionPolicy
+focus --class ~.domain.BikeLetUser
+// [failed] field reference --fieldName usp --type ~.domain.UserSubscriptionPolicy
+field reference --fieldName roles --type ~.domain.UserRole
+// [failed] focus --class ~.domain.Role
+focus --class ~.domain.BikeLetRole
+field reference --fieldName users --type ~.domain.UserRole
+focus --class ~.domain.Tenant
+field reference --fieldName users --type ~.domain.BikeLetUser
+field reference --fieldName tenLicPolicy --type ~.domain.TenantLicensePolicy
+focus --class ~.domain.LicensePolicy
+field reference --fieldName tenLicPolicy --type ~.domain.TenantLicensePolicy
+focus --class ~.domain.SubscriptionPolicy
+field reference --fieldName subscpRates --type ~.domain.SubscriptionRate
+focus --class ~.domain.Program
+field reference --fieldName subscpPolicy --type ~domain.SubscriptionPolicy
+focus --class ~.domain.Tenant
+field reference --fieldName stations --type ~.domain.Station
+focus --class ~.domain.Program
+field reference --fieldName stations --type ~.domain.Station
+focus --class ~.domain.Permission
+field reference --fieldName rolePermissions --type ~.domain.RolePermission
+focus --class ~.domain.BikeLetRole
+field reference --fieldName rolePermissions --type ~.domain.RolePermission
+focus --class ~.domain.Bike
+field reference --fieldName rentTransactions --type ~.domain.RentTransaction
+focus --class ~.domain.BikeLetUser
+field reference --fieldName rentTransactions --type ~.domain.RentTransaction
+perform tests
+focus --class ~.domain.PaymentTransaction
+field date --fieldName dateOfTransaction --type java.util.Date
+perform tests
+perform eclipse

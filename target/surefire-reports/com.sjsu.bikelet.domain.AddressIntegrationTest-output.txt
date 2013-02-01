@@ -1,0 +1,108 @@
+2013-02-01 01:36:41,018 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table address (id bigint not null auto_increment, address_id integer, address_line1 varchar(100) not null, address_line2 varchar(100) not null, address_type varchar(15) not null, c_state varchar(255) not null, cellphone varchar(15) not null, city varchar(255) not null, country varchar(255) not null, entity_id integer, entity_type varchar(15) not null, version integer, workphone varchar(15) not null, zip_code varchar(5) not null, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,018 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,019 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table bike (id bigint not null auto_increment, bike_id integer, bike_type varchar(20) not null, bikecolor varchar(10), bikeheight integer, bikestatus varchar(10), last_service_date datetime, tenant_id integer, version integer, wheel_size varchar(10), bike_location bigint, rent_transactions bigint, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,019 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,019 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table bike_let_role (id bigint not null auto_increment, role_id integer, role_name varchar(255) not null, version integer, role_permissions bigint, users bigint, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,019 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,019 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table bike_let_user (id bigint not null auto_increment, email varchar(40) not null, first_name varchar(30) not null, last_name varchar(30) not null, password varchar(15) not null, program_id integer, user_id integer, version integer, addresses bigint, bills bigint, payment_info bigint, payment_transactions bigint, rent_transactions bigint, roles bigint, usp bigint, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,019 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,020 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table bike_location (id bigint not null auto_increment, bike_status varchar(10), version integer, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,020 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,020 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table bill (id bigint not null auto_increment, bill_end_date datetime, bill_id integer, bill_start_date datetime, created_date datetime, description varchar(100), tenant_id integer, totalcharges double precision, version integer, bill_transactions bigint, payment_transactions bigint, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,020 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,020 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table bill_transaction (id bigint not null auto_increment, bill_transaction_id integer, description varchar(100), end_date datetime, start_date datetime, total_cost double precision, transaction_type varchar(100), version integer, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,020 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,021 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table license_policy (id bigint not null auto_increment, free_trial_period_in_days integer, license_base_cost double precision, license_cost_per_user double precision, license_id integer, license_name varchar(100), license_type integer, version integer, ten_lic_policy bigint, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,021 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,021 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table organization (id bigint not null auto_increment, contact_id integer, org_column integer, org_id integer, org_name varchar(30) not null, version integer, programs bigint, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,021 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,021 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table payment_info (id bigint not null auto_increment, card_number varchar(19) not null, card_user_name varchar(255) not null, payment_id integer, version integer, payment_transactions bigint, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,021 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,021 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table payment_transaction (id bigint not null auto_increment, date_of_transaction datetime, payment_transaction_id integer, status integer, version integer, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,022 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,022 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table permission (id bigint not null auto_increment, description varchar(100), permission_id integer, permission_name varchar(30), version integer, role_permissions bigint, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,022 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,022 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table program (id bigint not null auto_increment, description varchar(255), entity_id integer, program_name varchar(60), version integer, stations bigint, subscp_policy bigint, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,023 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,023 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table rent_transaction (id bigint not null auto_increment, comments varchar(500) not null, from_station_id integer, rate_id integer, rent_end_date datetime, rent_start_date datetime, status varchar(10) not null, tenant_id integer, to_station_id integer, transaction_id integer, version integer, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,023 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,023 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table role_permission (id bigint not null auto_increment, version integer, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,023 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,023 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table station (id bigint not null auto_increment, location varchar(255) not null, station_id integer, version integer, bike_location bigint, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,024 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,024 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table subscription_policy (id bigint not null auto_increment, policy_description varchar(250), policy_id integer, policy_name varchar(255) not null, version integer, subscp_rates bigint, usp bigint, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,024 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,024 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table subscription_rate (id bigint not null auto_increment, excess_charge_per_min double precision, membership_per_month double precision, organization_share double precision, policy_end_date datetime, policy_start_date datetime, rate_id integer, user_share double precision, version integer, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,024 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,024 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table tenant (id bigint not null auto_increment, contact_id integer, tenant_id integer, tenant_name varchar(30) not null, version integer, bikes bigint, organizations bigint, programs bigint, stations bigint, ten_lic_policy bigint, users bigint, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,025 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,025 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table tenant_license_policy (id bigint not null auto_increment, is_trial bit, license_end_date datetime, license_start_date datetime, version integer, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,025 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,025 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table user_role (id bigint not null auto_increment, version integer, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,025 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,025 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: create table user_subscription_policy (id bigint not null auto_increment, version integer, primary key (id)) ENGINE=InnoDB
+2013-02-01 01:36:41,025 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,026 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table bike add index FK2E23E11EA656B2 (rent_transactions), add constraint FK2E23E11EA656B2 foreign key (rent_transactions) references rent_transaction (id)
+2013-02-01 01:36:41,026 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,026 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table bike add index FK2E23E15A768617 (bike_location), add constraint FK2E23E15A768617 foreign key (bike_location) references bike_location (id)
+2013-02-01 01:36:41,026 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,026 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table bike_let_role add index FK95318AB8AC659CF7 (users), add constraint FK95318AB8AC659CF7 foreign key (users) references user_role (id)
+2013-02-01 01:36:41,026 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,027 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table bike_let_role add index FK95318AB86311A2AE (role_permissions), add constraint FK95318AB86311A2AE foreign key (role_permissions) references role_permission (id)
+2013-02-01 01:36:41,027 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,027 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table bike_let_user add index FK9532F60D5B1FA84D (payment_info), add constraint FK9532F60D5B1FA84D foreign key (payment_info) references payment_info (id)
+2013-02-01 01:36:41,027 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,027 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table bike_let_user add index FK9532F60DAC399DAC (roles), add constraint FK9532F60DAC399DAC foreign key (roles) references user_role (id)
+2013-02-01 01:36:41,028 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,028 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table bike_let_user add index FK9532F60D1EA656B2 (rent_transactions), add constraint FK9532F60D1EA656B2 foreign key (rent_transactions) references rent_transaction (id)
+2013-02-01 01:36:41,028 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,028 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table bike_let_user add index FK9532F60D9ABD51C8 (addresses), add constraint FK9532F60D9ABD51C8 foreign key (addresses) references address (id)
+2013-02-01 01:36:41,028 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,029 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table bike_let_user add index FK9532F60DD57AC461 (bills), add constraint FK9532F60DD57AC461 foreign key (bills) references bill (id)
+2013-02-01 01:36:41,029 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,029 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table bike_let_user add index FK9532F60D48FA7674 (payment_transactions), add constraint FK9532F60D48FA7674 foreign key (payment_transactions) references payment_transaction (id)
+2013-02-01 01:36:41,029 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,029 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table bike_let_user add index FK9532F60D82C6ECFA (usp), add constraint FK9532F60D82C6ECFA foreign key (usp) references user_subscription_policy (id)
+2013-02-01 01:36:41,029 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,030 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table bill add index FK2E2407A6D81716 (bill_transactions), add constraint FK2E2407A6D81716 foreign key (bill_transactions) references bill_transaction (id)
+2013-02-01 01:36:41,030 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,030 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table bill add index FK2E240748FA7674 (payment_transactions), add constraint FK2E240748FA7674 foreign key (payment_transactions) references payment_transaction (id)
+2013-02-01 01:36:41,030 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,030 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table license_policy add index FKCA3D02F0922959E8 (ten_lic_policy), add constraint FKCA3D02F0922959E8 foreign key (ten_lic_policy) references tenant_license_policy (id)
+2013-02-01 01:36:41,030 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,031 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table organization add index FK4644ED335CE90B25 (programs), add constraint FK4644ED335CE90B25 foreign key (programs) references program (id)
+2013-02-01 01:36:41,031 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,031 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table payment_info add index FKE25C3F4748FA7674 (payment_transactions), add constraint FKE25C3F4748FA7674 foreign key (payment_transactions) references payment_transaction (id)
+2013-02-01 01:36:41,031 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,031 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table permission add index FKE125C5CF6311A2AE (role_permissions), add constraint FKE125C5CF6311A2AE foreign key (role_permissions) references role_permission (id)
+2013-02-01 01:36:41,031 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,032 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table program add index FKED8F1E8488856125 (stations), add constraint FKED8F1E8488856125 foreign key (stations) references station (id)
+2013-02-01 01:36:41,032 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,032 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table program add index FKED8F1E8498CAA3AE (subscp_policy), add constraint FKED8F1E8498CAA3AE foreign key (subscp_policy) references subscription_policy (id)
+2013-02-01 01:36:41,032 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,033 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table station add index FK8EEC01345A768617 (bike_location), add constraint FK8EEC01345A768617 foreign key (bike_location) references bike_location (id)
+2013-02-01 01:36:41,033 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,033 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table subscription_policy add index FKF2E33E94BF62821F (subscp_rates), add constraint FKF2E33E94BF62821F foreign key (subscp_rates) references subscription_rate (id)
+2013-02-01 01:36:41,033 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,034 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table subscription_policy add index FKF2E33E9482C6ECFA (usp), add constraint FKF2E33E9482C6ECFA foreign key (usp) references user_subscription_policy (id)
+2013-02-01 01:36:41,034 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,034 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table tenant add index FKCBB4E8AA689A609F (users), add constraint FKCBB4E8AA689A609F foreign key (users) references bike_let_user (id)
+2013-02-01 01:36:41,034 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,034 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table tenant add index FKCBB4E8AA871EFBE1 (organizations), add constraint FKCBB4E8AA871EFBE1 foreign key (organizations) references organization (id)
+2013-02-01 01:36:41,034 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,035 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table tenant add index FKCBB4E8AA88856125 (stations), add constraint FKCBB4E8AA88856125 foreign key (stations) references station (id)
+2013-02-01 01:36:41,035 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,035 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table tenant add index FKCBB4E8AAD57ABFA1 (bikes), add constraint FKCBB4E8AAD57ABFA1 foreign key (bikes) references bike (id)
+2013-02-01 01:36:41,035 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,035 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table tenant add index FKCBB4E8AA922959E8 (ten_lic_policy), add constraint FKCBB4E8AA922959E8 foreign key (ten_lic_policy) references tenant_license_policy (id)
+2013-02-01 01:36:41,035 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,036 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - Unsuccessful: alter table tenant add index FKCBB4E8AA5CE90B25 (programs), add constraint FKCBB4E8AA5CE90B25 foreign key (programs) references program (id)
+2013-02-01 01:36:41,036 [main] ERROR org.hibernate.tool.hbm2ddl.SchemaExport - No database selected
+2013-02-01 01:36:41,450 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+2013-02-01 01:36:41,466 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+2013-02-01 01:36:41,475 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+2013-02-01 01:36:41,481 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+2013-02-01 01:36:41,489 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+2013-02-01 01:36:41,499 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+2013-02-01 01:36:41,507 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
+2013-02-01 01:36:41,515 [main] ERROR org.hibernate.util.JDBCExceptionReporter - No database selected
