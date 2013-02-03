@@ -4,8 +4,7 @@
 package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.RentTransaction;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.RentTransactionDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,7 +35,6 @@ privileged aspect RentTransactionDataOnDemand_Roo_DataOnDemand {
         setStatus(obj, index);
         setTenantId(obj, index);
         setToStationId(obj, index);
-        setTransactionId(obj, index);
         return obj;
     }
     
@@ -86,24 +84,23 @@ privileged aspect RentTransactionDataOnDemand_Roo_DataOnDemand {
         obj.setToStationId(toStationId);
     }
     
-    public void RentTransactionDataOnDemand.setTransactionId(RentTransaction obj, int index) {
-        Integer transactionId = new Integer(index);
-        obj.setTransactionId(transactionId);
-    }
-    
     public RentTransaction RentTransactionDataOnDemand.getSpecificRentTransaction(int index) {
         init();
-        if (index < 0) index = 0;
-        if (index > (data.size() - 1)) index = data.size() - 1;
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > (data.size() - 1)) {
+            index = data.size() - 1;
+        }
         RentTransaction obj = data.get(index);
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return RentTransaction.findRentTransaction(id);
     }
     
     public RentTransaction RentTransactionDataOnDemand.getRandomRentTransaction() {
         init();
         RentTransaction obj = data.get(rnd.nextInt(data.size()));
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return RentTransaction.findRentTransaction(id);
     }
     
@@ -115,20 +112,22 @@ privileged aspect RentTransactionDataOnDemand_Roo_DataOnDemand {
         int from = 0;
         int to = 10;
         data = RentTransaction.findRentTransactionEntries(from, to);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'RentTransaction' illegally returned null");
+        if (data == null) {
+            throw new IllegalStateException("Find entries implementation for 'RentTransaction' illegally returned null");
+        }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<com.sjsu.bikelet.domain.RentTransaction>();
+        data = new ArrayList<RentTransaction>();
         for (int i = 0; i < 10; i++) {
             RentTransaction obj = getNewTransientRentTransaction(i);
             try {
                 obj.persist();
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
-                for (Iterator<ConstraintViolation<?>> it = e.getConstraintViolations().iterator(); it.hasNext();) {
-                    ConstraintViolation<?> cv = it.next();
+                for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
+                    ConstraintViolation<?> cv = iter.next();
                     msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
                 throw new RuntimeException(msg.toString(), e);

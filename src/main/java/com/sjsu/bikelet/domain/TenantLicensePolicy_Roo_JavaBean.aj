@@ -3,7 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.Boolean;
+import com.sjsu.bikelet.domain.TenantLicensePolicy;
 import java.util.Date;
 
 privileged aspect TenantLicensePolicy_Roo_JavaBean {

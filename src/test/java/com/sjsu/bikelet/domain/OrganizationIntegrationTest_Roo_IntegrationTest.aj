@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Organization;
 import com.sjsu.bikelet.domain.OrganizationDataOnDemand;
-import java.lang.Integer;
-import java.lang.Long;
+import com.sjsu.bikelet.domain.OrganizationIntegrationTest;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +24,7 @@ privileged aspect OrganizationIntegrationTest_Roo_IntegrationTest {
     declare @type: OrganizationIntegrationTest: @Transactional;
     
     @Autowired
-    private OrganizationDataOnDemand OrganizationIntegrationTest.dod;
+    OrganizationDataOnDemand OrganizationIntegrationTest.dod;
     
     @Test
     public void OrganizationIntegrationTest.testCountOrganizations() {

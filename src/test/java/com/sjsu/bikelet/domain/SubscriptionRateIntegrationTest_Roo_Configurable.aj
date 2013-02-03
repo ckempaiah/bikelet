@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.SubscriptionRateIntegrationTest;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect SubscriptionRateIntegrationTest_Roo_Configurable {

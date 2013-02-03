@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.UserSubscriptionPolicyDataOnDemand;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect UserSubscriptionPolicyDataOnDemand_Roo_Configurable {

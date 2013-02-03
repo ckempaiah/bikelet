@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Station;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect Station_Roo_Configurable {

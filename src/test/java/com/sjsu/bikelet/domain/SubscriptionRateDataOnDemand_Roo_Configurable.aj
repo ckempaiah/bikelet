@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.SubscriptionRateDataOnDemand;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect SubscriptionRateDataOnDemand_Roo_Configurable {

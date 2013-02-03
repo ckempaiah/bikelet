@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.PaymentInfoIntegrationTest;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect PaymentInfoIntegrationTest_Roo_Configurable {

@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Permission;
 import com.sjsu.bikelet.domain.PermissionDataOnDemand;
-import java.lang.Integer;
-import java.lang.Long;
+import com.sjsu.bikelet.domain.PermissionIntegrationTest;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +24,7 @@ privileged aspect PermissionIntegrationTest_Roo_IntegrationTest {
     declare @type: PermissionIntegrationTest: @Transactional;
     
     @Autowired
-    private PermissionDataOnDemand PermissionIntegrationTest.dod;
+    PermissionDataOnDemand PermissionIntegrationTest.dod;
     
     @Test
     public void PermissionIntegrationTest.testCountPermissions() {

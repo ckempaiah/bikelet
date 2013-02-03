@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.TenantLicensePolicy;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect TenantLicensePolicy_Roo_Configurable {

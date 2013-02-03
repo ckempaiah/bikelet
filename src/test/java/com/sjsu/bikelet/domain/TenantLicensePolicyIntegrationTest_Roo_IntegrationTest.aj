@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.TenantLicensePolicy;
 import com.sjsu.bikelet.domain.TenantLicensePolicyDataOnDemand;
-import java.lang.Integer;
-import java.lang.Long;
+import com.sjsu.bikelet.domain.TenantLicensePolicyIntegrationTest;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +24,7 @@ privileged aspect TenantLicensePolicyIntegrationTest_Roo_IntegrationTest {
     declare @type: TenantLicensePolicyIntegrationTest: @Transactional;
     
     @Autowired
-    private TenantLicensePolicyDataOnDemand TenantLicensePolicyIntegrationTest.dod;
+    TenantLicensePolicyDataOnDemand TenantLicensePolicyIntegrationTest.dod;
     
     @Test
     public void TenantLicensePolicyIntegrationTest.testCountTenantLicensePolicys() {

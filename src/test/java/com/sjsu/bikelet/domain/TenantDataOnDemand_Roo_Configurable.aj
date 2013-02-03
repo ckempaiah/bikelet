@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.TenantDataOnDemand;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect TenantDataOnDemand_Roo_Configurable {

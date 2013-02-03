@@ -6,16 +6,14 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
 @RooToString
-@RooEntity
+@RooJpaActiveRecord
 public class RentTransaction {
-
-    private Integer transactionId;
 
     private Integer fromStationId;
 
@@ -31,6 +29,8 @@ public class RentTransaction {
     @DateTimeFormat(style = "M-")
     private Date rentEndDate;
 
+    private Integer rateId;
+
     @NotNull
     @Size(max = 10)
     private String status;
@@ -38,6 +38,4 @@ public class RentTransaction {
     @NotNull
     @Size(max = 500)
     private String comments;
-
-    private Integer rateId;
 }

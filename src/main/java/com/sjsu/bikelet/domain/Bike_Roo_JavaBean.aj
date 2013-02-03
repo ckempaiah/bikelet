@@ -3,36 +3,25 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.BikeLocation;
-import com.sjsu.bikelet.domain.RentTransaction;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.Bike;
 import java.util.Date;
 
 privileged aspect Bike_Roo_JavaBean {
     
-    public Integer Bike.getBikeheight() {
-        return this.bikeheight;
+    public Integer Bike.getBikeHeight() {
+        return this.bikeHeight;
     }
     
-    public void Bike.setBikeheight(Integer bikeheight) {
-        this.bikeheight = bikeheight;
+    public void Bike.setBikeHeight(Integer bikeHeight) {
+        this.bikeHeight = bikeHeight;
     }
     
-    public Integer Bike.getBikeId() {
-        return this.bikeId;
+    public String Bike.getBikeColor() {
+        return this.bikeColor;
     }
     
-    public void Bike.setBikeId(Integer bikeId) {
-        this.bikeId = bikeId;
-    }
-    
-    public String Bike.getBikecolor() {
-        return this.bikecolor;
-    }
-    
-    public void Bike.setBikecolor(String bikecolor) {
-        this.bikecolor = bikecolor;
+    public void Bike.setBikeColor(String bikeColor) {
+        this.bikeColor = bikeColor;
     }
     
     public String Bike.getBikeType() {
@@ -59,36 +48,12 @@ privileged aspect Bike_Roo_JavaBean {
         this.wheelSize = wheelSize;
     }
     
-    public String Bike.getBikestatus() {
-        return this.bikestatus;
+    public String Bike.getBikeStatus() {
+        return this.bikeStatus;
     }
     
-    public void Bike.setBikestatus(String bikestatus) {
-        this.bikestatus = bikestatus;
-    }
-    
-    public Integer Bike.getTenantId() {
-        return this.tenantId;
-    }
-    
-    public void Bike.setTenantId(Integer tenantId) {
-        this.tenantId = tenantId;
-    }
-    
-    public BikeLocation Bike.getBikeLocation() {
-        return this.bikeLocation;
-    }
-    
-    public void Bike.setBikeLocation(BikeLocation bikeLocation) {
-        this.bikeLocation = bikeLocation;
-    }
-    
-    public RentTransaction Bike.getRentTransactions() {
-        return this.rentTransactions;
-    }
-    
-    public void Bike.setRentTransactions(RentTransaction rentTransactions) {
-        this.rentTransactions = rentTransactions;
+    public void Bike.setBikeStatus(String bikeStatus) {
+        this.bikeStatus = bikeStatus;
     }
     
 }

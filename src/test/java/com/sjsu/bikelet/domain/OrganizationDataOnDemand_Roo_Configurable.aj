@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.OrganizationDataOnDemand;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect OrganizationDataOnDemand_Roo_Configurable {

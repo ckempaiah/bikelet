@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.ProgramDataOnDemand;
-import java.lang.Integer;
-import java.lang.Long;
+import com.sjsu.bikelet.domain.ProgramIntegrationTest;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +24,7 @@ privileged aspect ProgramIntegrationTest_Roo_IntegrationTest {
     declare @type: ProgramIntegrationTest: @Transactional;
     
     @Autowired
-    private ProgramDataOnDemand ProgramIntegrationTest.dod;
+    ProgramDataOnDemand ProgramIntegrationTest.dod;
     
     @Test
     public void ProgramIntegrationTest.testCountPrograms() {

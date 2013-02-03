@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.UserSubscriptionPolicy;
 import com.sjsu.bikelet.domain.UserSubscriptionPolicyDataOnDemand;
-import java.lang.Integer;
-import java.lang.Long;
+import com.sjsu.bikelet.domain.UserSubscriptionPolicyIntegrationTest;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +24,7 @@ privileged aspect UserSubscriptionPolicyIntegrationTest_Roo_IntegrationTest {
     declare @type: UserSubscriptionPolicyIntegrationTest: @Transactional;
     
     @Autowired
-    private UserSubscriptionPolicyDataOnDemand UserSubscriptionPolicyIntegrationTest.dod;
+    UserSubscriptionPolicyDataOnDemand UserSubscriptionPolicyIntegrationTest.dod;
     
     @Test
     public void UserSubscriptionPolicyIntegrationTest.testCountUserSubscriptionPolicys() {

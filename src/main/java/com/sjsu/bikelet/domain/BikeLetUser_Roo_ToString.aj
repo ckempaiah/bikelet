@@ -3,28 +3,14 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.String;
+import com.sjsu.bikelet.domain.BikeLetUser;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect BikeLetUser_Roo_ToString {
     
     public String BikeLetUser.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Addresses: ").append(getAddresses()).append(", ");
-        sb.append("Bills: ").append(getBills()).append(", ");
-        sb.append("Email: ").append(getEmail()).append(", ");
-        sb.append("FirstName: ").append(getFirstName()).append(", ");
-        sb.append("Id: ").append(getId()).append(", ");
-        sb.append("LastName: ").append(getLastName()).append(", ");
-        sb.append("Password: ").append(getPassword()).append(", ");
-        sb.append("PaymentInfo: ").append(getPaymentInfo()).append(", ");
-        sb.append("PaymentTransactions: ").append(getPaymentTransactions()).append(", ");
-        sb.append("ProgramId: ").append(getProgramId()).append(", ");
-        sb.append("RentTransactions: ").append(getRentTransactions()).append(", ");
-        sb.append("Roles: ").append(getRoles()).append(", ");
-        sb.append("UserId: ").append(getUserId()).append(", ");
-        sb.append("Usp: ").append(getUsp()).append(", ");
-        sb.append("Version: ").append(getVersion());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

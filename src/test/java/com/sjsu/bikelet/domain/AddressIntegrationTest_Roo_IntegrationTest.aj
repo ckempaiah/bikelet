@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Address;
 import com.sjsu.bikelet.domain.AddressDataOnDemand;
-import java.lang.Integer;
-import java.lang.Long;
+import com.sjsu.bikelet.domain.AddressIntegrationTest;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +24,7 @@ privileged aspect AddressIntegrationTest_Roo_IntegrationTest {
     declare @type: AddressIntegrationTest: @Transactional;
     
     @Autowired
-    private AddressDataOnDemand AddressIntegrationTest.dod;
+    AddressDataOnDemand AddressIntegrationTest.dod;
     
     @Test
     public void AddressIntegrationTest.testCountAddresses() {

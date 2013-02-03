@@ -3,18 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.Address;
 
 privileged aspect Address_Roo_JavaBean {
-    
-    public Integer Address.getAddressId() {
-        return this.addressId;
-    }
-    
-    public void Address.setAddressId(Integer addressId) {
-        this.addressId = addressId;
-    }
     
     public String Address.getAddressLine1() {
         return this.addressLine1;
@@ -40,12 +31,12 @@ privileged aspect Address_Roo_JavaBean {
         this.city = city;
     }
     
-    public String Address.getCState() {
-        return this.cState;
+    public String Address.getAddressState() {
+        return this.addressState;
     }
     
-    public void Address.setCState(String cState) {
-        this.cState = cState;
+    public void Address.setAddressState(String addressState) {
+        this.addressState = addressState;
     }
     
     public String Address.getCountry() {
@@ -72,12 +63,12 @@ privileged aspect Address_Roo_JavaBean {
         this.cellphone = cellphone;
     }
     
-    public String Address.getAddress_type() {
-        return this.address_type;
+    public String Address.getAddressType() {
+        return this.addressType;
     }
     
-    public void Address.setAddress_type(String address_type) {
-        this.address_type = address_type;
+    public void Address.setAddressType(String addressType) {
+        this.addressType = addressType;
     }
     
     public String Address.getWorkphone() {
@@ -86,22 +77,6 @@ privileged aspect Address_Roo_JavaBean {
     
     public void Address.setWorkphone(String workphone) {
         this.workphone = workphone;
-    }
-    
-    public Integer Address.getEntityId() {
-        return this.entityId;
-    }
-    
-    public void Address.setEntityId(Integer entityId) {
-        this.entityId = entityId;
-    }
-    
-    public String Address.getEntityType() {
-        return this.entityType;
-    }
-    
-    public void Address.setEntityType(String entityType) {
-        this.entityType = entityType;
     }
     
 }

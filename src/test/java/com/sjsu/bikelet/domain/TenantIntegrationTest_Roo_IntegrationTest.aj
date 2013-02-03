@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantDataOnDemand;
-import java.lang.Integer;
-import java.lang.Long;
+import com.sjsu.bikelet.domain.TenantIntegrationTest;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +24,7 @@ privileged aspect TenantIntegrationTest_Roo_IntegrationTest {
     declare @type: TenantIntegrationTest: @Transactional;
     
     @Autowired
-    private TenantDataOnDemand TenantIntegrationTest.dod;
+    TenantDataOnDemand TenantIntegrationTest.dod;
     
     @Test
     public void TenantIntegrationTest.testCountTenants() {

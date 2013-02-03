@@ -3,8 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.Integer;
-import java.lang.Long;
+import com.sjsu.bikelet.domain.UserSubscriptionPolicy;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

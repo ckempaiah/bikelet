@@ -3,15 +3,14 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.String;
+import com.sjsu.bikelet.domain.UserRole;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect UserRole_Roo_ToString {
     
     public String UserRole.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Id: ").append(getId()).append(", ");
-        sb.append("Version: ").append(getVersion());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

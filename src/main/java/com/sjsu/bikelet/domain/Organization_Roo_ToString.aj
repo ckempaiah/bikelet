@@ -3,20 +3,14 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.String;
+import com.sjsu.bikelet.domain.Organization;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect Organization_Roo_ToString {
     
     public String Organization.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("ContactId: ").append(getContactId()).append(", ");
-        sb.append("Id: ").append(getId()).append(", ");
-        sb.append("OrgColumn: ").append(getOrgColumn()).append(", ");
-        sb.append("OrgId: ").append(getOrgId()).append(", ");
-        sb.append("OrgName: ").append(getOrgName()).append(", ");
-        sb.append("Programs: ").append(getPrograms()).append(", ");
-        sb.append("Version: ").append(getVersion());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

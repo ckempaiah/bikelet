@@ -3,19 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Program;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.Organization;
 
 privileged aspect Organization_Roo_JavaBean {
-    
-    public Integer Organization.getOrgId() {
-        return this.orgId;
-    }
-    
-    public void Organization.setOrgId(Integer orgId) {
-        this.orgId = orgId;
-    }
     
     public String Organization.getOrgName() {
         return this.orgName;
@@ -31,22 +21,6 @@ privileged aspect Organization_Roo_JavaBean {
     
     public void Organization.setContactId(Integer contactId) {
         this.contactId = contactId;
-    }
-    
-    public Integer Organization.getOrgColumn() {
-        return this.orgColumn;
-    }
-    
-    public void Organization.setOrgColumn(Integer orgColumn) {
-        this.orgColumn = orgColumn;
-    }
-    
-    public Program Organization.getPrograms() {
-        return this.programs;
-    }
-    
-    public void Organization.setPrograms(Program programs) {
-        this.programs = programs;
     }
     
 }

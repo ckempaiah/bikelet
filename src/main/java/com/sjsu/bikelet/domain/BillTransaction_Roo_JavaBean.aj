@@ -3,20 +3,10 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.Double;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.BillTransaction;
 import java.util.Date;
 
 privileged aspect BillTransaction_Roo_JavaBean {
-    
-    public Integer BillTransaction.getBillTransactionId() {
-        return this.billTransactionId;
-    }
-    
-    public void BillTransaction.setBillTransactionId(Integer billTransactionId) {
-        this.billTransactionId = billTransactionId;
-    }
     
     public Double BillTransaction.getTotalCost() {
         return this.totalCost;

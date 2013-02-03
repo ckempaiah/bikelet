@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.LicensePolicyIntegrationTest;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect LicensePolicyIntegrationTest_Roo_Configurable {

@@ -3,19 +3,10 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.RentTransaction;
 import java.util.Date;
 
 privileged aspect RentTransaction_Roo_JavaBean {
-    
-    public Integer RentTransaction.getTransactionId() {
-        return this.transactionId;
-    }
-    
-    public void RentTransaction.setTransactionId(Integer transactionId) {
-        this.transactionId = transactionId;
-    }
     
     public Integer RentTransaction.getFromStationId() {
         return this.fromStationId;
@@ -57,6 +48,14 @@ privileged aspect RentTransaction_Roo_JavaBean {
         this.rentEndDate = rentEndDate;
     }
     
+    public Integer RentTransaction.getRateId() {
+        return this.rateId;
+    }
+    
+    public void RentTransaction.setRateId(Integer rateId) {
+        this.rateId = rateId;
+    }
+    
     public String RentTransaction.getStatus() {
         return this.status;
     }
@@ -71,14 +70,6 @@ privileged aspect RentTransaction_Roo_JavaBean {
     
     public void RentTransaction.setComments(String comments) {
         this.comments = comments;
-    }
-    
-    public Integer RentTransaction.getRateId() {
-        return this.rateId;
-    }
-    
-    public void RentTransaction.setRateId(Integer rateId) {
-        this.rateId = rateId;
     }
     
 }

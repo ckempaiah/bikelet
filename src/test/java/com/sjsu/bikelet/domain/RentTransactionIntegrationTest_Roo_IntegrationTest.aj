@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.RentTransaction;
 import com.sjsu.bikelet.domain.RentTransactionDataOnDemand;
-import java.lang.Integer;
-import java.lang.Long;
+import com.sjsu.bikelet.domain.RentTransactionIntegrationTest;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +24,7 @@ privileged aspect RentTransactionIntegrationTest_Roo_IntegrationTest {
     declare @type: RentTransactionIntegrationTest: @Transactional;
     
     @Autowired
-    private RentTransactionDataOnDemand RentTransactionIntegrationTest.dod;
+    RentTransactionDataOnDemand RentTransactionIntegrationTest.dod;
     
     @Test
     public void RentTransactionIntegrationTest.testCountRentTransactions() {

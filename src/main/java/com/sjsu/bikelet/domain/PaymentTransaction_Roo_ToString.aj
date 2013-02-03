@@ -3,18 +3,14 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.String;
+import com.sjsu.bikelet.domain.PaymentTransaction;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect PaymentTransaction_Roo_ToString {
     
     public String PaymentTransaction.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("DateOfTransaction: ").append(getDateOfTransaction()).append(", ");
-        sb.append("Id: ").append(getId()).append(", ");
-        sb.append("PaymentTransactionId: ").append(getPaymentTransactionId()).append(", ");
-        sb.append("Status: ").append(getStatus()).append(", ");
-        sb.append("Version: ").append(getVersion());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

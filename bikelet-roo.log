@@ -1,0 +1,173 @@
+entity jpa --class ~.domain.Address --testAutomatically
+field number --fieldName addressId --type java.lang.Integer --notNull --unique --column address_id
+field string --fieldName addressLine1 --notNull --sizeMax 100
+field string --fieldName addressLine2 --notNull --sizeMax 100
+field string --fieldName city --notNull --sizeMin 2
+field string --fieldName addressState --notNull --sizeMin 2
+field string --fieldName country --notNull --sizeMin 2
+field string --fieldName zipCode --notNull --sizeMin 5 --sizeMax 5
+field string --fieldName cellphone --notNull --sizeMin 8 --sizeMax 15
+field string --fieldName addressType --notNull --sizeMax 15
+field string --fieldName workphone --notNull --sizeMin 8 --sizeMax 15
+(Not added)field number --fieldName entityId --type java.lang.Integer
+(Not added)field string --fieldName entityType --notNull --sizeMin 8 --sizeMax 15
+(Not added)field number --fieldName userId --type java.lang.Integer----------------------- many to one with user
+(Not added)field reference --fieldName addresses --type ~.domain.Address
+
+entity jpa --class ~.domain.AddressAssociation --testAutomatically
+field number --fieldName entityId --type java.lang.Integer
+field number --fieldName addressId --type java.lang.Integer
+field number --fieldName entityType --type java.lang.Integer
+
+entity jpa --class ~.domain.Bike --testAutomatically 
+(not added)field number --fieldName bikeId --type java.lang.Integer --notNull
+field number --fieldName bikeheight --type java.lang.Integer
+field string --fieldName bikecolor --sizeMax 10
+field string --fieldName bikeType --notNull --sizeMin 2 --sizeMax 20
+field date --fieldName lastServiceDate --type java.util.Date
+field string --fieldName wheelSize --sizeMax 10
+field string --fieldName bikestatus --sizeMax 10
+
+(Not added)field number --fieldName tenantId --type java.lang.Integer-------- created but check
+(Not added)field reference --fieldName bikes --type ~.domain.Bikes
+
+entity jpa --class ~.domain.BikeLocation --testAutomatically
+field string --fieldName bikeStatus --sizeMax 10
+(Not added)field number --fieldName bikeId --type java.lang.Integer  ------------ one to one with bike
+field reference --fieldName bike --type ~.domain.Bike
+(Not added)field number --fieldName stationId --type java.lang.Integer ------------ many to one with station
+(Not added)field reference --fieldName station --type ~.domain.Station
+
+entity jpa --class ~.domain.Station --testAutomatically 
+(not added) field number --fieldName stationId --type java.lang.Integer
+field string --fieldName location --notNull
+(not added)field number --fieldName tenantId --type java.lang.Integer   --- many to one  with tenant
+(not added)field number --fieldName programId --type java.lang.Integer   --- many to one with  program
+
+entity jpa --class ~.domain.Bill --testAutomatically 
+(not added) field number --fieldName billId --type java.lang.Integer
+field number --fieldName totalcharges --type java.lang.Integer
+field string --fieldName description --sizeMax 100
+field date --fieldName createdDate --type java.util.Date
+field date --fieldName billStartDate --type java.util.Date
+field date --fieldName billEndDate --type java.util.Date
+(not added)field number --fieldName userId --type java.lang.Integer-------------left many to one with user
+(not added)field number --fieldName tenantId --type java.lang.Integer
+
+entity jpa --class ~.domain.BillTransaction --testAutomatically 
+(not added)field number --fieldName billTransactionId --type java.lang.Integer 
+field number --fieldName totalCost --type java.lang.Double
+(not added)field number --fieldName billId --type java.lang.Integer ------------ many to one with bill
+field string --fieldName transactionType --sizeMax 100 
+field date --fieldName startDate --type java.util.Date 
+field date --fieldName endDate --type java.util.Date 
+field string --fieldName description --sizeMax 100 
+
+entity jpa --class ~.domain.LicensePolicy --testAutomatically 
+(not added) field number --fieldName licenseId --type java.lang.Integer 
+field string --fieldName licenseName --sizeMax 100 
+field number --fieldName licenseCostPerUser --type java.lang.Double 
+field number --fieldName licenseType --type java.lang.Integer 
+field number --fieldName licenseBaseCost --type java.lang.Double 
+field number --fieldName freeTrialPeriodInDays --type java.lang.Integer 
+
+entity jpa --class ~.domain.Organization --testAutomatically
+(not added) field number --fieldName orgId --type java.lang.Integer
+field string --fieldName orgName --notNull --sizeMax 30
+(not added)field number --fieldName tenantId --type java.lang.Integer----- many to one with tenant
+field number --fieldName contactId --type java.lang.Integer
+field number --fieldName orgColumn --type java.lang.Integer
+
+entity jpa --class ~.domain.PaymentInfo --testAutomatically
+field number --fieldName paymentId --type java.lang.Integer
+field string --fieldName cardNumber --notNull --sizeMin 12 --sizeMax 19
+field string --fieldName cardUserName --notNull --sizeMin 2
+(not added)field number --fieldName userId --type java.lang.Integer ------ many to one with user
+
+entity jpa --class ~.domain.PaymentTransaction --testAutomatically
+(not added) field number --fieldName paymentTransactionId --type java.lang.Integer
+field number --fieldName status --type java.lang.Integer
+field date --fieldName dateOfTransaction --type java.util.Date
+(not added)field number --fieldName userId --type java.lang.Integer------ many to one with bikeletuser
+(not added)field number --fieldName paymentId --type java.lang.Integer----- many to one with paymentinfo
+(not added)field number --fieldName billId --type java.lang.Integer------ one to one with bill
+
+entity jpa --class ~.domain.Permission --testAutomatically
+(not added)field number --fieldName permissionId --type java.lang.Integer
+field string --fieldName permissionName --sizeMax 30
+field string --fieldName description --sizeMax 100
+
+entity jpa --class ~.domain.Program --testAutomatically
+(not added)field number --fieldName entityId --type java.lang.Integer
+field string --fieldName programName --sizeMax 60
+field string --fieldName description --sizeMax 255
+(not added) field number --fieldName tenantId --type java.lang.Integer------ many to one with tenant
+(not added) field number --fieldName orgId --type java.lang.Integer------ many to one with organization
+
+entity jpa --class ~.domain.UserSubscriptionPolicy --testAutomatically 
+field number --fieldName userId --type java.lang.Integer --sizeMax 10 ------one to one with bikeletuser
+field number --fieldName policyId --type java.lang.Integer --sizeMax 10 ------one to one with subscriptionpolicy
+
+entity jpa --class ~.domain.UserRole --testAutomatically 
+field number --fieldName userId --type java.lang.Integer --sizeMax 10 ----- many to one with user
+field number --fieldName roleId --type java.lang.Integer --sizeMax 10 ------- many to one with role
+
+entity jpa --class ~.domain.BikeLetUser --testAutomatically 
+(na)field number --fieldName userId --type java.lang.Integer
+(na)field number --fieldName tenantId --type java.lang.Integer------------- many to one with tenant
+(na)field number --fieldName programId --type java.lang.Integer
+field string --fieldName firstName --notNull --sizeMin 2 --sizeMax 30
+field string --fieldName lastName --notNull --sizeMin 2 --sizeMax 30
+field string --fieldName email --notNull --sizeMin 2 --sizeMax 40
+field string --fieldName password --notNull --sizeMin 6 --sizeMax 15
+
+entity jpa --class ~.domain.TenantLicensePolicy --testAutomatically 
+(na)field number --fieldName tenantId --type java.lang.Integer------------ one to one with tenant
+(na)field number --fieldName licenseId --type java.lang.Integer -------------- many to one with license policy
+field date --fieldName licenseStartDate --type java.util.Date
+field date --fieldName licenseEndDate --type java.util.Date
+field number --fieldName isTrial --type java.lang.Boolean
+
+entity jpa --class ~.domain.Tenant --testAutomatically 
+(na)field number --fieldName tenantId --type java.lang.Integer
+field string --fieldName tenantName --notNull --sizeMax 30
+field number --fieldName contactId --type java.lang.Integer
+
+entity jpa --class ~.domain.SubscriptionRate --testAutomatically 
+(na)field number --fieldName rateId --type java.lang.Integer
+field number --fieldName membershipPerMonth --type java.lang.Double
+field number --fieldName organizationShare --type java.lang.Double
+field number --fieldName userShare --type java.lang.Double
+field number --fieldName freeMinsPerDay --type java.lang.Integer
+field number --fieldName excessChargePerMin --type java.lang.Double
+field date --fieldName policyStartDate --type java.util.Date
+field date --fieldName policyEndDate --type java.util.Date
+// policyId from subscription policy many to one 
+
+entity jpa --class ~.domain.SubscriptionPolicy --testAutomatically 
+(na)field number --fieldName policyId --type java.lang.Integer
+field string --fieldName policyName --notNull --sizeMin 2
+field string --fieldName policyDescription --sizeMax 250
+field number --fieldName programId --type java.lang.Integer  --- many to one with program
+
+
+(na)entity jpa --class ~.domain.RolePermission --testAutomatically
+(na)field number --fieldName permissionId --type java.lang.Integer --notNull --sizeMax 10  -------  many to one  with Permission
+field number --fieldName roleId --type java.lang.Integer --notNull --sizeMax 10  -------  many to one with Role
+
+entity jpa --class ~.domain.BikeLetRole --testAutomatically
+(na)field number --fieldName roleId --type java.lang.Integer
+field string --fieldName roleName --notNull
+
+entity jpa --class ~.domain.RentTransaction --testAutomatically
+(na)field number --fieldName transactionId --type java.lang.Integer
+field number --fieldName fromStationId --type java.lang.Integer
+field number --fieldName toStationId --type java.lang.Integer
+(na)field number --fieldName bikeId --type java.lang.Integer      -----------   many to one with Bike
+(na)field number --fieldName userId --type java.lang.Integer      ------------  many to one with BikeLetUser
+field number --fieldName tenantId --type java.lang.Integer
+field date --fieldName rentStartDate --type java.util.Date
+field date --fieldName rentEndDate --type java.util.Date
+field number --fieldName rateId --type java.lang.Integer
+field string --fieldName status --notNull --sizeMax 10
+field string --fieldName comments --notNull --sizeMax 500

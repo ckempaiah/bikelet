@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.AddressIntegrationTest;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect AddressIntegrationTest_Roo_Configurable {

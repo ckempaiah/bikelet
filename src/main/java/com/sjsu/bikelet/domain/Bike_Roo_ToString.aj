@@ -3,25 +3,14 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.String;
+import com.sjsu.bikelet.domain.Bike;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect Bike_Roo_ToString {
     
     public String Bike.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("BikeId: ").append(getBikeId()).append(", ");
-        sb.append("BikeLocation: ").append(getBikeLocation()).append(", ");
-        sb.append("BikeType: ").append(getBikeType()).append(", ");
-        sb.append("Bikecolor: ").append(getBikecolor()).append(", ");
-        sb.append("Bikeheight: ").append(getBikeheight()).append(", ");
-        sb.append("Bikestatus: ").append(getBikestatus()).append(", ");
-        sb.append("Id: ").append(getId()).append(", ");
-        sb.append("LastServiceDate: ").append(getLastServiceDate()).append(", ");
-        sb.append("RentTransactions: ").append(getRentTransactions()).append(", ");
-        sb.append("TenantId: ").append(getTenantId()).append(", ");
-        sb.append("Version: ").append(getVersion()).append(", ");
-        sb.append("WheelSize: ").append(getWheelSize());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

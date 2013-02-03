@@ -4,13 +4,7 @@
 package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Bill;
-import com.sjsu.bikelet.domain.BillTransaction;
-import com.sjsu.bikelet.domain.BillTransactionDataOnDemand;
-import com.sjsu.bikelet.domain.PaymentTransaction;
-import com.sjsu.bikelet.domain.PaymentTransactionDataOnDemand;
-import java.lang.Double;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.BillDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,7 +15,6 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect BillDataOnDemand_Roo_DataOnDemand {
@@ -32,22 +25,12 @@ privileged aspect BillDataOnDemand_Roo_DataOnDemand {
     
     private List<Bill> BillDataOnDemand.data;
     
-    @Autowired
-    private BillTransactionDataOnDemand BillDataOnDemand.billTransactionDataOnDemand;
-    
-    @Autowired
-    private PaymentTransactionDataOnDemand BillDataOnDemand.paymentTransactionDataOnDemand;
-    
     public Bill BillDataOnDemand.getNewTransientBill(int index) {
         Bill obj = new Bill();
         setBillEndDate(obj, index);
-        setBillId(obj, index);
         setBillStartDate(obj, index);
-        setBillTransactions(obj, index);
         setCreatedDate(obj, index);
         setDescription(obj, index);
-        setPaymentTransactions(obj, index);
-        setTenantId(obj, index);
         setTotalcharges(obj, index);
         return obj;
     }
@@ -57,19 +40,9 @@ privileged aspect BillDataOnDemand_Roo_DataOnDemand {
         obj.setBillEndDate(billEndDate);
     }
     
-    public void BillDataOnDemand.setBillId(Bill obj, int index) {
-        Integer billId = new Integer(index);
-        obj.setBillId(billId);
-    }
-    
     public void BillDataOnDemand.setBillStartDate(Bill obj, int index) {
         Date billStartDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setBillStartDate(billStartDate);
-    }
-    
-    public void BillDataOnDemand.setBillTransactions(Bill obj, int index) {
-        BillTransaction billTransactions = billTransactionDataOnDemand.getRandomBillTransaction();
-        obj.setBillTransactions(billTransactions);
     }
     
     public void BillDataOnDemand.setCreatedDate(Bill obj, int index) {
@@ -85,34 +58,28 @@ privileged aspect BillDataOnDemand_Roo_DataOnDemand {
         obj.setDescription(description);
     }
     
-    public void BillDataOnDemand.setPaymentTransactions(Bill obj, int index) {
-        PaymentTransaction paymentTransactions = paymentTransactionDataOnDemand.getSpecificPaymentTransaction(index);
-        obj.setPaymentTransactions(paymentTransactions);
-    }
-    
-    public void BillDataOnDemand.setTenantId(Bill obj, int index) {
-        Integer tenantId = new Integer(index);
-        obj.setTenantId(tenantId);
-    }
-    
     public void BillDataOnDemand.setTotalcharges(Bill obj, int index) {
-        Double totalcharges = new Integer(index).doubleValue();
+        Integer totalcharges = new Integer(index);
         obj.setTotalcharges(totalcharges);
     }
     
     public Bill BillDataOnDemand.getSpecificBill(int index) {
         init();
-        if (index < 0) index = 0;
-        if (index > (data.size() - 1)) index = data.size() - 1;
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > (data.size() - 1)) {
+            index = data.size() - 1;
+        }
         Bill obj = data.get(index);
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return Bill.findBill(id);
     }
     
     public Bill BillDataOnDemand.getRandomBill() {
         init();
         Bill obj = data.get(rnd.nextInt(data.size()));
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return Bill.findBill(id);
     }
     
@@ -124,20 +91,22 @@ privileged aspect BillDataOnDemand_Roo_DataOnDemand {
         int from = 0;
         int to = 10;
         data = Bill.findBillEntries(from, to);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'Bill' illegally returned null");
+        if (data == null) {
+            throw new IllegalStateException("Find entries implementation for 'Bill' illegally returned null");
+        }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<com.sjsu.bikelet.domain.Bill>();
+        data = new ArrayList<Bill>();
         for (int i = 0; i < 10; i++) {
             Bill obj = getNewTransientBill(i);
             try {
                 obj.persist();
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
-                for (Iterator<ConstraintViolation<?>> it = e.getConstraintViolations().iterator(); it.hasNext();) {
-                    ConstraintViolation<?> cv = it.next();
+                for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
+                    ConstraintViolation<?> cv = iter.next();
                     msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
                 throw new RuntimeException(msg.toString(), e);

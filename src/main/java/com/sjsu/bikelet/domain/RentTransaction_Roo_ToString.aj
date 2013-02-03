@@ -3,24 +3,14 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.String;
+import com.sjsu.bikelet.domain.RentTransaction;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect RentTransaction_Roo_ToString {
     
     public String RentTransaction.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Comments: ").append(getComments()).append(", ");
-        sb.append("FromStationId: ").append(getFromStationId()).append(", ");
-        sb.append("Id: ").append(getId()).append(", ");
-        sb.append("RateId: ").append(getRateId()).append(", ");
-        sb.append("RentEndDate: ").append(getRentEndDate()).append(", ");
-        sb.append("RentStartDate: ").append(getRentStartDate()).append(", ");
-        sb.append("Status: ").append(getStatus()).append(", ");
-        sb.append("TenantId: ").append(getTenantId()).append(", ");
-        sb.append("ToStationId: ").append(getToStationId()).append(", ");
-        sb.append("TransactionId: ").append(getTransactionId()).append(", ");
-        sb.append("Version: ").append(getVersion());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

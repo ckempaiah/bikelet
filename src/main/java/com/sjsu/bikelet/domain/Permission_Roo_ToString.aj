@@ -3,19 +3,14 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.String;
+import com.sjsu.bikelet.domain.Permission;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect Permission_Roo_ToString {
     
     public String Permission.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Description: ").append(getDescription()).append(", ");
-        sb.append("Id: ").append(getId()).append(", ");
-        sb.append("PermissionId: ").append(getPermissionId()).append(", ");
-        sb.append("PermissionName: ").append(getPermissionName()).append(", ");
-        sb.append("RolePermissions: ").append(getRolePermissions()).append(", ");
-        sb.append("Version: ").append(getVersion());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

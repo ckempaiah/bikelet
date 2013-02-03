@@ -3,11 +3,8 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.BikeLocation;
-import com.sjsu.bikelet.domain.BikeLocationDataOnDemand;
 import com.sjsu.bikelet.domain.Station;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.StationDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,7 +12,6 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect StationDataOnDemand_Roo_DataOnDemand {
@@ -26,20 +22,10 @@ privileged aspect StationDataOnDemand_Roo_DataOnDemand {
     
     private List<Station> StationDataOnDemand.data;
     
-    @Autowired
-    private BikeLocationDataOnDemand StationDataOnDemand.bikeLocationDataOnDemand;
-    
     public Station StationDataOnDemand.getNewTransientStation(int index) {
         Station obj = new Station();
-        setBikeLocation(obj, index);
         setLocation(obj, index);
-        setStationId(obj, index);
         return obj;
-    }
-    
-    public void StationDataOnDemand.setBikeLocation(Station obj, int index) {
-        BikeLocation bikeLocation = bikeLocationDataOnDemand.getSpecificBikeLocation(index);
-        obj.setBikeLocation(bikeLocation);
     }
     
     public void StationDataOnDemand.setLocation(Station obj, int index) {
@@ -47,24 +33,23 @@ privileged aspect StationDataOnDemand_Roo_DataOnDemand {
         obj.setLocation(location);
     }
     
-    public void StationDataOnDemand.setStationId(Station obj, int index) {
-        Integer stationId = new Integer(index);
-        obj.setStationId(stationId);
-    }
-    
     public Station StationDataOnDemand.getSpecificStation(int index) {
         init();
-        if (index < 0) index = 0;
-        if (index > (data.size() - 1)) index = data.size() - 1;
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > (data.size() - 1)) {
+            index = data.size() - 1;
+        }
         Station obj = data.get(index);
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return Station.findStation(id);
     }
     
     public Station StationDataOnDemand.getRandomStation() {
         init();
         Station obj = data.get(rnd.nextInt(data.size()));
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return Station.findStation(id);
     }
     
@@ -76,20 +61,22 @@ privileged aspect StationDataOnDemand_Roo_DataOnDemand {
         int from = 0;
         int to = 10;
         data = Station.findStationEntries(from, to);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'Station' illegally returned null");
+        if (data == null) {
+            throw new IllegalStateException("Find entries implementation for 'Station' illegally returned null");
+        }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<com.sjsu.bikelet.domain.Station>();
+        data = new ArrayList<Station>();
         for (int i = 0; i < 10; i++) {
             Station obj = getNewTransientStation(i);
             try {
                 obj.persist();
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
-                for (Iterator<ConstraintViolation<?>> it = e.getConstraintViolations().iterator(); it.hasNext();) {
-                    ConstraintViolation<?> cv = it.next();
+                for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
+                    ConstraintViolation<?> cv = iter.next();
                     msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
                 throw new RuntimeException(msg.toString(), e);

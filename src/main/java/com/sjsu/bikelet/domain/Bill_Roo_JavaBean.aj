@@ -3,28 +3,16 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.BillTransaction;
-import com.sjsu.bikelet.domain.PaymentTransaction;
-import java.lang.Double;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.Bill;
 import java.util.Date;
 
 privileged aspect Bill_Roo_JavaBean {
     
-    public Integer Bill.getBillId() {
-        return this.billId;
-    }
-    
-    public void Bill.setBillId(Integer billId) {
-        this.billId = billId;
-    }
-    
-    public Double Bill.getTotalcharges() {
+    public Integer Bill.getTotalcharges() {
         return this.totalcharges;
     }
     
-    public void Bill.setTotalcharges(Double totalcharges) {
+    public void Bill.setTotalcharges(Integer totalcharges) {
         this.totalcharges = totalcharges;
     }
     
@@ -58,30 +46,6 @@ privileged aspect Bill_Roo_JavaBean {
     
     public void Bill.setBillEndDate(Date billEndDate) {
         this.billEndDate = billEndDate;
-    }
-    
-    public Integer Bill.getTenantId() {
-        return this.tenantId;
-    }
-    
-    public void Bill.setTenantId(Integer tenantId) {
-        this.tenantId = tenantId;
-    }
-    
-    public BillTransaction Bill.getBillTransactions() {
-        return this.billTransactions;
-    }
-    
-    public void Bill.setBillTransactions(BillTransaction billTransactions) {
-        this.billTransactions = billTransactions;
-    }
-    
-    public PaymentTransaction Bill.getPaymentTransactions() {
-        return this.paymentTransactions;
-    }
-    
-    public void Bill.setPaymentTransactions(PaymentTransaction paymentTransactions) {
-        this.paymentTransactions = paymentTransactions;
     }
     
 }

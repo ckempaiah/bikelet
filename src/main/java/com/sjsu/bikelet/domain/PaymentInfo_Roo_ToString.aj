@@ -3,19 +3,14 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.String;
+import com.sjsu.bikelet.domain.PaymentInfo;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect PaymentInfo_Roo_ToString {
     
     public String PaymentInfo.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("CardNumber: ").append(getCardNumber()).append(", ");
-        sb.append("CardUserName: ").append(getCardUserName()).append(", ");
-        sb.append("Id: ").append(getId()).append(", ");
-        sb.append("PaymentId: ").append(getPaymentId()).append(", ");
-        sb.append("PaymentTransactions: ").append(getPaymentTransactions()).append(", ");
-        sb.append("Version: ").append(getVersion());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

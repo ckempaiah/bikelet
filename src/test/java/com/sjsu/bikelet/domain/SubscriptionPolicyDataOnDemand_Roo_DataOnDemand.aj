@@ -4,12 +4,7 @@
 package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.SubscriptionPolicy;
-import com.sjsu.bikelet.domain.SubscriptionRate;
-import com.sjsu.bikelet.domain.SubscriptionRateDataOnDemand;
-import com.sjsu.bikelet.domain.UserSubscriptionPolicy;
-import com.sjsu.bikelet.domain.UserSubscriptionPolicyDataOnDemand;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.SubscriptionPolicyDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,7 +12,6 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect SubscriptionPolicyDataOnDemand_Roo_DataOnDemand {
@@ -28,19 +22,10 @@ privileged aspect SubscriptionPolicyDataOnDemand_Roo_DataOnDemand {
     
     private List<SubscriptionPolicy> SubscriptionPolicyDataOnDemand.data;
     
-    @Autowired
-    private SubscriptionRateDataOnDemand SubscriptionPolicyDataOnDemand.subscriptionRateDataOnDemand;
-    
-    @Autowired
-    private UserSubscriptionPolicyDataOnDemand SubscriptionPolicyDataOnDemand.userSubscriptionPolicyDataOnDemand;
-    
     public SubscriptionPolicy SubscriptionPolicyDataOnDemand.getNewTransientSubscriptionPolicy(int index) {
         SubscriptionPolicy obj = new SubscriptionPolicy();
         setPolicyDescription(obj, index);
-        setPolicyId(obj, index);
         setPolicyName(obj, index);
-        setSubscpRates(obj, index);
-        setUsp(obj, index);
         return obj;
     }
     
@@ -52,39 +37,28 @@ privileged aspect SubscriptionPolicyDataOnDemand_Roo_DataOnDemand {
         obj.setPolicyDescription(policyDescription);
     }
     
-    public void SubscriptionPolicyDataOnDemand.setPolicyId(SubscriptionPolicy obj, int index) {
-        Integer policyId = new Integer(index);
-        obj.setPolicyId(policyId);
-    }
-    
     public void SubscriptionPolicyDataOnDemand.setPolicyName(SubscriptionPolicy obj, int index) {
         String policyName = "policyName_" + index;
         obj.setPolicyName(policyName);
     }
     
-    public void SubscriptionPolicyDataOnDemand.setSubscpRates(SubscriptionPolicy obj, int index) {
-        SubscriptionRate subscpRates = subscriptionRateDataOnDemand.getRandomSubscriptionRate();
-        obj.setSubscpRates(subscpRates);
-    }
-    
-    public void SubscriptionPolicyDataOnDemand.setUsp(SubscriptionPolicy obj, int index) {
-        UserSubscriptionPolicy usp = userSubscriptionPolicyDataOnDemand.getRandomUserSubscriptionPolicy();
-        obj.setUsp(usp);
-    }
-    
     public SubscriptionPolicy SubscriptionPolicyDataOnDemand.getSpecificSubscriptionPolicy(int index) {
         init();
-        if (index < 0) index = 0;
-        if (index > (data.size() - 1)) index = data.size() - 1;
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > (data.size() - 1)) {
+            index = data.size() - 1;
+        }
         SubscriptionPolicy obj = data.get(index);
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return SubscriptionPolicy.findSubscriptionPolicy(id);
     }
     
     public SubscriptionPolicy SubscriptionPolicyDataOnDemand.getRandomSubscriptionPolicy() {
         init();
         SubscriptionPolicy obj = data.get(rnd.nextInt(data.size()));
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return SubscriptionPolicy.findSubscriptionPolicy(id);
     }
     
@@ -96,20 +70,22 @@ privileged aspect SubscriptionPolicyDataOnDemand_Roo_DataOnDemand {
         int from = 0;
         int to = 10;
         data = SubscriptionPolicy.findSubscriptionPolicyEntries(from, to);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'SubscriptionPolicy' illegally returned null");
+        if (data == null) {
+            throw new IllegalStateException("Find entries implementation for 'SubscriptionPolicy' illegally returned null");
+        }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<com.sjsu.bikelet.domain.SubscriptionPolicy>();
+        data = new ArrayList<SubscriptionPolicy>();
         for (int i = 0; i < 10; i++) {
             SubscriptionPolicy obj = getNewTransientSubscriptionPolicy(i);
             try {
                 obj.persist();
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
-                for (Iterator<ConstraintViolation<?>> it = e.getConstraintViolations().iterator(); it.hasNext();) {
-                    ConstraintViolation<?> cv = it.next();
+                for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
+                    ConstraintViolation<?> cv = iter.next();
                     msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
                 throw new RuntimeException(msg.toString(), e);

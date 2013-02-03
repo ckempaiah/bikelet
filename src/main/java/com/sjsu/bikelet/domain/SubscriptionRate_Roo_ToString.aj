@@ -3,22 +3,14 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.String;
+import com.sjsu.bikelet.domain.SubscriptionRate;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect SubscriptionRate_Roo_ToString {
     
     public String SubscriptionRate.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("ExcessChargePerMin: ").append(getExcessChargePerMin()).append(", ");
-        sb.append("Id: ").append(getId()).append(", ");
-        sb.append("MembershipPerMonth: ").append(getMembershipPerMonth()).append(", ");
-        sb.append("OrganizationShare: ").append(getOrganizationShare()).append(", ");
-        sb.append("PolicyEndDate: ").append(getPolicyEndDate()).append(", ");
-        sb.append("PolicyStartDate: ").append(getPolicyStartDate()).append(", ");
-        sb.append("RateId: ").append(getRateId()).append(", ");
-        sb.append("UserShare: ").append(getUserShare()).append(", ");
-        sb.append("Version: ").append(getVersion());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

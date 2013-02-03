@@ -4,7 +4,7 @@
 package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.TenantLicensePolicy;
-import java.lang.Boolean;
+import com.sjsu.bikelet.domain.TenantLicensePolicyDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,17 +50,21 @@ privileged aspect TenantLicensePolicyDataOnDemand_Roo_DataOnDemand {
     
     public TenantLicensePolicy TenantLicensePolicyDataOnDemand.getSpecificTenantLicensePolicy(int index) {
         init();
-        if (index < 0) index = 0;
-        if (index > (data.size() - 1)) index = data.size() - 1;
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > (data.size() - 1)) {
+            index = data.size() - 1;
+        }
         TenantLicensePolicy obj = data.get(index);
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return TenantLicensePolicy.findTenantLicensePolicy(id);
     }
     
     public TenantLicensePolicy TenantLicensePolicyDataOnDemand.getRandomTenantLicensePolicy() {
         init();
         TenantLicensePolicy obj = data.get(rnd.nextInt(data.size()));
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return TenantLicensePolicy.findTenantLicensePolicy(id);
     }
     
@@ -72,20 +76,22 @@ privileged aspect TenantLicensePolicyDataOnDemand_Roo_DataOnDemand {
         int from = 0;
         int to = 10;
         data = TenantLicensePolicy.findTenantLicensePolicyEntries(from, to);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'TenantLicensePolicy' illegally returned null");
+        if (data == null) {
+            throw new IllegalStateException("Find entries implementation for 'TenantLicensePolicy' illegally returned null");
+        }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<com.sjsu.bikelet.domain.TenantLicensePolicy>();
+        data = new ArrayList<TenantLicensePolicy>();
         for (int i = 0; i < 10; i++) {
             TenantLicensePolicy obj = getNewTransientTenantLicensePolicy(i);
             try {
                 obj.persist();
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
-                for (Iterator<ConstraintViolation<?>> it = e.getConstraintViolations().iterator(); it.hasNext();) {
-                    ConstraintViolation<?> cv = it.next();
+                for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
+                    ConstraintViolation<?> cv = iter.next();
                     msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
                 throw new RuntimeException(msg.toString(), e);

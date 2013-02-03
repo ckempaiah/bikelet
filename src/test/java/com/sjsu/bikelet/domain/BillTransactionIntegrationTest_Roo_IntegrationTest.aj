@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BillTransaction;
 import com.sjsu.bikelet.domain.BillTransactionDataOnDemand;
-import java.lang.Integer;
-import java.lang.Long;
+import com.sjsu.bikelet.domain.BillTransactionIntegrationTest;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +24,7 @@ privileged aspect BillTransactionIntegrationTest_Roo_IntegrationTest {
     declare @type: BillTransactionIntegrationTest: @Transactional;
     
     @Autowired
-    private BillTransactionDataOnDemand BillTransactionIntegrationTest.dod;
+    BillTransactionDataOnDemand BillTransactionIntegrationTest.dod;
     
     @Test
     public void BillTransactionIntegrationTest.testCountBillTransactions() {

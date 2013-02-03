@@ -3,9 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.PaymentTransaction;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.PaymentInfo;
 
 privileged aspect PaymentInfo_Roo_JavaBean {
     
@@ -17,14 +15,6 @@ privileged aspect PaymentInfo_Roo_JavaBean {
         this.paymentId = paymentId;
     }
     
-    public String PaymentInfo.getCardUserName() {
-        return this.cardUserName;
-    }
-    
-    public void PaymentInfo.setCardUserName(String cardUserName) {
-        this.cardUserName = cardUserName;
-    }
-    
     public String PaymentInfo.getCardNumber() {
         return this.cardNumber;
     }
@@ -33,12 +23,12 @@ privileged aspect PaymentInfo_Roo_JavaBean {
         this.cardNumber = cardNumber;
     }
     
-    public PaymentTransaction PaymentInfo.getPaymentTransactions() {
-        return this.paymentTransactions;
+    public String PaymentInfo.getCardUserName() {
+        return this.cardUserName;
     }
     
-    public void PaymentInfo.setPaymentTransactions(PaymentTransaction paymentTransactions) {
-        this.paymentTransactions = paymentTransactions;
+    public void PaymentInfo.setCardUserName(String cardUserName) {
+        this.cardUserName = cardUserName;
     }
     
 }

@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.UserRole;
 import com.sjsu.bikelet.domain.UserRoleDataOnDemand;
-import java.lang.Integer;
-import java.lang.Long;
+import com.sjsu.bikelet.domain.UserRoleIntegrationTest;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +24,7 @@ privileged aspect UserRoleIntegrationTest_Roo_IntegrationTest {
     declare @type: UserRoleIntegrationTest: @Transactional;
     
     @Autowired
-    private UserRoleDataOnDemand UserRoleIntegrationTest.dod;
+    UserRoleDataOnDemand UserRoleIntegrationTest.dod;
     
     @Test
     public void UserRoleIntegrationTest.testCountUserRoles() {

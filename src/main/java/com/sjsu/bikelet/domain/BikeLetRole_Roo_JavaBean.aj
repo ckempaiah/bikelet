@@ -3,20 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.RolePermission;
-import com.sjsu.bikelet.domain.UserRole;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.BikeLetRole;
 
 privileged aspect BikeLetRole_Roo_JavaBean {
-    
-    public Integer BikeLetRole.getRoleId() {
-        return this.roleId;
-    }
-    
-    public void BikeLetRole.setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
     
     public String BikeLetRole.getRoleName() {
         return this.roleName;
@@ -24,22 +13,6 @@ privileged aspect BikeLetRole_Roo_JavaBean {
     
     public void BikeLetRole.setRoleName(String roleName) {
         this.roleName = roleName;
-    }
-    
-    public UserRole BikeLetRole.getUsers() {
-        return this.users;
-    }
-    
-    public void BikeLetRole.setUsers(UserRole users) {
-        this.users = users;
-    }
-    
-    public RolePermission BikeLetRole.getRolePermissions() {
-        return this.rolePermissions;
-    }
-    
-    public void BikeLetRole.setRolePermissions(RolePermission rolePermissions) {
-        this.rolePermissions = rolePermissions;
     }
     
 }

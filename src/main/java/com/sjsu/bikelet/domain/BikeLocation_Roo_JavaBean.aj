@@ -3,7 +3,8 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.String;
+import com.sjsu.bikelet.domain.Bike;
+import com.sjsu.bikelet.domain.BikeLocation;
 
 privileged aspect BikeLocation_Roo_JavaBean {
     
@@ -13,6 +14,14 @@ privileged aspect BikeLocation_Roo_JavaBean {
     
     public void BikeLocation.setBikeStatus(String bikeStatus) {
         this.bikeStatus = bikeStatus;
+    }
+    
+    public Bike BikeLocation.getBike() {
+        return this.bike;
+    }
+    
+    public void BikeLocation.setBike(Bike bike) {
+        this.bike = bike;
     }
     
 }

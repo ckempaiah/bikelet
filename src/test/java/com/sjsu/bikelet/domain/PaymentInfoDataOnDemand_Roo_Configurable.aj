@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.PaymentInfoDataOnDemand;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect PaymentInfoDataOnDemand_Roo_Configurable {

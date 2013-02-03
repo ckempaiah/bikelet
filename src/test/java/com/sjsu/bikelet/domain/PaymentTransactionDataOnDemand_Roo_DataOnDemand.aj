@@ -4,7 +4,7 @@
 package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.PaymentTransaction;
-import java.lang.Integer;
+import com.sjsu.bikelet.domain.PaymentTransactionDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,7 +28,8 @@ privileged aspect PaymentTransactionDataOnDemand_Roo_DataOnDemand {
     public PaymentTransaction PaymentTransactionDataOnDemand.getNewTransientPaymentTransaction(int index) {
         PaymentTransaction obj = new PaymentTransaction();
         setDateOfTransaction(obj, index);
-        setPaymentTransactionId(obj, index);
+        setDescription(obj, index);
+        setPermissionName(obj, index);
         setStatus(obj, index);
         return obj;
     }
@@ -38,9 +39,20 @@ privileged aspect PaymentTransactionDataOnDemand_Roo_DataOnDemand {
         obj.setDateOfTransaction(dateOfTransaction);
     }
     
-    public void PaymentTransactionDataOnDemand.setPaymentTransactionId(PaymentTransaction obj, int index) {
-        Integer paymentTransactionId = new Integer(index);
-        obj.setPaymentTransactionId(paymentTransactionId);
+    public void PaymentTransactionDataOnDemand.setDescription(PaymentTransaction obj, int index) {
+        String description = "description_" + index;
+        if (description.length() > 100) {
+            description = description.substring(0, 100);
+        }
+        obj.setDescription(description);
+    }
+    
+    public void PaymentTransactionDataOnDemand.setPermissionName(PaymentTransaction obj, int index) {
+        String permissionName = "permissionName_" + index;
+        if (permissionName.length() > 30) {
+            permissionName = permissionName.substring(0, 30);
+        }
+        obj.setPermissionName(permissionName);
     }
     
     public void PaymentTransactionDataOnDemand.setStatus(PaymentTransaction obj, int index) {
@@ -50,17 +62,21 @@ privileged aspect PaymentTransactionDataOnDemand_Roo_DataOnDemand {
     
     public PaymentTransaction PaymentTransactionDataOnDemand.getSpecificPaymentTransaction(int index) {
         init();
-        if (index < 0) index = 0;
-        if (index > (data.size() - 1)) index = data.size() - 1;
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > (data.size() - 1)) {
+            index = data.size() - 1;
+        }
         PaymentTransaction obj = data.get(index);
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return PaymentTransaction.findPaymentTransaction(id);
     }
     
     public PaymentTransaction PaymentTransactionDataOnDemand.getRandomPaymentTransaction() {
         init();
         PaymentTransaction obj = data.get(rnd.nextInt(data.size()));
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return PaymentTransaction.findPaymentTransaction(id);
     }
     
@@ -72,20 +88,22 @@ privileged aspect PaymentTransactionDataOnDemand_Roo_DataOnDemand {
         int from = 0;
         int to = 10;
         data = PaymentTransaction.findPaymentTransactionEntries(from, to);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'PaymentTransaction' illegally returned null");
+        if (data == null) {
+            throw new IllegalStateException("Find entries implementation for 'PaymentTransaction' illegally returned null");
+        }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<com.sjsu.bikelet.domain.PaymentTransaction>();
+        data = new ArrayList<PaymentTransaction>();
         for (int i = 0; i < 10; i++) {
             PaymentTransaction obj = getNewTransientPaymentTransaction(i);
             try {
                 obj.persist();
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
-                for (Iterator<ConstraintViolation<?>> it = e.getConstraintViolations().iterator(); it.hasNext();) {
-                    ConstraintViolation<?> cv = it.next();
+                for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
+                    ConstraintViolation<?> cv = iter.next();
                     msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
                 throw new RuntimeException(msg.toString(), e);

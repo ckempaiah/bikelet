@@ -3,8 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BikeDataOnDemand;
 import com.sjsu.bikelet.domain.BikeLocation;
-import java.lang.String;
+import com.sjsu.bikelet.domain.BikeLocationDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect BikeLocationDataOnDemand_Roo_DataOnDemand {
@@ -21,6 +23,9 @@ privileged aspect BikeLocationDataOnDemand_Roo_DataOnDemand {
     private Random BikeLocationDataOnDemand.rnd = new SecureRandom();
     
     private List<BikeLocation> BikeLocationDataOnDemand.data;
+    
+    @Autowired
+    BikeDataOnDemand BikeLocationDataOnDemand.bikeDataOnDemand;
     
     public BikeLocation BikeLocationDataOnDemand.getNewTransientBikeLocation(int index) {
         BikeLocation obj = new BikeLocation();
@@ -38,17 +43,21 @@ privileged aspect BikeLocationDataOnDemand_Roo_DataOnDemand {
     
     public BikeLocation BikeLocationDataOnDemand.getSpecificBikeLocation(int index) {
         init();
-        if (index < 0) index = 0;
-        if (index > (data.size() - 1)) index = data.size() - 1;
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > (data.size() - 1)) {
+            index = data.size() - 1;
+        }
         BikeLocation obj = data.get(index);
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return BikeLocation.findBikeLocation(id);
     }
     
     public BikeLocation BikeLocationDataOnDemand.getRandomBikeLocation() {
         init();
         BikeLocation obj = data.get(rnd.nextInt(data.size()));
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return BikeLocation.findBikeLocation(id);
     }
     
@@ -60,20 +69,22 @@ privileged aspect BikeLocationDataOnDemand_Roo_DataOnDemand {
         int from = 0;
         int to = 10;
         data = BikeLocation.findBikeLocationEntries(from, to);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'BikeLocation' illegally returned null");
+        if (data == null) {
+            throw new IllegalStateException("Find entries implementation for 'BikeLocation' illegally returned null");
+        }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<com.sjsu.bikelet.domain.BikeLocation>();
+        data = new ArrayList<BikeLocation>();
         for (int i = 0; i < 10; i++) {
             BikeLocation obj = getNewTransientBikeLocation(i);
             try {
                 obj.persist();
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
-                for (Iterator<ConstraintViolation<?>> it = e.getConstraintViolations().iterator(); it.hasNext();) {
-                    ConstraintViolation<?> cv = it.next();
+                for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
+                    ConstraintViolation<?> cv = iter.next();
                     msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
                 throw new RuntimeException(msg.toString(), e);

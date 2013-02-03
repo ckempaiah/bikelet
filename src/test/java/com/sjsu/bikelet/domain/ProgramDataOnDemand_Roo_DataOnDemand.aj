@@ -4,12 +4,7 @@
 package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Program;
-import com.sjsu.bikelet.domain.Station;
-import com.sjsu.bikelet.domain.StationDataOnDemand;
-import com.sjsu.bikelet.domain.SubscriptionPolicy;
-import com.sjsu.bikelet.domain.SubscriptionPolicyDataOnDemand;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.ProgramDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,7 +12,6 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
@@ -28,19 +22,10 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
     
     private List<Program> ProgramDataOnDemand.data;
     
-    @Autowired
-    private StationDataOnDemand ProgramDataOnDemand.stationDataOnDemand;
-    
-    @Autowired
-    private SubscriptionPolicyDataOnDemand ProgramDataOnDemand.subscriptionPolicyDataOnDemand;
-    
     public Program ProgramDataOnDemand.getNewTransientProgram(int index) {
         Program obj = new Program();
         setDescription(obj, index);
-        setEntityId(obj, index);
         setProgramName(obj, index);
-        setStations(obj, index);
-        setSubscpPolicy(obj, index);
         return obj;
     }
     
@@ -52,11 +37,6 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
         obj.setDescription(description);
     }
     
-    public void ProgramDataOnDemand.setEntityId(Program obj, int index) {
-        Integer entityId = new Integer(index);
-        obj.setEntityId(entityId);
-    }
-    
     public void ProgramDataOnDemand.setProgramName(Program obj, int index) {
         String programName = "programName_" + index;
         if (programName.length() > 60) {
@@ -65,29 +45,23 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
         obj.setProgramName(programName);
     }
     
-    public void ProgramDataOnDemand.setStations(Program obj, int index) {
-        Station stations = stationDataOnDemand.getRandomStation();
-        obj.setStations(stations);
-    }
-    
-    public void ProgramDataOnDemand.setSubscpPolicy(Program obj, int index) {
-        SubscriptionPolicy subscpPolicy = subscriptionPolicyDataOnDemand.getRandomSubscriptionPolicy();
-        obj.setSubscpPolicy(subscpPolicy);
-    }
-    
     public Program ProgramDataOnDemand.getSpecificProgram(int index) {
         init();
-        if (index < 0) index = 0;
-        if (index > (data.size() - 1)) index = data.size() - 1;
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > (data.size() - 1)) {
+            index = data.size() - 1;
+        }
         Program obj = data.get(index);
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return Program.findProgram(id);
     }
     
     public Program ProgramDataOnDemand.getRandomProgram() {
         init();
         Program obj = data.get(rnd.nextInt(data.size()));
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return Program.findProgram(id);
     }
     
@@ -99,20 +73,22 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
         int from = 0;
         int to = 10;
         data = Program.findProgramEntries(from, to);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'Program' illegally returned null");
+        if (data == null) {
+            throw new IllegalStateException("Find entries implementation for 'Program' illegally returned null");
+        }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<com.sjsu.bikelet.domain.Program>();
+        data = new ArrayList<Program>();
         for (int i = 0; i < 10; i++) {
             Program obj = getNewTransientProgram(i);
             try {
                 obj.persist();
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
-                for (Iterator<ConstraintViolation<?>> it = e.getConstraintViolations().iterator(); it.hasNext();) {
-                    ConstraintViolation<?> cv = it.next();
+                for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
+                    ConstraintViolation<?> cv = iter.next();
                     msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
                 throw new RuntimeException(msg.toString(), e);

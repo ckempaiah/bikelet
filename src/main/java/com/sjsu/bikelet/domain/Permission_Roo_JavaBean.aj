@@ -3,19 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.RolePermission;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.Permission;
 
 privileged aspect Permission_Roo_JavaBean {
-    
-    public Integer Permission.getPermissionId() {
-        return this.permissionId;
-    }
-    
-    public void Permission.setPermissionId(Integer permissionId) {
-        this.permissionId = permissionId;
-    }
     
     public String Permission.getPermissionName() {
         return this.permissionName;
@@ -31,14 +21,6 @@ privileged aspect Permission_Roo_JavaBean {
     
     public void Permission.setDescription(String description) {
         this.description = description;
-    }
-    
-    public RolePermission Permission.getRolePermissions() {
-        return this.rolePermissions;
-    }
-    
-    public void Permission.setRolePermissions(RolePermission rolePermissions) {
-        this.rolePermissions = rolePermissions;
     }
     
 }

@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.OrganizationIntegrationTest;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect OrganizationIntegrationTest_Roo_Configurable {

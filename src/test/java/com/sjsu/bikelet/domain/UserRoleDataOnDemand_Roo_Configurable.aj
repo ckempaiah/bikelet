@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.UserRoleDataOnDemand;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect UserRoleDataOnDemand_Roo_Configurable {

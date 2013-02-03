@@ -3,19 +3,10 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.Double;
-import java.lang.Integer;
+import com.sjsu.bikelet.domain.SubscriptionRate;
 import java.util.Date;
 
 privileged aspect SubscriptionRate_Roo_JavaBean {
-    
-    public Integer SubscriptionRate.getRateId() {
-        return this.rateId;
-    }
-    
-    public void SubscriptionRate.setRateId(Integer rateId) {
-        this.rateId = rateId;
-    }
     
     public Double SubscriptionRate.getMembershipPerMonth() {
         return this.membershipPerMonth;
@@ -39,6 +30,14 @@ privileged aspect SubscriptionRate_Roo_JavaBean {
     
     public void SubscriptionRate.setUserShare(Double userShare) {
         this.userShare = userShare;
+    }
+    
+    public Integer SubscriptionRate.getFreeMinsPerDay() {
+        return this.freeMinsPerDay;
+    }
+    
+    public void SubscriptionRate.setFreeMinsPerDay(Integer freeMinsPerDay) {
+        this.freeMinsPerDay = freeMinsPerDay;
     }
     
     public Double SubscriptionRate.getExcessChargePerMin() {

@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BillTransaction;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect BillTransaction_Roo_Configurable {

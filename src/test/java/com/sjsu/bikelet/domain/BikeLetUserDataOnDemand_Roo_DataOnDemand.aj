@@ -3,23 +3,8 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Address;
-import com.sjsu.bikelet.domain.AddressDataOnDemand;
 import com.sjsu.bikelet.domain.BikeLetUser;
-import com.sjsu.bikelet.domain.Bill;
-import com.sjsu.bikelet.domain.BillDataOnDemand;
-import com.sjsu.bikelet.domain.PaymentInfo;
-import com.sjsu.bikelet.domain.PaymentInfoDataOnDemand;
-import com.sjsu.bikelet.domain.PaymentTransaction;
-import com.sjsu.bikelet.domain.PaymentTransactionDataOnDemand;
-import com.sjsu.bikelet.domain.RentTransaction;
-import com.sjsu.bikelet.domain.RentTransactionDataOnDemand;
-import com.sjsu.bikelet.domain.UserRole;
-import com.sjsu.bikelet.domain.UserRoleDataOnDemand;
-import com.sjsu.bikelet.domain.UserSubscriptionPolicy;
-import com.sjsu.bikelet.domain.UserSubscriptionPolicyDataOnDemand;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,7 +12,6 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
@@ -38,57 +22,17 @@ privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
     
     private List<BikeLetUser> BikeLetUserDataOnDemand.data;
     
-    @Autowired
-    private AddressDataOnDemand BikeLetUserDataOnDemand.addressDataOnDemand;
-    
-    @Autowired
-    private BillDataOnDemand BikeLetUserDataOnDemand.billDataOnDemand;
-    
-    @Autowired
-    private PaymentInfoDataOnDemand BikeLetUserDataOnDemand.paymentInfoDataOnDemand;
-    
-    @Autowired
-    private PaymentTransactionDataOnDemand BikeLetUserDataOnDemand.paymentTransactionDataOnDemand;
-    
-    @Autowired
-    private RentTransactionDataOnDemand BikeLetUserDataOnDemand.rentTransactionDataOnDemand;
-    
-    @Autowired
-    private UserRoleDataOnDemand BikeLetUserDataOnDemand.userRoleDataOnDemand;
-    
-    @Autowired
-    private UserSubscriptionPolicyDataOnDemand BikeLetUserDataOnDemand.userSubscriptionPolicyDataOnDemand;
-    
     public BikeLetUser BikeLetUserDataOnDemand.getNewTransientBikeLetUser(int index) {
         BikeLetUser obj = new BikeLetUser();
-        setAddresses(obj, index);
-        setBills(obj, index);
         setEmail(obj, index);
         setFirstName(obj, index);
         setLastName(obj, index);
         setPassword(obj, index);
-        setPaymentInfo(obj, index);
-        setPaymentTransactions(obj, index);
-        setProgramId(obj, index);
-        setRentTransactions(obj, index);
-        setRoles(obj, index);
-        setUserId(obj, index);
-        setUsp(obj, index);
         return obj;
     }
     
-    public void BikeLetUserDataOnDemand.setAddresses(BikeLetUser obj, int index) {
-        Address addresses = addressDataOnDemand.getRandomAddress();
-        obj.setAddresses(addresses);
-    }
-    
-    public void BikeLetUserDataOnDemand.setBills(BikeLetUser obj, int index) {
-        Bill bills = billDataOnDemand.getRandomBill();
-        obj.setBills(bills);
-    }
-    
     public void BikeLetUserDataOnDemand.setEmail(BikeLetUser obj, int index) {
-        String email = "email_" + index;
+        String email = "foo" + index + "@bar.com";
         if (email.length() > 40) {
             email = email.substring(0, 40);
         }
@@ -119,54 +63,23 @@ privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
         obj.setPassword(password);
     }
     
-    public void BikeLetUserDataOnDemand.setPaymentInfo(BikeLetUser obj, int index) {
-        PaymentInfo paymentInfo = paymentInfoDataOnDemand.getRandomPaymentInfo();
-        obj.setPaymentInfo(paymentInfo);
-    }
-    
-    public void BikeLetUserDataOnDemand.setPaymentTransactions(BikeLetUser obj, int index) {
-        PaymentTransaction paymentTransactions = paymentTransactionDataOnDemand.getRandomPaymentTransaction();
-        obj.setPaymentTransactions(paymentTransactions);
-    }
-    
-    public void BikeLetUserDataOnDemand.setProgramId(BikeLetUser obj, int index) {
-        Integer programId = new Integer(index);
-        obj.setProgramId(programId);
-    }
-    
-    public void BikeLetUserDataOnDemand.setRentTransactions(BikeLetUser obj, int index) {
-        RentTransaction rentTransactions = rentTransactionDataOnDemand.getRandomRentTransaction();
-        obj.setRentTransactions(rentTransactions);
-    }
-    
-    public void BikeLetUserDataOnDemand.setRoles(BikeLetUser obj, int index) {
-        UserRole roles = userRoleDataOnDemand.getRandomUserRole();
-        obj.setRoles(roles);
-    }
-    
-    public void BikeLetUserDataOnDemand.setUserId(BikeLetUser obj, int index) {
-        Integer userId = new Integer(index);
-        obj.setUserId(userId);
-    }
-    
-    public void BikeLetUserDataOnDemand.setUsp(BikeLetUser obj, int index) {
-        UserSubscriptionPolicy usp = userSubscriptionPolicyDataOnDemand.getRandomUserSubscriptionPolicy();
-        obj.setUsp(usp);
-    }
-    
     public BikeLetUser BikeLetUserDataOnDemand.getSpecificBikeLetUser(int index) {
         init();
-        if (index < 0) index = 0;
-        if (index > (data.size() - 1)) index = data.size() - 1;
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > (data.size() - 1)) {
+            index = data.size() - 1;
+        }
         BikeLetUser obj = data.get(index);
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return BikeLetUser.findBikeLetUser(id);
     }
     
     public BikeLetUser BikeLetUserDataOnDemand.getRandomBikeLetUser() {
         init();
         BikeLetUser obj = data.get(rnd.nextInt(data.size()));
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return BikeLetUser.findBikeLetUser(id);
     }
     
@@ -178,20 +91,22 @@ privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
         int from = 0;
         int to = 10;
         data = BikeLetUser.findBikeLetUserEntries(from, to);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'BikeLetUser' illegally returned null");
+        if (data == null) {
+            throw new IllegalStateException("Find entries implementation for 'BikeLetUser' illegally returned null");
+        }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<com.sjsu.bikelet.domain.BikeLetUser>();
+        data = new ArrayList<BikeLetUser>();
         for (int i = 0; i < 10; i++) {
             BikeLetUser obj = getNewTransientBikeLetUser(i);
             try {
                 obj.persist();
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
-                for (Iterator<ConstraintViolation<?>> it = e.getConstraintViolations().iterator(); it.hasNext();) {
-                    ConstraintViolation<?> cv = it.next();
+                for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
+                    ConstraintViolation<?> cv = iter.next();
                     msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
                 throw new RuntimeException(msg.toString(), e);

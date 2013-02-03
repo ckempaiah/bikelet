@@ -3,20 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.SubscriptionRate;
-import com.sjsu.bikelet.domain.UserSubscriptionPolicy;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.SubscriptionPolicy;
 
 privileged aspect SubscriptionPolicy_Roo_JavaBean {
-    
-    public Integer SubscriptionPolicy.getPolicyId() {
-        return this.policyId;
-    }
-    
-    public void SubscriptionPolicy.setPolicyId(Integer policyId) {
-        this.policyId = policyId;
-    }
     
     public String SubscriptionPolicy.getPolicyName() {
         return this.policyName;
@@ -32,22 +21,6 @@ privileged aspect SubscriptionPolicy_Roo_JavaBean {
     
     public void SubscriptionPolicy.setPolicyDescription(String policyDescription) {
         this.policyDescription = policyDescription;
-    }
-    
-    public UserSubscriptionPolicy SubscriptionPolicy.getUsp() {
-        return this.usp;
-    }
-    
-    public void SubscriptionPolicy.setUsp(UserSubscriptionPolicy usp) {
-        this.usp = usp;
-    }
-    
-    public SubscriptionRate SubscriptionPolicy.getSubscpRates() {
-        return this.subscpRates;
-    }
-    
-    public void SubscriptionPolicy.setSubscpRates(SubscriptionRate subscpRates) {
-        this.subscpRates = subscpRates;
     }
     
 }

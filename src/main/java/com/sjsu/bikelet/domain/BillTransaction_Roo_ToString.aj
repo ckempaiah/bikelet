@@ -3,21 +3,14 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.String;
+import com.sjsu.bikelet.domain.BillTransaction;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect BillTransaction_Roo_ToString {
     
     public String BillTransaction.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("BillTransactionId: ").append(getBillTransactionId()).append(", ");
-        sb.append("Description: ").append(getDescription()).append(", ");
-        sb.append("EndDate: ").append(getEndDate()).append(", ");
-        sb.append("Id: ").append(getId()).append(", ");
-        sb.append("StartDate: ").append(getStartDate()).append(", ");
-        sb.append("TotalCost: ").append(getTotalCost()).append(", ");
-        sb.append("TransactionType: ").append(getTransactionType()).append(", ");
-        sb.append("Version: ").append(getVersion());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

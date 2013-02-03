@@ -3,19 +3,14 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.String;
+import com.sjsu.bikelet.domain.BikeLetRole;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect BikeLetRole_Roo_ToString {
     
     public String BikeLetRole.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Id: ").append(getId()).append(", ");
-        sb.append("RoleId: ").append(getRoleId()).append(", ");
-        sb.append("RoleName: ").append(getRoleName()).append(", ");
-        sb.append("RolePermissions: ").append(getRolePermissions()).append(", ");
-        sb.append("Users: ").append(getUsers()).append(", ");
-        sb.append("Version: ").append(getVersion());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

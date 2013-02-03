@@ -4,12 +4,7 @@
 package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Bike;
-import com.sjsu.bikelet.domain.BikeLocation;
-import com.sjsu.bikelet.domain.BikeLocationDataOnDemand;
-import com.sjsu.bikelet.domain.RentTransaction;
-import com.sjsu.bikelet.domain.RentTransactionDataOnDemand;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.BikeDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,7 +15,6 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect BikeDataOnDemand_Roo_DataOnDemand {
@@ -31,35 +25,36 @@ privileged aspect BikeDataOnDemand_Roo_DataOnDemand {
     
     private List<Bike> BikeDataOnDemand.data;
     
-    @Autowired
-    private BikeLocationDataOnDemand BikeDataOnDemand.bikeLocationDataOnDemand;
-    
-    @Autowired
-    private RentTransactionDataOnDemand BikeDataOnDemand.rentTransactionDataOnDemand;
-    
     public Bike BikeDataOnDemand.getNewTransientBike(int index) {
         Bike obj = new Bike();
-        setBikeId(obj, index);
-        setBikeLocation(obj, index);
+        setBikeColor(obj, index);
+        setBikeHeight(obj, index);
+        setBikeStatus(obj, index);
         setBikeType(obj, index);
-        setBikecolor(obj, index);
-        setBikeheight(obj, index);
-        setBikestatus(obj, index);
         setLastServiceDate(obj, index);
-        setRentTransactions(obj, index);
-        setTenantId(obj, index);
         setWheelSize(obj, index);
         return obj;
     }
     
-    public void BikeDataOnDemand.setBikeId(Bike obj, int index) {
-        Integer bikeId = new Integer(index);
-        obj.setBikeId(bikeId);
+    public void BikeDataOnDemand.setBikeColor(Bike obj, int index) {
+        String bikeColor = "bikeColo_" + index;
+        if (bikeColor.length() > 10) {
+            bikeColor = bikeColor.substring(0, 10);
+        }
+        obj.setBikeColor(bikeColor);
     }
     
-    public void BikeDataOnDemand.setBikeLocation(Bike obj, int index) {
-        BikeLocation bikeLocation = bikeLocationDataOnDemand.getSpecificBikeLocation(index);
-        obj.setBikeLocation(bikeLocation);
+    public void BikeDataOnDemand.setBikeHeight(Bike obj, int index) {
+        Integer bikeHeight = new Integer(index);
+        obj.setBikeHeight(bikeHeight);
+    }
+    
+    public void BikeDataOnDemand.setBikeStatus(Bike obj, int index) {
+        String bikeStatus = "bikeStat_" + index;
+        if (bikeStatus.length() > 10) {
+            bikeStatus = bikeStatus.substring(0, 10);
+        }
+        obj.setBikeStatus(bikeStatus);
     }
     
     public void BikeDataOnDemand.setBikeType(Bike obj, int index) {
@@ -70,40 +65,9 @@ privileged aspect BikeDataOnDemand_Roo_DataOnDemand {
         obj.setBikeType(bikeType);
     }
     
-    public void BikeDataOnDemand.setBikecolor(Bike obj, int index) {
-        String bikecolor = "bikecolo_" + index;
-        if (bikecolor.length() > 10) {
-            bikecolor = bikecolor.substring(0, 10);
-        }
-        obj.setBikecolor(bikecolor);
-    }
-    
-    public void BikeDataOnDemand.setBikeheight(Bike obj, int index) {
-        Integer bikeheight = new Integer(index);
-        obj.setBikeheight(bikeheight);
-    }
-    
-    public void BikeDataOnDemand.setBikestatus(Bike obj, int index) {
-        String bikestatus = "bikestat_" + index;
-        if (bikestatus.length() > 10) {
-            bikestatus = bikestatus.substring(0, 10);
-        }
-        obj.setBikestatus(bikestatus);
-    }
-    
     public void BikeDataOnDemand.setLastServiceDate(Bike obj, int index) {
         Date lastServiceDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setLastServiceDate(lastServiceDate);
-    }
-    
-    public void BikeDataOnDemand.setRentTransactions(Bike obj, int index) {
-        RentTransaction rentTransactions = rentTransactionDataOnDemand.getRandomRentTransaction();
-        obj.setRentTransactions(rentTransactions);
-    }
-    
-    public void BikeDataOnDemand.setTenantId(Bike obj, int index) {
-        Integer tenantId = new Integer(index);
-        obj.setTenantId(tenantId);
     }
     
     public void BikeDataOnDemand.setWheelSize(Bike obj, int index) {
@@ -116,17 +80,21 @@ privileged aspect BikeDataOnDemand_Roo_DataOnDemand {
     
     public Bike BikeDataOnDemand.getSpecificBike(int index) {
         init();
-        if (index < 0) index = 0;
-        if (index > (data.size() - 1)) index = data.size() - 1;
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > (data.size() - 1)) {
+            index = data.size() - 1;
+        }
         Bike obj = data.get(index);
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return Bike.findBike(id);
     }
     
     public Bike BikeDataOnDemand.getRandomBike() {
         init();
         Bike obj = data.get(rnd.nextInt(data.size()));
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return Bike.findBike(id);
     }
     
@@ -138,20 +106,22 @@ privileged aspect BikeDataOnDemand_Roo_DataOnDemand {
         int from = 0;
         int to = 10;
         data = Bike.findBikeEntries(from, to);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'Bike' illegally returned null");
+        if (data == null) {
+            throw new IllegalStateException("Find entries implementation for 'Bike' illegally returned null");
+        }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<com.sjsu.bikelet.domain.Bike>();
+        data = new ArrayList<Bike>();
         for (int i = 0; i < 10; i++) {
             Bike obj = getNewTransientBike(i);
             try {
                 obj.persist();
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
-                for (Iterator<ConstraintViolation<?>> it = e.getConstraintViolations().iterator(); it.hasNext();) {
-                    ConstraintViolation<?> cv = it.next();
+                for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
+                    ConstraintViolation<?> cv = iter.next();
                     msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
                 throw new RuntimeException(msg.toString(), e);

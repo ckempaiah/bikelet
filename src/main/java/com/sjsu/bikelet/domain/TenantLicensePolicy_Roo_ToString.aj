@@ -3,18 +3,14 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.String;
+import com.sjsu.bikelet.domain.TenantLicensePolicy;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect TenantLicensePolicy_Roo_ToString {
     
     public String TenantLicensePolicy.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Id: ").append(getId()).append(", ");
-        sb.append("IsTrial: ").append(getIsTrial()).append(", ");
-        sb.append("LicenseEndDate: ").append(getLicenseEndDate()).append(", ");
-        sb.append("LicenseStartDate: ").append(getLicenseStartDate()).append(", ");
-        sb.append("Version: ").append(getVersion());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

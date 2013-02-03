@@ -4,10 +4,7 @@
 package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Organization;
-import com.sjsu.bikelet.domain.Program;
-import com.sjsu.bikelet.domain.ProgramDataOnDemand;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.OrganizationDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,7 +12,6 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect OrganizationDataOnDemand_Roo_DataOnDemand {
@@ -26,32 +22,16 @@ privileged aspect OrganizationDataOnDemand_Roo_DataOnDemand {
     
     private List<Organization> OrganizationDataOnDemand.data;
     
-    @Autowired
-    private ProgramDataOnDemand OrganizationDataOnDemand.programDataOnDemand;
-    
     public Organization OrganizationDataOnDemand.getNewTransientOrganization(int index) {
         Organization obj = new Organization();
         setContactId(obj, index);
-        setOrgColumn(obj, index);
-        setOrgId(obj, index);
         setOrgName(obj, index);
-        setPrograms(obj, index);
         return obj;
     }
     
     public void OrganizationDataOnDemand.setContactId(Organization obj, int index) {
         Integer contactId = new Integer(index);
         obj.setContactId(contactId);
-    }
-    
-    public void OrganizationDataOnDemand.setOrgColumn(Organization obj, int index) {
-        Integer orgColumn = new Integer(index);
-        obj.setOrgColumn(orgColumn);
-    }
-    
-    public void OrganizationDataOnDemand.setOrgId(Organization obj, int index) {
-        Integer orgId = new Integer(index);
-        obj.setOrgId(orgId);
     }
     
     public void OrganizationDataOnDemand.setOrgName(Organization obj, int index) {
@@ -62,24 +42,23 @@ privileged aspect OrganizationDataOnDemand_Roo_DataOnDemand {
         obj.setOrgName(orgName);
     }
     
-    public void OrganizationDataOnDemand.setPrograms(Organization obj, int index) {
-        Program programs = programDataOnDemand.getRandomProgram();
-        obj.setPrograms(programs);
-    }
-    
     public Organization OrganizationDataOnDemand.getSpecificOrganization(int index) {
         init();
-        if (index < 0) index = 0;
-        if (index > (data.size() - 1)) index = data.size() - 1;
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > (data.size() - 1)) {
+            index = data.size() - 1;
+        }
         Organization obj = data.get(index);
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return Organization.findOrganization(id);
     }
     
     public Organization OrganizationDataOnDemand.getRandomOrganization() {
         init();
         Organization obj = data.get(rnd.nextInt(data.size()));
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return Organization.findOrganization(id);
     }
     
@@ -91,20 +70,22 @@ privileged aspect OrganizationDataOnDemand_Roo_DataOnDemand {
         int from = 0;
         int to = 10;
         data = Organization.findOrganizationEntries(from, to);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'Organization' illegally returned null");
+        if (data == null) {
+            throw new IllegalStateException("Find entries implementation for 'Organization' illegally returned null");
+        }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<com.sjsu.bikelet.domain.Organization>();
+        data = new ArrayList<Organization>();
         for (int i = 0; i < 10; i++) {
             Organization obj = getNewTransientOrganization(i);
             try {
                 obj.persist();
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
-                for (Iterator<ConstraintViolation<?>> it = e.getConstraintViolations().iterator(); it.hasNext();) {
-                    ConstraintViolation<?> cv = it.next();
+                for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
+                    ConstraintViolation<?> cv = iter.next();
                     msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
                 throw new RuntimeException(msg.toString(), e);

@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.SubscriptionRate;
 import com.sjsu.bikelet.domain.SubscriptionRateDataOnDemand;
-import java.lang.Integer;
-import java.lang.Long;
+import com.sjsu.bikelet.domain.SubscriptionRateIntegrationTest;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +24,7 @@ privileged aspect SubscriptionRateIntegrationTest_Roo_IntegrationTest {
     declare @type: SubscriptionRateIntegrationTest: @Transactional;
     
     @Autowired
-    private SubscriptionRateDataOnDemand SubscriptionRateIntegrationTest.dod;
+    SubscriptionRateDataOnDemand SubscriptionRateIntegrationTest.dod;
     
     @Test
     public void SubscriptionRateIntegrationTest.testCountSubscriptionRates() {

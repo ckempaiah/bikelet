@@ -4,6 +4,7 @@
 package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.UserSubscriptionPolicy;
+import com.sjsu.bikelet.domain.UserSubscriptionPolicyDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,17 +29,21 @@ privileged aspect UserSubscriptionPolicyDataOnDemand_Roo_DataOnDemand {
     
     public UserSubscriptionPolicy UserSubscriptionPolicyDataOnDemand.getSpecificUserSubscriptionPolicy(int index) {
         init();
-        if (index < 0) index = 0;
-        if (index > (data.size() - 1)) index = data.size() - 1;
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > (data.size() - 1)) {
+            index = data.size() - 1;
+        }
         UserSubscriptionPolicy obj = data.get(index);
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return UserSubscriptionPolicy.findUserSubscriptionPolicy(id);
     }
     
     public UserSubscriptionPolicy UserSubscriptionPolicyDataOnDemand.getRandomUserSubscriptionPolicy() {
         init();
         UserSubscriptionPolicy obj = data.get(rnd.nextInt(data.size()));
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return UserSubscriptionPolicy.findUserSubscriptionPolicy(id);
     }
     
@@ -50,20 +55,22 @@ privileged aspect UserSubscriptionPolicyDataOnDemand_Roo_DataOnDemand {
         int from = 0;
         int to = 10;
         data = UserSubscriptionPolicy.findUserSubscriptionPolicyEntries(from, to);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'UserSubscriptionPolicy' illegally returned null");
+        if (data == null) {
+            throw new IllegalStateException("Find entries implementation for 'UserSubscriptionPolicy' illegally returned null");
+        }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<com.sjsu.bikelet.domain.UserSubscriptionPolicy>();
+        data = new ArrayList<UserSubscriptionPolicy>();
         for (int i = 0; i < 10; i++) {
             UserSubscriptionPolicy obj = getNewTransientUserSubscriptionPolicy(i);
             try {
                 obj.persist();
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
-                for (Iterator<ConstraintViolation<?>> it = e.getConstraintViolations().iterator(); it.hasNext();) {
-                    ConstraintViolation<?> cv = it.next();
+                for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
+                    ConstraintViolation<?> cv = iter.next();
                     msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
                 throw new RuntimeException(msg.toString(), e);

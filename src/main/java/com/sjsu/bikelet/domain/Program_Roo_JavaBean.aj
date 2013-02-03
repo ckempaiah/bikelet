@@ -3,20 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Station;
-import com.sjsu.bikelet.domain.SubscriptionPolicy;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.Program;
 
 privileged aspect Program_Roo_JavaBean {
-    
-    public Integer Program.getEntityId() {
-        return this.entityId;
-    }
-    
-    public void Program.setEntityId(Integer entityId) {
-        this.entityId = entityId;
-    }
     
     public String Program.getProgramName() {
         return this.programName;
@@ -32,22 +21,6 @@ privileged aspect Program_Roo_JavaBean {
     
     public void Program.setDescription(String description) {
         this.description = description;
-    }
-    
-    public SubscriptionPolicy Program.getSubscpPolicy() {
-        return this.subscpPolicy;
-    }
-    
-    public void Program.setSubscpPolicy(SubscriptionPolicy subscpPolicy) {
-        this.subscpPolicy = subscpPolicy;
-    }
-    
-    public Station Program.getStations() {
-        return this.stations;
-    }
-    
-    public void Program.setStations(Station stations) {
-        this.stations = stations;
     }
     
 }

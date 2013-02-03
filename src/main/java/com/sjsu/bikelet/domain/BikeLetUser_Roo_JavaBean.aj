@@ -3,33 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Address;
-import com.sjsu.bikelet.domain.Bill;
-import com.sjsu.bikelet.domain.PaymentInfo;
-import com.sjsu.bikelet.domain.PaymentTransaction;
-import com.sjsu.bikelet.domain.RentTransaction;
-import com.sjsu.bikelet.domain.UserRole;
-import com.sjsu.bikelet.domain.UserSubscriptionPolicy;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.BikeLetUser;
 
 privileged aspect BikeLetUser_Roo_JavaBean {
-    
-    public Integer BikeLetUser.getUserId() {
-        return this.userId;
-    }
-    
-    public void BikeLetUser.setUserId(Integer userId) {
-        this.userId = userId;
-    }
-    
-    public Integer BikeLetUser.getProgramId() {
-        return this.programId;
-    }
-    
-    public void BikeLetUser.setProgramId(Integer programId) {
-        this.programId = programId;
-    }
     
     public String BikeLetUser.getFirstName() {
         return this.firstName;
@@ -61,62 +37,6 @@ privileged aspect BikeLetUser_Roo_JavaBean {
     
     public void BikeLetUser.setPassword(String password) {
         this.password = password;
-    }
-    
-    public Address BikeLetUser.getAddresses() {
-        return this.addresses;
-    }
-    
-    public void BikeLetUser.setAddresses(Address addresses) {
-        this.addresses = addresses;
-    }
-    
-    public Bill BikeLetUser.getBills() {
-        return this.bills;
-    }
-    
-    public void BikeLetUser.setBills(Bill bills) {
-        this.bills = bills;
-    }
-    
-    public PaymentInfo BikeLetUser.getPaymentInfo() {
-        return this.paymentInfo;
-    }
-    
-    public void BikeLetUser.setPaymentInfo(PaymentInfo paymentInfo) {
-        this.paymentInfo = paymentInfo;
-    }
-    
-    public PaymentTransaction BikeLetUser.getPaymentTransactions() {
-        return this.paymentTransactions;
-    }
-    
-    public void BikeLetUser.setPaymentTransactions(PaymentTransaction paymentTransactions) {
-        this.paymentTransactions = paymentTransactions;
-    }
-    
-    public UserSubscriptionPolicy BikeLetUser.getUsp() {
-        return this.usp;
-    }
-    
-    public void BikeLetUser.setUsp(UserSubscriptionPolicy usp) {
-        this.usp = usp;
-    }
-    
-    public UserRole BikeLetUser.getRoles() {
-        return this.roles;
-    }
-    
-    public void BikeLetUser.setRoles(UserRole roles) {
-        this.roles = roles;
-    }
-    
-    public RentTransaction BikeLetUser.getRentTransactions() {
-        return this.rentTransactions;
-    }
-    
-    public void BikeLetUser.setRentTransactions(RentTransaction rentTransactions) {
-        this.rentTransactions = rentTransactions;
     }
     
 }

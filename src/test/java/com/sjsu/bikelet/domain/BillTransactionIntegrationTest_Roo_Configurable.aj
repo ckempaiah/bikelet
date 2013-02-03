@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BillTransactionIntegrationTest;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect BillTransactionIntegrationTest_Roo_Configurable {

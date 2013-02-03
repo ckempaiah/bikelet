@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Bike;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect Bike_Roo_Configurable {

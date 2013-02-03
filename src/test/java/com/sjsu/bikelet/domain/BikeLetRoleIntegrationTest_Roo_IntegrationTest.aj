@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BikeLetRole;
 import com.sjsu.bikelet.domain.BikeLetRoleDataOnDemand;
-import java.lang.Integer;
-import java.lang.Long;
+import com.sjsu.bikelet.domain.BikeLetRoleIntegrationTest;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +24,7 @@ privileged aspect BikeLetRoleIntegrationTest_Roo_IntegrationTest {
     declare @type: BikeLetRoleIntegrationTest: @Transactional;
     
     @Autowired
-    private BikeLetRoleDataOnDemand BikeLetRoleIntegrationTest.dod;
+    BikeLetRoleDataOnDemand BikeLetRoleIntegrationTest.dod;
     
     @Test
     public void BikeLetRoleIntegrationTest.testCountBikeLetRoles() {

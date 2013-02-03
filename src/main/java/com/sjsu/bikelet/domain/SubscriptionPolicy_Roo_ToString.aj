@@ -3,20 +3,14 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.String;
+import com.sjsu.bikelet.domain.SubscriptionPolicy;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect SubscriptionPolicy_Roo_ToString {
     
     public String SubscriptionPolicy.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Id: ").append(getId()).append(", ");
-        sb.append("PolicyDescription: ").append(getPolicyDescription()).append(", ");
-        sb.append("PolicyId: ").append(getPolicyId()).append(", ");
-        sb.append("PolicyName: ").append(getPolicyName()).append(", ");
-        sb.append("SubscpRates: ").append(getSubscpRates()).append(", ");
-        sb.append("Usp: ").append(getUsp()).append(", ");
-        sb.append("Version: ").append(getVersion());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

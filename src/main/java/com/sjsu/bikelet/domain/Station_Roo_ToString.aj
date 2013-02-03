@@ -3,18 +3,14 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.String;
+import com.sjsu.bikelet.domain.Station;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect Station_Roo_ToString {
     
     public String Station.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("BikeLocation: ").append(getBikeLocation()).append(", ");
-        sb.append("Id: ").append(getId()).append(", ");
-        sb.append("Location: ").append(getLocation()).append(", ");
-        sb.append("StationId: ").append(getStationId()).append(", ");
-        sb.append("Version: ").append(getVersion());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

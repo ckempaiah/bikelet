@@ -4,11 +4,7 @@
 package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.LicensePolicy;
-import com.sjsu.bikelet.domain.TenantLicensePolicy;
-import com.sjsu.bikelet.domain.TenantLicensePolicyDataOnDemand;
-import java.lang.Double;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.LicensePolicyDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,7 +12,6 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect LicensePolicyDataOnDemand_Roo_DataOnDemand {
@@ -27,18 +22,13 @@ privileged aspect LicensePolicyDataOnDemand_Roo_DataOnDemand {
     
     private List<LicensePolicy> LicensePolicyDataOnDemand.data;
     
-    @Autowired
-    private TenantLicensePolicyDataOnDemand LicensePolicyDataOnDemand.tenantLicensePolicyDataOnDemand;
-    
     public LicensePolicy LicensePolicyDataOnDemand.getNewTransientLicensePolicy(int index) {
         LicensePolicy obj = new LicensePolicy();
         setFreeTrialPeriodInDays(obj, index);
         setLicenseBaseCost(obj, index);
-        setLicenseCostPerUser(obj, index);
-        setLicenseId(obj, index);
+        setLicenseCostPeruser(obj, index);
         setLicenseName(obj, index);
         setLicenseType(obj, index);
-        setTenLicPolicy(obj, index);
         return obj;
     }
     
@@ -52,14 +42,9 @@ privileged aspect LicensePolicyDataOnDemand_Roo_DataOnDemand {
         obj.setLicenseBaseCost(licenseBaseCost);
     }
     
-    public void LicensePolicyDataOnDemand.setLicenseCostPerUser(LicensePolicy obj, int index) {
-        Double licenseCostPerUser = new Integer(index).doubleValue();
-        obj.setLicenseCostPerUser(licenseCostPerUser);
-    }
-    
-    public void LicensePolicyDataOnDemand.setLicenseId(LicensePolicy obj, int index) {
-        Integer licenseId = new Integer(index);
-        obj.setLicenseId(licenseId);
+    public void LicensePolicyDataOnDemand.setLicenseCostPeruser(LicensePolicy obj, int index) {
+        Double licenseCostPeruser = new Integer(index).doubleValue();
+        obj.setLicenseCostPeruser(licenseCostPeruser);
     }
     
     public void LicensePolicyDataOnDemand.setLicenseName(LicensePolicy obj, int index) {
@@ -75,24 +60,23 @@ privileged aspect LicensePolicyDataOnDemand_Roo_DataOnDemand {
         obj.setLicenseType(licenseType);
     }
     
-    public void LicensePolicyDataOnDemand.setTenLicPolicy(LicensePolicy obj, int index) {
-        TenantLicensePolicy tenLicPolicy = tenantLicensePolicyDataOnDemand.getRandomTenantLicensePolicy();
-        obj.setTenLicPolicy(tenLicPolicy);
-    }
-    
     public LicensePolicy LicensePolicyDataOnDemand.getSpecificLicensePolicy(int index) {
         init();
-        if (index < 0) index = 0;
-        if (index > (data.size() - 1)) index = data.size() - 1;
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > (data.size() - 1)) {
+            index = data.size() - 1;
+        }
         LicensePolicy obj = data.get(index);
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return LicensePolicy.findLicensePolicy(id);
     }
     
     public LicensePolicy LicensePolicyDataOnDemand.getRandomLicensePolicy() {
         init();
         LicensePolicy obj = data.get(rnd.nextInt(data.size()));
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return LicensePolicy.findLicensePolicy(id);
     }
     
@@ -104,20 +88,22 @@ privileged aspect LicensePolicyDataOnDemand_Roo_DataOnDemand {
         int from = 0;
         int to = 10;
         data = LicensePolicy.findLicensePolicyEntries(from, to);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'LicensePolicy' illegally returned null");
+        if (data == null) {
+            throw new IllegalStateException("Find entries implementation for 'LicensePolicy' illegally returned null");
+        }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<com.sjsu.bikelet.domain.LicensePolicy>();
+        data = new ArrayList<LicensePolicy>();
         for (int i = 0; i < 10; i++) {
             LicensePolicy obj = getNewTransientLicensePolicy(i);
             try {
                 obj.persist();
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
-                for (Iterator<ConstraintViolation<?>> it = e.getConstraintViolations().iterator(); it.hasNext();) {
-                    ConstraintViolation<?> cv = it.next();
+                for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
+                    ConstraintViolation<?> cv = iter.next();
                     msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
                 throw new RuntimeException(msg.toString(), e);

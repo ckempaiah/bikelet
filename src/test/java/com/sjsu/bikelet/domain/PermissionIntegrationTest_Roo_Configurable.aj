@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.PermissionIntegrationTest;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect PermissionIntegrationTest_Roo_Configurable {

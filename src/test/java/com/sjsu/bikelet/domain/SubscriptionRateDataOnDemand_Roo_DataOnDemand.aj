@@ -4,8 +4,7 @@
 package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.SubscriptionRate;
-import java.lang.Double;
-import java.lang.Integer;
+import com.sjsu.bikelet.domain.SubscriptionRateDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,11 +28,11 @@ privileged aspect SubscriptionRateDataOnDemand_Roo_DataOnDemand {
     public SubscriptionRate SubscriptionRateDataOnDemand.getNewTransientSubscriptionRate(int index) {
         SubscriptionRate obj = new SubscriptionRate();
         setExcessChargePerMin(obj, index);
+        setFreeMinsPerDay(obj, index);
         setMembershipPerMonth(obj, index);
         setOrganizationShare(obj, index);
         setPolicyEndDate(obj, index);
         setPolicyStartDate(obj, index);
-        setRateId(obj, index);
         setUserShare(obj, index);
         return obj;
     }
@@ -41,6 +40,11 @@ privileged aspect SubscriptionRateDataOnDemand_Roo_DataOnDemand {
     public void SubscriptionRateDataOnDemand.setExcessChargePerMin(SubscriptionRate obj, int index) {
         Double excessChargePerMin = new Integer(index).doubleValue();
         obj.setExcessChargePerMin(excessChargePerMin);
+    }
+    
+    public void SubscriptionRateDataOnDemand.setFreeMinsPerDay(SubscriptionRate obj, int index) {
+        Integer freeMinsPerDay = new Integer(index);
+        obj.setFreeMinsPerDay(freeMinsPerDay);
     }
     
     public void SubscriptionRateDataOnDemand.setMembershipPerMonth(SubscriptionRate obj, int index) {
@@ -63,11 +67,6 @@ privileged aspect SubscriptionRateDataOnDemand_Roo_DataOnDemand {
         obj.setPolicyStartDate(policyStartDate);
     }
     
-    public void SubscriptionRateDataOnDemand.setRateId(SubscriptionRate obj, int index) {
-        Integer rateId = new Integer(index);
-        obj.setRateId(rateId);
-    }
-    
     public void SubscriptionRateDataOnDemand.setUserShare(SubscriptionRate obj, int index) {
         Double userShare = new Integer(index).doubleValue();
         obj.setUserShare(userShare);
@@ -75,17 +74,21 @@ privileged aspect SubscriptionRateDataOnDemand_Roo_DataOnDemand {
     
     public SubscriptionRate SubscriptionRateDataOnDemand.getSpecificSubscriptionRate(int index) {
         init();
-        if (index < 0) index = 0;
-        if (index > (data.size() - 1)) index = data.size() - 1;
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > (data.size() - 1)) {
+            index = data.size() - 1;
+        }
         SubscriptionRate obj = data.get(index);
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return SubscriptionRate.findSubscriptionRate(id);
     }
     
     public SubscriptionRate SubscriptionRateDataOnDemand.getRandomSubscriptionRate() {
         init();
         SubscriptionRate obj = data.get(rnd.nextInt(data.size()));
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return SubscriptionRate.findSubscriptionRate(id);
     }
     
@@ -97,20 +100,22 @@ privileged aspect SubscriptionRateDataOnDemand_Roo_DataOnDemand {
         int from = 0;
         int to = 10;
         data = SubscriptionRate.findSubscriptionRateEntries(from, to);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'SubscriptionRate' illegally returned null");
+        if (data == null) {
+            throw new IllegalStateException("Find entries implementation for 'SubscriptionRate' illegally returned null");
+        }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<com.sjsu.bikelet.domain.SubscriptionRate>();
+        data = new ArrayList<SubscriptionRate>();
         for (int i = 0; i < 10; i++) {
             SubscriptionRate obj = getNewTransientSubscriptionRate(i);
             try {
                 obj.persist();
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
-                for (Iterator<ConstraintViolation<?>> it = e.getConstraintViolations().iterator(); it.hasNext();) {
-                    ConstraintViolation<?> cv = it.next();
+                for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
+                    ConstraintViolation<?> cv = iter.next();
                     msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
                 throw new RuntimeException(msg.toString(), e);

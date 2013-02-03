@@ -3,20 +3,14 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.String;
+import com.sjsu.bikelet.domain.Program;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 privileged aspect Program_Roo_ToString {
     
     public String Program.toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Description: ").append(getDescription()).append(", ");
-        sb.append("EntityId: ").append(getEntityId()).append(", ");
-        sb.append("Id: ").append(getId()).append(", ");
-        sb.append("ProgramName: ").append(getProgramName()).append(", ");
-        sb.append("Stations: ").append(getStations()).append(", ");
-        sb.append("SubscpPolicy: ").append(getSubscpPolicy()).append(", ");
-        sb.append("Version: ").append(getVersion());
-        return sb.toString();
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     
 }

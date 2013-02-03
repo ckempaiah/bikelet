@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Station;
 import com.sjsu.bikelet.domain.StationDataOnDemand;
-import java.lang.Integer;
-import java.lang.Long;
+import com.sjsu.bikelet.domain.StationIntegrationTest;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +24,7 @@ privileged aspect StationIntegrationTest_Roo_IntegrationTest {
     declare @type: StationIntegrationTest: @Transactional;
     
     @Autowired
-    private StationDataOnDemand StationIntegrationTest.dod;
+    StationDataOnDemand StationIntegrationTest.dod;
     
     @Test
     public void StationIntegrationTest.testCountStations() {

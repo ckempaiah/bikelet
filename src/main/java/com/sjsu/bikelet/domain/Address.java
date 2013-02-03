@@ -2,16 +2,14 @@ package com.sjsu.bikelet.domain;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
+import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
 @RooToString
-@RooEntity
+@RooJpaActiveRecord
 public class Address {
-
-    private Integer addressId;
 
     @NotNull
     @Size(max = 100)
@@ -27,7 +25,7 @@ public class Address {
 
     @NotNull
     @Size(min = 2)
-    private String cState;
+    private String addressState;
 
     @NotNull
     @Size(min = 2)
@@ -43,15 +41,9 @@ public class Address {
 
     @NotNull
     @Size(max = 15)
-    private String address_type;
+    private String addressType;
 
     @NotNull
     @Size(min = 8, max = 15)
     private String workphone;
-
-    private Integer entityId;
-
-    @NotNull
-    @Size(min = 8, max = 15)
-    private String entityType;
 }

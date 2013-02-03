@@ -3,21 +3,8 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Bike;
-import com.sjsu.bikelet.domain.BikeDataOnDemand;
-import com.sjsu.bikelet.domain.BikeLetUser;
-import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
-import com.sjsu.bikelet.domain.Organization;
-import com.sjsu.bikelet.domain.OrganizationDataOnDemand;
-import com.sjsu.bikelet.domain.Program;
-import com.sjsu.bikelet.domain.ProgramDataOnDemand;
-import com.sjsu.bikelet.domain.Station;
-import com.sjsu.bikelet.domain.StationDataOnDemand;
 import com.sjsu.bikelet.domain.Tenant;
-import com.sjsu.bikelet.domain.TenantLicensePolicy;
-import com.sjsu.bikelet.domain.TenantLicensePolicyDataOnDemand;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.TenantDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,7 +12,6 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect TenantDataOnDemand_Roo_DataOnDemand {
@@ -36,71 +22,16 @@ privileged aspect TenantDataOnDemand_Roo_DataOnDemand {
     
     private List<Tenant> TenantDataOnDemand.data;
     
-    @Autowired
-    private BikeDataOnDemand TenantDataOnDemand.bikeDataOnDemand;
-    
-    @Autowired
-    private OrganizationDataOnDemand TenantDataOnDemand.organizationDataOnDemand;
-    
-    @Autowired
-    private ProgramDataOnDemand TenantDataOnDemand.programDataOnDemand;
-    
-    @Autowired
-    private StationDataOnDemand TenantDataOnDemand.stationDataOnDemand;
-    
-    @Autowired
-    private TenantLicensePolicyDataOnDemand TenantDataOnDemand.tenantLicensePolicyDataOnDemand;
-    
-    @Autowired
-    private BikeLetUserDataOnDemand TenantDataOnDemand.bikeLetUserDataOnDemand;
-    
     public Tenant TenantDataOnDemand.getNewTransientTenant(int index) {
         Tenant obj = new Tenant();
-        setBikes(obj, index);
         setContactId(obj, index);
-        setOrganizations(obj, index);
-        setPrograms(obj, index);
-        setStations(obj, index);
-        setTenLicPolicy(obj, index);
-        setTenantId(obj, index);
         setTenantName(obj, index);
-        setUsers(obj, index);
         return obj;
-    }
-    
-    public void TenantDataOnDemand.setBikes(Tenant obj, int index) {
-        Bike bikes = bikeDataOnDemand.getRandomBike();
-        obj.setBikes(bikes);
     }
     
     public void TenantDataOnDemand.setContactId(Tenant obj, int index) {
         Integer contactId = new Integer(index);
         obj.setContactId(contactId);
-    }
-    
-    public void TenantDataOnDemand.setOrganizations(Tenant obj, int index) {
-        Organization organizations = organizationDataOnDemand.getRandomOrganization();
-        obj.setOrganizations(organizations);
-    }
-    
-    public void TenantDataOnDemand.setPrograms(Tenant obj, int index) {
-        Program programs = programDataOnDemand.getRandomProgram();
-        obj.setPrograms(programs);
-    }
-    
-    public void TenantDataOnDemand.setStations(Tenant obj, int index) {
-        Station stations = stationDataOnDemand.getRandomStation();
-        obj.setStations(stations);
-    }
-    
-    public void TenantDataOnDemand.setTenLicPolicy(Tenant obj, int index) {
-        TenantLicensePolicy tenLicPolicy = tenantLicensePolicyDataOnDemand.getRandomTenantLicensePolicy();
-        obj.setTenLicPolicy(tenLicPolicy);
-    }
-    
-    public void TenantDataOnDemand.setTenantId(Tenant obj, int index) {
-        Integer tenantId = new Integer(index);
-        obj.setTenantId(tenantId);
     }
     
     public void TenantDataOnDemand.setTenantName(Tenant obj, int index) {
@@ -111,24 +42,23 @@ privileged aspect TenantDataOnDemand_Roo_DataOnDemand {
         obj.setTenantName(tenantName);
     }
     
-    public void TenantDataOnDemand.setUsers(Tenant obj, int index) {
-        BikeLetUser users = bikeLetUserDataOnDemand.getRandomBikeLetUser();
-        obj.setUsers(users);
-    }
-    
     public Tenant TenantDataOnDemand.getSpecificTenant(int index) {
         init();
-        if (index < 0) index = 0;
-        if (index > (data.size() - 1)) index = data.size() - 1;
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > (data.size() - 1)) {
+            index = data.size() - 1;
+        }
         Tenant obj = data.get(index);
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return Tenant.findTenant(id);
     }
     
     public Tenant TenantDataOnDemand.getRandomTenant() {
         init();
         Tenant obj = data.get(rnd.nextInt(data.size()));
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return Tenant.findTenant(id);
     }
     
@@ -140,20 +70,22 @@ privileged aspect TenantDataOnDemand_Roo_DataOnDemand {
         int from = 0;
         int to = 10;
         data = Tenant.findTenantEntries(from, to);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'Tenant' illegally returned null");
+        if (data == null) {
+            throw new IllegalStateException("Find entries implementation for 'Tenant' illegally returned null");
+        }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<com.sjsu.bikelet.domain.Tenant>();
+        data = new ArrayList<Tenant>();
         for (int i = 0; i < 10; i++) {
             Tenant obj = getNewTransientTenant(i);
             try {
                 obj.persist();
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
-                for (Iterator<ConstraintViolation<?>> it = e.getConstraintViolations().iterator(); it.hasNext();) {
-                    ConstraintViolation<?> cv = it.next();
+                for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
+                    ConstraintViolation<?> cv = iter.next();
                     msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
                 throw new RuntimeException(msg.toString(), e);

@@ -4,10 +4,7 @@
 package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.PaymentInfo;
-import com.sjsu.bikelet.domain.PaymentTransaction;
-import com.sjsu.bikelet.domain.PaymentTransactionDataOnDemand;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.PaymentInfoDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,7 +12,6 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect PaymentInfoDataOnDemand_Roo_DataOnDemand {
@@ -26,15 +22,11 @@ privileged aspect PaymentInfoDataOnDemand_Roo_DataOnDemand {
     
     private List<PaymentInfo> PaymentInfoDataOnDemand.data;
     
-    @Autowired
-    private PaymentTransactionDataOnDemand PaymentInfoDataOnDemand.paymentTransactionDataOnDemand;
-    
     public PaymentInfo PaymentInfoDataOnDemand.getNewTransientPaymentInfo(int index) {
         PaymentInfo obj = new PaymentInfo();
         setCardNumber(obj, index);
         setCardUserName(obj, index);
         setPaymentId(obj, index);
-        setPaymentTransactions(obj, index);
         return obj;
     }
     
@@ -56,24 +48,23 @@ privileged aspect PaymentInfoDataOnDemand_Roo_DataOnDemand {
         obj.setPaymentId(paymentId);
     }
     
-    public void PaymentInfoDataOnDemand.setPaymentTransactions(PaymentInfo obj, int index) {
-        PaymentTransaction paymentTransactions = paymentTransactionDataOnDemand.getRandomPaymentTransaction();
-        obj.setPaymentTransactions(paymentTransactions);
-    }
-    
     public PaymentInfo PaymentInfoDataOnDemand.getSpecificPaymentInfo(int index) {
         init();
-        if (index < 0) index = 0;
-        if (index > (data.size() - 1)) index = data.size() - 1;
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > (data.size() - 1)) {
+            index = data.size() - 1;
+        }
         PaymentInfo obj = data.get(index);
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return PaymentInfo.findPaymentInfo(id);
     }
     
     public PaymentInfo PaymentInfoDataOnDemand.getRandomPaymentInfo() {
         init();
         PaymentInfo obj = data.get(rnd.nextInt(data.size()));
-        java.lang.Long id = obj.getId();
+        Long id = obj.getId();
         return PaymentInfo.findPaymentInfo(id);
     }
     
@@ -85,20 +76,22 @@ privileged aspect PaymentInfoDataOnDemand_Roo_DataOnDemand {
         int from = 0;
         int to = 10;
         data = PaymentInfo.findPaymentInfoEntries(from, to);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'PaymentInfo' illegally returned null");
+        if (data == null) {
+            throw new IllegalStateException("Find entries implementation for 'PaymentInfo' illegally returned null");
+        }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<com.sjsu.bikelet.domain.PaymentInfo>();
+        data = new ArrayList<PaymentInfo>();
         for (int i = 0; i < 10; i++) {
             PaymentInfo obj = getNewTransientPaymentInfo(i);
             try {
                 obj.persist();
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
-                for (Iterator<ConstraintViolation<?>> it = e.getConstraintViolations().iterator(); it.hasNext();) {
-                    ConstraintViolation<?> cv = it.next();
+                for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
+                    ConstraintViolation<?> cv = iter.next();
                     msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
                 throw new RuntimeException(msg.toString(), e);

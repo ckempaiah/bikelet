@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BikeDataOnDemand;
 import org.springframework.beans.factory.annotation.Configurable;
 
 privileged aspect BikeDataOnDemand_Roo_Configurable {

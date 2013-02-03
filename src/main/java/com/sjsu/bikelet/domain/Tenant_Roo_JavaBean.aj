@@ -3,14 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Bike;
-import com.sjsu.bikelet.domain.BikeLetUser;
-import com.sjsu.bikelet.domain.Organization;
-import com.sjsu.bikelet.domain.Program;
-import com.sjsu.bikelet.domain.Station;
-import com.sjsu.bikelet.domain.TenantLicensePolicy;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.Tenant;
 
 privileged aspect Tenant_Roo_JavaBean {
     
@@ -28,62 +21,6 @@ privileged aspect Tenant_Roo_JavaBean {
     
     public void Tenant.setContactId(Integer contactId) {
         this.contactId = contactId;
-    }
-    
-    public Integer Tenant.getTenantId() {
-        return this.tenantId;
-    }
-    
-    public void Tenant.setTenantId(Integer tenantId) {
-        this.tenantId = tenantId;
-    }
-    
-    public Bike Tenant.getBikes() {
-        return this.bikes;
-    }
-    
-    public void Tenant.setBikes(Bike bikes) {
-        this.bikes = bikes;
-    }
-    
-    public Organization Tenant.getOrganizations() {
-        return this.organizations;
-    }
-    
-    public void Tenant.setOrganizations(Organization organizations) {
-        this.organizations = organizations;
-    }
-    
-    public Program Tenant.getPrograms() {
-        return this.programs;
-    }
-    
-    public void Tenant.setPrograms(Program programs) {
-        this.programs = programs;
-    }
-    
-    public BikeLetUser Tenant.getUsers() {
-        return this.users;
-    }
-    
-    public void Tenant.setUsers(BikeLetUser users) {
-        this.users = users;
-    }
-    
-    public TenantLicensePolicy Tenant.getTenLicPolicy() {
-        return this.tenLicPolicy;
-    }
-    
-    public void Tenant.setTenLicPolicy(TenantLicensePolicy tenLicPolicy) {
-        this.tenLicPolicy = tenLicPolicy;
-    }
-    
-    public Station Tenant.getStations() {
-        return this.stations;
-    }
-    
-    public void Tenant.setStations(Station stations) {
-        this.stations = stations;
     }
     
 }

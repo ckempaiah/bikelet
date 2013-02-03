@@ -3,18 +3,10 @@
 
 package com.sjsu.bikelet.domain;
 
-import java.lang.Integer;
+import com.sjsu.bikelet.domain.PaymentTransaction;
 import java.util.Date;
 
 privileged aspect PaymentTransaction_Roo_JavaBean {
-    
-    public Integer PaymentTransaction.getPaymentTransactionId() {
-        return this.paymentTransactionId;
-    }
-    
-    public void PaymentTransaction.setPaymentTransactionId(Integer paymentTransactionId) {
-        this.paymentTransactionId = paymentTransactionId;
-    }
     
     public Integer PaymentTransaction.getStatus() {
         return this.status;
@@ -30,6 +22,22 @@ privileged aspect PaymentTransaction_Roo_JavaBean {
     
     public void PaymentTransaction.setDateOfTransaction(Date dateOfTransaction) {
         this.dateOfTransaction = dateOfTransaction;
+    }
+    
+    public String PaymentTransaction.getPermissionName() {
+        return this.permissionName;
+    }
+    
+    public void PaymentTransaction.setPermissionName(String permissionName) {
+        this.permissionName = permissionName;
+    }
+    
+    public String PaymentTransaction.getDescription() {
+        return this.description;
+    }
+    
+    public void PaymentTransaction.setDescription(String description) {
+        this.description = description;
     }
     
 }

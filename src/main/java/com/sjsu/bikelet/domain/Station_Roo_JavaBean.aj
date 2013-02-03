@@ -3,19 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.BikeLocation;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.Station;
 
 privileged aspect Station_Roo_JavaBean {
-    
-    public Integer Station.getStationId() {
-        return this.stationId;
-    }
-    
-    public void Station.setStationId(Integer stationId) {
-        this.stationId = stationId;
-    }
     
     public String Station.getLocation() {
         return this.location;
@@ -23,14 +13,6 @@ privileged aspect Station_Roo_JavaBean {
     
     public void Station.setLocation(String location) {
         this.location = location;
-    }
-    
-    public BikeLocation Station.getBikeLocation() {
-        return this.bikeLocation;
-    }
-    
-    public void Station.setBikeLocation(BikeLocation bikeLocation) {
-        this.bikeLocation = bikeLocation;
     }
     
 }

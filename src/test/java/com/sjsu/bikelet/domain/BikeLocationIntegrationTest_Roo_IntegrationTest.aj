@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BikeLocation;
 import com.sjsu.bikelet.domain.BikeLocationDataOnDemand;
-import java.lang.Integer;
-import java.lang.Long;
+import com.sjsu.bikelet.domain.BikeLocationIntegrationTest;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +24,7 @@ privileged aspect BikeLocationIntegrationTest_Roo_IntegrationTest {
     declare @type: BikeLocationIntegrationTest: @Transactional;
     
     @Autowired
-    private BikeLocationDataOnDemand BikeLocationIntegrationTest.dod;
+    BikeLocationDataOnDemand BikeLocationIntegrationTest.dod;
     
     @Test
     public void BikeLocationIntegrationTest.testCountBikeLocations() {

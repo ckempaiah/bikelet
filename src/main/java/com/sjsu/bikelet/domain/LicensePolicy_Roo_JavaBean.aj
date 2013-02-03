@@ -3,20 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.TenantLicensePolicy;
-import java.lang.Double;
-import java.lang.Integer;
-import java.lang.String;
+import com.sjsu.bikelet.domain.LicensePolicy;
 
 privileged aspect LicensePolicy_Roo_JavaBean {
-    
-    public Integer LicensePolicy.getLicenseId() {
-        return this.licenseId;
-    }
-    
-    public void LicensePolicy.setLicenseId(Integer licenseId) {
-        this.licenseId = licenseId;
-    }
     
     public String LicensePolicy.getLicenseName() {
         return this.licenseName;
@@ -26,12 +15,12 @@ privileged aspect LicensePolicy_Roo_JavaBean {
         this.licenseName = licenseName;
     }
     
-    public Double LicensePolicy.getLicenseCostPerUser() {
-        return this.licenseCostPerUser;
+    public Double LicensePolicy.getLicenseCostPeruser() {
+        return this.licenseCostPeruser;
     }
     
-    public void LicensePolicy.setLicenseCostPerUser(Double licenseCostPerUser) {
-        this.licenseCostPerUser = licenseCostPerUser;
+    public void LicensePolicy.setLicenseCostPeruser(Double licenseCostPeruser) {
+        this.licenseCostPeruser = licenseCostPeruser;
     }
     
     public Integer LicensePolicy.getLicenseType() {
@@ -56,14 +45,6 @@ privileged aspect LicensePolicy_Roo_JavaBean {
     
     public void LicensePolicy.setFreeTrialPeriodInDays(Integer freeTrialPeriodInDays) {
         this.freeTrialPeriodInDays = freeTrialPeriodInDays;
-    }
-    
-    public TenantLicensePolicy LicensePolicy.getTenLicPolicy() {
-        return this.tenLicPolicy;
-    }
-    
-    public void LicensePolicy.setTenLicPolicy(TenantLicensePolicy tenLicPolicy) {
-        this.tenLicPolicy = tenLicPolicy;
     }
     
 }
