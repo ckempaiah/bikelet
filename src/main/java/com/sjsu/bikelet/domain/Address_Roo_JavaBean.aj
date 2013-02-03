@@ -4,6 +4,7 @@
 package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Address;
+import com.sjsu.bikelet.domain.BikeLetUser;
 
 privileged aspect Address_Roo_JavaBean {
     
@@ -77,6 +78,14 @@ privileged aspect Address_Roo_JavaBean {
     
     public void Address.setWorkphone(String workphone) {
         this.workphone = workphone;
+    }
+    
+    public BikeLetUser Address.getUserId() {
+        return this.userId;
+    }
+    
+    public void Address.setUserId(BikeLetUser userId) {
+        this.userId = userId;
     }
     
 }

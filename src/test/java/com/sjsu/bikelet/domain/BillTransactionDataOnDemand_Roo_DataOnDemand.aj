@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BillDataOnDemand;
 import com.sjsu.bikelet.domain.BillTransaction;
 import com.sjsu.bikelet.domain.BillTransactionDataOnDemand;
 import java.security.SecureRandom;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect BillTransactionDataOnDemand_Roo_DataOnDemand {
@@ -24,6 +26,9 @@ privileged aspect BillTransactionDataOnDemand_Roo_DataOnDemand {
     private Random BillTransactionDataOnDemand.rnd = new SecureRandom();
     
     private List<BillTransaction> BillTransactionDataOnDemand.data;
+    
+    @Autowired
+    BillDataOnDemand BillTransactionDataOnDemand.billDataOnDemand;
     
     public BillTransaction BillTransactionDataOnDemand.getNewTransientBillTransaction(int index) {
         BillTransaction obj = new BillTransaction();

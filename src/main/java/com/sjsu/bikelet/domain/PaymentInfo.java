@@ -1,5 +1,6 @@
 package com.sjsu.bikelet.domain;
 
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -20,4 +21,7 @@ public class PaymentInfo {
     @NotNull
     @Size(min = 2)
     private String cardUserName;
+
+    @ManyToOne
+    private BikeLetUser userId;
 }

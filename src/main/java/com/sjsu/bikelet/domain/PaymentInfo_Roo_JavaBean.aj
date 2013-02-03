@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.PaymentInfo;
 
 privileged aspect PaymentInfo_Roo_JavaBean {
@@ -29,6 +30,14 @@ privileged aspect PaymentInfo_Roo_JavaBean {
     
     public void PaymentInfo.setCardUserName(String cardUserName) {
         this.cardUserName = cardUserName;
+    }
+    
+    public BikeLetUser PaymentInfo.getUserId() {
+        return this.userId;
+    }
+    
+    public void PaymentInfo.setUserId(BikeLetUser userId) {
+        this.userId = userId;
     }
     
 }

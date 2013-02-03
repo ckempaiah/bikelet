@@ -5,6 +5,7 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Address;
 import com.sjsu.bikelet.domain.AddressDataOnDemand;
+import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect AddressDataOnDemand_Roo_DataOnDemand {
@@ -21,6 +23,9 @@ privileged aspect AddressDataOnDemand_Roo_DataOnDemand {
     private Random AddressDataOnDemand.rnd = new SecureRandom();
     
     private List<Address> AddressDataOnDemand.data;
+    
+    @Autowired
+    BikeLetUserDataOnDemand AddressDataOnDemand.bikeLetUserDataOnDemand;
     
     public Address AddressDataOnDemand.getNewTransientAddress(int index) {
         Address obj = new Address();

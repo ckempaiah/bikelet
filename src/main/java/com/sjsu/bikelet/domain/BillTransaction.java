@@ -1,6 +1,7 @@
 package com.sjsu.bikelet.domain;
 
 import java.util.Date;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
@@ -29,4 +30,7 @@ public class BillTransaction {
 
     @Size(max = 100)
     private String description;
+
+    @ManyToOne
+    private Bill bill;
 }

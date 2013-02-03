@@ -3,6 +3,8 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BikeLetRoleDataOnDemand;
+import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
 import com.sjsu.bikelet.domain.UserRole;
 import com.sjsu.bikelet.domain.UserRoleDataOnDemand;
 import java.security.SecureRandom;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect UserRoleDataOnDemand_Roo_DataOnDemand {
@@ -21,6 +24,12 @@ privileged aspect UserRoleDataOnDemand_Roo_DataOnDemand {
     private Random UserRoleDataOnDemand.rnd = new SecureRandom();
     
     private List<UserRole> UserRoleDataOnDemand.data;
+    
+    @Autowired
+    BikeLetRoleDataOnDemand UserRoleDataOnDemand.bikeLetRoleDataOnDemand;
+    
+    @Autowired
+    BikeLetUserDataOnDemand UserRoleDataOnDemand.bikeLetUserDataOnDemand;
     
     public UserRole UserRoleDataOnDemand.getNewTransientUserRole(int index) {
         UserRole obj = new UserRole();

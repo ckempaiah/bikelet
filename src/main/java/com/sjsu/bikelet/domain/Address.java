@@ -1,5 +1,6 @@
 package com.sjsu.bikelet.domain;
 
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -46,4 +47,7 @@ public class Address {
     @NotNull
     @Size(min = 8, max = 15)
     private String workphone;
+
+    @ManyToOne
+    private BikeLetUser userId;
 }

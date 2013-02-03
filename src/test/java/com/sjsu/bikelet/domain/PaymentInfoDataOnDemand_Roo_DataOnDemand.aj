@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
 import com.sjsu.bikelet.domain.PaymentInfo;
 import com.sjsu.bikelet.domain.PaymentInfoDataOnDemand;
 import java.security.SecureRandom;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect PaymentInfoDataOnDemand_Roo_DataOnDemand {
@@ -21,6 +23,9 @@ privileged aspect PaymentInfoDataOnDemand_Roo_DataOnDemand {
     private Random PaymentInfoDataOnDemand.rnd = new SecureRandom();
     
     private List<PaymentInfo> PaymentInfoDataOnDemand.data;
+    
+    @Autowired
+    BikeLetUserDataOnDemand PaymentInfoDataOnDemand.bikeLetUserDataOnDemand;
     
     public PaymentInfo PaymentInfoDataOnDemand.getNewTransientPaymentInfo(int index) {
         PaymentInfo obj = new PaymentInfo();

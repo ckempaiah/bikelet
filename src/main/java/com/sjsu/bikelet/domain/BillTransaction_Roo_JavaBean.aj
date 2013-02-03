@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Bill;
 import com.sjsu.bikelet.domain.BillTransaction;
 import java.util.Date;
 
@@ -46,6 +47,14 @@ privileged aspect BillTransaction_Roo_JavaBean {
     
     public void BillTransaction.setDescription(String description) {
         this.description = description;
+    }
+    
+    public Bill BillTransaction.getBill() {
+        return this.bill;
+    }
+    
+    public void BillTransaction.setBill(Bill bill) {
+        this.bill = bill;
     }
     
 }
