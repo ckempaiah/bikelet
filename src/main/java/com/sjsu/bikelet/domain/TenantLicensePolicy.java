@@ -1,6 +1,8 @@
 package com.sjsu.bikelet.domain;
 
 import java.util.Date;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,4 +24,10 @@ public class TenantLicensePolicy {
     private Date licenseEndDate;
 
     private Boolean isTrial;
+
+    @OneToOne
+    private Tenant tenantId;
+
+    @ManyToOne
+    private LicensePolicy licenseId;
 }

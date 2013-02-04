@@ -1,5 +1,6 @@
 package com.sjsu.bikelet.domain;
 
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
@@ -12,4 +13,10 @@ public class Station {
 
     @NotNull
     private String location;
+
+    @ManyToOne
+    private Tenant tenantId;
+
+    @ManyToOne
+    private Program programId;
 }

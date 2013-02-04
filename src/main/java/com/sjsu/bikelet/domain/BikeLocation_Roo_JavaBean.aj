@@ -5,6 +5,7 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Bike;
 import com.sjsu.bikelet.domain.BikeLocation;
+import com.sjsu.bikelet.domain.Station;
 
 privileged aspect BikeLocation_Roo_JavaBean {
     
@@ -22,6 +23,22 @@ privileged aspect BikeLocation_Roo_JavaBean {
     
     public void BikeLocation.setBike(Bike bike) {
         this.bike = bike;
+    }
+    
+    public Station BikeLocation.getStationId() {
+        return this.stationId;
+    }
+    
+    public void BikeLocation.setStationId(Station stationId) {
+        this.stationId = stationId;
+    }
+    
+    public Bike BikeLocation.getBikeId() {
+        return this.bikeId;
+    }
+    
+    public void BikeLocation.setBikeId(Bike bikeId) {
+        this.bikeId = bikeId;
     }
     
 }

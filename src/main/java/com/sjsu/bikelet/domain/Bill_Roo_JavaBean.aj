@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.Bill;
 import java.util.Date;
 
@@ -46,6 +47,14 @@ privileged aspect Bill_Roo_JavaBean {
     
     public void Bill.setBillEndDate(Date billEndDate) {
         this.billEndDate = billEndDate;
+    }
+    
+    public BikeLetUser Bill.getUserId() {
+        return this.userId;
+    }
+    
+    public void Bill.setUserId(BikeLetUser userId) {
+        this.userId = userId;
     }
     
 }

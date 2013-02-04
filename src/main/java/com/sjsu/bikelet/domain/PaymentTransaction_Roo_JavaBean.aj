@@ -3,6 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BikeLetUser;
+import com.sjsu.bikelet.domain.Bill;
+import com.sjsu.bikelet.domain.PaymentInfo;
 import com.sjsu.bikelet.domain.PaymentTransaction;
 import java.util.Date;
 
@@ -38,6 +41,30 @@ privileged aspect PaymentTransaction_Roo_JavaBean {
     
     public void PaymentTransaction.setDescription(String description) {
         this.description = description;
+    }
+    
+    public PaymentInfo PaymentTransaction.getPaymentId() {
+        return this.paymentId;
+    }
+    
+    public void PaymentTransaction.setPaymentId(PaymentInfo paymentId) {
+        this.paymentId = paymentId;
+    }
+    
+    public BikeLetUser PaymentTransaction.getUserId() {
+        return this.userId;
+    }
+    
+    public void PaymentTransaction.setUserId(BikeLetUser userId) {
+        this.userId = userId;
+    }
+    
+    public Bill PaymentTransaction.getBillId() {
+        return this.billId;
+    }
+    
+    public void PaymentTransaction.setBillId(Bill billId) {
+        this.billId = billId;
     }
     
 }

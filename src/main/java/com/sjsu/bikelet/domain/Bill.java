@@ -2,6 +2,7 @@ package com.sjsu.bikelet.domain;
 
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
@@ -14,6 +15,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooToString
 @RooJpaActiveRecord
 public class Bill {
+
     @Column(name = "total_charges")
     private Integer totalcharges;
 
@@ -31,4 +33,7 @@ public class Bill {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
     private Date billEndDate;
+
+    @ManyToOne
+    private BikeLetUser userId;
 }

@@ -3,7 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Organization;
 import com.sjsu.bikelet.domain.Program;
+import com.sjsu.bikelet.domain.Tenant;
 
 privileged aspect Program_Roo_JavaBean {
     
@@ -21,6 +23,22 @@ privileged aspect Program_Roo_JavaBean {
     
     public void Program.setDescription(String description) {
         this.description = description;
+    }
+    
+    public Tenant Program.getTenantId() {
+        return this.tenantId;
+    }
+    
+    public void Program.setTenantId(Tenant tenantId) {
+        this.tenantId = tenantId;
+    }
+    
+    public Organization Program.getOrgId() {
+        return this.orgId;
+    }
+    
+    public void Program.setOrgId(Organization orgId) {
+        this.orgId = orgId;
     }
     
 }

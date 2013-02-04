@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.SubscriptionPolicy;
 
 privileged aspect SubscriptionPolicy_Roo_JavaBean {
@@ -21,6 +22,14 @@ privileged aspect SubscriptionPolicy_Roo_JavaBean {
     
     public void SubscriptionPolicy.setPolicyDescription(String policyDescription) {
         this.policyDescription = policyDescription;
+    }
+    
+    public Program SubscriptionPolicy.getProgramId() {
+        return this.programId;
+    }
+    
+    public void SubscriptionPolicy.setProgramId(Program programId) {
+        this.programId = programId;
     }
     
 }

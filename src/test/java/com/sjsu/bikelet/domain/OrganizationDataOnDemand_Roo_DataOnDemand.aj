@@ -5,6 +5,7 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Organization;
 import com.sjsu.bikelet.domain.OrganizationDataOnDemand;
+import com.sjsu.bikelet.domain.TenantDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect OrganizationDataOnDemand_Roo_DataOnDemand {
@@ -21,6 +23,9 @@ privileged aspect OrganizationDataOnDemand_Roo_DataOnDemand {
     private Random OrganizationDataOnDemand.rnd = new SecureRandom();
     
     private List<Organization> OrganizationDataOnDemand.data;
+    
+    @Autowired
+    TenantDataOnDemand OrganizationDataOnDemand.tenantDataOnDemand;
     
     public Organization OrganizationDataOnDemand.getNewTransientOrganization(int index) {
         Organization obj = new Organization();

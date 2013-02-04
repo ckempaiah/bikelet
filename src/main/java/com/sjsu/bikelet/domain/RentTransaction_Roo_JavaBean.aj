@@ -3,6 +3,8 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Bike;
+import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.RentTransaction;
 import java.util.Date;
 
@@ -70,6 +72,22 @@ privileged aspect RentTransaction_Roo_JavaBean {
     
     public void RentTransaction.setComments(String comments) {
         this.comments = comments;
+    }
+    
+    public BikeLetUser RentTransaction.getUserId() {
+        return this.userId;
+    }
+    
+    public void RentTransaction.setUserId(BikeLetUser userId) {
+        this.userId = userId;
+    }
+    
+    public Bike RentTransaction.getBikeId() {
+        return this.bikeId;
+    }
+    
+    public void RentTransaction.setBikeId(Bike bikeId) {
+        this.bikeId = bikeId;
     }
     
 }

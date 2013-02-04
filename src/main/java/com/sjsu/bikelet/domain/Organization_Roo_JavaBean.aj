@@ -4,6 +4,7 @@
 package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Organization;
+import com.sjsu.bikelet.domain.Tenant;
 
 privileged aspect Organization_Roo_JavaBean {
     
@@ -21,6 +22,14 @@ privileged aspect Organization_Roo_JavaBean {
     
     public void Organization.setContactId(Integer contactId) {
         this.contactId = contactId;
+    }
+    
+    public Tenant Organization.getTenantId() {
+        return this.tenantId;
+    }
+    
+    public void Organization.setTenantId(Tenant tenantId) {
+        this.tenantId = tenantId;
     }
     
 }

@@ -9,22 +9,6 @@ import com.sjsu.bikelet.domain.UserRole;
 
 privileged aspect UserRole_Roo_JavaBean {
     
-    public BikeLetUser UserRole.getBikeletUser() {
-        return this.bikeletUser;
-    }
-    
-    public void UserRole.setBikeletUser(BikeLetUser bikeletUser) {
-        this.bikeletUser = bikeletUser;
-    }
-    
-    public BikeLetRole UserRole.getBikeletRole() {
-        return this.bikeletRole;
-    }
-    
-    public void UserRole.setBikeletRole(BikeLetRole bikeletRole) {
-        this.bikeletRole = bikeletRole;
-    }
-    
     public BikeLetUser UserRole.getUserId() {
         return this.userId;
     }

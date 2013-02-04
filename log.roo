@@ -195,3 +195,47 @@ focus --class ~.domain.PaymentTransaction
 field date --fieldName dateOfTransaction --type java.util.Date
 perform tests
 perform eclipse
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-02-04 14:49:49
+entity jpa --class ~.domain.RolePermission --testAutomatically
+field reference --fieldName permissionId --type ~.domain.Permission
+field reference --fieldName roleId --type ~.domain.BikeLetRole
+focus --class ~.domain.BikeLetUser
+field reference --fieldName tenantId --type ~.domain.Tenant
+focus --class ~.domain.SubscriptionPolicy
+field reference --fieldName programId --type ~.domain.Program
+focus --class ~.domain.UserSubscriptionPolicy
+field reference --fieldName policyId --type ~.domain.SubscriptionPolicy --cardinality ONE_TO_ONE
+field reference --fieldName userId --type ~.domain.BikeLetUser --cardinality ONE_TO_ONE
+focus --class ~.domain.Program
+field reference --fieldName tenantId --type ~.domain.Tenant
+field reference --fieldName orgId --type ~.domain.Organization
+focus --class ~.domain.Station
+field reference --fieldName tenantId --type ~.domain.Tenant
+field reference --fieldName programId --type ~.domain.Program
+focus --class ~.domain.SubscriptionRate
+field reference --fieldName policyId --type ~.domain.SubscriptionPolicy
+focus --class ~.domain.Bill
+field reference --fieldName userId --type ~.domain.BikeLetUser
+focus --class ~.domain.Organization
+field reference --fieldName tenantId --type ~.domain.Tenant
+focus --class ~.domain.TenantLicensePolicy
+field reference --fieldName tenantId --type ~.domain.Tenant --cardinality ONE_TO_ONE
+focus --class ~.domain.BikeLocation
+field reference --fieldName stationId --type ~.domain.Station
+focus --class ~.domain.RentTransaction
+field reference --fieldName userId --type ~.domain.BikeLetUser
+field reference --fieldName bikeId --type ~.domain.Bike
+focus --class ~.domain.PaymentTransaction
+field reference --fieldName paymentId --type ~.domain.PaymentInfo
+field reference --fieldName userId --type ~.domain.BikeLetUser
+field reference --fieldName billId --type ~.domain.Bill --cardinality ONE_TO_ONE
+focus --class ~.domain.Bike
+field reference --fieldName tenantId --type ~.domain.Tenant
+focus --class ~.domain.BikeLocation
+field reference --fieldName bikeId --type ~.domain.Bike --cardinality ONE_TO_ONE
+focus --class ~.domain.TenantLicensePolicy
+field reference --fieldName licenseId --type ~.domain.LicensePolicy
+perform tests
+perform tests
+exit
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-02-04 14:58:16

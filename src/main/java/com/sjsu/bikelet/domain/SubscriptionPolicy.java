@@ -1,5 +1,6 @@
 package com.sjsu.bikelet.domain;
 
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -17,4 +18,7 @@ public class SubscriptionPolicy {
 
     @Size(max = 250)
     private String policyDescription;
+
+    @ManyToOne
+    private Program programId;
 }

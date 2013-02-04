@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.SubscriptionPolicy;
 import com.sjsu.bikelet.domain.SubscriptionRate;
 import java.util.Date;
 
@@ -62,6 +63,14 @@ privileged aspect SubscriptionRate_Roo_JavaBean {
     
     public void SubscriptionRate.setPolicyEndDate(Date policyEndDate) {
         this.policyEndDate = policyEndDate;
+    }
+    
+    public SubscriptionPolicy SubscriptionRate.getPolicyId() {
+        return this.policyId;
+    }
+    
+    public void SubscriptionRate.setPolicyId(SubscriptionPolicy policyId) {
+        this.policyId = policyId;
     }
     
 }

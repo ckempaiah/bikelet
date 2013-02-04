@@ -5,6 +5,7 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Bike;
 import com.sjsu.bikelet.domain.BikeDataOnDemand;
+import com.sjsu.bikelet.domain.TenantDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect BikeDataOnDemand_Roo_DataOnDemand {
@@ -24,6 +26,9 @@ privileged aspect BikeDataOnDemand_Roo_DataOnDemand {
     private Random BikeDataOnDemand.rnd = new SecureRandom();
     
     private List<Bike> BikeDataOnDemand.data;
+    
+    @Autowired
+    TenantDataOnDemand BikeDataOnDemand.tenantDataOnDemand;
     
     public Bike BikeDataOnDemand.getNewTransientBike(int index) {
         Bike obj = new Bike();

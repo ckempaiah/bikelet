@@ -6,6 +6,7 @@ package com.sjsu.bikelet.domain;
 import com.sjsu.bikelet.domain.BikeDataOnDemand;
 import com.sjsu.bikelet.domain.BikeLocation;
 import com.sjsu.bikelet.domain.BikeLocationDataOnDemand;
+import com.sjsu.bikelet.domain.StationDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,6 +27,9 @@ privileged aspect BikeLocationDataOnDemand_Roo_DataOnDemand {
     
     @Autowired
     BikeDataOnDemand BikeLocationDataOnDemand.bikeDataOnDemand;
+    
+    @Autowired
+    StationDataOnDemand BikeLocationDataOnDemand.stationDataOnDemand;
     
     public BikeLocation BikeLocationDataOnDemand.getNewTransientBikeLocation(int index) {
         BikeLocation obj = new BikeLocation();

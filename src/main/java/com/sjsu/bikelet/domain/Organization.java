@@ -1,5 +1,6 @@
 package com.sjsu.bikelet.domain;
 
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -17,4 +18,6 @@ public class Organization {
 
     private Integer contactId;
 
+    @ManyToOne
+    private Tenant tenantId;
 }

@@ -2,6 +2,7 @@ package com.sjsu.bikelet.domain;
 
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -19,7 +20,6 @@ public class Bike {
     private Integer bikeHeight;
 
     @Size(max = 10)
-
     private String bikeColor;
 
     @NotNull
@@ -35,4 +35,7 @@ public class Bike {
 
     @Size(max = 10)
     private String bikeStatus;
+
+    @ManyToOne
+    private Tenant tenantId;
 }

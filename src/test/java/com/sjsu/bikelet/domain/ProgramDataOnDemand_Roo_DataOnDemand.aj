@@ -3,8 +3,10 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.OrganizationDataOnDemand;
 import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.ProgramDataOnDemand;
+import com.sjsu.bikelet.domain.TenantDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
@@ -21,6 +24,12 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
     private Random ProgramDataOnDemand.rnd = new SecureRandom();
     
     private List<Program> ProgramDataOnDemand.data;
+    
+    @Autowired
+    OrganizationDataOnDemand ProgramDataOnDemand.organizationDataOnDemand;
+    
+    @Autowired
+    TenantDataOnDemand ProgramDataOnDemand.tenantDataOnDemand;
     
     public Program ProgramDataOnDemand.getNewTransientProgram(int index) {
         Program obj = new Program();

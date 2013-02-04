@@ -1,5 +1,6 @@
 package com.sjsu.bikelet.domain;
 
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
@@ -15,4 +16,10 @@ public class Program {
 
     @Size(max = 255)
     private String description;
+
+    @ManyToOne
+    private Tenant tenantId;
+
+    @ManyToOne
+    private Organization orgId;
 }

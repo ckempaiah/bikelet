@@ -1,6 +1,7 @@
 package com.sjsu.bikelet.domain;
 
 import java.util.Date;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -30,4 +31,7 @@ public class SubscriptionRate {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
     private Date policyEndDate;
+
+    @ManyToOne
+    private SubscriptionPolicy policyId;
 }

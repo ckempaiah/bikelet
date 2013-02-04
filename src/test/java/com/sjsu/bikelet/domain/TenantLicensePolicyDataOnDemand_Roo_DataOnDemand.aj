@@ -3,6 +3,8 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.LicensePolicyDataOnDemand;
+import com.sjsu.bikelet.domain.TenantDataOnDemand;
 import com.sjsu.bikelet.domain.TenantLicensePolicy;
 import com.sjsu.bikelet.domain.TenantLicensePolicyDataOnDemand;
 import java.security.SecureRandom;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect TenantLicensePolicyDataOnDemand_Roo_DataOnDemand {
@@ -24,6 +27,12 @@ privileged aspect TenantLicensePolicyDataOnDemand_Roo_DataOnDemand {
     private Random TenantLicensePolicyDataOnDemand.rnd = new SecureRandom();
     
     private List<TenantLicensePolicy> TenantLicensePolicyDataOnDemand.data;
+    
+    @Autowired
+    LicensePolicyDataOnDemand TenantLicensePolicyDataOnDemand.licensePolicyDataOnDemand;
+    
+    @Autowired
+    TenantDataOnDemand TenantLicensePolicyDataOnDemand.tenantDataOnDemand;
     
     public TenantLicensePolicy TenantLicensePolicyDataOnDemand.getNewTransientTenantLicensePolicy(int index) {
         TenantLicensePolicy obj = new TenantLicensePolicy();

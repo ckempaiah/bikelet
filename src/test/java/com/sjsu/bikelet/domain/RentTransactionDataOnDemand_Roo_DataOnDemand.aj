@@ -3,6 +3,8 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BikeDataOnDemand;
+import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
 import com.sjsu.bikelet.domain.RentTransaction;
 import com.sjsu.bikelet.domain.RentTransactionDataOnDemand;
 import java.security.SecureRandom;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect RentTransactionDataOnDemand_Roo_DataOnDemand {
@@ -24,6 +27,12 @@ privileged aspect RentTransactionDataOnDemand_Roo_DataOnDemand {
     private Random RentTransactionDataOnDemand.rnd = new SecureRandom();
     
     private List<RentTransaction> RentTransactionDataOnDemand.data;
+    
+    @Autowired
+    BikeDataOnDemand RentTransactionDataOnDemand.bikeDataOnDemand;
+    
+    @Autowired
+    BikeLetUserDataOnDemand RentTransactionDataOnDemand.bikeLetUserDataOnDemand;
     
     public RentTransaction RentTransactionDataOnDemand.getNewTransientRentTransaction(int index) {
         RentTransaction obj = new RentTransaction();

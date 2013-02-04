@@ -1,6 +1,7 @@
 package com.sjsu.bikelet.domain;
 
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Size;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
@@ -16,4 +17,10 @@ public class BikeLocation {
 
     @ManyToOne
     private Bike bike;
+
+    @ManyToOne
+    private Station stationId;
+
+    @OneToOne
+    private Bike bikeId;
 }

@@ -1,5 +1,6 @@
 package com.sjsu.bikelet.domain;
 
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -26,4 +27,7 @@ public class BikeLetUser {
     @NotNull
     @Size(min = 6, max = 15)
     private String password;
+
+    @ManyToOne
+    private Tenant tenantId;
 }

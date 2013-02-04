@@ -1,6 +1,7 @@
 package com.sjsu.bikelet.domain;
 
 import java.util.Date;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -38,4 +39,10 @@ public class RentTransaction {
     @NotNull
     @Size(max = 500)
     private String comments;
+
+    @ManyToOne
+    private BikeLetUser userId;
+
+    @ManyToOne
+    private Bike bikeId;
 }

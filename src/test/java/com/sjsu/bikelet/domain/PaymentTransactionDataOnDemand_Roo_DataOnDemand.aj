@@ -3,6 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
+import com.sjsu.bikelet.domain.BillDataOnDemand;
+import com.sjsu.bikelet.domain.PaymentInfoDataOnDemand;
 import com.sjsu.bikelet.domain.PaymentTransaction;
 import com.sjsu.bikelet.domain.PaymentTransactionDataOnDemand;
 import java.security.SecureRandom;
@@ -15,6 +18,7 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect PaymentTransactionDataOnDemand_Roo_DataOnDemand {
@@ -24,6 +28,15 @@ privileged aspect PaymentTransactionDataOnDemand_Roo_DataOnDemand {
     private Random PaymentTransactionDataOnDemand.rnd = new SecureRandom();
     
     private List<PaymentTransaction> PaymentTransactionDataOnDemand.data;
+    
+    @Autowired
+    BillDataOnDemand PaymentTransactionDataOnDemand.billDataOnDemand;
+    
+    @Autowired
+    PaymentInfoDataOnDemand PaymentTransactionDataOnDemand.paymentInfoDataOnDemand;
+    
+    @Autowired
+    BikeLetUserDataOnDemand PaymentTransactionDataOnDemand.bikeLetUserDataOnDemand;
     
     public PaymentTransaction PaymentTransactionDataOnDemand.getNewTransientPaymentTransaction(int index) {
         PaymentTransaction obj = new PaymentTransaction();

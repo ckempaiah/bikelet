@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.ProgramDataOnDemand;
 import com.sjsu.bikelet.domain.SubscriptionPolicy;
 import com.sjsu.bikelet.domain.SubscriptionPolicyDataOnDemand;
 import java.security.SecureRandom;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect SubscriptionPolicyDataOnDemand_Roo_DataOnDemand {
@@ -21,6 +23,9 @@ privileged aspect SubscriptionPolicyDataOnDemand_Roo_DataOnDemand {
     private Random SubscriptionPolicyDataOnDemand.rnd = new SecureRandom();
     
     private List<SubscriptionPolicy> SubscriptionPolicyDataOnDemand.data;
+    
+    @Autowired
+    ProgramDataOnDemand SubscriptionPolicyDataOnDemand.programDataOnDemand;
     
     public SubscriptionPolicy SubscriptionPolicyDataOnDemand.getNewTransientSubscriptionPolicy(int index) {
         SubscriptionPolicy obj = new SubscriptionPolicy();

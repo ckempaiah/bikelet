@@ -10,11 +10,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooJpaActiveRecord
 public class UserRole {
 
-    @ManyToOne
-    private BikeLetUser bikeletUser;
-
-    @ManyToOne
-    private BikeLetRole bikeletRole;
+    
 
     @ManyToOne
     private BikeLetUser userId;

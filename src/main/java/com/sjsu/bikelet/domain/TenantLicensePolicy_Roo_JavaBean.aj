@@ -3,6 +3,8 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.LicensePolicy;
+import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantLicensePolicy;
 import java.util.Date;
 
@@ -30,6 +32,22 @@ privileged aspect TenantLicensePolicy_Roo_JavaBean {
     
     public void TenantLicensePolicy.setIsTrial(Boolean isTrial) {
         this.isTrial = isTrial;
+    }
+    
+    public Tenant TenantLicensePolicy.getTenantId() {
+        return this.tenantId;
+    }
+    
+    public void TenantLicensePolicy.setTenantId(Tenant tenantId) {
+        this.tenantId = tenantId;
+    }
+    
+    public LicensePolicy TenantLicensePolicy.getLicenseId() {
+        return this.licenseId;
+    }
+    
+    public void TenantLicensePolicy.setLicenseId(LicensePolicy licenseId) {
+        this.licenseId = licenseId;
     }
     
 }

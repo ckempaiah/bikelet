@@ -3,7 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.Station;
+import com.sjsu.bikelet.domain.Tenant;
 
 privileged aspect Station_Roo_JavaBean {
     
@@ -13,6 +15,22 @@ privileged aspect Station_Roo_JavaBean {
     
     public void Station.setLocation(String location) {
         this.location = location;
+    }
+    
+    public Tenant Station.getTenantId() {
+        return this.tenantId;
+    }
+    
+    public void Station.setTenantId(Tenant tenantId) {
+        this.tenantId = tenantId;
+    }
+    
+    public Program Station.getProgramId() {
+        return this.programId;
+    }
+    
+    public void Station.setProgramId(Program programId) {
+        this.programId = programId;
     }
     
 }

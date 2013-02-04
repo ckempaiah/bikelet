@@ -4,6 +4,7 @@
 package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Bike;
+import com.sjsu.bikelet.domain.Tenant;
 import java.util.Date;
 
 privileged aspect Bike_Roo_JavaBean {
@@ -54,6 +55,14 @@ privileged aspect Bike_Roo_JavaBean {
     
     public void Bike.setBikeStatus(String bikeStatus) {
         this.bikeStatus = bikeStatus;
+    }
+    
+    public Tenant Bike.getTenantId() {
+        return this.tenantId;
+    }
+    
+    public void Bike.setTenantId(Tenant tenantId) {
+        this.tenantId = tenantId;
     }
     
 }
