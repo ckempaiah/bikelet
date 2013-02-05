@@ -249,3 +249,13 @@ perform tests
 focus --class ~.domain.RolePermission
 field reference --fieldName permissionId --type ~.domain.Permission
 field reference --fieldName roleId --type ~.domain.BikeLetRole
+focus --class ~.domain.Station
+field number --fieldName capacity --type java.lang.Integer
+focus --class ~.domain.Program
+field number --fieldName min_threshold --type java.lang.Integer
+field number --fieldName max_threshold --type java.lang.Integer
+focus --class ~.domain.BillTransaction
+field number --fieldName referenceEntityId --type java.lang.Integer
+focus --class ~.domain.BikeLetUser
+field reference --fieldName programId --type ~.domain.Program
+perform tests

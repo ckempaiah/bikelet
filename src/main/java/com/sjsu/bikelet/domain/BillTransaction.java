@@ -33,4 +33,6 @@ public class BillTransaction {
 
     @ManyToOne
     private Bill bill;
+
+    private Integer referenceEntityId;
 }

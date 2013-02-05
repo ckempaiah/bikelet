@@ -31,6 +31,8 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
         Program obj = new Program();
         setContactId(obj, index);
         setDescription(obj, index);
+        setMax_threshold(obj, index);
+        setMin_threshold(obj, index);
         setOrgName(obj, index);
         setProgramName(obj, index);
         return obj;
@@ -47,6 +49,16 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
             description = description.substring(0, 255);
         }
         obj.setDescription(description);
+    }
+    
+    public void ProgramDataOnDemand.setMax_threshold(Program obj, int index) {
+        Integer max_threshold = new Integer(index);
+        obj.setMax_threshold(max_threshold);
+    }
+    
+    public void ProgramDataOnDemand.setMin_threshold(Program obj, int index) {
+        Integer min_threshold = new Integer(index);
+        obj.setMin_threshold(min_threshold);
     }
     
     public void ProgramDataOnDemand.setOrgName(Program obj, int index) {

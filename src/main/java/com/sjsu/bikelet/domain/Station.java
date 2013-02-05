@@ -19,4 +19,6 @@ public class Station {
 
     @ManyToOne
     private Program programId;
+
+    private Integer capacity;
 }

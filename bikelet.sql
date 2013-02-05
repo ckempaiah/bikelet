@@ -287,6 +287,7 @@ CREATE TABLE user_subscription_policy
 
 ALTER TABLE payment_info ADD INDEX FKpayment_in938275 (user_id), ADD CONSTRAINT FKpayment_in938275 FOREIGN KEY (user_id) REFERENCES bike_let_user (id);
 ALTER TABLE bike_let_user ADD INDEX FKuser330759 (tenant_id), ADD CONSTRAINT FKuser330759 FOREIGN KEY (tenant_id) REFERENCES tenant (id);
+ALTER TABLE bike_let_user ADD INDEX FKuser330760 (program_id), ADD CONSTRAINT FKuser330760 FOREIGN KEY (program_id) REFERENCES program (id);
 ALTER TABLE program ADD INDEX FKprogram318023 (tenant_id), ADD CONSTRAINT FKprogram318023 FOREIGN KEY (tenant_id) REFERENCES tenant (id);
 ALTER TABLE bike ADD INDEX FKbike906225 (tenant_id), ADD CONSTRAINT FKbike906225 FOREIGN KEY (tenant_id) REFERENCES tenant (id);
 ALTER TABLE station ADD INDEX FKstation903803 (tenant_id), ADD CONSTRAINT FKstation903803 FOREIGN KEY (tenant_id) REFERENCES tenant (id);

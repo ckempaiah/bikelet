@@ -31,4 +31,7 @@ public class BikeLetUser {
     @ManyToOne
     @NotNull
     private Tenant tenantId;
+
+    @ManyToOne
+    private Program programId;
 }

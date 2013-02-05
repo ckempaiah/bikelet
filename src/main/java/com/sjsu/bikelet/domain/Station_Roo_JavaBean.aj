@@ -33,4 +33,12 @@ privileged aspect Station_Roo_JavaBean {
         this.programId = programId;
     }
     
+    public Integer Station.getCapacity() {
+        return this.capacity;
+    }
+    
+    public void Station.setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
+    
 }

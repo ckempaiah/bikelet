@@ -34,6 +34,7 @@ privileged aspect BillTransactionDataOnDemand_Roo_DataOnDemand {
         BillTransaction obj = new BillTransaction();
         setDescription(obj, index);
         setEndDate(obj, index);
+        setReferenceEntityId(obj, index);
         setStartDate(obj, index);
         setTotalCost(obj, index);
         setTransactionType(obj, index);
@@ -51,6 +52,11 @@ privileged aspect BillTransactionDataOnDemand_Roo_DataOnDemand {
     public void BillTransactionDataOnDemand.setEndDate(BillTransaction obj, int index) {
         Date endDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setEndDate(endDate);
+    }
+    
+    public void BillTransactionDataOnDemand.setReferenceEntityId(BillTransaction obj, int index) {
+        Integer referenceEntityId = new Integer(index);
+        obj.setReferenceEntityId(referenceEntityId);
     }
     
     public void BillTransactionDataOnDemand.setStartDate(BillTransaction obj, int index) {

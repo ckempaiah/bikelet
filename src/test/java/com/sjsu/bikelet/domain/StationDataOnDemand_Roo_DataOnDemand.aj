@@ -33,8 +33,14 @@ privileged aspect StationDataOnDemand_Roo_DataOnDemand {
     
     public Station StationDataOnDemand.getNewTransientStation(int index) {
         Station obj = new Station();
+        setCapacity(obj, index);
         setLocation(obj, index);
         return obj;
+    }
+    
+    public void StationDataOnDemand.setCapacity(Station obj, int index) {
+        Integer capacity = new Integer(index);
+        obj.setCapacity(capacity);
     }
     
     public void StationDataOnDemand.setLocation(Station obj, int index) {

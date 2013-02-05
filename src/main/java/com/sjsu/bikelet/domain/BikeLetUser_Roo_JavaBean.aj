@@ -4,6 +4,7 @@
 package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.BikeLetUser;
+import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.Tenant;
 
 privileged aspect BikeLetUser_Roo_JavaBean {
@@ -46,6 +47,14 @@ privileged aspect BikeLetUser_Roo_JavaBean {
     
     public void BikeLetUser.setTenantId(Tenant tenantId) {
         this.tenantId = tenantId;
+    }
+    
+    public Program BikeLetUser.getProgramId() {
+        return this.programId;
+    }
+    
+    public void BikeLetUser.setProgramId(Program programId) {
+        this.programId = programId;
     }
     
 }

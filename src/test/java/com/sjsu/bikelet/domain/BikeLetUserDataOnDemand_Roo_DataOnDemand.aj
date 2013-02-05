@@ -5,6 +5,7 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
+import com.sjsu.bikelet.domain.ProgramDataOnDemand;
 import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantDataOnDemand;
 import java.security.SecureRandom;
@@ -24,6 +25,9 @@ privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
     private Random BikeLetUserDataOnDemand.rnd = new SecureRandom();
     
     private List<BikeLetUser> BikeLetUserDataOnDemand.data;
+    
+    @Autowired
+    ProgramDataOnDemand BikeLetUserDataOnDemand.programDataOnDemand;
     
     @Autowired
     TenantDataOnDemand BikeLetUserDataOnDemand.tenantDataOnDemand;

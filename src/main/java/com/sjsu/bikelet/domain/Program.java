@@ -26,4 +26,8 @@ public class Program {
     private String orgName;
 
     private Integer contactId;
+
+    private Integer min_threshold;
+
+    private Integer max_threshold;
 }

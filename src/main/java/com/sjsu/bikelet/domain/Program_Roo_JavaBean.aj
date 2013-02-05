@@ -48,4 +48,20 @@ privileged aspect Program_Roo_JavaBean {
         this.contactId = contactId;
     }
     
+    public Integer Program.getMin_threshold() {
+        return this.min_threshold;
+    }
+    
+    public void Program.setMin_threshold(Integer min_threshold) {
+        this.min_threshold = min_threshold;
+    }
+    
+    public Integer Program.getMax_threshold() {
+        return this.max_threshold;
+    }
+    
+    public void Program.setMax_threshold(Integer max_threshold) {
+        this.max_threshold = max_threshold;
+    }
+    
 }
