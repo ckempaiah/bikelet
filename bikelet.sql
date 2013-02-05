@@ -8,8 +8,6 @@ DROP TABLE IF EXISTS  subscription_rate;
 
 DROP TABLE IF EXISTS  role_permission;
 
-DROP TABLE IF EXISTS  rent_transation;
-
 DROP TABLE IF EXISTS  payment_transaction;
 
 DROP TABLE IF EXISTS  bill_transaction;
@@ -32,8 +30,6 @@ DROP TABLE IF EXISTS  bill;
 
 DROP TABLE IF EXISTS  address;
 
-DROP TABLE IF EXISTS  role;
-
 DROP TABLE IF EXISTS  permission;
 
 DROP TABLE IF EXISTS  license_policy;
@@ -47,7 +43,6 @@ DROP TABLE IF EXISTS  bike_let_user;
 DROP TABLE IF EXISTS  bike_let_role;
 
 DROP TABLE IF EXISTS  tenant;
-
 
 CREATE TABLE address
 (
@@ -208,33 +203,14 @@ CREATE TABLE rent_transaction
    comments text NOT NULL,
    from_station_id int,
    rate_id int,
+   user_id bigint NOT NULL,
+   bike_id bigint,
    rent_end_date timestamp,
    rent_start_date timestamp,
    status varchar(10) NOT NULL,
    tenant_id bigint,
    to_station_id bigint,
    version int
-)
-;
-CREATE TABLE rent_transation
-(
-   id int PRIMARY KEY NOT NULL,
-   from_station_id bigint,
-   to_station_id bigint,
-   bike_id bigint,
-   user_id bigint NOT NULL,
-   tenant_id bigint,
-   rent_start_date date,
-   rate_id int,
-   rent_end_date date,
-   status varchar(60),
-   comments varchar(250)
-)
-;
-CREATE TABLE role
-(
-   id bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
-   role_name varchar(50) NOT NULL
 )
 ;
 CREATE TABLE role_permission
@@ -321,11 +297,11 @@ ALTER TABLE organization ADD INDEX FKorganizati993399 (tenant_id), ADD CONSTRAIN
 ALTER TABLE bike_location ADD INDEX FKbike_locat442826 (bike_id), ADD CONSTRAINT FKbike_locat442826 FOREIGN KEY (bike_id) REFERENCES bike (id);
 ALTER TABLE bike_location ADD INDEX FKbike_locat282148 (station_id), ADD CONSTRAINT FKbike_locat282148 FOREIGN KEY (station_id) REFERENCES station (id);
 ALTER TABLE user_role ADD INDEX FKuser_role807043 (user_id), ADD CONSTRAINT FKuser_role807043 FOREIGN KEY (user_id) REFERENCES bike_let_user (id);
-ALTER TABLE rent_transation ADD INDEX FKrent_trans366470 (user_id), ADD CONSTRAINT FKrent_trans366470 FOREIGN KEY (user_id) REFERENCES bike_let_user (id);
-ALTER TABLE rent_transation ADD INDEX FKrent_trans618708 (bike_id), ADD CONSTRAINT FKrent_trans618708 FOREIGN KEY (bike_id) REFERENCES bike (id);
-ALTER TABLE user_role ADD INDEX FKuser_role220486 (role_id), ADD CONSTRAINT FKuser_role220486 FOREIGN KEY (role_id) REFERENCES role (id);
+ALTER TABLE rent_transaction ADD INDEX FKrent_trans366470 (user_id), ADD CONSTRAINT FKrent_trans366470 FOREIGN KEY (user_id) REFERENCES bike_let_user (id);
+ALTER TABLE rent_transaction ADD INDEX FKrent_trans618708 (bike_id), ADD CONSTRAINT FKrent_trans618708 FOREIGN KEY (bike_id) REFERENCES bike (id);
+ALTER TABLE user_role ADD INDEX FKuser_role220486 (role_id), ADD CONSTRAINT FKuser_role220486 FOREIGN KEY (role_id) REFERENCES bike_let_role (id);
 ALTER TABLE subscription_policy ADD INDEX FKsubscripti157516 (program_id), ADD CONSTRAINT FKsubscripti157516 FOREIGN KEY (program_id) REFERENCES program (id);
-ALTER TABLE role_permission ADD INDEX FKrole_permi451547 (role_id), ADD CONSTRAINT FKrole_permi451547 FOREIGN KEY (role_id) REFERENCES role (id);
+ALTER TABLE role_permission ADD INDEX FKrole_permi451547 (role_id), ADD CONSTRAINT FKrole_permi451547 FOREIGN KEY (role_id) REFERENCES bike_let_role (id);
 ALTER TABLE role_permission ADD INDEX FKrole_permi183089 (permission_id), ADD CONSTRAINT FKrole_permi183089 FOREIGN KEY (permission_id) REFERENCES permission (id);
 ALTER TABLE tenant_license_policy ADD INDEX FKtenant_lic996616 (license_id), ADD CONSTRAINT FKtenant_lic996616 FOREIGN KEY (license_id) REFERENCES license_policy (id);
 ALTER TABLE tenant_license_policy ADD INDEX FKtenant_lic646131 (tenant_id), ADD CONSTRAINT FKtenant_lic646131 FOREIGN KEY (tenant_id) REFERENCES tenant (id);
@@ -341,4 +317,5 @@ ALTER TABLE payment_transaction ADD INDEX FKpayment_tr290075 (user_id), ADD CONS
 ALTER TABLE payment_transaction ADD INDEX FKpayment_tr494181 (payment_id), ADD CONSTRAINT FKpayment_tr494181 FOREIGN KEY (id) REFERENCES payment_info (id);
 ALTER TABLE payment_transaction ADD INDEX FKpayment_tr669597 (bill_id), ADD CONSTRAINT FKpayment_tr669597 FOREIGN KEY (bill_id) REFERENCES bill (id);
 ALTER TABLE program ADD INDEX FKprogram840536 (org_id), ADD CONSTRAINT FKprogram840536 FOREIGN KEY (org_id) REFERENCES organization (id);
+
 
