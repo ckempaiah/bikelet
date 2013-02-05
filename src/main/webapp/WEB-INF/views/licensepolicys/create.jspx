@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_com_sjsu_bikelet_domain_LicensePolicy" modelAttribute="licensePolicy" path="/licensepolicys" render="${empty dependencies}" z="+gIKkqlhlHialCzyj+Ke2uY1mLA=">
+        <field:textarea field="licenseName" id="c_com_sjsu_bikelet_domain_LicensePolicy_licenseName" z="iTJdaB9SE6lZLETfLL8PSmqwCOk="/>
+        <field:input field="licenseCostPeruser" id="c_com_sjsu_bikelet_domain_LicensePolicy_licenseCostPeruser" validationMessageCode="field_invalid_number" z="10Yaxn+c1GSPY5pL+Kyl9/TPeyw="/>
+        <field:input field="licenseType" id="c_com_sjsu_bikelet_domain_LicensePolicy_licenseType" validationMessageCode="field_invalid_integer" z="vs4XvxVtPLMz8E6M/XANuvgztJI="/>
+        <field:input field="licenseBaseCost" id="c_com_sjsu_bikelet_domain_LicensePolicy_licenseBaseCost" validationMessageCode="field_invalid_number" z="ZRw4d1x0BvXPKWxx7B9PQUB3euI="/>
+        <field:input field="freeTrialPeriodInDays" id="c_com_sjsu_bikelet_domain_LicensePolicy_freeTrialPeriodInDays" validationMessageCode="field_invalid_integer" z="vPPXxj7EqRBvEBGHArXvcyEwVsQ="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_com_sjsu_bikelet_domain_LicensePolicy" render="${not empty dependencies}" z="AQvH5JXRoNSK/7Xbc5mMB68nfsE="/>
+</div>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_sjsu_bikelet_domain_LicensePolicy" items="${licensepolicys}" z="aMhT+aVKFfD4/Rbd4y0dSPCgOKg=">
+        <table:table data="${licensepolicys}" id="l_com_sjsu_bikelet_domain_LicensePolicy" path="/licensepolicys" z="EJQKc2YjnXs29jY0Tp8OBrwKUfo=">
+            <table:column id="c_com_sjsu_bikelet_domain_LicensePolicy_licenseName" property="licenseName" z="LKKJWea8HUbgLwi8CADMqEMSfyI="/>
+            <table:column id="c_com_sjsu_bikelet_domain_LicensePolicy_licenseCostPeruser" property="licenseCostPeruser" z="WXmptE3ZNM6Nt4xEKv27XD6fmac="/>
+            <table:column id="c_com_sjsu_bikelet_domain_LicensePolicy_licenseType" property="licenseType" z="/mpwmbh8nEX8pVKrGV150th35H8="/>
+            <table:column id="c_com_sjsu_bikelet_domain_LicensePolicy_licenseBaseCost" property="licenseBaseCost" z="F8HcdD3Wv14cOXqydqsVbo1x3nQ="/>
+            <table:column id="c_com_sjsu_bikelet_domain_LicensePolicy_freeTrialPeriodInDays" property="freeTrialPeriodInDays" z="tnstO7fFMWz+LbzaPGJ9HVCz3LY="/>
+        </table:table>
+    </page:list>
+</div>

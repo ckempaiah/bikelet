@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_sjsu_bikelet_domain_Address" items="${addresses}" z="My/SgTX+ti1pW1VkowSC1w3vvZM=">
+        <table:table data="${addresses}" id="l_com_sjsu_bikelet_domain_Address" path="/addresses" z="m5ucOVGlBdUJOY4K/mEovy4ToGo=">
+            <table:column id="c_com_sjsu_bikelet_domain_Address_addressLine1" property="addressLine1" z="WefHjXLNSX8DDX3GoIrIC0z+XLo="/>
+            <table:column id="c_com_sjsu_bikelet_domain_Address_addressLine2" property="addressLine2" z="GuQN9hwYb0+Vrg+ZzmLq45mI+oY="/>
+            <table:column id="c_com_sjsu_bikelet_domain_Address_city" property="city" z="0Xi3JUKSDwTZ2yTg4VIK9DE3uRg="/>
+            <table:column id="c_com_sjsu_bikelet_domain_Address_addressState" property="addressState" z="HkL8Ennn+209Zp6pXN3uasxE4HU="/>
+            <table:column id="c_com_sjsu_bikelet_domain_Address_country" property="country" z="6xfG+EQuZ4915R2R8Ui4cLTafSs="/>
+            <table:column id="c_com_sjsu_bikelet_domain_Address_zipCode" property="zipCode" z="I26eT2PT2Mo7P6xKmLgqALjq9xI="/>
+        </table:table>
+    </page:list>
+</div>

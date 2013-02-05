@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_sjsu_bikelet_domain_Address" object="${address}" path="/addresses" z="ZX0cjGtLqUgdA6c2TUvlEKp3vzI=">
+        <field:display field="addressLine1" id="s_com_sjsu_bikelet_domain_Address_addressLine1" object="${address}" z="wv/6Z87ishO91xw8OBaYbY+9Ng8="/>
+        <field:display field="addressLine2" id="s_com_sjsu_bikelet_domain_Address_addressLine2" object="${address}" z="g5sxnsdhK7Rb0XQHiDsohCn5l6w="/>
+        <field:display field="city" id="s_com_sjsu_bikelet_domain_Address_city" object="${address}" z="OP+QNPTOzTU6giEAXpPdcz2BYL8="/>
+        <field:display field="addressState" id="s_com_sjsu_bikelet_domain_Address_addressState" object="${address}" z="0+xhnZd6sEPr7fYBagbP5lORfZo="/>
+        <field:display field="country" id="s_com_sjsu_bikelet_domain_Address_country" object="${address}" z="NSw1pbe49jODAXlT0a/fBE238Hc="/>
+        <field:display field="zipCode" id="s_com_sjsu_bikelet_domain_Address_zipCode" object="${address}" z="jFcrN4Ex+DZd4HWhCX4HMX29LNg="/>
+        <field:display field="cellphone" id="s_com_sjsu_bikelet_domain_Address_cellphone" object="${address}" z="qT1M+WZle17SfOnutIYS0LGIIQI="/>
+        <field:display field="addressType" id="s_com_sjsu_bikelet_domain_Address_addressType" object="${address}" z="p09v4uAOsWpt6JnWdQml2hVcB9E="/>
+        <field:display field="workphone" id="s_com_sjsu_bikelet_domain_Address_workphone" object="${address}" z="oP/Jw4ldrd/8PrJu5BCmj+puiDc="/>
+        <field:display field="userId" id="s_com_sjsu_bikelet_domain_Address_userId" object="${address}" z="gxZjATR+VHTJ6YmqcNVS1SZB2GI="/>
+    </page:show>
+</div>

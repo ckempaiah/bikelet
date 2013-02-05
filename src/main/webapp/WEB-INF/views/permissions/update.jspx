@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_com_sjsu_bikelet_domain_Permission" modelAttribute="permission" path="/permissions" versionField="Version" z="48l8dFN7DfK541HCGVE4VW7WPFA=">
+        <field:input field="permissionName" id="c_com_sjsu_bikelet_domain_Permission_permissionName" max="30" z="Fxrf8Qoo4bWeQMDeUvvRR7uNZ/Y="/>
+        <field:textarea field="description" id="c_com_sjsu_bikelet_domain_Permission_description" z="8fHd9c0lZwb81gjpZY+mtRECojQ="/>
+    </form:update>
+</div>

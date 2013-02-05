@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_com_sjsu_bikelet_domain_PaymentInfo" modelAttribute="paymentInfo" path="/paymentinfoes" render="${empty dependencies}" z="dHh4of6G+UuTQY5quAEgzHsBs6o=">
+        <field:input field="paymentId" id="c_com_sjsu_bikelet_domain_PaymentInfo_paymentId" validationMessageCode="field_invalid_integer" z="PBSxtcqWKmpea4FYeB5RsXTtWcE="/>
+        <field:input field="cardNumber" id="c_com_sjsu_bikelet_domain_PaymentInfo_cardNumber" max="19" min="12" required="true" z="mXn2TZXzP/9UNyq8JpfDDI7p3Rc="/>
+        <field:input field="cardUserName" id="c_com_sjsu_bikelet_domain_PaymentInfo_cardUserName" min="2" required="true" z="Shn6Fp2SCcDjbA+PL1bAoHClOUA="/>
+        <field:select field="userId" id="c_com_sjsu_bikelet_domain_PaymentInfo_userId" itemValue="id" items="${bikeletusers}" path="/bikeletusers" z="Pse9om/YmXNqFgcxfe3Cz/FDjWI="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_com_sjsu_bikelet_domain_PaymentInfo" render="${not empty dependencies}" z="2UFi8t2cclJAVhhFFUOJ76d/DZA="/>
+</div>

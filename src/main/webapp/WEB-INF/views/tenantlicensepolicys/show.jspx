@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_sjsu_bikelet_domain_TenantLicensePolicy" object="${tenantlicensepolicy}" path="/tenantlicensepolicys" z="nZ4OrAxmC3XKaRcL5397u7kHllY=">
+        <field:display date="true" dateTimePattern="${tenantLicensePolicy_licensestartdate_date_format}" field="licenseStartDate" id="s_com_sjsu_bikelet_domain_TenantLicensePolicy_licenseStartDate" object="${tenantlicensepolicy}" z="FDJ+WS8tkZ6JWjdcV8IG/hey03Y="/>
+        <field:display date="true" dateTimePattern="${tenantLicensePolicy_licenseenddate_date_format}" field="licenseEndDate" id="s_com_sjsu_bikelet_domain_TenantLicensePolicy_licenseEndDate" object="${tenantlicensepolicy}" z="FaZ8BAMGJKAOEQvalWjv3pMz2ow="/>
+        <field:display field="isTrial" id="s_com_sjsu_bikelet_domain_TenantLicensePolicy_isTrial" object="${tenantlicensepolicy}" z="TQn5EnN0TAdENk6UdhpxWG96Nk8="/>
+        <field:display field="tenantId" id="s_com_sjsu_bikelet_domain_TenantLicensePolicy_tenantId" object="${tenantlicensepolicy}" z="rcitDGxSg/j0VqqRQwmul/d0h74="/>
+        <field:display field="licenseId" id="s_com_sjsu_bikelet_domain_TenantLicensePolicy_licenseId" object="${tenantlicensepolicy}" z="oQK9ki7a3h/uBl5mlJmQpBkq6ys="/>
+    </page:show>
+</div>

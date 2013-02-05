@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_sjsu_bikelet_domain_PaymentInfo" items="${paymentinfoes}" z="u+QmdPXv2LN7ei54FxG5cZS0qOM=">
+        <table:table data="${paymentinfoes}" id="l_com_sjsu_bikelet_domain_PaymentInfo" path="/paymentinfoes" z="AXbt5sY665Odw8M84KEMFAdTRDk=">
+            <table:column id="c_com_sjsu_bikelet_domain_PaymentInfo_paymentId" property="paymentId" z="k/fThmfnJr7PGlIywA41e0vw1mg="/>
+            <table:column id="c_com_sjsu_bikelet_domain_PaymentInfo_cardNumber" property="cardNumber" z="bS+weQPeIjktjuIZ2EGYX24XQUs="/>
+            <table:column id="c_com_sjsu_bikelet_domain_PaymentInfo_cardUserName" property="cardUserName" z="RBkhWr7qerouuMWQZ1XjTPNMXAc="/>
+            <table:column id="c_com_sjsu_bikelet_domain_PaymentInfo_userId" property="userId" z="LbNi6eSgh7xGTJLVbiR5oXmRytc="/>
+        </table:table>
+    </page:list>
+</div>

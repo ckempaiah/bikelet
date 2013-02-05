@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_sjsu_bikelet_domain_Permission" object="${permission}" path="/permissions" z="CRspuwa8l02FGJxNYBnRGdrh6BY=">
+        <field:display field="permissionName" id="s_com_sjsu_bikelet_domain_Permission_permissionName" object="${permission}" z="9OzfzDiu+QZeKjTGRpViKTNif4o="/>
+        <field:display field="description" id="s_com_sjsu_bikelet_domain_Permission_description" object="${permission}" z="fdwwQb9a15gFnYVK2TFrtUzJ8l8="/>
+    </page:show>
+</div>

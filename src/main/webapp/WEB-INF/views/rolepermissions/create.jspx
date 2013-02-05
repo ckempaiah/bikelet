@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_com_sjsu_bikelet_domain_RolePermission" modelAttribute="rolePermission" path="/rolepermissions" render="${empty dependencies}" z="BxzVxpVZoBEKIx6P+WFKyWib230=">
+        <field:select field="permissionId" id="c_com_sjsu_bikelet_domain_RolePermission_permissionId" itemValue="id" items="${permissions}" path="/permissions" z="go4fp89/fipAMOjrfDg6FCTvoQQ="/>
+        <field:select field="roleId" id="c_com_sjsu_bikelet_domain_RolePermission_roleId" itemValue="id" items="${bikeletroles}" path="/bikeletroles" z="eJu8OftN/1q+pgc2PYyyY0CKV6k="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_com_sjsu_bikelet_domain_RolePermission" render="${not empty dependencies}" z="Ug5Wi2vvQwEp9gcAnuTFAYDzow4="/>
+</div>

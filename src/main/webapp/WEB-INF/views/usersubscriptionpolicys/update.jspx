@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_com_sjsu_bikelet_domain_UserSubscriptionPolicy" modelAttribute="userSubscriptionPolicy" path="/usersubscriptionpolicys" versionField="Version" z="jl+NiwrCwR/xuIpoNyzNpTDKpFo=">
+        <field:select field="policyId" id="c_com_sjsu_bikelet_domain_UserSubscriptionPolicy_policyId" itemValue="id" items="${subscriptionpolicys}" path="/subscriptionpolicys" z="Gn3M0C5EAiRYin3U37sLsnou/2E="/>
+        <field:select field="userId" id="c_com_sjsu_bikelet_domain_UserSubscriptionPolicy_userId" itemValue="id" items="${bikeletusers}" path="/bikeletusers" z="8QTCZbrZLH2cl64Z5IFHMO4tAzM="/>
+    </form:update>
+</div>

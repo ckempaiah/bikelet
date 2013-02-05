@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="addressassociations/list">
+        <put-attribute name="body" value="/WEB-INF/views/addressassociations/list.jspx"/>
+    </definition>
+<definition extends="default" name="addressassociations/show">
+        <put-attribute name="body" value="/WEB-INF/views/addressassociations/show.jspx"/>
+    </definition>
+<definition extends="default" name="addressassociations/create">
+        <put-attribute name="body" value="/WEB-INF/views/addressassociations/create.jspx"/>
+    </definition>
+<definition extends="default" name="addressassociations/update">
+        <put-attribute name="body" value="/WEB-INF/views/addressassociations/update.jspx"/>
+    </definition>
+</tiles-definitions>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_sjsu_bikelet_domain_AddressAssociation" items="${addressassociations}" z="E1FRQ462yzjIetf/yylLGKZYmN8=">
+        <table:table data="${addressassociations}" id="l_com_sjsu_bikelet_domain_AddressAssociation" path="/addressassociations" z="/qDMDZ9m4VR4MB/kWfAB36dq0hk=">
+            <table:column id="c_com_sjsu_bikelet_domain_AddressAssociation_entityId" property="entityId" z="rCKnqkSHIVVuAFij5tRyX41SJsQ="/>
+            <table:column id="c_com_sjsu_bikelet_domain_AddressAssociation_addressId" property="addressId" z="nwMzo/LqgBl0tirheUpD9bEGmkA="/>
+            <table:column id="c_com_sjsu_bikelet_domain_AddressAssociation_entityType" property="entityType" z="sxQgiZASD0cHNvlR6Wflk9urTpI="/>
+        </table:table>
+    </page:list>
+</div>

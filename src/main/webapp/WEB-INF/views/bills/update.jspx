@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_com_sjsu_bikelet_domain_Bill" modelAttribute="bill" path="/bills" versionField="Version" z="uhneYKdSq2ACowKjq2rM6zYNZgk=">
+        <field:input field="totalcharges" id="c_com_sjsu_bikelet_domain_Bill_totalcharges" validationMessageCode="field_invalid_integer" z="PLSbWxPfS+ZlB6arWwRfoHEY950="/>
+        <field:textarea field="description" id="c_com_sjsu_bikelet_domain_Bill_description" z="9bMN+now0h32P4r3jSZMQBWjjuQ="/>
+        <field:datetime dateTimePattern="${bill_createddate_date_format}" field="createdDate" id="c_com_sjsu_bikelet_domain_Bill_createdDate" z="g1OMBl2Y57dM/1oKUa8LW4vLxWk="/>
+        <field:datetime dateTimePattern="${bill_billstartdate_date_format}" field="billStartDate" id="c_com_sjsu_bikelet_domain_Bill_billStartDate" z="kNSi8oM3fqGUlYAyJl7+RqgfhmY="/>
+        <field:datetime dateTimePattern="${bill_billenddate_date_format}" field="billEndDate" id="c_com_sjsu_bikelet_domain_Bill_billEndDate" z="IxhZ5q+dZ5Q8ocvb0ekL7xXnRs0="/>
+        <field:select field="userId" id="c_com_sjsu_bikelet_domain_Bill_userId" itemValue="id" items="${bikeletusers}" path="/bikeletusers" z="XXnE8Mdq64hy1KTNh7FUJ5yeLXM="/>
+    </form:update>
+</div>

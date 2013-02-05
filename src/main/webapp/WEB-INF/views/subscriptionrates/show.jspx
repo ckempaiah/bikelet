@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_sjsu_bikelet_domain_SubscriptionRate" object="${subscriptionrate}" path="/subscriptionrates" z="WJSsexQiNLcXKTDPw9F3IFrwCjU=">
+        <field:display field="membershipPerMonth" id="s_com_sjsu_bikelet_domain_SubscriptionRate_membershipPerMonth" object="${subscriptionrate}" z="iGoHTSuRQ6dUzk+Nj8eQWTAcSPA="/>
+        <field:display field="organizationShare" id="s_com_sjsu_bikelet_domain_SubscriptionRate_organizationShare" object="${subscriptionrate}" z="5EZg7fAIRq5W+6JLEUx/nn3W+ZM="/>
+        <field:display field="userShare" id="s_com_sjsu_bikelet_domain_SubscriptionRate_userShare" object="${subscriptionrate}" z="r81qRWPVGN0f0UiHUuxTyq7Qdw4="/>
+        <field:display field="freeMinsPerDay" id="s_com_sjsu_bikelet_domain_SubscriptionRate_freeMinsPerDay" object="${subscriptionrate}" z="SOi6vGh++x6Pje4OCe8pvJNkNH4="/>
+        <field:display field="excessChargePerMin" id="s_com_sjsu_bikelet_domain_SubscriptionRate_excessChargePerMin" object="${subscriptionrate}" z="BKfHFqXO4ioXkIb0pAlBmXZyl0k="/>
+        <field:display date="true" dateTimePattern="${subscriptionRate_policystartdate_date_format}" field="policyStartDate" id="s_com_sjsu_bikelet_domain_SubscriptionRate_policyStartDate" object="${subscriptionrate}" z="JQOWBcE4V7+sgEZsFw3+cUwJSos="/>
+        <field:display date="true" dateTimePattern="${subscriptionRate_policyenddate_date_format}" field="policyEndDate" id="s_com_sjsu_bikelet_domain_SubscriptionRate_policyEndDate" object="${subscriptionrate}" z="4zH1Cvdrhe9WL/U0iGElkECheGk="/>
+        <field:display field="policyId" id="s_com_sjsu_bikelet_domain_SubscriptionRate_policyId" object="${subscriptionrate}" z="EY5dLtRxzb4H0X3nVnfUTuncEZo="/>
+    </page:show>
+</div>

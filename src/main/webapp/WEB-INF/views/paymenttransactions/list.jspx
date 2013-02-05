@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_sjsu_bikelet_domain_PaymentTransaction" items="${paymenttransactions}" z="hdOWn+NwPgRGIubzJ//eYXGn5zY=">
+        <table:table data="${paymenttransactions}" id="l_com_sjsu_bikelet_domain_PaymentTransaction" path="/paymenttransactions" z="M56T8GR6EbIr77dLGIW4Fvwr9Fo=">
+            <table:column id="c_com_sjsu_bikelet_domain_PaymentTransaction_status" property="status" z="qB3/Qs1K4iGMBLkKYU5FbtloHKI="/>
+            <table:column date="true" dateTimePattern="${paymentTransaction_dateoftransaction_date_format}" id="c_com_sjsu_bikelet_domain_PaymentTransaction_dateOfTransaction" property="dateOfTransaction" z="YjxhUPncoEFKy88O2VqL7S8mwGQ="/>
+            <table:column id="c_com_sjsu_bikelet_domain_PaymentTransaction_permissionName" property="permissionName" z="AZ2viSzBCuX2SbUUh+BWsraEB2M="/>
+            <table:column id="c_com_sjsu_bikelet_domain_PaymentTransaction_description" property="description" z="0AoU8UcFa2OsDj51lsaWOWXBEB4="/>
+            <table:column id="c_com_sjsu_bikelet_domain_PaymentTransaction_paymentId" property="paymentId" z="mln8bycFsvhb8NPFBKrseQTvyUM="/>
+            <table:column id="c_com_sjsu_bikelet_domain_PaymentTransaction_userId" property="userId" z="sqq6Aphr75SuzrJsJZbeK6Odyns="/>
+        </table:table>
+    </page:list>
+</div>

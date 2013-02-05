@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_sjsu_bikelet_domain_BikeLetUser" object="${bikeletuser}" path="/bikeletusers" z="ygZ9AMBqHrKFJhScNW74axknyok=">
+        <field:display field="firstName" id="s_com_sjsu_bikelet_domain_BikeLetUser_firstName" object="${bikeletuser}" z="k9w7812y61S/dq/rqk+wwBCBx+Q="/>
+        <field:display field="lastName" id="s_com_sjsu_bikelet_domain_BikeLetUser_lastName" object="${bikeletuser}" z="lji6jVRV9g0VqaITgLhEHuKb0yo="/>
+        <field:display field="email" id="s_com_sjsu_bikelet_domain_BikeLetUser_email" object="${bikeletuser}" z="8X0rMslpe2T3vvsMa7cZ8G94pGk="/>
+        <field:display field="password" id="s_com_sjsu_bikelet_domain_BikeLetUser_password" object="${bikeletuser}" z="hAvAHQO58McDNA2BTw9Dcan0b34="/>
+        <field:display field="tenantId" id="s_com_sjsu_bikelet_domain_BikeLetUser_tenantId" object="${bikeletuser}" z="IbbrlUZ6Bzd+rl1e0FXaFcI+2UI="/>
+        <field:display field="programId" id="s_com_sjsu_bikelet_domain_BikeLetUser_programId" object="${bikeletuser}" z="0gJAqxnKY8qiqRSOKAmBmA2Tze8="/>
+    </page:show>
+</div>

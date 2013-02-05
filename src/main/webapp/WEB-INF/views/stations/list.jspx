@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_sjsu_bikelet_domain_Station" items="${stations}" z="GAy78KI0Swvm43ywn2zfaZ+YLqY=">
+        <table:table data="${stations}" id="l_com_sjsu_bikelet_domain_Station" path="/stations" z="VnwnWZKaVrkt/Bqo+pGs4PIL+ss=">
+            <table:column id="c_com_sjsu_bikelet_domain_Station_location" property="location" z="imWwje5Tu5FrS0Xh4nSfOKwG+j8="/>
+            <table:column id="c_com_sjsu_bikelet_domain_Station_tenantId" property="tenantId" z="Z0bWPzZ1MV1fKA8vstQfzHaw1Rk="/>
+            <table:column id="c_com_sjsu_bikelet_domain_Station_programId" property="programId" z="wf4mPmSA+dAha8pT5jEF1n7Q7ww="/>
+            <table:column id="c_com_sjsu_bikelet_domain_Station_capacity" property="capacity" z="OK/ZLBr2Hnki7h32RlkofVUXrbU="/>
+        </table:table>
+    </page:list>
+</div>

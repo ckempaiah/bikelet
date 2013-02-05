@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_sjsu_bikelet_domain_TenantLicensePolicy" items="${tenantlicensepolicys}" z="t+ARUcKE7VGGFgNtjKqsdWb3HT0=">
+        <table:table data="${tenantlicensepolicys}" id="l_com_sjsu_bikelet_domain_TenantLicensePolicy" path="/tenantlicensepolicys" z="gqe3HNZwC+0RXGzE8Z6FjOkOySU=">
+            <table:column date="true" dateTimePattern="${tenantLicensePolicy_licensestartdate_date_format}" id="c_com_sjsu_bikelet_domain_TenantLicensePolicy_licenseStartDate" property="licenseStartDate" z="hLu7GGW7o4UwufcDrrpM6H0is+c="/>
+            <table:column date="true" dateTimePattern="${tenantLicensePolicy_licenseenddate_date_format}" id="c_com_sjsu_bikelet_domain_TenantLicensePolicy_licenseEndDate" property="licenseEndDate" z="7xl4CmxLcPwz4BC8DIBbb3XxNXE="/>
+            <table:column id="c_com_sjsu_bikelet_domain_TenantLicensePolicy_isTrial" property="isTrial" z="SJkXRlv6JPPNXXDdlgc1hh82zis="/>
+            <table:column id="c_com_sjsu_bikelet_domain_TenantLicensePolicy_tenantId" property="tenantId" z="SAqJfPVdKrFweIhlsCzp/pxGCw0="/>
+            <table:column id="c_com_sjsu_bikelet_domain_TenantLicensePolicy_licenseId" property="licenseId" z="gF4+v8rSvArGSoYIXF8M3pR+/+k="/>
+        </table:table>
+    </page:list>
+</div>
