@@ -29,5 +29,6 @@ public class BikeLetUser {
     private String password;
 
     @ManyToOne
+    @NotNull
     private Tenant tenantId;
 }

@@ -5,6 +5,7 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
+import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
         setFirstName(obj, index);
         setLastName(obj, index);
         setPassword(obj, index);
+        setTenantId(obj, index);
         return obj;
     }
     
@@ -66,6 +68,11 @@ privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
             password = password.substring(0, 15);
         }
         obj.setPassword(password);
+    }
+    
+    public void BikeLetUserDataOnDemand.setTenantId(BikeLetUser obj, int index) {
+        Tenant tenantId = tenantDataOnDemand.getRandomTenant();
+        obj.setTenantId(tenantId);
     }
     
     public BikeLetUser BikeLetUserDataOnDemand.getSpecificBikeLetUser(int index) {

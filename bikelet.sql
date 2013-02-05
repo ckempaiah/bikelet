@@ -30,10 +30,7 @@ DROP TABLE IF EXISTS  organization;
 
 DROP TABLE IF EXISTS  bill;
 
-DROP TABLE IF EXISTS  bike;
-
 DROP TABLE IF EXISTS  address;
-
 
 DROP TABLE IF EXISTS  role;
 
@@ -42,6 +39,8 @@ DROP TABLE IF EXISTS  permission;
 DROP TABLE IF EXISTS  license_policy;
 
 DROP TABLE IF EXISTS  rent_transaction;
+
+DROP TABLE IF EXISTS  bike;
 
 DROP TABLE IF EXISTS  bike_let_user;
 
