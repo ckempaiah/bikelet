@@ -3,7 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Organization;
+import com.sjsu.bikelet.domain.RolePermission;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,32 +11,32 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 
-privileged aspect Organization_Roo_Jpa_Entity {
+privileged aspect RolePermission_Roo_Jpa_Entity {
     
-    declare @type: Organization: @Entity;
+    declare @type: RolePermission: @Entity;
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long Organization.id;
+    private Long RolePermission.id;
     
     @Version
     @Column(name = "version")
-    private Integer Organization.version;
+    private Integer RolePermission.version;
     
-    public Long Organization.getId() {
+    public Long RolePermission.getId() {
         return this.id;
     }
     
-    public void Organization.setId(Long id) {
+    public void RolePermission.setId(Long id) {
         this.id = id;
     }
     
-    public Integer Organization.getVersion() {
+    public Integer RolePermission.getVersion() {
         return this.version;
     }
     
-    public void Organization.setVersion(Integer version) {
+    public void RolePermission.setVersion(Integer version) {
         this.version = version;
     }
     

@@ -1,6 +1,7 @@
 package com.sjsu.bikelet.domain;
 
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
@@ -20,6 +21,9 @@ public class Program {
     @ManyToOne
     private Tenant tenantId;
 
-    @ManyToOne
-    private Organization orgId;
+    @NotNull
+    @Size(max = 30)
+    private String orgName;
+
+    private Integer contactId;
 }

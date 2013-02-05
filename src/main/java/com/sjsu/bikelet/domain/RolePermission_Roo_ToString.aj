@@ -3,13 +3,13 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Organization;
+import com.sjsu.bikelet.domain.RolePermission;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-privileged aspect Organization_Roo_ToString {
+privileged aspect RolePermission_Roo_ToString {
     
-    public String Organization.toString() {
+    public String RolePermission.toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
     

@@ -239,3 +239,13 @@ perform tests
 perform tests
 exit
 // Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-02-04 14:58:16
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-02-04 21:25:12
+perform tests
+entity jpa --class ~.domain.RolePermission --testAutomatically 
+focus --class ~.domain.Program
+field string --fieldName orgName --notNull --sizeMax 30
+field number --fieldName contactId --type java.lang.Integer
+perform tests
+focus --class ~.domain.RolePermission
+field reference --fieldName permissionId --type ~.domain.Permission
+field reference --fieldName roleId --type ~.domain.BikeLetRole

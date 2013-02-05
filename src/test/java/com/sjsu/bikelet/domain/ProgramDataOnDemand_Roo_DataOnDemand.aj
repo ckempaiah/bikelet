@@ -3,7 +3,6 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.OrganizationDataOnDemand;
 import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.ProgramDataOnDemand;
 import com.sjsu.bikelet.domain.TenantDataOnDemand;
@@ -26,16 +25,20 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
     private List<Program> ProgramDataOnDemand.data;
     
     @Autowired
-    OrganizationDataOnDemand ProgramDataOnDemand.organizationDataOnDemand;
-    
-    @Autowired
     TenantDataOnDemand ProgramDataOnDemand.tenantDataOnDemand;
     
     public Program ProgramDataOnDemand.getNewTransientProgram(int index) {
         Program obj = new Program();
+        setContactId(obj, index);
         setDescription(obj, index);
+        setOrgName(obj, index);
         setProgramName(obj, index);
         return obj;
+    }
+    
+    public void ProgramDataOnDemand.setContactId(Program obj, int index) {
+        Integer contactId = new Integer(index);
+        obj.setContactId(contactId);
     }
     
     public void ProgramDataOnDemand.setDescription(Program obj, int index) {
@@ -44,6 +47,14 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
             description = description.substring(0, 255);
         }
         obj.setDescription(description);
+    }
+    
+    public void ProgramDataOnDemand.setOrgName(Program obj, int index) {
+        String orgName = "orgName_" + index;
+        if (orgName.length() > 30) {
+            orgName = orgName.substring(0, 30);
+        }
+        obj.setOrgName(orgName);
     }
     
     public void ProgramDataOnDemand.setProgramName(Program obj, int index) {

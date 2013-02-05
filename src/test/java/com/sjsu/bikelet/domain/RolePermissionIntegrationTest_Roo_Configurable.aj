@@ -3,11 +3,11 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Organization;
+import com.sjsu.bikelet.domain.RolePermissionIntegrationTest;
 import org.springframework.beans.factory.annotation.Configurable;
 
-privileged aspect Organization_Roo_Configurable {
+privileged aspect RolePermissionIntegrationTest_Roo_Configurable {
     
-    declare @type: Organization: @Configurable;
+    declare @type: RolePermissionIntegrationTest: @Configurable;
     
 }

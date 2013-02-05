@@ -133,6 +133,7 @@ CREATE TABLE bill_transaction
    total_cost double,
    transaction_type varchar(100),
    bill_id bigint,
+   reference_entity_id bigint,
    version int
 )
 ;
@@ -144,15 +145,6 @@ CREATE TABLE license_policy
    license_cost_peruser double,
    license_name varchar(100),
    license_type int,
-   version int
-)
-;
-CREATE TABLE organization
-(
-   id bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
-   org_name varchar(30),
-   tenant_id bigint,
-   contact_id bigint,
    version int
 )
 ;
@@ -194,6 +186,10 @@ CREATE TABLE program
    program_name varchar(60),
    tenant_id bigint,
    org_id bigint,
+   org_name varchar(30),
+   contact_id bigint,
+   min_threshold int,
+   max_threshold int,
    version int
 )
 ;
@@ -215,7 +211,7 @@ CREATE TABLE rent_transaction
 ;
 CREATE TABLE role_permission
 (
-   id int PRIMARY KEY NOT NULL,
+   id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
    permission_id bigint NOT NULL,
    role_id bigint NOT NULL
 )
@@ -224,6 +220,7 @@ CREATE TABLE station
 (
    id bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
    location varchar(255) NOT NULL,
+   capacity int,
    tenant_id bigint,
    program_id bigint,
    version int
@@ -293,7 +290,6 @@ ALTER TABLE bike_let_user ADD INDEX FKuser330759 (tenant_id), ADD CONSTRAINT FKu
 ALTER TABLE program ADD INDEX FKprogram318023 (tenant_id), ADD CONSTRAINT FKprogram318023 FOREIGN KEY (tenant_id) REFERENCES tenant (id);
 ALTER TABLE bike ADD INDEX FKbike906225 (tenant_id), ADD CONSTRAINT FKbike906225 FOREIGN KEY (tenant_id) REFERENCES tenant (id);
 ALTER TABLE station ADD INDEX FKstation903803 (tenant_id), ADD CONSTRAINT FKstation903803 FOREIGN KEY (tenant_id) REFERENCES tenant (id);
-ALTER TABLE organization ADD INDEX FKorganizati993399 (tenant_id), ADD CONSTRAINT FKorganizati993399 FOREIGN KEY (tenant_id) REFERENCES tenant (id);
 ALTER TABLE bike_location ADD INDEX FKbike_locat442826 (bike_id), ADD CONSTRAINT FKbike_locat442826 FOREIGN KEY (bike_id) REFERENCES bike (id);
 ALTER TABLE bike_location ADD INDEX FKbike_locat282148 (station_id), ADD CONSTRAINT FKbike_locat282148 FOREIGN KEY (station_id) REFERENCES station (id);
 ALTER TABLE user_role ADD INDEX FKuser_role807043 (user_id), ADD CONSTRAINT FKuser_role807043 FOREIGN KEY (user_id) REFERENCES bike_let_user (id);
@@ -316,6 +312,6 @@ ALTER TABLE station ADD INDEX FKstation306681 (program_id), ADD CONSTRAINT FKsta
 ALTER TABLE payment_transaction ADD INDEX FKpayment_tr290075 (user_id), ADD CONSTRAINT FKpayment_tr290075 FOREIGN KEY (user_id) REFERENCES bike_let_user (id);
 ALTER TABLE payment_transaction ADD INDEX FKpayment_tr494181 (payment_id), ADD CONSTRAINT FKpayment_tr494181 FOREIGN KEY (id) REFERENCES payment_info (id);
 ALTER TABLE payment_transaction ADD INDEX FKpayment_tr669597 (bill_id), ADD CONSTRAINT FKpayment_tr669597 FOREIGN KEY (bill_id) REFERENCES bill (id);
-ALTER TABLE program ADD INDEX FKprogram840536 (org_id), ADD CONSTRAINT FKprogram840536 FOREIGN KEY (org_id) REFERENCES organization (id);
+
 
 

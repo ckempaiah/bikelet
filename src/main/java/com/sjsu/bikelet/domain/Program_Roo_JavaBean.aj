@@ -3,7 +3,6 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Organization;
 import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.Tenant;
 
@@ -33,12 +32,20 @@ privileged aspect Program_Roo_JavaBean {
         this.tenantId = tenantId;
     }
     
-    public Organization Program.getOrgId() {
-        return this.orgId;
+    public String Program.getOrgName() {
+        return this.orgName;
     }
     
-    public void Program.setOrgId(Organization orgId) {
-        this.orgId = orgId;
+    public void Program.setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+    
+    public Integer Program.getContactId() {
+        return this.contactId;
+    }
+    
+    public void Program.setContactId(Integer contactId) {
+        this.contactId = contactId;
     }
     
 }
