@@ -3,7 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BikeLetRole;
 import com.sjsu.bikelet.domain.BikeLetRoleDataOnDemand;
+import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
 import com.sjsu.bikelet.domain.UserRole;
 import com.sjsu.bikelet.domain.UserRoleDataOnDemand;
@@ -26,14 +28,26 @@ privileged aspect UserRoleDataOnDemand_Roo_DataOnDemand {
     private List<UserRole> UserRoleDataOnDemand.data;
     
     @Autowired
-    BikeLetRoleDataOnDemand UserRoleDataOnDemand.bikeLetRoleDataOnDemand;
+    private BikeLetRoleDataOnDemand UserRoleDataOnDemand.bikeLetRoleDataOnDemand;
     
     @Autowired
-    BikeLetUserDataOnDemand UserRoleDataOnDemand.bikeLetUserDataOnDemand;
+    private BikeLetUserDataOnDemand UserRoleDataOnDemand.bikeLetUserDataOnDemand;
     
     public UserRole UserRoleDataOnDemand.getNewTransientUserRole(int index) {
         UserRole obj = new UserRole();
+        setRoleId(obj, index);
+        setUserId(obj, index);
         return obj;
+    }
+    
+    public void UserRoleDataOnDemand.setRoleId(UserRole obj, int index) {
+        BikeLetRole roleId = bikeLetRoleDataOnDemand.getRandomBikeLetRole();
+        obj.setRoleId(roleId);
+    }
+    
+    public void UserRoleDataOnDemand.setUserId(UserRole obj, int index) {
+        BikeLetUser userId = bikeLetUserDataOnDemand.getRandomBikeLetUser();
+        obj.setUserId(userId);
     }
     
     public UserRole UserRoleDataOnDemand.getSpecificUserRole(int index) {

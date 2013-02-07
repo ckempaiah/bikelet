@@ -24,7 +24,7 @@ privileged aspect BikeIntegrationTest_Roo_IntegrationTest {
     declare @type: BikeIntegrationTest: @Transactional;
     
     @Autowired
-    BikeDataOnDemand BikeIntegrationTest.dod;
+    private BikeDataOnDemand BikeIntegrationTest.dod;
     
     @Test
     public void BikeIntegrationTest.testCountBikes() {

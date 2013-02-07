@@ -3,13 +3,15 @@
 
 package com.sjsu.bikelet.web;
 
-import com.sjsu.bikelet.domain.BikeLetUser;
-import com.sjsu.bikelet.domain.SubscriptionPolicy;
 import com.sjsu.bikelet.domain.UserSubscriptionPolicy;
+import com.sjsu.bikelet.service.BikeLetUserService;
+import com.sjsu.bikelet.service.SubscriptionPolicyService;
+import com.sjsu.bikelet.service.UserSubscriptionPolicyService;
 import com.sjsu.bikelet.web.UserSubscriptionPolicyController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,15 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect UserSubscriptionPolicyController_Roo_Controller {
     
+    @Autowired
+    UserSubscriptionPolicyService UserSubscriptionPolicyController.userSubscriptionPolicyService;
+    
+    @Autowired
+    BikeLetUserService UserSubscriptionPolicyController.bikeLetUserService;
+    
+    @Autowired
+    SubscriptionPolicyService UserSubscriptionPolicyController.subscriptionPolicyService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String UserSubscriptionPolicyController.create(@Valid UserSubscriptionPolicy userSubscriptionPolicy, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -28,7 +39,7 @@ privileged aspect UserSubscriptionPolicyController_Roo_Controller {
             return "usersubscriptionpolicys/create";
         }
         uiModel.asMap().clear();
-        userSubscriptionPolicy.persist();
+        userSubscriptionPolicyService.saveUserSubscriptionPolicy(userSubscriptionPolicy);
         return "redirect:/usersubscriptionpolicys/" + encodeUrlPathSegment(userSubscriptionPolicy.getId().toString(), httpServletRequest);
     }
     
@@ -40,7 +51,7 @@ privileged aspect UserSubscriptionPolicyController_Roo_Controller {
     
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String UserSubscriptionPolicyController.show(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("usersubscriptionpolicy", UserSubscriptionPolicy.findUserSubscriptionPolicy(id));
+        uiModel.addAttribute("usersubscriptionpolicy", userSubscriptionPolicyService.findUserSubscriptionPolicy(id));
         uiModel.addAttribute("itemId", id);
         return "usersubscriptionpolicys/show";
     }
@@ -50,11 +61,11 @@ privileged aspect UserSubscriptionPolicyController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("usersubscriptionpolicys", UserSubscriptionPolicy.findUserSubscriptionPolicyEntries(firstResult, sizeNo));
-            float nrOfPages = (float) UserSubscriptionPolicy.countUserSubscriptionPolicys() / sizeNo;
+            uiModel.addAttribute("usersubscriptionpolicys", userSubscriptionPolicyService.findUserSubscriptionPolicyEntries(firstResult, sizeNo));
+            float nrOfPages = (float) userSubscriptionPolicyService.countAllUserSubscriptionPolicys() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("usersubscriptionpolicys", UserSubscriptionPolicy.findAllUserSubscriptionPolicys());
+            uiModel.addAttribute("usersubscriptionpolicys", userSubscriptionPolicyService.findAllUserSubscriptionPolicys());
         }
         return "usersubscriptionpolicys/list";
     }
@@ -66,20 +77,20 @@ privileged aspect UserSubscriptionPolicyController_Roo_Controller {
             return "usersubscriptionpolicys/update";
         }
         uiModel.asMap().clear();
-        userSubscriptionPolicy.merge();
+        userSubscriptionPolicyService.updateUserSubscriptionPolicy(userSubscriptionPolicy);
         return "redirect:/usersubscriptionpolicys/" + encodeUrlPathSegment(userSubscriptionPolicy.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String UserSubscriptionPolicyController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, UserSubscriptionPolicy.findUserSubscriptionPolicy(id));
+        populateEditForm(uiModel, userSubscriptionPolicyService.findUserSubscriptionPolicy(id));
         return "usersubscriptionpolicys/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String UserSubscriptionPolicyController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        UserSubscriptionPolicy userSubscriptionPolicy = UserSubscriptionPolicy.findUserSubscriptionPolicy(id);
-        userSubscriptionPolicy.remove();
+        UserSubscriptionPolicy userSubscriptionPolicy = userSubscriptionPolicyService.findUserSubscriptionPolicy(id);
+        userSubscriptionPolicyService.deleteUserSubscriptionPolicy(userSubscriptionPolicy);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
@@ -88,8 +99,8 @@ privileged aspect UserSubscriptionPolicyController_Roo_Controller {
     
     void UserSubscriptionPolicyController.populateEditForm(Model uiModel, UserSubscriptionPolicy userSubscriptionPolicy) {
         uiModel.addAttribute("userSubscriptionPolicy", userSubscriptionPolicy);
-        uiModel.addAttribute("bikeletusers", BikeLetUser.findAllBikeLetUsers());
-        uiModel.addAttribute("subscriptionpolicys", SubscriptionPolicy.findAllSubscriptionPolicys());
+        uiModel.addAttribute("bikeletusers", bikeLetUserService.findAllBikeLetUsers());
+        uiModel.addAttribute("subscriptionpolicys", subscriptionPolicyService.findAllSubscriptionPolicys());
     }
     
     String UserSubscriptionPolicyController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

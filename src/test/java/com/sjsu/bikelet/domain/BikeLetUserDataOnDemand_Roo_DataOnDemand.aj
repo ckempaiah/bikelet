@@ -5,6 +5,7 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
+import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.ProgramDataOnDemand;
 import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantDataOnDemand;
@@ -27,10 +28,10 @@ privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
     private List<BikeLetUser> BikeLetUserDataOnDemand.data;
     
     @Autowired
-    ProgramDataOnDemand BikeLetUserDataOnDemand.programDataOnDemand;
+    private ProgramDataOnDemand BikeLetUserDataOnDemand.programDataOnDemand;
     
     @Autowired
-    TenantDataOnDemand BikeLetUserDataOnDemand.tenantDataOnDemand;
+    private TenantDataOnDemand BikeLetUserDataOnDemand.tenantDataOnDemand;
     
     public BikeLetUser BikeLetUserDataOnDemand.getNewTransientBikeLetUser(int index) {
         BikeLetUser obj = new BikeLetUser();
@@ -38,6 +39,7 @@ privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
         setFirstName(obj, index);
         setLastName(obj, index);
         setPassword(obj, index);
+        setProgramId(obj, index);
         setTenantId(obj, index);
         return obj;
     }
@@ -72,6 +74,11 @@ privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
             password = password.substring(0, 15);
         }
         obj.setPassword(password);
+    }
+    
+    public void BikeLetUserDataOnDemand.setProgramId(BikeLetUser obj, int index) {
+        Program programId = programDataOnDemand.getRandomProgram();
+        obj.setProgramId(programId);
     }
     
     public void BikeLetUserDataOnDemand.setTenantId(BikeLetUser obj, int index) {

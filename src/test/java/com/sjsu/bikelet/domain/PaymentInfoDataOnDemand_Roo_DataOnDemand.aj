@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
 import com.sjsu.bikelet.domain.PaymentInfo;
 import com.sjsu.bikelet.domain.PaymentInfoDataOnDemand;
@@ -25,13 +26,14 @@ privileged aspect PaymentInfoDataOnDemand_Roo_DataOnDemand {
     private List<PaymentInfo> PaymentInfoDataOnDemand.data;
     
     @Autowired
-    BikeLetUserDataOnDemand PaymentInfoDataOnDemand.bikeLetUserDataOnDemand;
+    private BikeLetUserDataOnDemand PaymentInfoDataOnDemand.bikeLetUserDataOnDemand;
     
     public PaymentInfo PaymentInfoDataOnDemand.getNewTransientPaymentInfo(int index) {
         PaymentInfo obj = new PaymentInfo();
         setCardNumber(obj, index);
         setCardUserName(obj, index);
         setPaymentId(obj, index);
+        setUserId(obj, index);
         return obj;
     }
     
@@ -51,6 +53,11 @@ privileged aspect PaymentInfoDataOnDemand_Roo_DataOnDemand {
     public void PaymentInfoDataOnDemand.setPaymentId(PaymentInfo obj, int index) {
         Integer paymentId = new Integer(index);
         obj.setPaymentId(paymentId);
+    }
+    
+    public void PaymentInfoDataOnDemand.setUserId(PaymentInfo obj, int index) {
+        BikeLetUser userId = bikeLetUserDataOnDemand.getRandomBikeLetUser();
+        obj.setUserId(userId);
     }
     
     public PaymentInfo PaymentInfoDataOnDemand.getSpecificPaymentInfo(int index) {

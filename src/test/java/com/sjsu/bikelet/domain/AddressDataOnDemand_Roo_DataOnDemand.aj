@@ -5,6 +5,7 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Address;
 import com.sjsu.bikelet.domain.AddressDataOnDemand;
+import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ privileged aspect AddressDataOnDemand_Roo_DataOnDemand {
     private List<Address> AddressDataOnDemand.data;
     
     @Autowired
-    BikeLetUserDataOnDemand AddressDataOnDemand.bikeLetUserDataOnDemand;
+    private BikeLetUserDataOnDemand AddressDataOnDemand.bikeLetUserDataOnDemand;
     
     public Address AddressDataOnDemand.getNewTransientAddress(int index) {
         Address obj = new Address();
@@ -36,6 +37,7 @@ privileged aspect AddressDataOnDemand_Roo_DataOnDemand {
         setCellphone(obj, index);
         setCity(obj, index);
         setCountry(obj, index);
+        setUserId(obj, index);
         setWorkphone(obj, index);
         setZipCode(obj, index);
         return obj;
@@ -86,6 +88,11 @@ privileged aspect AddressDataOnDemand_Roo_DataOnDemand {
     public void AddressDataOnDemand.setCountry(Address obj, int index) {
         String country = "country_" + index;
         obj.setCountry(country);
+    }
+    
+    public void AddressDataOnDemand.setUserId(Address obj, int index) {
+        BikeLetUser userId = bikeLetUserDataOnDemand.getRandomBikeLetUser();
+        obj.setUserId(userId);
     }
     
     public void AddressDataOnDemand.setWorkphone(Address obj, int index) {

@@ -5,10 +5,12 @@ package com.sjsu.bikelet.web;
 
 import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.Tenant;
+import com.sjsu.bikelet.service.ProgramService;
 import com.sjsu.bikelet.web.ProgramController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,9 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect ProgramController_Roo_Controller {
     
+    @Autowired
+    ProgramService ProgramController.programService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String ProgramController.create(@Valid Program program, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -27,7 +32,7 @@ privileged aspect ProgramController_Roo_Controller {
             return "programs/create";
         }
         uiModel.asMap().clear();
-        program.persist();
+        programService.saveProgram(program);
         return "redirect:/programs/" + encodeUrlPathSegment(program.getId().toString(), httpServletRequest);
     }
     
@@ -39,7 +44,7 @@ privileged aspect ProgramController_Roo_Controller {
     
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String ProgramController.show(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("program", Program.findProgram(id));
+        uiModel.addAttribute("program", programService.findProgram(id));
         uiModel.addAttribute("itemId", id);
         return "programs/show";
     }
@@ -49,11 +54,11 @@ privileged aspect ProgramController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("programs", Program.findProgramEntries(firstResult, sizeNo));
-            float nrOfPages = (float) Program.countPrograms() / sizeNo;
+            uiModel.addAttribute("programs", programService.findProgramEntries(firstResult, sizeNo));
+            float nrOfPages = (float) programService.countAllPrograms() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("programs", Program.findAllPrograms());
+            uiModel.addAttribute("programs", programService.findAllPrograms());
         }
         return "programs/list";
     }
@@ -65,20 +70,20 @@ privileged aspect ProgramController_Roo_Controller {
             return "programs/update";
         }
         uiModel.asMap().clear();
-        program.merge();
+        programService.updateProgram(program);
         return "redirect:/programs/" + encodeUrlPathSegment(program.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String ProgramController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, Program.findProgram(id));
+        populateEditForm(uiModel, programService.findProgram(id));
         return "programs/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String ProgramController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        Program program = Program.findProgram(id);
-        program.remove();
+        Program program = programService.findProgram(id);
+        programService.deleteProgram(program);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());

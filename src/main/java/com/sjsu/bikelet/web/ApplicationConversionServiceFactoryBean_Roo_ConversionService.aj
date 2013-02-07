@@ -25,7 +25,30 @@ import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantLicensePolicy;
 import com.sjsu.bikelet.domain.UserRole;
 import com.sjsu.bikelet.domain.UserSubscriptionPolicy;
+import com.sjsu.bikelet.service.AddressAssociationService;
+import com.sjsu.bikelet.service.AddressService;
+import com.sjsu.bikelet.service.BikeLetRoleService;
+import com.sjsu.bikelet.service.BikeLetUserService;
+import com.sjsu.bikelet.service.BikeLocationService;
+import com.sjsu.bikelet.service.BikeService;
+import com.sjsu.bikelet.service.BillService;
+import com.sjsu.bikelet.service.BillTransactionService;
+import com.sjsu.bikelet.service.LicensePolicyService;
+import com.sjsu.bikelet.service.PaymentInfoService;
+import com.sjsu.bikelet.service.PaymentTransactionService;
+import com.sjsu.bikelet.service.PermissionService;
+import com.sjsu.bikelet.service.ProgramService;
+import com.sjsu.bikelet.service.RentTransactionService;
+import com.sjsu.bikelet.service.RolePermissionService;
+import com.sjsu.bikelet.service.StationService;
+import com.sjsu.bikelet.service.SubscriptionPolicyService;
+import com.sjsu.bikelet.service.SubscriptionRateService;
+import com.sjsu.bikelet.service.TenantLicensePolicyService;
+import com.sjsu.bikelet.service.TenantService;
+import com.sjsu.bikelet.service.UserRoleService;
+import com.sjsu.bikelet.service.UserSubscriptionPolicyService;
 import com.sjsu.bikelet.web.ApplicationConversionServiceFactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.FormatterRegistry;
@@ -34,10 +57,76 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     
     declare @type: ApplicationConversionServiceFactoryBean: @Configurable;
     
+    @Autowired
+    AddressService ApplicationConversionServiceFactoryBean.addressService;
+    
+    @Autowired
+    AddressAssociationService ApplicationConversionServiceFactoryBean.addressAssociationService;
+    
+    @Autowired
+    BikeService ApplicationConversionServiceFactoryBean.bikeService;
+    
+    @Autowired
+    BikeLetRoleService ApplicationConversionServiceFactoryBean.bikeLetRoleService;
+    
+    @Autowired
+    BikeLetUserService ApplicationConversionServiceFactoryBean.bikeLetUserService;
+    
+    @Autowired
+    BikeLocationService ApplicationConversionServiceFactoryBean.bikeLocationService;
+    
+    @Autowired
+    BillService ApplicationConversionServiceFactoryBean.billService;
+    
+    @Autowired
+    BillTransactionService ApplicationConversionServiceFactoryBean.billTransactionService;
+    
+    @Autowired
+    LicensePolicyService ApplicationConversionServiceFactoryBean.licensePolicyService;
+    
+    @Autowired
+    PaymentInfoService ApplicationConversionServiceFactoryBean.paymentInfoService;
+    
+    @Autowired
+    PaymentTransactionService ApplicationConversionServiceFactoryBean.paymentTransactionService;
+    
+    @Autowired
+    PermissionService ApplicationConversionServiceFactoryBean.permissionService;
+    
+    @Autowired
+    ProgramService ApplicationConversionServiceFactoryBean.programService;
+    
+    @Autowired
+    RentTransactionService ApplicationConversionServiceFactoryBean.rentTransactionService;
+    
+    @Autowired
+    RolePermissionService ApplicationConversionServiceFactoryBean.rolePermissionService;
+    
+    @Autowired
+    StationService ApplicationConversionServiceFactoryBean.stationService;
+    
+    @Autowired
+    SubscriptionPolicyService ApplicationConversionServiceFactoryBean.subscriptionPolicyService;
+    
+    @Autowired
+    SubscriptionRateService ApplicationConversionServiceFactoryBean.subscriptionRateService;
+    
+    @Autowired
+    TenantService ApplicationConversionServiceFactoryBean.tenantService;
+    
+    @Autowired
+    TenantLicensePolicyService ApplicationConversionServiceFactoryBean.tenantLicensePolicyService;
+    
+    @Autowired
+    UserRoleService ApplicationConversionServiceFactoryBean.userRoleService;
+    
+    @Autowired
+    UserSubscriptionPolicyService ApplicationConversionServiceFactoryBean.userSubscriptionPolicyService;
+    
     public Converter<Address, String> ApplicationConversionServiceFactoryBean.getAddressToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Address, java.lang.String>() {
             public String convert(Address address) {
-                return new StringBuilder().append(address.getAddressLine1()).append(' ').append(address.getAddressLine2()).append(' ').append(address.getCity()).append(' ').append(address.getAddressState()).toString();
+                return new StringBuilder().append(address.getAddressLine1()).append(" ").append(address.getAddressLine2()).append(" ").append(address.getCity()).append(" ").append(address.getAddressState()).toString();
             }
         };
     }
@@ -45,7 +134,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, Address> ApplicationConversionServiceFactoryBean.getIdToAddressConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.Address>() {
             public com.sjsu.bikelet.domain.Address convert(java.lang.Long id) {
-                return Address.findAddress(id);
+                return addressService.findAddress(id);
             }
         };
     }
@@ -61,7 +150,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<AddressAssociation, String> ApplicationConversionServiceFactoryBean.getAddressAssociationToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.AddressAssociation, java.lang.String>() {
             public String convert(AddressAssociation addressAssociation) {
-                return new StringBuilder().append(addressAssociation.getEntityId()).append(' ').append(addressAssociation.getAddressId()).append(' ').append(addressAssociation.getEntityType()).toString();
+                return new StringBuilder().append(addressAssociation.getEntityId()).append(" ").append(addressAssociation.getAddressId()).append(" ").append(addressAssociation.getEntityType()).toString();
             }
         };
     }
@@ -69,7 +158,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, AddressAssociation> ApplicationConversionServiceFactoryBean.getIdToAddressAssociationConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.AddressAssociation>() {
             public com.sjsu.bikelet.domain.AddressAssociation convert(java.lang.Long id) {
-                return AddressAssociation.findAddressAssociation(id);
+                return addressAssociationService.findAddressAssociation(id);
             }
         };
     }
@@ -85,7 +174,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Bike, String> ApplicationConversionServiceFactoryBean.getBikeToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Bike, java.lang.String>() {
             public String convert(Bike bike) {
-                return new StringBuilder().append(bike.getBikeHeight()).append(' ').append(bike.getBikeColor()).append(' ').append(bike.getBikeType()).append(' ').append(bike.getLastServiceDate()).toString();
+                return new StringBuilder().append(bike.getBikeHeight()).append(" ").append(bike.getBikeColor()).append(" ").append(bike.getBikeType()).append(" ").append(bike.getLastServiceDate()).toString();
             }
         };
     }
@@ -93,7 +182,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, Bike> ApplicationConversionServiceFactoryBean.getIdToBikeConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.Bike>() {
             public com.sjsu.bikelet.domain.Bike convert(java.lang.Long id) {
-                return Bike.findBike(id);
+                return bikeService.findBike(id);
             }
         };
     }
@@ -117,7 +206,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, BikeLetRole> ApplicationConversionServiceFactoryBean.getIdToBikeLetRoleConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.BikeLetRole>() {
             public com.sjsu.bikelet.domain.BikeLetRole convert(java.lang.Long id) {
-                return BikeLetRole.findBikeLetRole(id);
+                return bikeLetRoleService.findBikeLetRole(id);
             }
         };
     }
@@ -133,7 +222,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<BikeLetUser, String> ApplicationConversionServiceFactoryBean.getBikeLetUserToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.BikeLetUser, java.lang.String>() {
             public String convert(BikeLetUser bikeLetUser) {
-                return new StringBuilder().append(bikeLetUser.getFirstName()).append(' ').append(bikeLetUser.getLastName()).append(' ').append(bikeLetUser.getEmail()).append(' ').append(bikeLetUser.getPassword()).toString();
+                return new StringBuilder().append(bikeLetUser.getFirstName()).append(" ").append(bikeLetUser.getLastName()).append(" ").append(bikeLetUser.getEmail()).append(" ").append(bikeLetUser.getPassword()).toString();
             }
         };
     }
@@ -141,7 +230,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, BikeLetUser> ApplicationConversionServiceFactoryBean.getIdToBikeLetUserConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.BikeLetUser>() {
             public com.sjsu.bikelet.domain.BikeLetUser convert(java.lang.Long id) {
-                return BikeLetUser.findBikeLetUser(id);
+                return bikeLetUserService.findBikeLetUser(id);
             }
         };
     }
@@ -165,7 +254,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, BikeLocation> ApplicationConversionServiceFactoryBean.getIdToBikeLocationConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.BikeLocation>() {
             public com.sjsu.bikelet.domain.BikeLocation convert(java.lang.Long id) {
-                return BikeLocation.findBikeLocation(id);
+                return bikeLocationService.findBikeLocation(id);
             }
         };
     }
@@ -181,7 +270,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Bill, String> ApplicationConversionServiceFactoryBean.getBillToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Bill, java.lang.String>() {
             public String convert(Bill bill) {
-                return new StringBuilder().append(bill.getTotalcharges()).append(' ').append(bill.getDescription()).append(' ').append(bill.getCreatedDate()).append(' ').append(bill.getBillStartDate()).toString();
+                return new StringBuilder().append(bill.getTotalcharges()).append(" ").append(bill.getDescription()).append(" ").append(bill.getCreatedDate()).append(" ").append(bill.getBillStartDate()).toString();
             }
         };
     }
@@ -189,7 +278,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, Bill> ApplicationConversionServiceFactoryBean.getIdToBillConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.Bill>() {
             public com.sjsu.bikelet.domain.Bill convert(java.lang.Long id) {
-                return Bill.findBill(id);
+                return billService.findBill(id);
             }
         };
     }
@@ -205,7 +294,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<BillTransaction, String> ApplicationConversionServiceFactoryBean.getBillTransactionToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.BillTransaction, java.lang.String>() {
             public String convert(BillTransaction billTransaction) {
-                return new StringBuilder().append(billTransaction.getTotalCost()).append(' ').append(billTransaction.getTransactionType()).append(' ').append(billTransaction.getStartDate()).append(' ').append(billTransaction.getEndDate()).toString();
+                return new StringBuilder().append(billTransaction.getTotalCost()).append(" ").append(billTransaction.getTransactionType()).append(" ").append(billTransaction.getStartDate()).append(" ").append(billTransaction.getEndDate()).toString();
             }
         };
     }
@@ -213,7 +302,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, BillTransaction> ApplicationConversionServiceFactoryBean.getIdToBillTransactionConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.BillTransaction>() {
             public com.sjsu.bikelet.domain.BillTransaction convert(java.lang.Long id) {
-                return BillTransaction.findBillTransaction(id);
+                return billTransactionService.findBillTransaction(id);
             }
         };
     }
@@ -229,7 +318,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<LicensePolicy, String> ApplicationConversionServiceFactoryBean.getLicensePolicyToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.LicensePolicy, java.lang.String>() {
             public String convert(LicensePolicy licensePolicy) {
-                return new StringBuilder().append(licensePolicy.getLicenseName()).append(' ').append(licensePolicy.getLicenseCostPeruser()).append(' ').append(licensePolicy.getLicenseType()).append(' ').append(licensePolicy.getLicenseBaseCost()).toString();
+                return new StringBuilder().append(licensePolicy.getLicenseName()).append(" ").append(licensePolicy.getLicenseCostPeruser()).append(" ").append(licensePolicy.getLicenseType()).append(" ").append(licensePolicy.getLicenseBaseCost()).toString();
             }
         };
     }
@@ -237,7 +326,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, LicensePolicy> ApplicationConversionServiceFactoryBean.getIdToLicensePolicyConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.LicensePolicy>() {
             public com.sjsu.bikelet.domain.LicensePolicy convert(java.lang.Long id) {
-                return LicensePolicy.findLicensePolicy(id);
+                return licensePolicyService.findLicensePolicy(id);
             }
         };
     }
@@ -253,7 +342,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<PaymentInfo, String> ApplicationConversionServiceFactoryBean.getPaymentInfoToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.PaymentInfo, java.lang.String>() {
             public String convert(PaymentInfo paymentInfo) {
-                return new StringBuilder().append(paymentInfo.getPaymentId()).append(' ').append(paymentInfo.getCardNumber()).append(' ').append(paymentInfo.getCardUserName()).toString();
+                return new StringBuilder().append(paymentInfo.getPaymentId()).append(" ").append(paymentInfo.getCardNumber()).append(" ").append(paymentInfo.getCardUserName()).toString();
             }
         };
     }
@@ -261,7 +350,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, PaymentInfo> ApplicationConversionServiceFactoryBean.getIdToPaymentInfoConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.PaymentInfo>() {
             public com.sjsu.bikelet.domain.PaymentInfo convert(java.lang.Long id) {
-                return PaymentInfo.findPaymentInfo(id);
+                return paymentInfoService.findPaymentInfo(id);
             }
         };
     }
@@ -277,7 +366,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<PaymentTransaction, String> ApplicationConversionServiceFactoryBean.getPaymentTransactionToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.PaymentTransaction, java.lang.String>() {
             public String convert(PaymentTransaction paymentTransaction) {
-                return new StringBuilder().append(paymentTransaction.getStatus()).append(' ').append(paymentTransaction.getDateOfTransaction()).append(' ').append(paymentTransaction.getPermissionName()).append(' ').append(paymentTransaction.getDescription()).toString();
+                return new StringBuilder().append(paymentTransaction.getStatus()).append(" ").append(paymentTransaction.getDateOfTransaction()).append(" ").append(paymentTransaction.getPermissionName()).append(" ").append(paymentTransaction.getDescription()).toString();
             }
         };
     }
@@ -285,7 +374,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, PaymentTransaction> ApplicationConversionServiceFactoryBean.getIdToPaymentTransactionConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.PaymentTransaction>() {
             public com.sjsu.bikelet.domain.PaymentTransaction convert(java.lang.Long id) {
-                return PaymentTransaction.findPaymentTransaction(id);
+                return paymentTransactionService.findPaymentTransaction(id);
             }
         };
     }
@@ -301,7 +390,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Permission, String> ApplicationConversionServiceFactoryBean.getPermissionToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Permission, java.lang.String>() {
             public String convert(Permission permission) {
-                return new StringBuilder().append(permission.getPermissionName()).append(' ').append(permission.getDescription()).toString();
+                return new StringBuilder().append(permission.getPermissionName()).append(" ").append(permission.getDescription()).toString();
             }
         };
     }
@@ -309,7 +398,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, Permission> ApplicationConversionServiceFactoryBean.getIdToPermissionConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.Permission>() {
             public com.sjsu.bikelet.domain.Permission convert(java.lang.Long id) {
-                return Permission.findPermission(id);
+                return permissionService.findPermission(id);
             }
         };
     }
@@ -325,7 +414,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Program, String> ApplicationConversionServiceFactoryBean.getProgramToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Program, java.lang.String>() {
             public String convert(Program program) {
-                return new StringBuilder().append(program.getProgramName()).append(' ').append(program.getDescription()).append(' ').append(program.getOrgName()).append(' ').append(program.getContactId()).toString();
+                return new StringBuilder().append(program.getProgramName()).append(" ").append(program.getDescription()).append(" ").append(program.getOrgName()).append(" ").append(program.getContactId()).toString();
             }
         };
     }
@@ -333,7 +422,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, Program> ApplicationConversionServiceFactoryBean.getIdToProgramConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.Program>() {
             public com.sjsu.bikelet.domain.Program convert(java.lang.Long id) {
-                return Program.findProgram(id);
+                return programService.findProgram(id);
             }
         };
     }
@@ -349,7 +438,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<RentTransaction, String> ApplicationConversionServiceFactoryBean.getRentTransactionToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.RentTransaction, java.lang.String>() {
             public String convert(RentTransaction rentTransaction) {
-                return new StringBuilder().append(rentTransaction.getFromStationId()).append(' ').append(rentTransaction.getToStationId()).append(' ').append(rentTransaction.getTenantId()).append(' ').append(rentTransaction.getRentStartDate()).toString();
+                return new StringBuilder().append(rentTransaction.getFromStationId()).append(" ").append(rentTransaction.getToStationId()).append(" ").append(rentTransaction.getTenantId()).append(" ").append(rentTransaction.getRentStartDate()).toString();
             }
         };
     }
@@ -357,7 +446,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, RentTransaction> ApplicationConversionServiceFactoryBean.getIdToRentTransactionConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.RentTransaction>() {
             public com.sjsu.bikelet.domain.RentTransaction convert(java.lang.Long id) {
-                return RentTransaction.findRentTransaction(id);
+                return rentTransactionService.findRentTransaction(id);
             }
         };
     }
@@ -373,7 +462,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<RolePermission, String> ApplicationConversionServiceFactoryBean.getRolePermissionToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.RolePermission, java.lang.String>() {
             public String convert(RolePermission rolePermission) {
-                return "(no displayable fields)";
+                return new StringBuilder().toString();
             }
         };
     }
@@ -381,7 +470,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, RolePermission> ApplicationConversionServiceFactoryBean.getIdToRolePermissionConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.RolePermission>() {
             public com.sjsu.bikelet.domain.RolePermission convert(java.lang.Long id) {
-                return RolePermission.findRolePermission(id);
+                return rolePermissionService.findRolePermission(id);
             }
         };
     }
@@ -397,7 +486,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Station, String> ApplicationConversionServiceFactoryBean.getStationToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Station, java.lang.String>() {
             public String convert(Station station) {
-                return new StringBuilder().append(station.getLocation()).append(' ').append(station.getCapacity()).toString();
+                return new StringBuilder().append(station.getLocation()).append(" ").append(station.getCapacity()).toString();
             }
         };
     }
@@ -405,7 +494,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, Station> ApplicationConversionServiceFactoryBean.getIdToStationConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.Station>() {
             public com.sjsu.bikelet.domain.Station convert(java.lang.Long id) {
-                return Station.findStation(id);
+                return stationService.findStation(id);
             }
         };
     }
@@ -421,7 +510,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<SubscriptionPolicy, String> ApplicationConversionServiceFactoryBean.getSubscriptionPolicyToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.SubscriptionPolicy, java.lang.String>() {
             public String convert(SubscriptionPolicy subscriptionPolicy) {
-                return new StringBuilder().append(subscriptionPolicy.getPolicyName()).append(' ').append(subscriptionPolicy.getPolicyDescription()).toString();
+                return new StringBuilder().append(subscriptionPolicy.getPolicyName()).append(" ").append(subscriptionPolicy.getPolicyDescription()).toString();
             }
         };
     }
@@ -429,7 +518,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, SubscriptionPolicy> ApplicationConversionServiceFactoryBean.getIdToSubscriptionPolicyConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.SubscriptionPolicy>() {
             public com.sjsu.bikelet.domain.SubscriptionPolicy convert(java.lang.Long id) {
-                return SubscriptionPolicy.findSubscriptionPolicy(id);
+                return subscriptionPolicyService.findSubscriptionPolicy(id);
             }
         };
     }
@@ -445,7 +534,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<SubscriptionRate, String> ApplicationConversionServiceFactoryBean.getSubscriptionRateToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.SubscriptionRate, java.lang.String>() {
             public String convert(SubscriptionRate subscriptionRate) {
-                return new StringBuilder().append(subscriptionRate.getMembershipPerMonth()).append(' ').append(subscriptionRate.getOrganizationShare()).append(' ').append(subscriptionRate.getUserShare()).append(' ').append(subscriptionRate.getFreeMinsPerDay()).toString();
+                return new StringBuilder().append(subscriptionRate.getMembershipPerMonth()).append(" ").append(subscriptionRate.getOrganizationShare()).append(" ").append(subscriptionRate.getUserShare()).append(" ").append(subscriptionRate.getFreeMinsPerDay()).toString();
             }
         };
     }
@@ -453,7 +542,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, SubscriptionRate> ApplicationConversionServiceFactoryBean.getIdToSubscriptionRateConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.SubscriptionRate>() {
             public com.sjsu.bikelet.domain.SubscriptionRate convert(java.lang.Long id) {
-                return SubscriptionRate.findSubscriptionRate(id);
+                return subscriptionRateService.findSubscriptionRate(id);
             }
         };
     }
@@ -469,7 +558,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Tenant, String> ApplicationConversionServiceFactoryBean.getTenantToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Tenant, java.lang.String>() {
             public String convert(Tenant tenant) {
-                return new StringBuilder().append(tenant.getTenantName()).append(' ').append(tenant.getContactId()).toString();
+                return new StringBuilder().append(tenant.getTenantName()).append(" ").append(tenant.getContactId()).toString();
             }
         };
     }
@@ -477,7 +566,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, Tenant> ApplicationConversionServiceFactoryBean.getIdToTenantConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.Tenant>() {
             public com.sjsu.bikelet.domain.Tenant convert(java.lang.Long id) {
-                return Tenant.findTenant(id);
+                return tenantService.findTenant(id);
             }
         };
     }
@@ -493,7 +582,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<TenantLicensePolicy, String> ApplicationConversionServiceFactoryBean.getTenantLicensePolicyToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.TenantLicensePolicy, java.lang.String>() {
             public String convert(TenantLicensePolicy tenantLicensePolicy) {
-                return new StringBuilder().append(tenantLicensePolicy.getLicenseStartDate()).append(' ').append(tenantLicensePolicy.getLicenseEndDate()).toString();
+                return new StringBuilder().append(tenantLicensePolicy.getLicenseStartDate()).append(" ").append(tenantLicensePolicy.getLicenseEndDate()).toString();
             }
         };
     }
@@ -501,7 +590,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, TenantLicensePolicy> ApplicationConversionServiceFactoryBean.getIdToTenantLicensePolicyConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.TenantLicensePolicy>() {
             public com.sjsu.bikelet.domain.TenantLicensePolicy convert(java.lang.Long id) {
-                return TenantLicensePolicy.findTenantLicensePolicy(id);
+                return tenantLicensePolicyService.findTenantLicensePolicy(id);
             }
         };
     }
@@ -517,7 +606,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<UserRole, String> ApplicationConversionServiceFactoryBean.getUserRoleToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.UserRole, java.lang.String>() {
             public String convert(UserRole userRole) {
-                return "(no displayable fields)";
+                return new StringBuilder().toString();
             }
         };
     }
@@ -525,7 +614,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, UserRole> ApplicationConversionServiceFactoryBean.getIdToUserRoleConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.UserRole>() {
             public com.sjsu.bikelet.domain.UserRole convert(java.lang.Long id) {
-                return UserRole.findUserRole(id);
+                return userRoleService.findUserRole(id);
             }
         };
     }
@@ -541,7 +630,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<UserSubscriptionPolicy, String> ApplicationConversionServiceFactoryBean.getUserSubscriptionPolicyToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.UserSubscriptionPolicy, java.lang.String>() {
             public String convert(UserSubscriptionPolicy userSubscriptionPolicy) {
-                return "(no displayable fields)";
+                return new StringBuilder().toString();
             }
         };
     }
@@ -549,7 +638,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, UserSubscriptionPolicy> ApplicationConversionServiceFactoryBean.getIdToUserSubscriptionPolicyConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.UserSubscriptionPolicy>() {
             public com.sjsu.bikelet.domain.UserSubscriptionPolicy convert(java.lang.Long id) {
-                return UserSubscriptionPolicy.findUserSubscriptionPolicy(id);
+                return userSubscriptionPolicyService.findUserSubscriptionPolicy(id);
             }
         };
     }

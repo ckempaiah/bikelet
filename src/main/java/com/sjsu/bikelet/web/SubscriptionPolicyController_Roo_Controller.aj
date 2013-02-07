@@ -3,12 +3,14 @@
 
 package com.sjsu.bikelet.web;
 
-import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.SubscriptionPolicy;
+import com.sjsu.bikelet.service.ProgramService;
+import com.sjsu.bikelet.service.SubscriptionPolicyService;
 import com.sjsu.bikelet.web.SubscriptionPolicyController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,12 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect SubscriptionPolicyController_Roo_Controller {
     
+    @Autowired
+    SubscriptionPolicyService SubscriptionPolicyController.subscriptionPolicyService;
+    
+    @Autowired
+    ProgramService SubscriptionPolicyController.programService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String SubscriptionPolicyController.create(@Valid SubscriptionPolicy subscriptionPolicy, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -27,7 +35,7 @@ privileged aspect SubscriptionPolicyController_Roo_Controller {
             return "subscriptionpolicys/create";
         }
         uiModel.asMap().clear();
-        subscriptionPolicy.persist();
+        subscriptionPolicyService.saveSubscriptionPolicy(subscriptionPolicy);
         return "redirect:/subscriptionpolicys/" + encodeUrlPathSegment(subscriptionPolicy.getId().toString(), httpServletRequest);
     }
     
@@ -39,7 +47,7 @@ privileged aspect SubscriptionPolicyController_Roo_Controller {
     
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String SubscriptionPolicyController.show(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("subscriptionpolicy", SubscriptionPolicy.findSubscriptionPolicy(id));
+        uiModel.addAttribute("subscriptionpolicy", subscriptionPolicyService.findSubscriptionPolicy(id));
         uiModel.addAttribute("itemId", id);
         return "subscriptionpolicys/show";
     }
@@ -49,11 +57,11 @@ privileged aspect SubscriptionPolicyController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("subscriptionpolicys", SubscriptionPolicy.findSubscriptionPolicyEntries(firstResult, sizeNo));
-            float nrOfPages = (float) SubscriptionPolicy.countSubscriptionPolicys() / sizeNo;
+            uiModel.addAttribute("subscriptionpolicys", subscriptionPolicyService.findSubscriptionPolicyEntries(firstResult, sizeNo));
+            float nrOfPages = (float) subscriptionPolicyService.countAllSubscriptionPolicys() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("subscriptionpolicys", SubscriptionPolicy.findAllSubscriptionPolicys());
+            uiModel.addAttribute("subscriptionpolicys", subscriptionPolicyService.findAllSubscriptionPolicys());
         }
         return "subscriptionpolicys/list";
     }
@@ -65,20 +73,20 @@ privileged aspect SubscriptionPolicyController_Roo_Controller {
             return "subscriptionpolicys/update";
         }
         uiModel.asMap().clear();
-        subscriptionPolicy.merge();
+        subscriptionPolicyService.updateSubscriptionPolicy(subscriptionPolicy);
         return "redirect:/subscriptionpolicys/" + encodeUrlPathSegment(subscriptionPolicy.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String SubscriptionPolicyController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, SubscriptionPolicy.findSubscriptionPolicy(id));
+        populateEditForm(uiModel, subscriptionPolicyService.findSubscriptionPolicy(id));
         return "subscriptionpolicys/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String SubscriptionPolicyController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        SubscriptionPolicy subscriptionPolicy = SubscriptionPolicy.findSubscriptionPolicy(id);
-        subscriptionPolicy.remove();
+        SubscriptionPolicy subscriptionPolicy = subscriptionPolicyService.findSubscriptionPolicy(id);
+        subscriptionPolicyService.deleteSubscriptionPolicy(subscriptionPolicy);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
@@ -87,7 +95,7 @@ privileged aspect SubscriptionPolicyController_Roo_Controller {
     
     void SubscriptionPolicyController.populateEditForm(Model uiModel, SubscriptionPolicy subscriptionPolicy) {
         uiModel.addAttribute("subscriptionPolicy", subscriptionPolicy);
-        uiModel.addAttribute("programs", Program.findAllPrograms());
+        uiModel.addAttribute("programs", programService.findAllPrograms());
     }
     
     String SubscriptionPolicyController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

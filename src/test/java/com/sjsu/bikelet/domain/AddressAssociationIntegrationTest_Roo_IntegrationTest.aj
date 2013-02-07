@@ -24,7 +24,7 @@ privileged aspect AddressAssociationIntegrationTest_Roo_IntegrationTest {
     declare @type: AddressAssociationIntegrationTest: @Transactional;
     
     @Autowired
-    AddressAssociationDataOnDemand AddressAssociationIntegrationTest.dod;
+    private AddressAssociationDataOnDemand AddressAssociationIntegrationTest.dod;
     
     @Test
     public void AddressAssociationIntegrationTest.testCountAddressAssociations() {

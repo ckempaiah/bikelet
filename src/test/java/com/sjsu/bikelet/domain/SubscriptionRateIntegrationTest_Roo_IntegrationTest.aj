@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.SubscriptionRate;
 import com.sjsu.bikelet.domain.SubscriptionRateDataOnDemand;
 import com.sjsu.bikelet.domain.SubscriptionRateIntegrationTest;
+import com.sjsu.bikelet.service.SubscriptionRateService;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,12 +24,15 @@ privileged aspect SubscriptionRateIntegrationTest_Roo_IntegrationTest {
     declare @type: SubscriptionRateIntegrationTest: @Transactional;
     
     @Autowired
-    SubscriptionRateDataOnDemand SubscriptionRateIntegrationTest.dod;
+    private SubscriptionRateDataOnDemand SubscriptionRateIntegrationTest.dod;
+    
+    @Autowired
+    SubscriptionRateService SubscriptionRateIntegrationTest.subscriptionRateService;
     
     @Test
-    public void SubscriptionRateIntegrationTest.testCountSubscriptionRates() {
+    public void SubscriptionRateIntegrationTest.testCountAllSubscriptionRates() {
         Assert.assertNotNull("Data on demand for 'SubscriptionRate' failed to initialize correctly", dod.getRandomSubscriptionRate());
-        long count = SubscriptionRate.countSubscriptionRates();
+        long count = subscriptionRateService.countAllSubscriptionRates();
         Assert.assertTrue("Counter for 'SubscriptionRate' incorrectly reported there were no entries", count > 0);
     }
     
@@ -39,7 +42,7 @@ privileged aspect SubscriptionRateIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'SubscriptionRate' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'SubscriptionRate' failed to provide an identifier", id);
-        obj = SubscriptionRate.findSubscriptionRate(id);
+        obj = subscriptionRateService.findSubscriptionRate(id);
         Assert.assertNotNull("Find method for 'SubscriptionRate' illegally returned null for id '" + id + "'", obj);
         Assert.assertEquals("Find method for 'SubscriptionRate' returned the incorrect identifier", id, obj.getId());
     }
@@ -47,9 +50,9 @@ privileged aspect SubscriptionRateIntegrationTest_Roo_IntegrationTest {
     @Test
     public void SubscriptionRateIntegrationTest.testFindAllSubscriptionRates() {
         Assert.assertNotNull("Data on demand for 'SubscriptionRate' failed to initialize correctly", dod.getRandomSubscriptionRate());
-        long count = SubscriptionRate.countSubscriptionRates();
+        long count = subscriptionRateService.countAllSubscriptionRates();
         Assert.assertTrue("Too expensive to perform a find all test for 'SubscriptionRate', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<SubscriptionRate> result = SubscriptionRate.findAllSubscriptionRates();
+        List<SubscriptionRate> result = subscriptionRateService.findAllSubscriptionRates();
         Assert.assertNotNull("Find all method for 'SubscriptionRate' illegally returned null", result);
         Assert.assertTrue("Find all method for 'SubscriptionRate' failed to return any data", result.size() > 0);
     }
@@ -57,11 +60,11 @@ privileged aspect SubscriptionRateIntegrationTest_Roo_IntegrationTest {
     @Test
     public void SubscriptionRateIntegrationTest.testFindSubscriptionRateEntries() {
         Assert.assertNotNull("Data on demand for 'SubscriptionRate' failed to initialize correctly", dod.getRandomSubscriptionRate());
-        long count = SubscriptionRate.countSubscriptionRates();
+        long count = subscriptionRateService.countAllSubscriptionRates();
         if (count > 20) count = 20;
         int firstResult = 0;
         int maxResults = (int) count;
-        List<SubscriptionRate> result = SubscriptionRate.findSubscriptionRateEntries(firstResult, maxResults);
+        List<SubscriptionRate> result = subscriptionRateService.findSubscriptionRateEntries(firstResult, maxResults);
         Assert.assertNotNull("Find entries method for 'SubscriptionRate' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'SubscriptionRate' returned an incorrect number of entries", count, result.size());
     }
@@ -72,7 +75,7 @@ privileged aspect SubscriptionRateIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'SubscriptionRate' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'SubscriptionRate' failed to provide an identifier", id);
-        obj = SubscriptionRate.findSubscriptionRate(id);
+        obj = subscriptionRateService.findSubscriptionRate(id);
         Assert.assertNotNull("Find method for 'SubscriptionRate' illegally returned null for id '" + id + "'", obj);
         boolean modified =  dod.modifySubscriptionRate(obj);
         Integer currentVersion = obj.getVersion();
@@ -81,41 +84,41 @@ privileged aspect SubscriptionRateIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void SubscriptionRateIntegrationTest.testMergeUpdate() {
+    public void SubscriptionRateIntegrationTest.testUpdateSubscriptionRateUpdate() {
         SubscriptionRate obj = dod.getRandomSubscriptionRate();
         Assert.assertNotNull("Data on demand for 'SubscriptionRate' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'SubscriptionRate' failed to provide an identifier", id);
-        obj = SubscriptionRate.findSubscriptionRate(id);
+        obj = subscriptionRateService.findSubscriptionRate(id);
         boolean modified =  dod.modifySubscriptionRate(obj);
         Integer currentVersion = obj.getVersion();
-        SubscriptionRate merged = obj.merge();
+        SubscriptionRate merged = subscriptionRateService.updateSubscriptionRate(obj);
         obj.flush();
         Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
         Assert.assertTrue("Version for 'SubscriptionRate' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
-    public void SubscriptionRateIntegrationTest.testPersist() {
+    public void SubscriptionRateIntegrationTest.testSaveSubscriptionRate() {
         Assert.assertNotNull("Data on demand for 'SubscriptionRate' failed to initialize correctly", dod.getRandomSubscriptionRate());
         SubscriptionRate obj = dod.getNewTransientSubscriptionRate(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'SubscriptionRate' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'SubscriptionRate' identifier to be null", obj.getId());
-        obj.persist();
+        subscriptionRateService.saveSubscriptionRate(obj);
         obj.flush();
         Assert.assertNotNull("Expected 'SubscriptionRate' identifier to no longer be null", obj.getId());
     }
     
     @Test
-    public void SubscriptionRateIntegrationTest.testRemove() {
+    public void SubscriptionRateIntegrationTest.testDeleteSubscriptionRate() {
         SubscriptionRate obj = dod.getRandomSubscriptionRate();
         Assert.assertNotNull("Data on demand for 'SubscriptionRate' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'SubscriptionRate' failed to provide an identifier", id);
-        obj = SubscriptionRate.findSubscriptionRate(id);
-        obj.remove();
+        obj = subscriptionRateService.findSubscriptionRate(id);
+        subscriptionRateService.deleteSubscriptionRate(obj);
         obj.flush();
-        Assert.assertNull("Failed to remove 'SubscriptionRate' with identifier '" + id + "'", SubscriptionRate.findSubscriptionRate(id));
+        Assert.assertNull("Failed to remove 'SubscriptionRate' with identifier '" + id + "'", subscriptionRateService.findSubscriptionRate(id));
     }
     
 }

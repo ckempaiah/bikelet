@@ -3,15 +3,17 @@
 
 package com.sjsu.bikelet.web;
 
-import com.sjsu.bikelet.domain.BikeLetUser;
-import com.sjsu.bikelet.domain.Bill;
-import com.sjsu.bikelet.domain.PaymentInfo;
 import com.sjsu.bikelet.domain.PaymentTransaction;
+import com.sjsu.bikelet.service.BikeLetUserService;
+import com.sjsu.bikelet.service.BillService;
+import com.sjsu.bikelet.service.PaymentInfoService;
+import com.sjsu.bikelet.service.PaymentTransactionService;
 import com.sjsu.bikelet.web.PaymentTransactionController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.joda.time.format.DateTimeFormat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +26,18 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect PaymentTransactionController_Roo_Controller {
     
+    @Autowired
+    PaymentTransactionService PaymentTransactionController.paymentTransactionService;
+    
+    @Autowired
+    BikeLetUserService PaymentTransactionController.bikeLetUserService;
+    
+    @Autowired
+    BillService PaymentTransactionController.billService;
+    
+    @Autowired
+    PaymentInfoService PaymentTransactionController.paymentInfoService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String PaymentTransactionController.create(@Valid PaymentTransaction paymentTransaction, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -31,7 +45,7 @@ privileged aspect PaymentTransactionController_Roo_Controller {
             return "paymenttransactions/create";
         }
         uiModel.asMap().clear();
-        paymentTransaction.persist();
+        paymentTransactionService.savePaymentTransaction(paymentTransaction);
         return "redirect:/paymenttransactions/" + encodeUrlPathSegment(paymentTransaction.getId().toString(), httpServletRequest);
     }
     
@@ -44,7 +58,7 @@ privileged aspect PaymentTransactionController_Roo_Controller {
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String PaymentTransactionController.show(@PathVariable("id") Long id, Model uiModel) {
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("paymenttransaction", PaymentTransaction.findPaymentTransaction(id));
+        uiModel.addAttribute("paymenttransaction", paymentTransactionService.findPaymentTransaction(id));
         uiModel.addAttribute("itemId", id);
         return "paymenttransactions/show";
     }
@@ -54,11 +68,11 @@ privileged aspect PaymentTransactionController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("paymenttransactions", PaymentTransaction.findPaymentTransactionEntries(firstResult, sizeNo));
-            float nrOfPages = (float) PaymentTransaction.countPaymentTransactions() / sizeNo;
+            uiModel.addAttribute("paymenttransactions", paymentTransactionService.findPaymentTransactionEntries(firstResult, sizeNo));
+            float nrOfPages = (float) paymentTransactionService.countAllPaymentTransactions() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("paymenttransactions", PaymentTransaction.findAllPaymentTransactions());
+            uiModel.addAttribute("paymenttransactions", paymentTransactionService.findAllPaymentTransactions());
         }
         addDateTimeFormatPatterns(uiModel);
         return "paymenttransactions/list";
@@ -71,20 +85,20 @@ privileged aspect PaymentTransactionController_Roo_Controller {
             return "paymenttransactions/update";
         }
         uiModel.asMap().clear();
-        paymentTransaction.merge();
+        paymentTransactionService.updatePaymentTransaction(paymentTransaction);
         return "redirect:/paymenttransactions/" + encodeUrlPathSegment(paymentTransaction.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String PaymentTransactionController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, PaymentTransaction.findPaymentTransaction(id));
+        populateEditForm(uiModel, paymentTransactionService.findPaymentTransaction(id));
         return "paymenttransactions/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String PaymentTransactionController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        PaymentTransaction paymentTransaction = PaymentTransaction.findPaymentTransaction(id);
-        paymentTransaction.remove();
+        PaymentTransaction paymentTransaction = paymentTransactionService.findPaymentTransaction(id);
+        paymentTransactionService.deletePaymentTransaction(paymentTransaction);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
@@ -98,9 +112,9 @@ privileged aspect PaymentTransactionController_Roo_Controller {
     void PaymentTransactionController.populateEditForm(Model uiModel, PaymentTransaction paymentTransaction) {
         uiModel.addAttribute("paymentTransaction", paymentTransaction);
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("bikeletusers", BikeLetUser.findAllBikeLetUsers());
-        uiModel.addAttribute("bills", Bill.findAllBills());
-        uiModel.addAttribute("paymentinfoes", PaymentInfo.findAllPaymentInfoes());
+        uiModel.addAttribute("bikeletusers", bikeLetUserService.findAllBikeLetUsers());
+        uiModel.addAttribute("bills", billService.findAllBills());
+        uiModel.addAttribute("paymentinfoes", paymentInfoService.findAllPaymentInfoes());
     }
     
     String PaymentTransactionController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

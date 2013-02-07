@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.SubscriptionPolicy;
 import com.sjsu.bikelet.domain.SubscriptionPolicyDataOnDemand;
 import com.sjsu.bikelet.domain.SubscriptionPolicyIntegrationTest;
+import com.sjsu.bikelet.service.SubscriptionPolicyService;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,12 +24,15 @@ privileged aspect SubscriptionPolicyIntegrationTest_Roo_IntegrationTest {
     declare @type: SubscriptionPolicyIntegrationTest: @Transactional;
     
     @Autowired
-    SubscriptionPolicyDataOnDemand SubscriptionPolicyIntegrationTest.dod;
+    private SubscriptionPolicyDataOnDemand SubscriptionPolicyIntegrationTest.dod;
+    
+    @Autowired
+    SubscriptionPolicyService SubscriptionPolicyIntegrationTest.subscriptionPolicyService;
     
     @Test
-    public void SubscriptionPolicyIntegrationTest.testCountSubscriptionPolicys() {
+    public void SubscriptionPolicyIntegrationTest.testCountAllSubscriptionPolicys() {
         Assert.assertNotNull("Data on demand for 'SubscriptionPolicy' failed to initialize correctly", dod.getRandomSubscriptionPolicy());
-        long count = SubscriptionPolicy.countSubscriptionPolicys();
+        long count = subscriptionPolicyService.countAllSubscriptionPolicys();
         Assert.assertTrue("Counter for 'SubscriptionPolicy' incorrectly reported there were no entries", count > 0);
     }
     
@@ -39,7 +42,7 @@ privileged aspect SubscriptionPolicyIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'SubscriptionPolicy' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'SubscriptionPolicy' failed to provide an identifier", id);
-        obj = SubscriptionPolicy.findSubscriptionPolicy(id);
+        obj = subscriptionPolicyService.findSubscriptionPolicy(id);
         Assert.assertNotNull("Find method for 'SubscriptionPolicy' illegally returned null for id '" + id + "'", obj);
         Assert.assertEquals("Find method for 'SubscriptionPolicy' returned the incorrect identifier", id, obj.getId());
     }
@@ -47,9 +50,9 @@ privileged aspect SubscriptionPolicyIntegrationTest_Roo_IntegrationTest {
     @Test
     public void SubscriptionPolicyIntegrationTest.testFindAllSubscriptionPolicys() {
         Assert.assertNotNull("Data on demand for 'SubscriptionPolicy' failed to initialize correctly", dod.getRandomSubscriptionPolicy());
-        long count = SubscriptionPolicy.countSubscriptionPolicys();
+        long count = subscriptionPolicyService.countAllSubscriptionPolicys();
         Assert.assertTrue("Too expensive to perform a find all test for 'SubscriptionPolicy', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<SubscriptionPolicy> result = SubscriptionPolicy.findAllSubscriptionPolicys();
+        List<SubscriptionPolicy> result = subscriptionPolicyService.findAllSubscriptionPolicys();
         Assert.assertNotNull("Find all method for 'SubscriptionPolicy' illegally returned null", result);
         Assert.assertTrue("Find all method for 'SubscriptionPolicy' failed to return any data", result.size() > 0);
     }
@@ -57,11 +60,11 @@ privileged aspect SubscriptionPolicyIntegrationTest_Roo_IntegrationTest {
     @Test
     public void SubscriptionPolicyIntegrationTest.testFindSubscriptionPolicyEntries() {
         Assert.assertNotNull("Data on demand for 'SubscriptionPolicy' failed to initialize correctly", dod.getRandomSubscriptionPolicy());
-        long count = SubscriptionPolicy.countSubscriptionPolicys();
+        long count = subscriptionPolicyService.countAllSubscriptionPolicys();
         if (count > 20) count = 20;
         int firstResult = 0;
         int maxResults = (int) count;
-        List<SubscriptionPolicy> result = SubscriptionPolicy.findSubscriptionPolicyEntries(firstResult, maxResults);
+        List<SubscriptionPolicy> result = subscriptionPolicyService.findSubscriptionPolicyEntries(firstResult, maxResults);
         Assert.assertNotNull("Find entries method for 'SubscriptionPolicy' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'SubscriptionPolicy' returned an incorrect number of entries", count, result.size());
     }
@@ -72,7 +75,7 @@ privileged aspect SubscriptionPolicyIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'SubscriptionPolicy' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'SubscriptionPolicy' failed to provide an identifier", id);
-        obj = SubscriptionPolicy.findSubscriptionPolicy(id);
+        obj = subscriptionPolicyService.findSubscriptionPolicy(id);
         Assert.assertNotNull("Find method for 'SubscriptionPolicy' illegally returned null for id '" + id + "'", obj);
         boolean modified =  dod.modifySubscriptionPolicy(obj);
         Integer currentVersion = obj.getVersion();
@@ -81,41 +84,41 @@ privileged aspect SubscriptionPolicyIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void SubscriptionPolicyIntegrationTest.testMergeUpdate() {
+    public void SubscriptionPolicyIntegrationTest.testUpdateSubscriptionPolicyUpdate() {
         SubscriptionPolicy obj = dod.getRandomSubscriptionPolicy();
         Assert.assertNotNull("Data on demand for 'SubscriptionPolicy' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'SubscriptionPolicy' failed to provide an identifier", id);
-        obj = SubscriptionPolicy.findSubscriptionPolicy(id);
+        obj = subscriptionPolicyService.findSubscriptionPolicy(id);
         boolean modified =  dod.modifySubscriptionPolicy(obj);
         Integer currentVersion = obj.getVersion();
-        SubscriptionPolicy merged = obj.merge();
+        SubscriptionPolicy merged = subscriptionPolicyService.updateSubscriptionPolicy(obj);
         obj.flush();
         Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
         Assert.assertTrue("Version for 'SubscriptionPolicy' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
-    public void SubscriptionPolicyIntegrationTest.testPersist() {
+    public void SubscriptionPolicyIntegrationTest.testSaveSubscriptionPolicy() {
         Assert.assertNotNull("Data on demand for 'SubscriptionPolicy' failed to initialize correctly", dod.getRandomSubscriptionPolicy());
         SubscriptionPolicy obj = dod.getNewTransientSubscriptionPolicy(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'SubscriptionPolicy' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'SubscriptionPolicy' identifier to be null", obj.getId());
-        obj.persist();
+        subscriptionPolicyService.saveSubscriptionPolicy(obj);
         obj.flush();
         Assert.assertNotNull("Expected 'SubscriptionPolicy' identifier to no longer be null", obj.getId());
     }
     
     @Test
-    public void SubscriptionPolicyIntegrationTest.testRemove() {
+    public void SubscriptionPolicyIntegrationTest.testDeleteSubscriptionPolicy() {
         SubscriptionPolicy obj = dod.getRandomSubscriptionPolicy();
         Assert.assertNotNull("Data on demand for 'SubscriptionPolicy' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'SubscriptionPolicy' failed to provide an identifier", id);
-        obj = SubscriptionPolicy.findSubscriptionPolicy(id);
-        obj.remove();
+        obj = subscriptionPolicyService.findSubscriptionPolicy(id);
+        subscriptionPolicyService.deleteSubscriptionPolicy(obj);
         obj.flush();
-        Assert.assertNull("Failed to remove 'SubscriptionPolicy' with identifier '" + id + "'", SubscriptionPolicy.findSubscriptionPolicy(id));
+        Assert.assertNull("Failed to remove 'SubscriptionPolicy' with identifier '" + id + "'", subscriptionPolicyService.findSubscriptionPolicy(id));
     }
     
 }

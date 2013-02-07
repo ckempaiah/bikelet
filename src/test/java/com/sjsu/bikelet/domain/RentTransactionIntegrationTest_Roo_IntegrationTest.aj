@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.RentTransaction;
 import com.sjsu.bikelet.domain.RentTransactionDataOnDemand;
 import com.sjsu.bikelet.domain.RentTransactionIntegrationTest;
+import com.sjsu.bikelet.service.RentTransactionService;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,12 +24,15 @@ privileged aspect RentTransactionIntegrationTest_Roo_IntegrationTest {
     declare @type: RentTransactionIntegrationTest: @Transactional;
     
     @Autowired
-    RentTransactionDataOnDemand RentTransactionIntegrationTest.dod;
+    private RentTransactionDataOnDemand RentTransactionIntegrationTest.dod;
+    
+    @Autowired
+    RentTransactionService RentTransactionIntegrationTest.rentTransactionService;
     
     @Test
-    public void RentTransactionIntegrationTest.testCountRentTransactions() {
+    public void RentTransactionIntegrationTest.testCountAllRentTransactions() {
         Assert.assertNotNull("Data on demand for 'RentTransaction' failed to initialize correctly", dod.getRandomRentTransaction());
-        long count = RentTransaction.countRentTransactions();
+        long count = rentTransactionService.countAllRentTransactions();
         Assert.assertTrue("Counter for 'RentTransaction' incorrectly reported there were no entries", count > 0);
     }
     
@@ -39,7 +42,7 @@ privileged aspect RentTransactionIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'RentTransaction' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'RentTransaction' failed to provide an identifier", id);
-        obj = RentTransaction.findRentTransaction(id);
+        obj = rentTransactionService.findRentTransaction(id);
         Assert.assertNotNull("Find method for 'RentTransaction' illegally returned null for id '" + id + "'", obj);
         Assert.assertEquals("Find method for 'RentTransaction' returned the incorrect identifier", id, obj.getId());
     }
@@ -47,9 +50,9 @@ privileged aspect RentTransactionIntegrationTest_Roo_IntegrationTest {
     @Test
     public void RentTransactionIntegrationTest.testFindAllRentTransactions() {
         Assert.assertNotNull("Data on demand for 'RentTransaction' failed to initialize correctly", dod.getRandomRentTransaction());
-        long count = RentTransaction.countRentTransactions();
+        long count = rentTransactionService.countAllRentTransactions();
         Assert.assertTrue("Too expensive to perform a find all test for 'RentTransaction', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<RentTransaction> result = RentTransaction.findAllRentTransactions();
+        List<RentTransaction> result = rentTransactionService.findAllRentTransactions();
         Assert.assertNotNull("Find all method for 'RentTransaction' illegally returned null", result);
         Assert.assertTrue("Find all method for 'RentTransaction' failed to return any data", result.size() > 0);
     }
@@ -57,11 +60,11 @@ privileged aspect RentTransactionIntegrationTest_Roo_IntegrationTest {
     @Test
     public void RentTransactionIntegrationTest.testFindRentTransactionEntries() {
         Assert.assertNotNull("Data on demand for 'RentTransaction' failed to initialize correctly", dod.getRandomRentTransaction());
-        long count = RentTransaction.countRentTransactions();
+        long count = rentTransactionService.countAllRentTransactions();
         if (count > 20) count = 20;
         int firstResult = 0;
         int maxResults = (int) count;
-        List<RentTransaction> result = RentTransaction.findRentTransactionEntries(firstResult, maxResults);
+        List<RentTransaction> result = rentTransactionService.findRentTransactionEntries(firstResult, maxResults);
         Assert.assertNotNull("Find entries method for 'RentTransaction' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'RentTransaction' returned an incorrect number of entries", count, result.size());
     }
@@ -72,7 +75,7 @@ privileged aspect RentTransactionIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'RentTransaction' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'RentTransaction' failed to provide an identifier", id);
-        obj = RentTransaction.findRentTransaction(id);
+        obj = rentTransactionService.findRentTransaction(id);
         Assert.assertNotNull("Find method for 'RentTransaction' illegally returned null for id '" + id + "'", obj);
         boolean modified =  dod.modifyRentTransaction(obj);
         Integer currentVersion = obj.getVersion();
@@ -81,41 +84,41 @@ privileged aspect RentTransactionIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void RentTransactionIntegrationTest.testMergeUpdate() {
+    public void RentTransactionIntegrationTest.testUpdateRentTransactionUpdate() {
         RentTransaction obj = dod.getRandomRentTransaction();
         Assert.assertNotNull("Data on demand for 'RentTransaction' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'RentTransaction' failed to provide an identifier", id);
-        obj = RentTransaction.findRentTransaction(id);
+        obj = rentTransactionService.findRentTransaction(id);
         boolean modified =  dod.modifyRentTransaction(obj);
         Integer currentVersion = obj.getVersion();
-        RentTransaction merged = obj.merge();
+        RentTransaction merged = rentTransactionService.updateRentTransaction(obj);
         obj.flush();
         Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
         Assert.assertTrue("Version for 'RentTransaction' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
-    public void RentTransactionIntegrationTest.testPersist() {
+    public void RentTransactionIntegrationTest.testSaveRentTransaction() {
         Assert.assertNotNull("Data on demand for 'RentTransaction' failed to initialize correctly", dod.getRandomRentTransaction());
         RentTransaction obj = dod.getNewTransientRentTransaction(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'RentTransaction' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'RentTransaction' identifier to be null", obj.getId());
-        obj.persist();
+        rentTransactionService.saveRentTransaction(obj);
         obj.flush();
         Assert.assertNotNull("Expected 'RentTransaction' identifier to no longer be null", obj.getId());
     }
     
     @Test
-    public void RentTransactionIntegrationTest.testRemove() {
+    public void RentTransactionIntegrationTest.testDeleteRentTransaction() {
         RentTransaction obj = dod.getRandomRentTransaction();
         Assert.assertNotNull("Data on demand for 'RentTransaction' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'RentTransaction' failed to provide an identifier", id);
-        obj = RentTransaction.findRentTransaction(id);
-        obj.remove();
+        obj = rentTransactionService.findRentTransaction(id);
+        rentTransactionService.deleteRentTransaction(obj);
         obj.flush();
-        Assert.assertNull("Failed to remove 'RentTransaction' with identifier '" + id + "'", RentTransaction.findRentTransaction(id));
+        Assert.assertNull("Failed to remove 'RentTransaction' with identifier '" + id + "'", rentTransactionService.findRentTransaction(id));
     }
     
 }

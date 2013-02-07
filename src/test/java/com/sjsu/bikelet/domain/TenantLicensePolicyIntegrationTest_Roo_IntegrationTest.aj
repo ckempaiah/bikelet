@@ -24,7 +24,7 @@ privileged aspect TenantLicensePolicyIntegrationTest_Roo_IntegrationTest {
     declare @type: TenantLicensePolicyIntegrationTest: @Transactional;
     
     @Autowired
-    TenantLicensePolicyDataOnDemand TenantLicensePolicyIntegrationTest.dod;
+    private TenantLicensePolicyDataOnDemand TenantLicensePolicyIntegrationTest.dod;
     
     @Test
     public void TenantLicensePolicyIntegrationTest.testCountTenantLicensePolicys() {

@@ -4,10 +4,12 @@
 package com.sjsu.bikelet.web;
 
 import com.sjsu.bikelet.domain.BikeLetRole;
+import com.sjsu.bikelet.service.BikeLetRoleService;
 import com.sjsu.bikelet.web.BikeLetRoleController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,9 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect BikeLetRoleController_Roo_Controller {
     
+    @Autowired
+    BikeLetRoleService BikeLetRoleController.bikeLetRoleService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String BikeLetRoleController.create(@Valid BikeLetRole bikeLetRole, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -26,7 +31,7 @@ privileged aspect BikeLetRoleController_Roo_Controller {
             return "bikeletroles/create";
         }
         uiModel.asMap().clear();
-        bikeLetRole.persist();
+        bikeLetRoleService.saveBikeLetRole(bikeLetRole);
         return "redirect:/bikeletroles/" + encodeUrlPathSegment(bikeLetRole.getId().toString(), httpServletRequest);
     }
     
@@ -38,7 +43,7 @@ privileged aspect BikeLetRoleController_Roo_Controller {
     
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String BikeLetRoleController.show(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("bikeletrole", BikeLetRole.findBikeLetRole(id));
+        uiModel.addAttribute("bikeletrole", bikeLetRoleService.findBikeLetRole(id));
         uiModel.addAttribute("itemId", id);
         return "bikeletroles/show";
     }
@@ -48,11 +53,11 @@ privileged aspect BikeLetRoleController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("bikeletroles", BikeLetRole.findBikeLetRoleEntries(firstResult, sizeNo));
-            float nrOfPages = (float) BikeLetRole.countBikeLetRoles() / sizeNo;
+            uiModel.addAttribute("bikeletroles", bikeLetRoleService.findBikeLetRoleEntries(firstResult, sizeNo));
+            float nrOfPages = (float) bikeLetRoleService.countAllBikeLetRoles() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("bikeletroles", BikeLetRole.findAllBikeLetRoles());
+            uiModel.addAttribute("bikeletroles", bikeLetRoleService.findAllBikeLetRoles());
         }
         return "bikeletroles/list";
     }
@@ -64,20 +69,20 @@ privileged aspect BikeLetRoleController_Roo_Controller {
             return "bikeletroles/update";
         }
         uiModel.asMap().clear();
-        bikeLetRole.merge();
+        bikeLetRoleService.updateBikeLetRole(bikeLetRole);
         return "redirect:/bikeletroles/" + encodeUrlPathSegment(bikeLetRole.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String BikeLetRoleController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, BikeLetRole.findBikeLetRole(id));
+        populateEditForm(uiModel, bikeLetRoleService.findBikeLetRole(id));
         return "bikeletroles/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String BikeLetRoleController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        BikeLetRole bikeLetRole = BikeLetRole.findBikeLetRole(id);
-        bikeLetRole.remove();
+        BikeLetRole bikeLetRole = bikeLetRoleService.findBikeLetRole(id);
+        bikeLetRoleService.deleteBikeLetRole(bikeLetRole);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());

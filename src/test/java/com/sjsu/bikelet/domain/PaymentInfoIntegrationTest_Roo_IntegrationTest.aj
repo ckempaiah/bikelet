@@ -24,7 +24,7 @@ privileged aspect PaymentInfoIntegrationTest_Roo_IntegrationTest {
     declare @type: PaymentInfoIntegrationTest: @Transactional;
     
     @Autowired
-    PaymentInfoDataOnDemand PaymentInfoIntegrationTest.dod;
+    private PaymentInfoDataOnDemand PaymentInfoIntegrationTest.dod;
     
     @Test
     public void PaymentInfoIntegrationTest.testCountPaymentInfoes() {

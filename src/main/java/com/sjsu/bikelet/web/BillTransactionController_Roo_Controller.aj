@@ -3,13 +3,15 @@
 
 package com.sjsu.bikelet.web;
 
-import com.sjsu.bikelet.domain.Bill;
 import com.sjsu.bikelet.domain.BillTransaction;
+import com.sjsu.bikelet.service.BillService;
+import com.sjsu.bikelet.service.BillTransactionService;
 import com.sjsu.bikelet.web.BillTransactionController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.joda.time.format.DateTimeFormat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +24,12 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect BillTransactionController_Roo_Controller {
     
+    @Autowired
+    BillTransactionService BillTransactionController.billTransactionService;
+    
+    @Autowired
+    BillService BillTransactionController.billService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String BillTransactionController.create(@Valid BillTransaction billTransaction, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -29,7 +37,7 @@ privileged aspect BillTransactionController_Roo_Controller {
             return "billtransactions/create";
         }
         uiModel.asMap().clear();
-        billTransaction.persist();
+        billTransactionService.saveBillTransaction(billTransaction);
         return "redirect:/billtransactions/" + encodeUrlPathSegment(billTransaction.getId().toString(), httpServletRequest);
     }
     
@@ -42,7 +50,7 @@ privileged aspect BillTransactionController_Roo_Controller {
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String BillTransactionController.show(@PathVariable("id") Long id, Model uiModel) {
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("billtransaction", BillTransaction.findBillTransaction(id));
+        uiModel.addAttribute("billtransaction", billTransactionService.findBillTransaction(id));
         uiModel.addAttribute("itemId", id);
         return "billtransactions/show";
     }
@@ -52,11 +60,11 @@ privileged aspect BillTransactionController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("billtransactions", BillTransaction.findBillTransactionEntries(firstResult, sizeNo));
-            float nrOfPages = (float) BillTransaction.countBillTransactions() / sizeNo;
+            uiModel.addAttribute("billtransactions", billTransactionService.findBillTransactionEntries(firstResult, sizeNo));
+            float nrOfPages = (float) billTransactionService.countAllBillTransactions() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("billtransactions", BillTransaction.findAllBillTransactions());
+            uiModel.addAttribute("billtransactions", billTransactionService.findAllBillTransactions());
         }
         addDateTimeFormatPatterns(uiModel);
         return "billtransactions/list";
@@ -69,20 +77,20 @@ privileged aspect BillTransactionController_Roo_Controller {
             return "billtransactions/update";
         }
         uiModel.asMap().clear();
-        billTransaction.merge();
+        billTransactionService.updateBillTransaction(billTransaction);
         return "redirect:/billtransactions/" + encodeUrlPathSegment(billTransaction.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String BillTransactionController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, BillTransaction.findBillTransaction(id));
+        populateEditForm(uiModel, billTransactionService.findBillTransaction(id));
         return "billtransactions/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String BillTransactionController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        BillTransaction billTransaction = BillTransaction.findBillTransaction(id);
-        billTransaction.remove();
+        BillTransaction billTransaction = billTransactionService.findBillTransaction(id);
+        billTransactionService.deleteBillTransaction(billTransaction);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
@@ -97,7 +105,7 @@ privileged aspect BillTransactionController_Roo_Controller {
     void BillTransactionController.populateEditForm(Model uiModel, BillTransaction billTransaction) {
         uiModel.addAttribute("billTransaction", billTransaction);
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("bills", Bill.findAllBills());
+        uiModel.addAttribute("bills", billService.findAllBills());
     }
     
     String BillTransactionController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

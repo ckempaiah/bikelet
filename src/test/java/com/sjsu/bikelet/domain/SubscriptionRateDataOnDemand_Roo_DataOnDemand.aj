@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.SubscriptionPolicy;
 import com.sjsu.bikelet.domain.SubscriptionPolicyDataOnDemand;
 import com.sjsu.bikelet.domain.SubscriptionRate;
 import com.sjsu.bikelet.domain.SubscriptionRateDataOnDemand;
@@ -28,7 +29,7 @@ privileged aspect SubscriptionRateDataOnDemand_Roo_DataOnDemand {
     private List<SubscriptionRate> SubscriptionRateDataOnDemand.data;
     
     @Autowired
-    SubscriptionPolicyDataOnDemand SubscriptionRateDataOnDemand.subscriptionPolicyDataOnDemand;
+    private SubscriptionPolicyDataOnDemand SubscriptionRateDataOnDemand.subscriptionPolicyDataOnDemand;
     
     public SubscriptionRate SubscriptionRateDataOnDemand.getNewTransientSubscriptionRate(int index) {
         SubscriptionRate obj = new SubscriptionRate();
@@ -37,6 +38,7 @@ privileged aspect SubscriptionRateDataOnDemand_Roo_DataOnDemand {
         setMembershipPerMonth(obj, index);
         setOrganizationShare(obj, index);
         setPolicyEndDate(obj, index);
+        setPolicyId(obj, index);
         setPolicyStartDate(obj, index);
         setUserShare(obj, index);
         return obj;
@@ -65,6 +67,11 @@ privileged aspect SubscriptionRateDataOnDemand_Roo_DataOnDemand {
     public void SubscriptionRateDataOnDemand.setPolicyEndDate(SubscriptionRate obj, int index) {
         Date policyEndDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setPolicyEndDate(policyEndDate);
+    }
+    
+    public void SubscriptionRateDataOnDemand.setPolicyId(SubscriptionRate obj, int index) {
+        SubscriptionPolicy policyId = subscriptionPolicyDataOnDemand.getRandomSubscriptionPolicy();
+        obj.setPolicyId(policyId);
     }
     
     public void SubscriptionRateDataOnDemand.setPolicyStartDate(SubscriptionRate obj, int index) {

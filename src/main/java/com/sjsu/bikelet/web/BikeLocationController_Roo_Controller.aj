@@ -3,13 +3,15 @@
 
 package com.sjsu.bikelet.web;
 
-import com.sjsu.bikelet.domain.Bike;
 import com.sjsu.bikelet.domain.BikeLocation;
 import com.sjsu.bikelet.domain.Station;
+import com.sjsu.bikelet.service.BikeLocationService;
+import com.sjsu.bikelet.service.BikeService;
 import com.sjsu.bikelet.web.BikeLocationController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,12 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect BikeLocationController_Roo_Controller {
     
+    @Autowired
+    BikeLocationService BikeLocationController.bikeLocationService;
+    
+    @Autowired
+    BikeService BikeLocationController.bikeService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String BikeLocationController.create(@Valid BikeLocation bikeLocation, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -28,7 +36,7 @@ privileged aspect BikeLocationController_Roo_Controller {
             return "bikelocations/create";
         }
         uiModel.asMap().clear();
-        bikeLocation.persist();
+        bikeLocationService.saveBikeLocation(bikeLocation);
         return "redirect:/bikelocations/" + encodeUrlPathSegment(bikeLocation.getId().toString(), httpServletRequest);
     }
     
@@ -40,7 +48,7 @@ privileged aspect BikeLocationController_Roo_Controller {
     
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String BikeLocationController.show(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("bikelocation", BikeLocation.findBikeLocation(id));
+        uiModel.addAttribute("bikelocation", bikeLocationService.findBikeLocation(id));
         uiModel.addAttribute("itemId", id);
         return "bikelocations/show";
     }
@@ -50,11 +58,11 @@ privileged aspect BikeLocationController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("bikelocations", BikeLocation.findBikeLocationEntries(firstResult, sizeNo));
-            float nrOfPages = (float) BikeLocation.countBikeLocations() / sizeNo;
+            uiModel.addAttribute("bikelocations", bikeLocationService.findBikeLocationEntries(firstResult, sizeNo));
+            float nrOfPages = (float) bikeLocationService.countAllBikeLocations() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("bikelocations", BikeLocation.findAllBikeLocations());
+            uiModel.addAttribute("bikelocations", bikeLocationService.findAllBikeLocations());
         }
         return "bikelocations/list";
     }
@@ -66,20 +74,20 @@ privileged aspect BikeLocationController_Roo_Controller {
             return "bikelocations/update";
         }
         uiModel.asMap().clear();
-        bikeLocation.merge();
+        bikeLocationService.updateBikeLocation(bikeLocation);
         return "redirect:/bikelocations/" + encodeUrlPathSegment(bikeLocation.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String BikeLocationController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, BikeLocation.findBikeLocation(id));
+        populateEditForm(uiModel, bikeLocationService.findBikeLocation(id));
         return "bikelocations/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String BikeLocationController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        BikeLocation bikeLocation = BikeLocation.findBikeLocation(id);
-        bikeLocation.remove();
+        BikeLocation bikeLocation = bikeLocationService.findBikeLocation(id);
+        bikeLocationService.deleteBikeLocation(bikeLocation);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
@@ -88,7 +96,7 @@ privileged aspect BikeLocationController_Roo_Controller {
     
     void BikeLocationController.populateEditForm(Model uiModel, BikeLocation bikeLocation) {
         uiModel.addAttribute("bikeLocation", bikeLocation);
-        uiModel.addAttribute("bikes", Bike.findAllBikes());
+        uiModel.addAttribute("bikes", bikeService.findAllBikes());
         uiModel.addAttribute("stations", Station.findAllStations());
     }
     

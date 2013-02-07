@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.BikeLocation;
 import com.sjsu.bikelet.domain.BikeLocationDataOnDemand;
 import com.sjsu.bikelet.domain.BikeLocationIntegrationTest;
+import com.sjsu.bikelet.service.BikeLocationService;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,12 +24,15 @@ privileged aspect BikeLocationIntegrationTest_Roo_IntegrationTest {
     declare @type: BikeLocationIntegrationTest: @Transactional;
     
     @Autowired
-    BikeLocationDataOnDemand BikeLocationIntegrationTest.dod;
+    private BikeLocationDataOnDemand BikeLocationIntegrationTest.dod;
+    
+    @Autowired
+    BikeLocationService BikeLocationIntegrationTest.bikeLocationService;
     
     @Test
-    public void BikeLocationIntegrationTest.testCountBikeLocations() {
+    public void BikeLocationIntegrationTest.testCountAllBikeLocations() {
         Assert.assertNotNull("Data on demand for 'BikeLocation' failed to initialize correctly", dod.getRandomBikeLocation());
-        long count = BikeLocation.countBikeLocations();
+        long count = bikeLocationService.countAllBikeLocations();
         Assert.assertTrue("Counter for 'BikeLocation' incorrectly reported there were no entries", count > 0);
     }
     
@@ -39,7 +42,7 @@ privileged aspect BikeLocationIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'BikeLocation' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'BikeLocation' failed to provide an identifier", id);
-        obj = BikeLocation.findBikeLocation(id);
+        obj = bikeLocationService.findBikeLocation(id);
         Assert.assertNotNull("Find method for 'BikeLocation' illegally returned null for id '" + id + "'", obj);
         Assert.assertEquals("Find method for 'BikeLocation' returned the incorrect identifier", id, obj.getId());
     }
@@ -47,9 +50,9 @@ privileged aspect BikeLocationIntegrationTest_Roo_IntegrationTest {
     @Test
     public void BikeLocationIntegrationTest.testFindAllBikeLocations() {
         Assert.assertNotNull("Data on demand for 'BikeLocation' failed to initialize correctly", dod.getRandomBikeLocation());
-        long count = BikeLocation.countBikeLocations();
+        long count = bikeLocationService.countAllBikeLocations();
         Assert.assertTrue("Too expensive to perform a find all test for 'BikeLocation', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<BikeLocation> result = BikeLocation.findAllBikeLocations();
+        List<BikeLocation> result = bikeLocationService.findAllBikeLocations();
         Assert.assertNotNull("Find all method for 'BikeLocation' illegally returned null", result);
         Assert.assertTrue("Find all method for 'BikeLocation' failed to return any data", result.size() > 0);
     }
@@ -57,11 +60,11 @@ privileged aspect BikeLocationIntegrationTest_Roo_IntegrationTest {
     @Test
     public void BikeLocationIntegrationTest.testFindBikeLocationEntries() {
         Assert.assertNotNull("Data on demand for 'BikeLocation' failed to initialize correctly", dod.getRandomBikeLocation());
-        long count = BikeLocation.countBikeLocations();
+        long count = bikeLocationService.countAllBikeLocations();
         if (count > 20) count = 20;
         int firstResult = 0;
         int maxResults = (int) count;
-        List<BikeLocation> result = BikeLocation.findBikeLocationEntries(firstResult, maxResults);
+        List<BikeLocation> result = bikeLocationService.findBikeLocationEntries(firstResult, maxResults);
         Assert.assertNotNull("Find entries method for 'BikeLocation' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'BikeLocation' returned an incorrect number of entries", count, result.size());
     }
@@ -72,7 +75,7 @@ privileged aspect BikeLocationIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'BikeLocation' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'BikeLocation' failed to provide an identifier", id);
-        obj = BikeLocation.findBikeLocation(id);
+        obj = bikeLocationService.findBikeLocation(id);
         Assert.assertNotNull("Find method for 'BikeLocation' illegally returned null for id '" + id + "'", obj);
         boolean modified =  dod.modifyBikeLocation(obj);
         Integer currentVersion = obj.getVersion();
@@ -81,41 +84,41 @@ privileged aspect BikeLocationIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void BikeLocationIntegrationTest.testMergeUpdate() {
+    public void BikeLocationIntegrationTest.testUpdateBikeLocationUpdate() {
         BikeLocation obj = dod.getRandomBikeLocation();
         Assert.assertNotNull("Data on demand for 'BikeLocation' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'BikeLocation' failed to provide an identifier", id);
-        obj = BikeLocation.findBikeLocation(id);
+        obj = bikeLocationService.findBikeLocation(id);
         boolean modified =  dod.modifyBikeLocation(obj);
         Integer currentVersion = obj.getVersion();
-        BikeLocation merged = obj.merge();
+        BikeLocation merged = bikeLocationService.updateBikeLocation(obj);
         obj.flush();
         Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
         Assert.assertTrue("Version for 'BikeLocation' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
-    public void BikeLocationIntegrationTest.testPersist() {
+    public void BikeLocationIntegrationTest.testSaveBikeLocation() {
         Assert.assertNotNull("Data on demand for 'BikeLocation' failed to initialize correctly", dod.getRandomBikeLocation());
         BikeLocation obj = dod.getNewTransientBikeLocation(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'BikeLocation' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'BikeLocation' identifier to be null", obj.getId());
-        obj.persist();
+        bikeLocationService.saveBikeLocation(obj);
         obj.flush();
         Assert.assertNotNull("Expected 'BikeLocation' identifier to no longer be null", obj.getId());
     }
     
     @Test
-    public void BikeLocationIntegrationTest.testRemove() {
+    public void BikeLocationIntegrationTest.testDeleteBikeLocation() {
         BikeLocation obj = dod.getRandomBikeLocation();
         Assert.assertNotNull("Data on demand for 'BikeLocation' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'BikeLocation' failed to provide an identifier", id);
-        obj = BikeLocation.findBikeLocation(id);
-        obj.remove();
+        obj = bikeLocationService.findBikeLocation(id);
+        bikeLocationService.deleteBikeLocation(obj);
         obj.flush();
-        Assert.assertNull("Failed to remove 'BikeLocation' with identifier '" + id + "'", BikeLocation.findBikeLocation(id));
+        Assert.assertNull("Failed to remove 'BikeLocation' with identifier '" + id + "'", bikeLocationService.findBikeLocation(id));
     }
     
 }

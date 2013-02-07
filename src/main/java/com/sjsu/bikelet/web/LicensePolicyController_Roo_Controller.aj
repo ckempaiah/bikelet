@@ -4,10 +4,12 @@
 package com.sjsu.bikelet.web;
 
 import com.sjsu.bikelet.domain.LicensePolicy;
+import com.sjsu.bikelet.service.LicensePolicyService;
 import com.sjsu.bikelet.web.LicensePolicyController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,9 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect LicensePolicyController_Roo_Controller {
     
+    @Autowired
+    LicensePolicyService LicensePolicyController.licensePolicyService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String LicensePolicyController.create(@Valid LicensePolicy licensePolicy, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -26,7 +31,7 @@ privileged aspect LicensePolicyController_Roo_Controller {
             return "licensepolicys/create";
         }
         uiModel.asMap().clear();
-        licensePolicy.persist();
+        licensePolicyService.saveLicensePolicy(licensePolicy);
         return "redirect:/licensepolicys/" + encodeUrlPathSegment(licensePolicy.getId().toString(), httpServletRequest);
     }
     
@@ -38,7 +43,7 @@ privileged aspect LicensePolicyController_Roo_Controller {
     
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String LicensePolicyController.show(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("licensepolicy", LicensePolicy.findLicensePolicy(id));
+        uiModel.addAttribute("licensepolicy", licensePolicyService.findLicensePolicy(id));
         uiModel.addAttribute("itemId", id);
         return "licensepolicys/show";
     }
@@ -48,11 +53,11 @@ privileged aspect LicensePolicyController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("licensepolicys", LicensePolicy.findLicensePolicyEntries(firstResult, sizeNo));
-            float nrOfPages = (float) LicensePolicy.countLicensePolicys() / sizeNo;
+            uiModel.addAttribute("licensepolicys", licensePolicyService.findLicensePolicyEntries(firstResult, sizeNo));
+            float nrOfPages = (float) licensePolicyService.countAllLicensePolicys() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("licensepolicys", LicensePolicy.findAllLicensePolicys());
+            uiModel.addAttribute("licensepolicys", licensePolicyService.findAllLicensePolicys());
         }
         return "licensepolicys/list";
     }
@@ -64,20 +69,20 @@ privileged aspect LicensePolicyController_Roo_Controller {
             return "licensepolicys/update";
         }
         uiModel.asMap().clear();
-        licensePolicy.merge();
+        licensePolicyService.updateLicensePolicy(licensePolicy);
         return "redirect:/licensepolicys/" + encodeUrlPathSegment(licensePolicy.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String LicensePolicyController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, LicensePolicy.findLicensePolicy(id));
+        populateEditForm(uiModel, licensePolicyService.findLicensePolicy(id));
         return "licensepolicys/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String LicensePolicyController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        LicensePolicy licensePolicy = LicensePolicy.findLicensePolicy(id);
-        licensePolicy.remove();
+        LicensePolicy licensePolicy = licensePolicyService.findLicensePolicy(id);
+        licensePolicyService.deleteLicensePolicy(licensePolicy);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());

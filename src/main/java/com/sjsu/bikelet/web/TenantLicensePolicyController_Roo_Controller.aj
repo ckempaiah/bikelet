@@ -3,14 +3,16 @@
 
 package com.sjsu.bikelet.web;
 
-import com.sjsu.bikelet.domain.LicensePolicy;
-import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantLicensePolicy;
+import com.sjsu.bikelet.service.LicensePolicyService;
+import com.sjsu.bikelet.service.TenantLicensePolicyService;
+import com.sjsu.bikelet.service.TenantService;
 import com.sjsu.bikelet.web.TenantLicensePolicyController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.joda.time.format.DateTimeFormat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +25,15 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect TenantLicensePolicyController_Roo_Controller {
     
+    @Autowired
+    TenantLicensePolicyService TenantLicensePolicyController.tenantLicensePolicyService;
+    
+    @Autowired
+    LicensePolicyService TenantLicensePolicyController.licensePolicyService;
+    
+    @Autowired
+    TenantService TenantLicensePolicyController.tenantService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String TenantLicensePolicyController.create(@Valid TenantLicensePolicy tenantLicensePolicy, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -30,7 +41,7 @@ privileged aspect TenantLicensePolicyController_Roo_Controller {
             return "tenantlicensepolicys/create";
         }
         uiModel.asMap().clear();
-        tenantLicensePolicy.persist();
+        tenantLicensePolicyService.saveTenantLicensePolicy(tenantLicensePolicy);
         return "redirect:/tenantlicensepolicys/" + encodeUrlPathSegment(tenantLicensePolicy.getId().toString(), httpServletRequest);
     }
     
@@ -43,7 +54,7 @@ privileged aspect TenantLicensePolicyController_Roo_Controller {
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String TenantLicensePolicyController.show(@PathVariable("id") Long id, Model uiModel) {
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("tenantlicensepolicy", TenantLicensePolicy.findTenantLicensePolicy(id));
+        uiModel.addAttribute("tenantlicensepolicy", tenantLicensePolicyService.findTenantLicensePolicy(id));
         uiModel.addAttribute("itemId", id);
         return "tenantlicensepolicys/show";
     }
@@ -53,11 +64,11 @@ privileged aspect TenantLicensePolicyController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("tenantlicensepolicys", TenantLicensePolicy.findTenantLicensePolicyEntries(firstResult, sizeNo));
-            float nrOfPages = (float) TenantLicensePolicy.countTenantLicensePolicys() / sizeNo;
+            uiModel.addAttribute("tenantlicensepolicys", tenantLicensePolicyService.findTenantLicensePolicyEntries(firstResult, sizeNo));
+            float nrOfPages = (float) tenantLicensePolicyService.countAllTenantLicensePolicys() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("tenantlicensepolicys", TenantLicensePolicy.findAllTenantLicensePolicys());
+            uiModel.addAttribute("tenantlicensepolicys", tenantLicensePolicyService.findAllTenantLicensePolicys());
         }
         addDateTimeFormatPatterns(uiModel);
         return "tenantlicensepolicys/list";
@@ -70,20 +81,20 @@ privileged aspect TenantLicensePolicyController_Roo_Controller {
             return "tenantlicensepolicys/update";
         }
         uiModel.asMap().clear();
-        tenantLicensePolicy.merge();
+        tenantLicensePolicyService.updateTenantLicensePolicy(tenantLicensePolicy);
         return "redirect:/tenantlicensepolicys/" + encodeUrlPathSegment(tenantLicensePolicy.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String TenantLicensePolicyController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, TenantLicensePolicy.findTenantLicensePolicy(id));
+        populateEditForm(uiModel, tenantLicensePolicyService.findTenantLicensePolicy(id));
         return "tenantlicensepolicys/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String TenantLicensePolicyController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        TenantLicensePolicy tenantLicensePolicy = TenantLicensePolicy.findTenantLicensePolicy(id);
-        tenantLicensePolicy.remove();
+        TenantLicensePolicy tenantLicensePolicy = tenantLicensePolicyService.findTenantLicensePolicy(id);
+        tenantLicensePolicyService.deleteTenantLicensePolicy(tenantLicensePolicy);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
@@ -98,8 +109,8 @@ privileged aspect TenantLicensePolicyController_Roo_Controller {
     void TenantLicensePolicyController.populateEditForm(Model uiModel, TenantLicensePolicy tenantLicensePolicy) {
         uiModel.addAttribute("tenantLicensePolicy", tenantLicensePolicy);
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("licensepolicys", LicensePolicy.findAllLicensePolicys());
-        uiModel.addAttribute("tenants", Tenant.findAllTenants());
+        uiModel.addAttribute("licensepolicys", licensePolicyService.findAllLicensePolicys());
+        uiModel.addAttribute("tenants", tenantService.findAllTenants());
     }
     
     String TenantLicensePolicyController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

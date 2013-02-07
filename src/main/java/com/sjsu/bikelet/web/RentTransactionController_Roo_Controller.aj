@@ -3,14 +3,16 @@
 
 package com.sjsu.bikelet.web;
 
-import com.sjsu.bikelet.domain.Bike;
-import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.RentTransaction;
+import com.sjsu.bikelet.service.BikeLetUserService;
+import com.sjsu.bikelet.service.BikeService;
+import com.sjsu.bikelet.service.RentTransactionService;
 import com.sjsu.bikelet.web.RentTransactionController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.joda.time.format.DateTimeFormat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +25,15 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect RentTransactionController_Roo_Controller {
     
+    @Autowired
+    RentTransactionService RentTransactionController.rentTransactionService;
+    
+    @Autowired
+    BikeService RentTransactionController.bikeService;
+    
+    @Autowired
+    BikeLetUserService RentTransactionController.bikeLetUserService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String RentTransactionController.create(@Valid RentTransaction rentTransaction, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -30,7 +41,7 @@ privileged aspect RentTransactionController_Roo_Controller {
             return "renttransactions/create";
         }
         uiModel.asMap().clear();
-        rentTransaction.persist();
+        rentTransactionService.saveRentTransaction(rentTransaction);
         return "redirect:/renttransactions/" + encodeUrlPathSegment(rentTransaction.getId().toString(), httpServletRequest);
     }
     
@@ -43,7 +54,7 @@ privileged aspect RentTransactionController_Roo_Controller {
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String RentTransactionController.show(@PathVariable("id") Long id, Model uiModel) {
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("renttransaction", RentTransaction.findRentTransaction(id));
+        uiModel.addAttribute("renttransaction", rentTransactionService.findRentTransaction(id));
         uiModel.addAttribute("itemId", id);
         return "renttransactions/show";
     }
@@ -53,11 +64,11 @@ privileged aspect RentTransactionController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("renttransactions", RentTransaction.findRentTransactionEntries(firstResult, sizeNo));
-            float nrOfPages = (float) RentTransaction.countRentTransactions() / sizeNo;
+            uiModel.addAttribute("renttransactions", rentTransactionService.findRentTransactionEntries(firstResult, sizeNo));
+            float nrOfPages = (float) rentTransactionService.countAllRentTransactions() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("renttransactions", RentTransaction.findAllRentTransactions());
+            uiModel.addAttribute("renttransactions", rentTransactionService.findAllRentTransactions());
         }
         addDateTimeFormatPatterns(uiModel);
         return "renttransactions/list";
@@ -70,20 +81,20 @@ privileged aspect RentTransactionController_Roo_Controller {
             return "renttransactions/update";
         }
         uiModel.asMap().clear();
-        rentTransaction.merge();
+        rentTransactionService.updateRentTransaction(rentTransaction);
         return "redirect:/renttransactions/" + encodeUrlPathSegment(rentTransaction.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String RentTransactionController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, RentTransaction.findRentTransaction(id));
+        populateEditForm(uiModel, rentTransactionService.findRentTransaction(id));
         return "renttransactions/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String RentTransactionController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        RentTransaction rentTransaction = RentTransaction.findRentTransaction(id);
-        rentTransaction.remove();
+        RentTransaction rentTransaction = rentTransactionService.findRentTransaction(id);
+        rentTransactionService.deleteRentTransaction(rentTransaction);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
@@ -98,8 +109,8 @@ privileged aspect RentTransactionController_Roo_Controller {
     void RentTransactionController.populateEditForm(Model uiModel, RentTransaction rentTransaction) {
         uiModel.addAttribute("rentTransaction", rentTransaction);
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("bikes", Bike.findAllBikes());
-        uiModel.addAttribute("bikeletusers", BikeLetUser.findAllBikeLetUsers());
+        uiModel.addAttribute("bikes", bikeService.findAllBikes());
+        uiModel.addAttribute("bikeletusers", bikeLetUserService.findAllBikeLetUsers());
     }
     
     String RentTransactionController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

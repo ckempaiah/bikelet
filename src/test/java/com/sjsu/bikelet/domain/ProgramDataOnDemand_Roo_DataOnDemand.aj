@@ -5,6 +5,7 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.ProgramDataOnDemand;
+import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
     private List<Program> ProgramDataOnDemand.data;
     
     @Autowired
-    TenantDataOnDemand ProgramDataOnDemand.tenantDataOnDemand;
+    private TenantDataOnDemand ProgramDataOnDemand.tenantDataOnDemand;
     
     public Program ProgramDataOnDemand.getNewTransientProgram(int index) {
         Program obj = new Program();
@@ -35,6 +36,7 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
         setMin_threshold(obj, index);
         setOrgName(obj, index);
         setProgramName(obj, index);
+        setTenantId(obj, index);
         return obj;
     }
     
@@ -75,6 +77,11 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
             programName = programName.substring(0, 60);
         }
         obj.setProgramName(programName);
+    }
+    
+    public void ProgramDataOnDemand.setTenantId(Program obj, int index) {
+        Tenant tenantId = tenantDataOnDemand.getRandomTenant();
+        obj.setTenantId(tenantId);
     }
     
     public Program ProgramDataOnDemand.getSpecificProgram(int index) {

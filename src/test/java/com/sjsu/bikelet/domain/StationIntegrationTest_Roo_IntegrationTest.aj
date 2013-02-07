@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Station;
 import com.sjsu.bikelet.domain.StationDataOnDemand;
 import com.sjsu.bikelet.domain.StationIntegrationTest;
+import com.sjsu.bikelet.service.StationService;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,12 +24,15 @@ privileged aspect StationIntegrationTest_Roo_IntegrationTest {
     declare @type: StationIntegrationTest: @Transactional;
     
     @Autowired
-    StationDataOnDemand StationIntegrationTest.dod;
+    private StationDataOnDemand StationIntegrationTest.dod;
+    
+    @Autowired
+    StationService StationIntegrationTest.stationService;
     
     @Test
-    public void StationIntegrationTest.testCountStations() {
+    public void StationIntegrationTest.testCountAllStations() {
         Assert.assertNotNull("Data on demand for 'Station' failed to initialize correctly", dod.getRandomStation());
-        long count = Station.countStations();
+        long count = stationService.countAllStations();
         Assert.assertTrue("Counter for 'Station' incorrectly reported there were no entries", count > 0);
     }
     
@@ -39,7 +42,7 @@ privileged aspect StationIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'Station' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'Station' failed to provide an identifier", id);
-        obj = Station.findStation(id);
+        obj = stationService.findStation(id);
         Assert.assertNotNull("Find method for 'Station' illegally returned null for id '" + id + "'", obj);
         Assert.assertEquals("Find method for 'Station' returned the incorrect identifier", id, obj.getId());
     }
@@ -47,9 +50,9 @@ privileged aspect StationIntegrationTest_Roo_IntegrationTest {
     @Test
     public void StationIntegrationTest.testFindAllStations() {
         Assert.assertNotNull("Data on demand for 'Station' failed to initialize correctly", dod.getRandomStation());
-        long count = Station.countStations();
+        long count = stationService.countAllStations();
         Assert.assertTrue("Too expensive to perform a find all test for 'Station', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<Station> result = Station.findAllStations();
+        List<Station> result = stationService.findAllStations();
         Assert.assertNotNull("Find all method for 'Station' illegally returned null", result);
         Assert.assertTrue("Find all method for 'Station' failed to return any data", result.size() > 0);
     }
@@ -57,11 +60,11 @@ privileged aspect StationIntegrationTest_Roo_IntegrationTest {
     @Test
     public void StationIntegrationTest.testFindStationEntries() {
         Assert.assertNotNull("Data on demand for 'Station' failed to initialize correctly", dod.getRandomStation());
-        long count = Station.countStations();
+        long count = stationService.countAllStations();
         if (count > 20) count = 20;
         int firstResult = 0;
         int maxResults = (int) count;
-        List<Station> result = Station.findStationEntries(firstResult, maxResults);
+        List<Station> result = stationService.findStationEntries(firstResult, maxResults);
         Assert.assertNotNull("Find entries method for 'Station' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'Station' returned an incorrect number of entries", count, result.size());
     }
@@ -72,7 +75,7 @@ privileged aspect StationIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'Station' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'Station' failed to provide an identifier", id);
-        obj = Station.findStation(id);
+        obj = stationService.findStation(id);
         Assert.assertNotNull("Find method for 'Station' illegally returned null for id '" + id + "'", obj);
         boolean modified =  dod.modifyStation(obj);
         Integer currentVersion = obj.getVersion();
@@ -81,41 +84,41 @@ privileged aspect StationIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void StationIntegrationTest.testMergeUpdate() {
+    public void StationIntegrationTest.testUpdateStationUpdate() {
         Station obj = dod.getRandomStation();
         Assert.assertNotNull("Data on demand for 'Station' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'Station' failed to provide an identifier", id);
-        obj = Station.findStation(id);
+        obj = stationService.findStation(id);
         boolean modified =  dod.modifyStation(obj);
         Integer currentVersion = obj.getVersion();
-        Station merged = obj.merge();
+        Station merged = stationService.updateStation(obj);
         obj.flush();
         Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
         Assert.assertTrue("Version for 'Station' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
-    public void StationIntegrationTest.testPersist() {
+    public void StationIntegrationTest.testSaveStation() {
         Assert.assertNotNull("Data on demand for 'Station' failed to initialize correctly", dod.getRandomStation());
         Station obj = dod.getNewTransientStation(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'Station' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'Station' identifier to be null", obj.getId());
-        obj.persist();
+        stationService.saveStation(obj);
         obj.flush();
         Assert.assertNotNull("Expected 'Station' identifier to no longer be null", obj.getId());
     }
     
     @Test
-    public void StationIntegrationTest.testRemove() {
+    public void StationIntegrationTest.testDeleteStation() {
         Station obj = dod.getRandomStation();
         Assert.assertNotNull("Data on demand for 'Station' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'Station' failed to provide an identifier", id);
-        obj = Station.findStation(id);
-        obj.remove();
+        obj = stationService.findStation(id);
+        stationService.deleteStation(obj);
         obj.flush();
-        Assert.assertNull("Failed to remove 'Station' with identifier '" + id + "'", Station.findStation(id));
+        Assert.assertNull("Failed to remove 'Station' with identifier '" + id + "'", stationService.findStation(id));
     }
     
 }

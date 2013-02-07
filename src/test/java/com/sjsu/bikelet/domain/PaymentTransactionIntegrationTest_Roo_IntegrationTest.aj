@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.PaymentTransaction;
 import com.sjsu.bikelet.domain.PaymentTransactionDataOnDemand;
 import com.sjsu.bikelet.domain.PaymentTransactionIntegrationTest;
+import com.sjsu.bikelet.service.PaymentTransactionService;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,12 +24,15 @@ privileged aspect PaymentTransactionIntegrationTest_Roo_IntegrationTest {
     declare @type: PaymentTransactionIntegrationTest: @Transactional;
     
     @Autowired
-    PaymentTransactionDataOnDemand PaymentTransactionIntegrationTest.dod;
+    private PaymentTransactionDataOnDemand PaymentTransactionIntegrationTest.dod;
+    
+    @Autowired
+    PaymentTransactionService PaymentTransactionIntegrationTest.paymentTransactionService;
     
     @Test
-    public void PaymentTransactionIntegrationTest.testCountPaymentTransactions() {
+    public void PaymentTransactionIntegrationTest.testCountAllPaymentTransactions() {
         Assert.assertNotNull("Data on demand for 'PaymentTransaction' failed to initialize correctly", dod.getRandomPaymentTransaction());
-        long count = PaymentTransaction.countPaymentTransactions();
+        long count = paymentTransactionService.countAllPaymentTransactions();
         Assert.assertTrue("Counter for 'PaymentTransaction' incorrectly reported there were no entries", count > 0);
     }
     
@@ -39,7 +42,7 @@ privileged aspect PaymentTransactionIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'PaymentTransaction' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'PaymentTransaction' failed to provide an identifier", id);
-        obj = PaymentTransaction.findPaymentTransaction(id);
+        obj = paymentTransactionService.findPaymentTransaction(id);
         Assert.assertNotNull("Find method for 'PaymentTransaction' illegally returned null for id '" + id + "'", obj);
         Assert.assertEquals("Find method for 'PaymentTransaction' returned the incorrect identifier", id, obj.getId());
     }
@@ -47,9 +50,9 @@ privileged aspect PaymentTransactionIntegrationTest_Roo_IntegrationTest {
     @Test
     public void PaymentTransactionIntegrationTest.testFindAllPaymentTransactions() {
         Assert.assertNotNull("Data on demand for 'PaymentTransaction' failed to initialize correctly", dod.getRandomPaymentTransaction());
-        long count = PaymentTransaction.countPaymentTransactions();
+        long count = paymentTransactionService.countAllPaymentTransactions();
         Assert.assertTrue("Too expensive to perform a find all test for 'PaymentTransaction', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<PaymentTransaction> result = PaymentTransaction.findAllPaymentTransactions();
+        List<PaymentTransaction> result = paymentTransactionService.findAllPaymentTransactions();
         Assert.assertNotNull("Find all method for 'PaymentTransaction' illegally returned null", result);
         Assert.assertTrue("Find all method for 'PaymentTransaction' failed to return any data", result.size() > 0);
     }
@@ -57,11 +60,11 @@ privileged aspect PaymentTransactionIntegrationTest_Roo_IntegrationTest {
     @Test
     public void PaymentTransactionIntegrationTest.testFindPaymentTransactionEntries() {
         Assert.assertNotNull("Data on demand for 'PaymentTransaction' failed to initialize correctly", dod.getRandomPaymentTransaction());
-        long count = PaymentTransaction.countPaymentTransactions();
+        long count = paymentTransactionService.countAllPaymentTransactions();
         if (count > 20) count = 20;
         int firstResult = 0;
         int maxResults = (int) count;
-        List<PaymentTransaction> result = PaymentTransaction.findPaymentTransactionEntries(firstResult, maxResults);
+        List<PaymentTransaction> result = paymentTransactionService.findPaymentTransactionEntries(firstResult, maxResults);
         Assert.assertNotNull("Find entries method for 'PaymentTransaction' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'PaymentTransaction' returned an incorrect number of entries", count, result.size());
     }
@@ -72,7 +75,7 @@ privileged aspect PaymentTransactionIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'PaymentTransaction' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'PaymentTransaction' failed to provide an identifier", id);
-        obj = PaymentTransaction.findPaymentTransaction(id);
+        obj = paymentTransactionService.findPaymentTransaction(id);
         Assert.assertNotNull("Find method for 'PaymentTransaction' illegally returned null for id '" + id + "'", obj);
         boolean modified =  dod.modifyPaymentTransaction(obj);
         Integer currentVersion = obj.getVersion();
@@ -81,41 +84,41 @@ privileged aspect PaymentTransactionIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void PaymentTransactionIntegrationTest.testMergeUpdate() {
+    public void PaymentTransactionIntegrationTest.testUpdatePaymentTransactionUpdate() {
         PaymentTransaction obj = dod.getRandomPaymentTransaction();
         Assert.assertNotNull("Data on demand for 'PaymentTransaction' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'PaymentTransaction' failed to provide an identifier", id);
-        obj = PaymentTransaction.findPaymentTransaction(id);
+        obj = paymentTransactionService.findPaymentTransaction(id);
         boolean modified =  dod.modifyPaymentTransaction(obj);
         Integer currentVersion = obj.getVersion();
-        PaymentTransaction merged = obj.merge();
+        PaymentTransaction merged = paymentTransactionService.updatePaymentTransaction(obj);
         obj.flush();
         Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
         Assert.assertTrue("Version for 'PaymentTransaction' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
-    public void PaymentTransactionIntegrationTest.testPersist() {
+    public void PaymentTransactionIntegrationTest.testSavePaymentTransaction() {
         Assert.assertNotNull("Data on demand for 'PaymentTransaction' failed to initialize correctly", dod.getRandomPaymentTransaction());
         PaymentTransaction obj = dod.getNewTransientPaymentTransaction(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'PaymentTransaction' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'PaymentTransaction' identifier to be null", obj.getId());
-        obj.persist();
+        paymentTransactionService.savePaymentTransaction(obj);
         obj.flush();
         Assert.assertNotNull("Expected 'PaymentTransaction' identifier to no longer be null", obj.getId());
     }
     
     @Test
-    public void PaymentTransactionIntegrationTest.testRemove() {
+    public void PaymentTransactionIntegrationTest.testDeletePaymentTransaction() {
         PaymentTransaction obj = dod.getRandomPaymentTransaction();
         Assert.assertNotNull("Data on demand for 'PaymentTransaction' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'PaymentTransaction' failed to provide an identifier", id);
-        obj = PaymentTransaction.findPaymentTransaction(id);
-        obj.remove();
+        obj = paymentTransactionService.findPaymentTransaction(id);
+        paymentTransactionService.deletePaymentTransaction(obj);
         obj.flush();
-        Assert.assertNull("Failed to remove 'PaymentTransaction' with identifier '" + id + "'", PaymentTransaction.findPaymentTransaction(id));
+        Assert.assertNull("Failed to remove 'PaymentTransaction' with identifier '" + id + "'", paymentTransactionService.findPaymentTransaction(id));
     }
     
 }

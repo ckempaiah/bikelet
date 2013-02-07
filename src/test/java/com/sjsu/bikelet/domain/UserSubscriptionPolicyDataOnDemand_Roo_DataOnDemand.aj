@@ -3,7 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
+import com.sjsu.bikelet.domain.SubscriptionPolicy;
 import com.sjsu.bikelet.domain.SubscriptionPolicyDataOnDemand;
 import com.sjsu.bikelet.domain.UserSubscriptionPolicy;
 import com.sjsu.bikelet.domain.UserSubscriptionPolicyDataOnDemand;
@@ -26,14 +28,26 @@ privileged aspect UserSubscriptionPolicyDataOnDemand_Roo_DataOnDemand {
     private List<UserSubscriptionPolicy> UserSubscriptionPolicyDataOnDemand.data;
     
     @Autowired
-    SubscriptionPolicyDataOnDemand UserSubscriptionPolicyDataOnDemand.subscriptionPolicyDataOnDemand;
+    private SubscriptionPolicyDataOnDemand UserSubscriptionPolicyDataOnDemand.subscriptionPolicyDataOnDemand;
     
     @Autowired
-    BikeLetUserDataOnDemand UserSubscriptionPolicyDataOnDemand.bikeLetUserDataOnDemand;
+    private BikeLetUserDataOnDemand UserSubscriptionPolicyDataOnDemand.bikeLetUserDataOnDemand;
     
     public UserSubscriptionPolicy UserSubscriptionPolicyDataOnDemand.getNewTransientUserSubscriptionPolicy(int index) {
         UserSubscriptionPolicy obj = new UserSubscriptionPolicy();
+        setPolicyId(obj, index);
+        setUserId(obj, index);
         return obj;
+    }
+    
+    public void UserSubscriptionPolicyDataOnDemand.setPolicyId(UserSubscriptionPolicy obj, int index) {
+        SubscriptionPolicy policyId = subscriptionPolicyDataOnDemand.getSpecificSubscriptionPolicy(index);
+        obj.setPolicyId(policyId);
+    }
+    
+    public void UserSubscriptionPolicyDataOnDemand.setUserId(UserSubscriptionPolicy obj, int index) {
+        BikeLetUser userId = bikeLetUserDataOnDemand.getSpecificBikeLetUser(index);
+        obj.setUserId(userId);
     }
     
     public UserSubscriptionPolicy UserSubscriptionPolicyDataOnDemand.getSpecificUserSubscriptionPolicy(int index) {

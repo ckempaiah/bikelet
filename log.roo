@@ -259,3 +259,30 @@ field number --fieldName referenceEntityId --type java.lang.Integer
 focus --class ~.domain.BikeLetUser
 field reference --fieldName programId --type ~.domain.Program
 perform tests
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log opened at 2013-02-07 00:04:41
+service --interface ~.service.AddressService --entity ~.domain.Address
+service --interface ~.service.AddressAssociationService --entity ~.domain.AddressAssociation
+service --interface ~.service.BikeService --entity ~.domain.Bike
+service --interface ~.service.BikeLetRoleService --entity ~.domain.BikeLetRole
+service --interface ~.service.BikeLetUserService --entity ~.domain.BikeLetUser
+service --interface ~.service.BikeLocationService --entity ~.domain.BikeLocation
+service --interface ~.service.BillService --entity ~.domain.Bill
+service --interface ~.service.BillTransactionService --entity ~.domain.BillTransaction
+service --interface ~.service.LicensePolicyService --entity ~.domain.LicensePolicy
+service --interface ~.service.PaymentInfoService --entity ~.domain.PaymentInfo
+service --interface ~.service.PaymentTransactionService --entity ~.domain.PaymentTransaction
+service --interface ~.service.PermissionService --entity ~.domain.Permission
+service --interface ~.service.ProgramService --entity ~.domain.Program
+service --interface ~.service.RentTransactionService --entity ~.domain.RentTransaction
+service --interface ~.service.RolePermissionService --entity ~.domain.RolePermission
+service --interface ~.service.StationService --entity ~.domain.Station
+service --interface ~.service.SuscriptionPolicyService --entity ~.domain.SuscriptionPolicy
+service --interface ~.service.SuscriptionPolicyService --entity ~.domain.SubscriptionPolicy
+service --interface ~.service.SubscriptionPolicyService --entity ~.domain.SubscriptionPolicy
+service --interface ~.service.SubscriptionRateService --entity ~.domain.SubscriptionRate
+service --interface ~.service.TenantService --entity ~.domain.Tenant
+service --interface ~.service.TenantLicensePolicyService --entity ~.domain.TenantLicensePolicy
+service --interface ~.service.UserRoleService --entity ~.domain.UserRole
+service --interface ~.service.UserSubscriptionPolicyService --entity ~.domain.UserSubscriptionPolicy
+exit
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log closed at 2013-02-07 00:14:39

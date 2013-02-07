@@ -24,7 +24,7 @@ privileged aspect TenantIntegrationTest_Roo_IntegrationTest {
     declare @type: TenantIntegrationTest: @Transactional;
     
     @Autowired
-    TenantDataOnDemand TenantIntegrationTest.dod;
+    private TenantDataOnDemand TenantIntegrationTest.dod;
     
     @Test
     public void TenantIntegrationTest.testCountTenants() {

@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Bill;
 import com.sjsu.bikelet.domain.BillDataOnDemand;
 import com.sjsu.bikelet.domain.BillTransaction;
 import com.sjsu.bikelet.domain.BillTransactionDataOnDemand;
@@ -28,10 +29,11 @@ privileged aspect BillTransactionDataOnDemand_Roo_DataOnDemand {
     private List<BillTransaction> BillTransactionDataOnDemand.data;
     
     @Autowired
-    BillDataOnDemand BillTransactionDataOnDemand.billDataOnDemand;
+    private BillDataOnDemand BillTransactionDataOnDemand.billDataOnDemand;
     
     public BillTransaction BillTransactionDataOnDemand.getNewTransientBillTransaction(int index) {
         BillTransaction obj = new BillTransaction();
+        setBill(obj, index);
         setDescription(obj, index);
         setEndDate(obj, index);
         setReferenceEntityId(obj, index);
@@ -39,6 +41,11 @@ privileged aspect BillTransactionDataOnDemand_Roo_DataOnDemand {
         setTotalCost(obj, index);
         setTransactionType(obj, index);
         return obj;
+    }
+    
+    public void BillTransactionDataOnDemand.setBill(BillTransaction obj, int index) {
+        Bill bill = billDataOnDemand.getRandomBill();
+        obj.setBill(bill);
     }
     
     public void BillTransactionDataOnDemand.setDescription(BillTransaction obj, int index) {

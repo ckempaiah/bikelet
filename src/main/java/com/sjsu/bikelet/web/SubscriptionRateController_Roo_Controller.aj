@@ -3,13 +3,15 @@
 
 package com.sjsu.bikelet.web;
 
-import com.sjsu.bikelet.domain.SubscriptionPolicy;
 import com.sjsu.bikelet.domain.SubscriptionRate;
+import com.sjsu.bikelet.service.SubscriptionPolicyService;
+import com.sjsu.bikelet.service.SubscriptionRateService;
 import com.sjsu.bikelet.web.SubscriptionRateController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.joda.time.format.DateTimeFormat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +24,12 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect SubscriptionRateController_Roo_Controller {
     
+    @Autowired
+    SubscriptionRateService SubscriptionRateController.subscriptionRateService;
+    
+    @Autowired
+    SubscriptionPolicyService SubscriptionRateController.subscriptionPolicyService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String SubscriptionRateController.create(@Valid SubscriptionRate subscriptionRate, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -29,7 +37,7 @@ privileged aspect SubscriptionRateController_Roo_Controller {
             return "subscriptionrates/create";
         }
         uiModel.asMap().clear();
-        subscriptionRate.persist();
+        subscriptionRateService.saveSubscriptionRate(subscriptionRate);
         return "redirect:/subscriptionrates/" + encodeUrlPathSegment(subscriptionRate.getId().toString(), httpServletRequest);
     }
     
@@ -42,7 +50,7 @@ privileged aspect SubscriptionRateController_Roo_Controller {
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String SubscriptionRateController.show(@PathVariable("id") Long id, Model uiModel) {
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("subscriptionrate", SubscriptionRate.findSubscriptionRate(id));
+        uiModel.addAttribute("subscriptionrate", subscriptionRateService.findSubscriptionRate(id));
         uiModel.addAttribute("itemId", id);
         return "subscriptionrates/show";
     }
@@ -52,11 +60,11 @@ privileged aspect SubscriptionRateController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("subscriptionrates", SubscriptionRate.findSubscriptionRateEntries(firstResult, sizeNo));
-            float nrOfPages = (float) SubscriptionRate.countSubscriptionRates() / sizeNo;
+            uiModel.addAttribute("subscriptionrates", subscriptionRateService.findSubscriptionRateEntries(firstResult, sizeNo));
+            float nrOfPages = (float) subscriptionRateService.countAllSubscriptionRates() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("subscriptionrates", SubscriptionRate.findAllSubscriptionRates());
+            uiModel.addAttribute("subscriptionrates", subscriptionRateService.findAllSubscriptionRates());
         }
         addDateTimeFormatPatterns(uiModel);
         return "subscriptionrates/list";
@@ -69,20 +77,20 @@ privileged aspect SubscriptionRateController_Roo_Controller {
             return "subscriptionrates/update";
         }
         uiModel.asMap().clear();
-        subscriptionRate.merge();
+        subscriptionRateService.updateSubscriptionRate(subscriptionRate);
         return "redirect:/subscriptionrates/" + encodeUrlPathSegment(subscriptionRate.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String SubscriptionRateController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, SubscriptionRate.findSubscriptionRate(id));
+        populateEditForm(uiModel, subscriptionRateService.findSubscriptionRate(id));
         return "subscriptionrates/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String SubscriptionRateController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        SubscriptionRate subscriptionRate = SubscriptionRate.findSubscriptionRate(id);
-        subscriptionRate.remove();
+        SubscriptionRate subscriptionRate = subscriptionRateService.findSubscriptionRate(id);
+        subscriptionRateService.deleteSubscriptionRate(subscriptionRate);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
@@ -97,7 +105,7 @@ privileged aspect SubscriptionRateController_Roo_Controller {
     void SubscriptionRateController.populateEditForm(Model uiModel, SubscriptionRate subscriptionRate) {
         uiModel.addAttribute("subscriptionRate", subscriptionRate);
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("subscriptionpolicys", SubscriptionPolicy.findAllSubscriptionPolicys());
+        uiModel.addAttribute("subscriptionpolicys", subscriptionPolicyService.findAllSubscriptionPolicys());
     }
     
     String SubscriptionRateController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

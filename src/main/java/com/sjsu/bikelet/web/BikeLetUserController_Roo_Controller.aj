@@ -6,12 +6,14 @@ package com.sjsu.bikelet.web;
 import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.Tenant;
+import com.sjsu.bikelet.service.BikeLetUserService;
 import com.sjsu.bikelet.web.BikeLetUserController;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +25,9 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect BikeLetUserController_Roo_Controller {
     
+    @Autowired
+    BikeLetUserService BikeLetUserController.bikeLetUserService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String BikeLetUserController.create(@Valid BikeLetUser bikeLetUser, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -30,7 +35,7 @@ privileged aspect BikeLetUserController_Roo_Controller {
             return "bikeletusers/create";
         }
         uiModel.asMap().clear();
-        bikeLetUser.persist();
+        bikeLetUserService.saveBikeLetUser(bikeLetUser);
         return "redirect:/bikeletusers/" + encodeUrlPathSegment(bikeLetUser.getId().toString(), httpServletRequest);
     }
     
@@ -47,7 +52,7 @@ privileged aspect BikeLetUserController_Roo_Controller {
     
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String BikeLetUserController.show(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("bikeletuser", BikeLetUser.findBikeLetUser(id));
+        uiModel.addAttribute("bikeletuser", bikeLetUserService.findBikeLetUser(id));
         uiModel.addAttribute("itemId", id);
         return "bikeletusers/show";
     }
@@ -57,11 +62,11 @@ privileged aspect BikeLetUserController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("bikeletusers", BikeLetUser.findBikeLetUserEntries(firstResult, sizeNo));
-            float nrOfPages = (float) BikeLetUser.countBikeLetUsers() / sizeNo;
+            uiModel.addAttribute("bikeletusers", bikeLetUserService.findBikeLetUserEntries(firstResult, sizeNo));
+            float nrOfPages = (float) bikeLetUserService.countAllBikeLetUsers() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("bikeletusers", BikeLetUser.findAllBikeLetUsers());
+            uiModel.addAttribute("bikeletusers", bikeLetUserService.findAllBikeLetUsers());
         }
         return "bikeletusers/list";
     }
@@ -73,20 +78,20 @@ privileged aspect BikeLetUserController_Roo_Controller {
             return "bikeletusers/update";
         }
         uiModel.asMap().clear();
-        bikeLetUser.merge();
+        bikeLetUserService.updateBikeLetUser(bikeLetUser);
         return "redirect:/bikeletusers/" + encodeUrlPathSegment(bikeLetUser.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String BikeLetUserController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, BikeLetUser.findBikeLetUser(id));
+        populateEditForm(uiModel, bikeLetUserService.findBikeLetUser(id));
         return "bikeletusers/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String BikeLetUserController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        BikeLetUser bikeLetUser = BikeLetUser.findBikeLetUser(id);
-        bikeLetUser.remove();
+        BikeLetUser bikeLetUser = bikeLetUserService.findBikeLetUser(id);
+        bikeLetUserService.deleteBikeLetUser(bikeLetUser);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());

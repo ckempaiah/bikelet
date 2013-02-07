@@ -3,7 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BikeLetRole;
 import com.sjsu.bikelet.domain.BikeLetRoleDataOnDemand;
+import com.sjsu.bikelet.domain.Permission;
 import com.sjsu.bikelet.domain.PermissionDataOnDemand;
 import com.sjsu.bikelet.domain.RolePermission;
 import com.sjsu.bikelet.domain.RolePermissionDataOnDemand;
@@ -26,14 +28,26 @@ privileged aspect RolePermissionDataOnDemand_Roo_DataOnDemand {
     private List<RolePermission> RolePermissionDataOnDemand.data;
     
     @Autowired
-    PermissionDataOnDemand RolePermissionDataOnDemand.permissionDataOnDemand;
+    private PermissionDataOnDemand RolePermissionDataOnDemand.permissionDataOnDemand;
     
     @Autowired
-    BikeLetRoleDataOnDemand RolePermissionDataOnDemand.bikeLetRoleDataOnDemand;
+    private BikeLetRoleDataOnDemand RolePermissionDataOnDemand.bikeLetRoleDataOnDemand;
     
     public RolePermission RolePermissionDataOnDemand.getNewTransientRolePermission(int index) {
         RolePermission obj = new RolePermission();
+        setPermissionId(obj, index);
+        setRoleId(obj, index);
         return obj;
+    }
+    
+    public void RolePermissionDataOnDemand.setPermissionId(RolePermission obj, int index) {
+        Permission permissionId = permissionDataOnDemand.getRandomPermission();
+        obj.setPermissionId(permissionId);
+    }
+    
+    public void RolePermissionDataOnDemand.setRoleId(RolePermission obj, int index) {
+        BikeLetRole roleId = bikeLetRoleDataOnDemand.getRandomBikeLetRole();
+        obj.setRoleId(roleId);
     }
     
     public RolePermission RolePermissionDataOnDemand.getSpecificRolePermission(int index) {

@@ -24,7 +24,7 @@ privileged aspect RolePermissionIntegrationTest_Roo_IntegrationTest {
     declare @type: RolePermissionIntegrationTest: @Transactional;
     
     @Autowired
-    RolePermissionDataOnDemand RolePermissionIntegrationTest.dod;
+    private RolePermissionDataOnDemand RolePermissionIntegrationTest.dod;
     
     @Test
     public void RolePermissionIntegrationTest.testCountRolePermissions() {

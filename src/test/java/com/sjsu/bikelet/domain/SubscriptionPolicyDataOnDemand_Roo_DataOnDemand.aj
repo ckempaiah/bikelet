@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.ProgramDataOnDemand;
 import com.sjsu.bikelet.domain.SubscriptionPolicy;
 import com.sjsu.bikelet.domain.SubscriptionPolicyDataOnDemand;
@@ -25,12 +26,13 @@ privileged aspect SubscriptionPolicyDataOnDemand_Roo_DataOnDemand {
     private List<SubscriptionPolicy> SubscriptionPolicyDataOnDemand.data;
     
     @Autowired
-    ProgramDataOnDemand SubscriptionPolicyDataOnDemand.programDataOnDemand;
+    private ProgramDataOnDemand SubscriptionPolicyDataOnDemand.programDataOnDemand;
     
     public SubscriptionPolicy SubscriptionPolicyDataOnDemand.getNewTransientSubscriptionPolicy(int index) {
         SubscriptionPolicy obj = new SubscriptionPolicy();
         setPolicyDescription(obj, index);
         setPolicyName(obj, index);
+        setProgramId(obj, index);
         return obj;
     }
     
@@ -45,6 +47,11 @@ privileged aspect SubscriptionPolicyDataOnDemand_Roo_DataOnDemand {
     public void SubscriptionPolicyDataOnDemand.setPolicyName(SubscriptionPolicy obj, int index) {
         String policyName = "policyName_" + index;
         obj.setPolicyName(policyName);
+    }
+    
+    public void SubscriptionPolicyDataOnDemand.setProgramId(SubscriptionPolicy obj, int index) {
+        Program programId = programDataOnDemand.getRandomProgram();
+        obj.setProgramId(programId);
     }
     
     public SubscriptionPolicy SubscriptionPolicyDataOnDemand.getSpecificSubscriptionPolicy(int index) {

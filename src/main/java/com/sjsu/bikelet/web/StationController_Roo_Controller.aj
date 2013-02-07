@@ -3,13 +3,15 @@
 
 package com.sjsu.bikelet.web;
 
-import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.Station;
 import com.sjsu.bikelet.domain.Tenant;
+import com.sjsu.bikelet.service.ProgramService;
+import com.sjsu.bikelet.service.StationService;
 import com.sjsu.bikelet.web.StationController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,12 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect StationController_Roo_Controller {
     
+    @Autowired
+    StationService StationController.stationService;
+    
+    @Autowired
+    ProgramService StationController.programService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String StationController.create(@Valid Station station, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -28,7 +36,7 @@ privileged aspect StationController_Roo_Controller {
             return "stations/create";
         }
         uiModel.asMap().clear();
-        station.persist();
+        stationService.saveStation(station);
         return "redirect:/stations/" + encodeUrlPathSegment(station.getId().toString(), httpServletRequest);
     }
     
@@ -40,7 +48,7 @@ privileged aspect StationController_Roo_Controller {
     
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String StationController.show(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("station", Station.findStation(id));
+        uiModel.addAttribute("station", stationService.findStation(id));
         uiModel.addAttribute("itemId", id);
         return "stations/show";
     }
@@ -50,11 +58,11 @@ privileged aspect StationController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("stations", Station.findStationEntries(firstResult, sizeNo));
-            float nrOfPages = (float) Station.countStations() / sizeNo;
+            uiModel.addAttribute("stations", stationService.findStationEntries(firstResult, sizeNo));
+            float nrOfPages = (float) stationService.countAllStations() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("stations", Station.findAllStations());
+            uiModel.addAttribute("stations", stationService.findAllStations());
         }
         return "stations/list";
     }
@@ -66,20 +74,20 @@ privileged aspect StationController_Roo_Controller {
             return "stations/update";
         }
         uiModel.asMap().clear();
-        station.merge();
+        stationService.updateStation(station);
         return "redirect:/stations/" + encodeUrlPathSegment(station.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String StationController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, Station.findStation(id));
+        populateEditForm(uiModel, stationService.findStation(id));
         return "stations/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String StationController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        Station station = Station.findStation(id);
-        station.remove();
+        Station station = stationService.findStation(id);
+        stationService.deleteStation(station);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
@@ -88,7 +96,7 @@ privileged aspect StationController_Roo_Controller {
     
     void StationController.populateEditForm(Model uiModel, Station station) {
         uiModel.addAttribute("station", station);
-        uiModel.addAttribute("programs", Program.findAllPrograms());
+        uiModel.addAttribute("programs", programService.findAllPrograms());
         uiModel.addAttribute("tenants", Tenant.findAllTenants());
     }
     

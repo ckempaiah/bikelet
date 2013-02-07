@@ -3,13 +3,15 @@
 
 package com.sjsu.bikelet.web;
 
-import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.Bill;
+import com.sjsu.bikelet.service.BikeLetUserService;
+import com.sjsu.bikelet.service.BillService;
 import com.sjsu.bikelet.web.BillController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.joda.time.format.DateTimeFormat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +24,12 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect BillController_Roo_Controller {
     
+    @Autowired
+    BillService BillController.billService;
+    
+    @Autowired
+    BikeLetUserService BillController.bikeLetUserService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String BillController.create(@Valid Bill bill, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -29,7 +37,7 @@ privileged aspect BillController_Roo_Controller {
             return "bills/create";
         }
         uiModel.asMap().clear();
-        bill.persist();
+        billService.saveBill(bill);
         return "redirect:/bills/" + encodeUrlPathSegment(bill.getId().toString(), httpServletRequest);
     }
     
@@ -42,7 +50,7 @@ privileged aspect BillController_Roo_Controller {
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String BillController.show(@PathVariable("id") Long id, Model uiModel) {
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("bill", Bill.findBill(id));
+        uiModel.addAttribute("bill", billService.findBill(id));
         uiModel.addAttribute("itemId", id);
         return "bills/show";
     }
@@ -52,11 +60,11 @@ privileged aspect BillController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("bills", Bill.findBillEntries(firstResult, sizeNo));
-            float nrOfPages = (float) Bill.countBills() / sizeNo;
+            uiModel.addAttribute("bills", billService.findBillEntries(firstResult, sizeNo));
+            float nrOfPages = (float) billService.countAllBills() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("bills", Bill.findAllBills());
+            uiModel.addAttribute("bills", billService.findAllBills());
         }
         addDateTimeFormatPatterns(uiModel);
         return "bills/list";
@@ -69,20 +77,20 @@ privileged aspect BillController_Roo_Controller {
             return "bills/update";
         }
         uiModel.asMap().clear();
-        bill.merge();
+        billService.updateBill(bill);
         return "redirect:/bills/" + encodeUrlPathSegment(bill.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String BillController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, Bill.findBill(id));
+        populateEditForm(uiModel, billService.findBill(id));
         return "bills/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String BillController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        Bill bill = Bill.findBill(id);
-        bill.remove();
+        Bill bill = billService.findBill(id);
+        billService.deleteBill(bill);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
@@ -98,7 +106,7 @@ privileged aspect BillController_Roo_Controller {
     void BillController.populateEditForm(Model uiModel, Bill bill) {
         uiModel.addAttribute("bill", bill);
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("bikeletusers", BikeLetUser.findAllBikeLetUsers());
+        uiModel.addAttribute("bikeletusers", bikeLetUserService.findAllBikeLetUsers());
     }
     
     String BillController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

@@ -3,13 +3,15 @@
 
 package com.sjsu.bikelet.web;
 
-import com.sjsu.bikelet.domain.BikeLetRole;
-import com.sjsu.bikelet.domain.Permission;
 import com.sjsu.bikelet.domain.RolePermission;
+import com.sjsu.bikelet.service.BikeLetRoleService;
+import com.sjsu.bikelet.service.PermissionService;
+import com.sjsu.bikelet.service.RolePermissionService;
 import com.sjsu.bikelet.web.RolePermissionController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,15 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect RolePermissionController_Roo_Controller {
     
+    @Autowired
+    RolePermissionService RolePermissionController.rolePermissionService;
+    
+    @Autowired
+    BikeLetRoleService RolePermissionController.bikeLetRoleService;
+    
+    @Autowired
+    PermissionService RolePermissionController.permissionService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String RolePermissionController.create(@Valid RolePermission rolePermission, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -28,7 +39,7 @@ privileged aspect RolePermissionController_Roo_Controller {
             return "rolepermissions/create";
         }
         uiModel.asMap().clear();
-        rolePermission.persist();
+        rolePermissionService.saveRolePermission(rolePermission);
         return "redirect:/rolepermissions/" + encodeUrlPathSegment(rolePermission.getId().toString(), httpServletRequest);
     }
     
@@ -40,7 +51,7 @@ privileged aspect RolePermissionController_Roo_Controller {
     
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String RolePermissionController.show(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("rolepermission", RolePermission.findRolePermission(id));
+        uiModel.addAttribute("rolepermission", rolePermissionService.findRolePermission(id));
         uiModel.addAttribute("itemId", id);
         return "rolepermissions/show";
     }
@@ -50,11 +61,11 @@ privileged aspect RolePermissionController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("rolepermissions", RolePermission.findRolePermissionEntries(firstResult, sizeNo));
-            float nrOfPages = (float) RolePermission.countRolePermissions() / sizeNo;
+            uiModel.addAttribute("rolepermissions", rolePermissionService.findRolePermissionEntries(firstResult, sizeNo));
+            float nrOfPages = (float) rolePermissionService.countAllRolePermissions() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("rolepermissions", RolePermission.findAllRolePermissions());
+            uiModel.addAttribute("rolepermissions", rolePermissionService.findAllRolePermissions());
         }
         return "rolepermissions/list";
     }
@@ -66,20 +77,20 @@ privileged aspect RolePermissionController_Roo_Controller {
             return "rolepermissions/update";
         }
         uiModel.asMap().clear();
-        rolePermission.merge();
+        rolePermissionService.updateRolePermission(rolePermission);
         return "redirect:/rolepermissions/" + encodeUrlPathSegment(rolePermission.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String RolePermissionController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, RolePermission.findRolePermission(id));
+        populateEditForm(uiModel, rolePermissionService.findRolePermission(id));
         return "rolepermissions/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String RolePermissionController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        RolePermission rolePermission = RolePermission.findRolePermission(id);
-        rolePermission.remove();
+        RolePermission rolePermission = rolePermissionService.findRolePermission(id);
+        rolePermissionService.deleteRolePermission(rolePermission);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
@@ -88,8 +99,8 @@ privileged aspect RolePermissionController_Roo_Controller {
     
     void RolePermissionController.populateEditForm(Model uiModel, RolePermission rolePermission) {
         uiModel.addAttribute("rolePermission", rolePermission);
-        uiModel.addAttribute("bikeletroles", BikeLetRole.findAllBikeLetRoles());
-        uiModel.addAttribute("permissions", Permission.findAllPermissions());
+        uiModel.addAttribute("bikeletroles", bikeLetRoleService.findAllBikeLetRoles());
+        uiModel.addAttribute("permissions", permissionService.findAllPermissions());
     }
     
     String RolePermissionController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

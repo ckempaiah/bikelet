@@ -3,8 +3,11 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
+import com.sjsu.bikelet.domain.Bill;
 import com.sjsu.bikelet.domain.BillDataOnDemand;
+import com.sjsu.bikelet.domain.PaymentInfo;
 import com.sjsu.bikelet.domain.PaymentInfoDataOnDemand;
 import com.sjsu.bikelet.domain.PaymentTransaction;
 import com.sjsu.bikelet.domain.PaymentTransactionDataOnDemand;
@@ -30,21 +33,29 @@ privileged aspect PaymentTransactionDataOnDemand_Roo_DataOnDemand {
     private List<PaymentTransaction> PaymentTransactionDataOnDemand.data;
     
     @Autowired
-    BillDataOnDemand PaymentTransactionDataOnDemand.billDataOnDemand;
+    private BillDataOnDemand PaymentTransactionDataOnDemand.billDataOnDemand;
     
     @Autowired
-    PaymentInfoDataOnDemand PaymentTransactionDataOnDemand.paymentInfoDataOnDemand;
+    private PaymentInfoDataOnDemand PaymentTransactionDataOnDemand.paymentInfoDataOnDemand;
     
     @Autowired
-    BikeLetUserDataOnDemand PaymentTransactionDataOnDemand.bikeLetUserDataOnDemand;
+    private BikeLetUserDataOnDemand PaymentTransactionDataOnDemand.bikeLetUserDataOnDemand;
     
     public PaymentTransaction PaymentTransactionDataOnDemand.getNewTransientPaymentTransaction(int index) {
         PaymentTransaction obj = new PaymentTransaction();
+        setBillId(obj, index);
         setDateOfTransaction(obj, index);
         setDescription(obj, index);
+        setPaymentId(obj, index);
         setPermissionName(obj, index);
         setStatus(obj, index);
+        setUserId(obj, index);
         return obj;
+    }
+    
+    public void PaymentTransactionDataOnDemand.setBillId(PaymentTransaction obj, int index) {
+        Bill billId = billDataOnDemand.getSpecificBill(index);
+        obj.setBillId(billId);
     }
     
     public void PaymentTransactionDataOnDemand.setDateOfTransaction(PaymentTransaction obj, int index) {
@@ -60,6 +71,11 @@ privileged aspect PaymentTransactionDataOnDemand_Roo_DataOnDemand {
         obj.setDescription(description);
     }
     
+    public void PaymentTransactionDataOnDemand.setPaymentId(PaymentTransaction obj, int index) {
+        PaymentInfo paymentId = paymentInfoDataOnDemand.getRandomPaymentInfo();
+        obj.setPaymentId(paymentId);
+    }
+    
     public void PaymentTransactionDataOnDemand.setPermissionName(PaymentTransaction obj, int index) {
         String permissionName = "permissionName_" + index;
         if (permissionName.length() > 30) {
@@ -71,6 +87,11 @@ privileged aspect PaymentTransactionDataOnDemand_Roo_DataOnDemand {
     public void PaymentTransactionDataOnDemand.setStatus(PaymentTransaction obj, int index) {
         Integer status = new Integer(index);
         obj.setStatus(status);
+    }
+    
+    public void PaymentTransactionDataOnDemand.setUserId(PaymentTransaction obj, int index) {
+        BikeLetUser userId = bikeLetUserDataOnDemand.getRandomBikeLetUser();
+        obj.setUserId(userId);
     }
     
     public PaymentTransaction PaymentTransactionDataOnDemand.getSpecificPaymentTransaction(int index) {

@@ -4,10 +4,12 @@
 package com.sjsu.bikelet.web;
 
 import com.sjsu.bikelet.domain.AddressAssociation;
+import com.sjsu.bikelet.service.AddressAssociationService;
 import com.sjsu.bikelet.web.AddressAssociationController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,9 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect AddressAssociationController_Roo_Controller {
     
+    @Autowired
+    AddressAssociationService AddressAssociationController.addressAssociationService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String AddressAssociationController.create(@Valid AddressAssociation addressAssociation, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -26,7 +31,7 @@ privileged aspect AddressAssociationController_Roo_Controller {
             return "addressassociations/create";
         }
         uiModel.asMap().clear();
-        addressAssociation.persist();
+        addressAssociationService.saveAddressAssociation(addressAssociation);
         return "redirect:/addressassociations/" + encodeUrlPathSegment(addressAssociation.getId().toString(), httpServletRequest);
     }
     
@@ -38,7 +43,7 @@ privileged aspect AddressAssociationController_Roo_Controller {
     
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String AddressAssociationController.show(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("addressassociation", AddressAssociation.findAddressAssociation(id));
+        uiModel.addAttribute("addressassociation", addressAssociationService.findAddressAssociation(id));
         uiModel.addAttribute("itemId", id);
         return "addressassociations/show";
     }
@@ -48,11 +53,11 @@ privileged aspect AddressAssociationController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("addressassociations", AddressAssociation.findAddressAssociationEntries(firstResult, sizeNo));
-            float nrOfPages = (float) AddressAssociation.countAddressAssociations() / sizeNo;
+            uiModel.addAttribute("addressassociations", addressAssociationService.findAddressAssociationEntries(firstResult, sizeNo));
+            float nrOfPages = (float) addressAssociationService.countAllAddressAssociations() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("addressassociations", AddressAssociation.findAllAddressAssociations());
+            uiModel.addAttribute("addressassociations", addressAssociationService.findAllAddressAssociations());
         }
         return "addressassociations/list";
     }
@@ -64,20 +69,20 @@ privileged aspect AddressAssociationController_Roo_Controller {
             return "addressassociations/update";
         }
         uiModel.asMap().clear();
-        addressAssociation.merge();
+        addressAssociationService.updateAddressAssociation(addressAssociation);
         return "redirect:/addressassociations/" + encodeUrlPathSegment(addressAssociation.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String AddressAssociationController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, AddressAssociation.findAddressAssociation(id));
+        populateEditForm(uiModel, addressAssociationService.findAddressAssociation(id));
         return "addressassociations/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String AddressAssociationController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        AddressAssociation addressAssociation = AddressAssociation.findAddressAssociation(id);
-        addressAssociation.remove();
+        AddressAssociation addressAssociation = addressAssociationService.findAddressAssociation(id);
+        addressAssociationService.deleteAddressAssociation(addressAssociation);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());

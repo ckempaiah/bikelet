@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.BikeLetRole;
 import com.sjsu.bikelet.domain.BikeLetRoleDataOnDemand;
 import com.sjsu.bikelet.domain.BikeLetRoleIntegrationTest;
+import com.sjsu.bikelet.service.BikeLetRoleService;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,12 +24,15 @@ privileged aspect BikeLetRoleIntegrationTest_Roo_IntegrationTest {
     declare @type: BikeLetRoleIntegrationTest: @Transactional;
     
     @Autowired
-    BikeLetRoleDataOnDemand BikeLetRoleIntegrationTest.dod;
+    private BikeLetRoleDataOnDemand BikeLetRoleIntegrationTest.dod;
+    
+    @Autowired
+    BikeLetRoleService BikeLetRoleIntegrationTest.bikeLetRoleService;
     
     @Test
-    public void BikeLetRoleIntegrationTest.testCountBikeLetRoles() {
+    public void BikeLetRoleIntegrationTest.testCountAllBikeLetRoles() {
         Assert.assertNotNull("Data on demand for 'BikeLetRole' failed to initialize correctly", dod.getRandomBikeLetRole());
-        long count = BikeLetRole.countBikeLetRoles();
+        long count = bikeLetRoleService.countAllBikeLetRoles();
         Assert.assertTrue("Counter for 'BikeLetRole' incorrectly reported there were no entries", count > 0);
     }
     
@@ -39,7 +42,7 @@ privileged aspect BikeLetRoleIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'BikeLetRole' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'BikeLetRole' failed to provide an identifier", id);
-        obj = BikeLetRole.findBikeLetRole(id);
+        obj = bikeLetRoleService.findBikeLetRole(id);
         Assert.assertNotNull("Find method for 'BikeLetRole' illegally returned null for id '" + id + "'", obj);
         Assert.assertEquals("Find method for 'BikeLetRole' returned the incorrect identifier", id, obj.getId());
     }
@@ -47,9 +50,9 @@ privileged aspect BikeLetRoleIntegrationTest_Roo_IntegrationTest {
     @Test
     public void BikeLetRoleIntegrationTest.testFindAllBikeLetRoles() {
         Assert.assertNotNull("Data on demand for 'BikeLetRole' failed to initialize correctly", dod.getRandomBikeLetRole());
-        long count = BikeLetRole.countBikeLetRoles();
+        long count = bikeLetRoleService.countAllBikeLetRoles();
         Assert.assertTrue("Too expensive to perform a find all test for 'BikeLetRole', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<BikeLetRole> result = BikeLetRole.findAllBikeLetRoles();
+        List<BikeLetRole> result = bikeLetRoleService.findAllBikeLetRoles();
         Assert.assertNotNull("Find all method for 'BikeLetRole' illegally returned null", result);
         Assert.assertTrue("Find all method for 'BikeLetRole' failed to return any data", result.size() > 0);
     }
@@ -57,11 +60,11 @@ privileged aspect BikeLetRoleIntegrationTest_Roo_IntegrationTest {
     @Test
     public void BikeLetRoleIntegrationTest.testFindBikeLetRoleEntries() {
         Assert.assertNotNull("Data on demand for 'BikeLetRole' failed to initialize correctly", dod.getRandomBikeLetRole());
-        long count = BikeLetRole.countBikeLetRoles();
+        long count = bikeLetRoleService.countAllBikeLetRoles();
         if (count > 20) count = 20;
         int firstResult = 0;
         int maxResults = (int) count;
-        List<BikeLetRole> result = BikeLetRole.findBikeLetRoleEntries(firstResult, maxResults);
+        List<BikeLetRole> result = bikeLetRoleService.findBikeLetRoleEntries(firstResult, maxResults);
         Assert.assertNotNull("Find entries method for 'BikeLetRole' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'BikeLetRole' returned an incorrect number of entries", count, result.size());
     }
@@ -72,7 +75,7 @@ privileged aspect BikeLetRoleIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'BikeLetRole' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'BikeLetRole' failed to provide an identifier", id);
-        obj = BikeLetRole.findBikeLetRole(id);
+        obj = bikeLetRoleService.findBikeLetRole(id);
         Assert.assertNotNull("Find method for 'BikeLetRole' illegally returned null for id '" + id + "'", obj);
         boolean modified =  dod.modifyBikeLetRole(obj);
         Integer currentVersion = obj.getVersion();
@@ -81,41 +84,41 @@ privileged aspect BikeLetRoleIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void BikeLetRoleIntegrationTest.testMergeUpdate() {
+    public void BikeLetRoleIntegrationTest.testUpdateBikeLetRoleUpdate() {
         BikeLetRole obj = dod.getRandomBikeLetRole();
         Assert.assertNotNull("Data on demand for 'BikeLetRole' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'BikeLetRole' failed to provide an identifier", id);
-        obj = BikeLetRole.findBikeLetRole(id);
+        obj = bikeLetRoleService.findBikeLetRole(id);
         boolean modified =  dod.modifyBikeLetRole(obj);
         Integer currentVersion = obj.getVersion();
-        BikeLetRole merged = obj.merge();
+        BikeLetRole merged = bikeLetRoleService.updateBikeLetRole(obj);
         obj.flush();
         Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
         Assert.assertTrue("Version for 'BikeLetRole' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
-    public void BikeLetRoleIntegrationTest.testPersist() {
+    public void BikeLetRoleIntegrationTest.testSaveBikeLetRole() {
         Assert.assertNotNull("Data on demand for 'BikeLetRole' failed to initialize correctly", dod.getRandomBikeLetRole());
         BikeLetRole obj = dod.getNewTransientBikeLetRole(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'BikeLetRole' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'BikeLetRole' identifier to be null", obj.getId());
-        obj.persist();
+        bikeLetRoleService.saveBikeLetRole(obj);
         obj.flush();
         Assert.assertNotNull("Expected 'BikeLetRole' identifier to no longer be null", obj.getId());
     }
     
     @Test
-    public void BikeLetRoleIntegrationTest.testRemove() {
+    public void BikeLetRoleIntegrationTest.testDeleteBikeLetRole() {
         BikeLetRole obj = dod.getRandomBikeLetRole();
         Assert.assertNotNull("Data on demand for 'BikeLetRole' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'BikeLetRole' failed to provide an identifier", id);
-        obj = BikeLetRole.findBikeLetRole(id);
-        obj.remove();
+        obj = bikeLetRoleService.findBikeLetRole(id);
+        bikeLetRoleService.deleteBikeLetRole(obj);
         obj.flush();
-        Assert.assertNull("Failed to remove 'BikeLetRole' with identifier '" + id + "'", BikeLetRole.findBikeLetRole(id));
+        Assert.assertNull("Failed to remove 'BikeLetRole' with identifier '" + id + "'", bikeLetRoleService.findBikeLetRole(id));
     }
     
 }

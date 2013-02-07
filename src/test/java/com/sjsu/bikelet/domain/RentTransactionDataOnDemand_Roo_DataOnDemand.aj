@@ -3,7 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Bike;
 import com.sjsu.bikelet.domain.BikeDataOnDemand;
+import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
 import com.sjsu.bikelet.domain.RentTransaction;
 import com.sjsu.bikelet.domain.RentTransactionDataOnDemand;
@@ -29,13 +31,14 @@ privileged aspect RentTransactionDataOnDemand_Roo_DataOnDemand {
     private List<RentTransaction> RentTransactionDataOnDemand.data;
     
     @Autowired
-    BikeDataOnDemand RentTransactionDataOnDemand.bikeDataOnDemand;
+    private BikeDataOnDemand RentTransactionDataOnDemand.bikeDataOnDemand;
     
     @Autowired
-    BikeLetUserDataOnDemand RentTransactionDataOnDemand.bikeLetUserDataOnDemand;
+    private BikeLetUserDataOnDemand RentTransactionDataOnDemand.bikeLetUserDataOnDemand;
     
     public RentTransaction RentTransactionDataOnDemand.getNewTransientRentTransaction(int index) {
         RentTransaction obj = new RentTransaction();
+        setBikeId(obj, index);
         setComments(obj, index);
         setFromStationId(obj, index);
         setRateId(obj, index);
@@ -44,7 +47,13 @@ privileged aspect RentTransactionDataOnDemand_Roo_DataOnDemand {
         setStatus(obj, index);
         setTenantId(obj, index);
         setToStationId(obj, index);
+        setUserId(obj, index);
         return obj;
+    }
+    
+    public void RentTransactionDataOnDemand.setBikeId(RentTransaction obj, int index) {
+        Bike bikeId = bikeDataOnDemand.getRandomBike();
+        obj.setBikeId(bikeId);
     }
     
     public void RentTransactionDataOnDemand.setComments(RentTransaction obj, int index) {
@@ -91,6 +100,11 @@ privileged aspect RentTransactionDataOnDemand_Roo_DataOnDemand {
     public void RentTransactionDataOnDemand.setToStationId(RentTransaction obj, int index) {
         Integer toStationId = new Integer(index);
         obj.setToStationId(toStationId);
+    }
+    
+    public void RentTransactionDataOnDemand.setUserId(RentTransaction obj, int index) {
+        BikeLetUser userId = bikeLetUserDataOnDemand.getRandomBikeLetUser();
+        obj.setUserId(userId);
     }
     
     public RentTransaction RentTransactionDataOnDemand.getSpecificRentTransaction(int index) {

@@ -3,9 +3,11 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Bike;
 import com.sjsu.bikelet.domain.BikeDataOnDemand;
 import com.sjsu.bikelet.domain.BikeLocation;
 import com.sjsu.bikelet.domain.BikeLocationDataOnDemand;
+import com.sjsu.bikelet.domain.Station;
 import com.sjsu.bikelet.domain.StationDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -26,15 +28,28 @@ privileged aspect BikeLocationDataOnDemand_Roo_DataOnDemand {
     private List<BikeLocation> BikeLocationDataOnDemand.data;
     
     @Autowired
-    BikeDataOnDemand BikeLocationDataOnDemand.bikeDataOnDemand;
+    private BikeDataOnDemand BikeLocationDataOnDemand.bikeDataOnDemand;
     
     @Autowired
-    StationDataOnDemand BikeLocationDataOnDemand.stationDataOnDemand;
+    private StationDataOnDemand BikeLocationDataOnDemand.stationDataOnDemand;
     
     public BikeLocation BikeLocationDataOnDemand.getNewTransientBikeLocation(int index) {
         BikeLocation obj = new BikeLocation();
+        setBike(obj, index);
+        setBikeId(obj, index);
         setBikeStatus(obj, index);
+        setStationId(obj, index);
         return obj;
+    }
+    
+    public void BikeLocationDataOnDemand.setBike(BikeLocation obj, int index) {
+        Bike bike = bikeDataOnDemand.getRandomBike();
+        obj.setBike(bike);
+    }
+    
+    public void BikeLocationDataOnDemand.setBikeId(BikeLocation obj, int index) {
+        Bike bikeId = bikeDataOnDemand.getSpecificBike(index);
+        obj.setBikeId(bikeId);
     }
     
     public void BikeLocationDataOnDemand.setBikeStatus(BikeLocation obj, int index) {
@@ -43,6 +58,11 @@ privileged aspect BikeLocationDataOnDemand_Roo_DataOnDemand {
             bikeStatus = bikeStatus.substring(0, 10);
         }
         obj.setBikeStatus(bikeStatus);
+    }
+    
+    public void BikeLocationDataOnDemand.setStationId(BikeLocation obj, int index) {
+        Station stationId = stationDataOnDemand.getRandomStation();
+        obj.setStationId(stationId);
     }
     
     public BikeLocation BikeLocationDataOnDemand.getSpecificBikeLocation(int index) {

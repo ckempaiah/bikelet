@@ -3,9 +3,11 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.ProgramDataOnDemand;
 import com.sjsu.bikelet.domain.Station;
 import com.sjsu.bikelet.domain.StationDataOnDemand;
+import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -26,15 +28,17 @@ privileged aspect StationDataOnDemand_Roo_DataOnDemand {
     private List<Station> StationDataOnDemand.data;
     
     @Autowired
-    ProgramDataOnDemand StationDataOnDemand.programDataOnDemand;
+    private ProgramDataOnDemand StationDataOnDemand.programDataOnDemand;
     
     @Autowired
-    TenantDataOnDemand StationDataOnDemand.tenantDataOnDemand;
+    private TenantDataOnDemand StationDataOnDemand.tenantDataOnDemand;
     
     public Station StationDataOnDemand.getNewTransientStation(int index) {
         Station obj = new Station();
         setCapacity(obj, index);
         setLocation(obj, index);
+        setProgramId(obj, index);
+        setTenantId(obj, index);
         return obj;
     }
     
@@ -46,6 +50,16 @@ privileged aspect StationDataOnDemand_Roo_DataOnDemand {
     public void StationDataOnDemand.setLocation(Station obj, int index) {
         String location = "location_" + index;
         obj.setLocation(location);
+    }
+    
+    public void StationDataOnDemand.setProgramId(Station obj, int index) {
+        Program programId = programDataOnDemand.getRandomProgram();
+        obj.setProgramId(programId);
+    }
+    
+    public void StationDataOnDemand.setTenantId(Station obj, int index) {
+        Tenant tenantId = tenantDataOnDemand.getRandomTenant();
+        obj.setTenantId(tenantId);
     }
     
     public Station StationDataOnDemand.getSpecificStation(int index) {

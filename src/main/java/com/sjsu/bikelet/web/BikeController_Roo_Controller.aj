@@ -5,11 +5,13 @@ package com.sjsu.bikelet.web;
 
 import com.sjsu.bikelet.domain.Bike;
 import com.sjsu.bikelet.domain.Tenant;
+import com.sjsu.bikelet.service.BikeService;
 import com.sjsu.bikelet.web.BikeController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.joda.time.format.DateTimeFormat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +24,9 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect BikeController_Roo_Controller {
     
+    @Autowired
+    BikeService BikeController.bikeService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String BikeController.create(@Valid Bike bike, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -29,7 +34,7 @@ privileged aspect BikeController_Roo_Controller {
             return "bikes/create";
         }
         uiModel.asMap().clear();
-        bike.persist();
+        bikeService.saveBike(bike);
         return "redirect:/bikes/" + encodeUrlPathSegment(bike.getId().toString(), httpServletRequest);
     }
     
@@ -42,7 +47,7 @@ privileged aspect BikeController_Roo_Controller {
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String BikeController.show(@PathVariable("id") Long id, Model uiModel) {
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("bike", Bike.findBike(id));
+        uiModel.addAttribute("bike", bikeService.findBike(id));
         uiModel.addAttribute("itemId", id);
         return "bikes/show";
     }
@@ -52,11 +57,11 @@ privileged aspect BikeController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("bikes", Bike.findBikeEntries(firstResult, sizeNo));
-            float nrOfPages = (float) Bike.countBikes() / sizeNo;
+            uiModel.addAttribute("bikes", bikeService.findBikeEntries(firstResult, sizeNo));
+            float nrOfPages = (float) bikeService.countAllBikes() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("bikes", Bike.findAllBikes());
+            uiModel.addAttribute("bikes", bikeService.findAllBikes());
         }
         addDateTimeFormatPatterns(uiModel);
         return "bikes/list";
@@ -69,20 +74,20 @@ privileged aspect BikeController_Roo_Controller {
             return "bikes/update";
         }
         uiModel.asMap().clear();
-        bike.merge();
+        bikeService.updateBike(bike);
         return "redirect:/bikes/" + encodeUrlPathSegment(bike.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String BikeController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, Bike.findBike(id));
+        populateEditForm(uiModel, bikeService.findBike(id));
         return "bikes/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String BikeController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        Bike bike = Bike.findBike(id);
-        bike.remove();
+        Bike bike = bikeService.findBike(id);
+        bikeService.deleteBike(bike);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());

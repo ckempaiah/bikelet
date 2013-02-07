@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.BillTransaction;
 import com.sjsu.bikelet.domain.BillTransactionDataOnDemand;
 import com.sjsu.bikelet.domain.BillTransactionIntegrationTest;
+import com.sjsu.bikelet.service.BillTransactionService;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,12 +24,15 @@ privileged aspect BillTransactionIntegrationTest_Roo_IntegrationTest {
     declare @type: BillTransactionIntegrationTest: @Transactional;
     
     @Autowired
-    BillTransactionDataOnDemand BillTransactionIntegrationTest.dod;
+    private BillTransactionDataOnDemand BillTransactionIntegrationTest.dod;
+    
+    @Autowired
+    BillTransactionService BillTransactionIntegrationTest.billTransactionService;
     
     @Test
-    public void BillTransactionIntegrationTest.testCountBillTransactions() {
+    public void BillTransactionIntegrationTest.testCountAllBillTransactions() {
         Assert.assertNotNull("Data on demand for 'BillTransaction' failed to initialize correctly", dod.getRandomBillTransaction());
-        long count = BillTransaction.countBillTransactions();
+        long count = billTransactionService.countAllBillTransactions();
         Assert.assertTrue("Counter for 'BillTransaction' incorrectly reported there were no entries", count > 0);
     }
     
@@ -39,7 +42,7 @@ privileged aspect BillTransactionIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'BillTransaction' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'BillTransaction' failed to provide an identifier", id);
-        obj = BillTransaction.findBillTransaction(id);
+        obj = billTransactionService.findBillTransaction(id);
         Assert.assertNotNull("Find method for 'BillTransaction' illegally returned null for id '" + id + "'", obj);
         Assert.assertEquals("Find method for 'BillTransaction' returned the incorrect identifier", id, obj.getId());
     }
@@ -47,9 +50,9 @@ privileged aspect BillTransactionIntegrationTest_Roo_IntegrationTest {
     @Test
     public void BillTransactionIntegrationTest.testFindAllBillTransactions() {
         Assert.assertNotNull("Data on demand for 'BillTransaction' failed to initialize correctly", dod.getRandomBillTransaction());
-        long count = BillTransaction.countBillTransactions();
+        long count = billTransactionService.countAllBillTransactions();
         Assert.assertTrue("Too expensive to perform a find all test for 'BillTransaction', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<BillTransaction> result = BillTransaction.findAllBillTransactions();
+        List<BillTransaction> result = billTransactionService.findAllBillTransactions();
         Assert.assertNotNull("Find all method for 'BillTransaction' illegally returned null", result);
         Assert.assertTrue("Find all method for 'BillTransaction' failed to return any data", result.size() > 0);
     }
@@ -57,11 +60,11 @@ privileged aspect BillTransactionIntegrationTest_Roo_IntegrationTest {
     @Test
     public void BillTransactionIntegrationTest.testFindBillTransactionEntries() {
         Assert.assertNotNull("Data on demand for 'BillTransaction' failed to initialize correctly", dod.getRandomBillTransaction());
-        long count = BillTransaction.countBillTransactions();
+        long count = billTransactionService.countAllBillTransactions();
         if (count > 20) count = 20;
         int firstResult = 0;
         int maxResults = (int) count;
-        List<BillTransaction> result = BillTransaction.findBillTransactionEntries(firstResult, maxResults);
+        List<BillTransaction> result = billTransactionService.findBillTransactionEntries(firstResult, maxResults);
         Assert.assertNotNull("Find entries method for 'BillTransaction' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'BillTransaction' returned an incorrect number of entries", count, result.size());
     }
@@ -72,7 +75,7 @@ privileged aspect BillTransactionIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'BillTransaction' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'BillTransaction' failed to provide an identifier", id);
-        obj = BillTransaction.findBillTransaction(id);
+        obj = billTransactionService.findBillTransaction(id);
         Assert.assertNotNull("Find method for 'BillTransaction' illegally returned null for id '" + id + "'", obj);
         boolean modified =  dod.modifyBillTransaction(obj);
         Integer currentVersion = obj.getVersion();
@@ -81,41 +84,41 @@ privileged aspect BillTransactionIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void BillTransactionIntegrationTest.testMergeUpdate() {
+    public void BillTransactionIntegrationTest.testUpdateBillTransactionUpdate() {
         BillTransaction obj = dod.getRandomBillTransaction();
         Assert.assertNotNull("Data on demand for 'BillTransaction' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'BillTransaction' failed to provide an identifier", id);
-        obj = BillTransaction.findBillTransaction(id);
+        obj = billTransactionService.findBillTransaction(id);
         boolean modified =  dod.modifyBillTransaction(obj);
         Integer currentVersion = obj.getVersion();
-        BillTransaction merged = obj.merge();
+        BillTransaction merged = billTransactionService.updateBillTransaction(obj);
         obj.flush();
         Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
         Assert.assertTrue("Version for 'BillTransaction' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
-    public void BillTransactionIntegrationTest.testPersist() {
+    public void BillTransactionIntegrationTest.testSaveBillTransaction() {
         Assert.assertNotNull("Data on demand for 'BillTransaction' failed to initialize correctly", dod.getRandomBillTransaction());
         BillTransaction obj = dod.getNewTransientBillTransaction(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'BillTransaction' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'BillTransaction' identifier to be null", obj.getId());
-        obj.persist();
+        billTransactionService.saveBillTransaction(obj);
         obj.flush();
         Assert.assertNotNull("Expected 'BillTransaction' identifier to no longer be null", obj.getId());
     }
     
     @Test
-    public void BillTransactionIntegrationTest.testRemove() {
+    public void BillTransactionIntegrationTest.testDeleteBillTransaction() {
         BillTransaction obj = dod.getRandomBillTransaction();
         Assert.assertNotNull("Data on demand for 'BillTransaction' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'BillTransaction' failed to provide an identifier", id);
-        obj = BillTransaction.findBillTransaction(id);
-        obj.remove();
+        obj = billTransactionService.findBillTransaction(id);
+        billTransactionService.deleteBillTransaction(obj);
         obj.flush();
-        Assert.assertNull("Failed to remove 'BillTransaction' with identifier '" + id + "'", BillTransaction.findBillTransaction(id));
+        Assert.assertNull("Failed to remove 'BillTransaction' with identifier '" + id + "'", billTransactionService.findBillTransaction(id));
     }
     
 }
