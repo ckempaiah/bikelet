@@ -1,1 +1,16 @@
+# Project wide .gitignore settings
+
+*.jar
+*.zip
+*.log
+*.log.*
+*.class
+*.orig
+
+.project
+.classpath
+.metadata
+.settings
 target
+build
+classes
