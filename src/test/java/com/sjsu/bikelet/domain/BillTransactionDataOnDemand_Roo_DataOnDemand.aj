@@ -3,10 +3,10 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Bill;
 import com.sjsu.bikelet.domain.BillDataOnDemand;
 import com.sjsu.bikelet.domain.BillTransaction;
 import com.sjsu.bikelet.domain.BillTransactionDataOnDemand;
+import com.sjsu.bikelet.service.BillTransactionService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,11 +29,13 @@ privileged aspect BillTransactionDataOnDemand_Roo_DataOnDemand {
     private List<BillTransaction> BillTransactionDataOnDemand.data;
     
     @Autowired
-    private BillDataOnDemand BillTransactionDataOnDemand.billDataOnDemand;
+    BillDataOnDemand BillTransactionDataOnDemand.billDataOnDemand;
+    
+    @Autowired
+    BillTransactionService BillTransactionDataOnDemand.billTransactionService;
     
     public BillTransaction BillTransactionDataOnDemand.getNewTransientBillTransaction(int index) {
         BillTransaction obj = new BillTransaction();
-        setBill(obj, index);
         setDescription(obj, index);
         setEndDate(obj, index);
         setReferenceEntityId(obj, index);
@@ -41,11 +43,6 @@ privileged aspect BillTransactionDataOnDemand_Roo_DataOnDemand {
         setTotalCost(obj, index);
         setTransactionType(obj, index);
         return obj;
-    }
-    
-    public void BillTransactionDataOnDemand.setBill(BillTransaction obj, int index) {
-        Bill bill = billDataOnDemand.getRandomBill();
-        obj.setBill(bill);
     }
     
     public void BillTransactionDataOnDemand.setDescription(BillTransaction obj, int index) {
@@ -94,14 +91,14 @@ privileged aspect BillTransactionDataOnDemand_Roo_DataOnDemand {
         }
         BillTransaction obj = data.get(index);
         Long id = obj.getId();
-        return BillTransaction.findBillTransaction(id);
+        return billTransactionService.findBillTransaction(id);
     }
     
     public BillTransaction BillTransactionDataOnDemand.getRandomBillTransaction() {
         init();
         BillTransaction obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return BillTransaction.findBillTransaction(id);
+        return billTransactionService.findBillTransaction(id);
     }
     
     public boolean BillTransactionDataOnDemand.modifyBillTransaction(BillTransaction obj) {
@@ -111,7 +108,7 @@ privileged aspect BillTransactionDataOnDemand_Roo_DataOnDemand {
     public void BillTransactionDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = BillTransaction.findBillTransactionEntries(from, to);
+        data = billTransactionService.findBillTransactionEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'BillTransaction' illegally returned null");
         }
@@ -123,7 +120,7 @@ privileged aspect BillTransactionDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             BillTransaction obj = getNewTransientBillTransaction(i);
             try {
-                obj.persist();
+                billTransactionService.saveBillTransaction(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

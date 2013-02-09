@@ -24,7 +24,7 @@ privileged aspect BikeLocationIntegrationTest_Roo_IntegrationTest {
     declare @type: BikeLocationIntegrationTest: @Transactional;
     
     @Autowired
-    private BikeLocationDataOnDemand BikeLocationIntegrationTest.dod;
+    BikeLocationDataOnDemand BikeLocationIntegrationTest.dod;
     
     @Autowired
     BikeLocationService BikeLocationIntegrationTest.bikeLocationService;

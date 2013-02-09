@@ -5,6 +5,7 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantDataOnDemand;
+import com.sjsu.bikelet.service.TenantService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect TenantDataOnDemand_Roo_DataOnDemand {
@@ -21,6 +23,9 @@ privileged aspect TenantDataOnDemand_Roo_DataOnDemand {
     private Random TenantDataOnDemand.rnd = new SecureRandom();
     
     private List<Tenant> TenantDataOnDemand.data;
+    
+    @Autowired
+    TenantService TenantDataOnDemand.tenantService;
     
     public Tenant TenantDataOnDemand.getNewTransientTenant(int index) {
         Tenant obj = new Tenant();
@@ -52,14 +57,14 @@ privileged aspect TenantDataOnDemand_Roo_DataOnDemand {
         }
         Tenant obj = data.get(index);
         Long id = obj.getId();
-        return Tenant.findTenant(id);
+        return tenantService.findTenant(id);
     }
     
     public Tenant TenantDataOnDemand.getRandomTenant() {
         init();
         Tenant obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return Tenant.findTenant(id);
+        return tenantService.findTenant(id);
     }
     
     public boolean TenantDataOnDemand.modifyTenant(Tenant obj) {
@@ -69,7 +74,7 @@ privileged aspect TenantDataOnDemand_Roo_DataOnDemand {
     public void TenantDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = Tenant.findTenantEntries(from, to);
+        data = tenantService.findTenantEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'Tenant' illegally returned null");
         }
@@ -81,7 +86,7 @@ privileged aspect TenantDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             Tenant obj = getNewTransientTenant(i);
             try {
-                obj.persist();
+                tenantService.saveTenant(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

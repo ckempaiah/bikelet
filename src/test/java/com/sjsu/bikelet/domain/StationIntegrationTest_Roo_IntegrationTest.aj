@@ -24,7 +24,7 @@ privileged aspect StationIntegrationTest_Roo_IntegrationTest {
     declare @type: StationIntegrationTest: @Transactional;
     
     @Autowired
-    private StationDataOnDemand StationIntegrationTest.dod;
+    StationDataOnDemand StationIntegrationTest.dod;
     
     @Autowired
     StationService StationIntegrationTest.stationService;

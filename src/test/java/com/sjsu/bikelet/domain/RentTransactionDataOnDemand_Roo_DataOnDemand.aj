@@ -3,12 +3,11 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Bike;
 import com.sjsu.bikelet.domain.BikeDataOnDemand;
-import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
 import com.sjsu.bikelet.domain.RentTransaction;
 import com.sjsu.bikelet.domain.RentTransactionDataOnDemand;
+import com.sjsu.bikelet.service.RentTransactionService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,14 +30,16 @@ privileged aspect RentTransactionDataOnDemand_Roo_DataOnDemand {
     private List<RentTransaction> RentTransactionDataOnDemand.data;
     
     @Autowired
-    private BikeDataOnDemand RentTransactionDataOnDemand.bikeDataOnDemand;
+    BikeDataOnDemand RentTransactionDataOnDemand.bikeDataOnDemand;
     
     @Autowired
-    private BikeLetUserDataOnDemand RentTransactionDataOnDemand.bikeLetUserDataOnDemand;
+    BikeLetUserDataOnDemand RentTransactionDataOnDemand.bikeLetUserDataOnDemand;
+    
+    @Autowired
+    RentTransactionService RentTransactionDataOnDemand.rentTransactionService;
     
     public RentTransaction RentTransactionDataOnDemand.getNewTransientRentTransaction(int index) {
         RentTransaction obj = new RentTransaction();
-        setBikeId(obj, index);
         setComments(obj, index);
         setFromStationId(obj, index);
         setRateId(obj, index);
@@ -47,13 +48,7 @@ privileged aspect RentTransactionDataOnDemand_Roo_DataOnDemand {
         setStatus(obj, index);
         setTenantId(obj, index);
         setToStationId(obj, index);
-        setUserId(obj, index);
         return obj;
-    }
-    
-    public void RentTransactionDataOnDemand.setBikeId(RentTransaction obj, int index) {
-        Bike bikeId = bikeDataOnDemand.getRandomBike();
-        obj.setBikeId(bikeId);
     }
     
     public void RentTransactionDataOnDemand.setComments(RentTransaction obj, int index) {
@@ -102,11 +97,6 @@ privileged aspect RentTransactionDataOnDemand_Roo_DataOnDemand {
         obj.setToStationId(toStationId);
     }
     
-    public void RentTransactionDataOnDemand.setUserId(RentTransaction obj, int index) {
-        BikeLetUser userId = bikeLetUserDataOnDemand.getRandomBikeLetUser();
-        obj.setUserId(userId);
-    }
-    
     public RentTransaction RentTransactionDataOnDemand.getSpecificRentTransaction(int index) {
         init();
         if (index < 0) {
@@ -117,14 +107,14 @@ privileged aspect RentTransactionDataOnDemand_Roo_DataOnDemand {
         }
         RentTransaction obj = data.get(index);
         Long id = obj.getId();
-        return RentTransaction.findRentTransaction(id);
+        return rentTransactionService.findRentTransaction(id);
     }
     
     public RentTransaction RentTransactionDataOnDemand.getRandomRentTransaction() {
         init();
         RentTransaction obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return RentTransaction.findRentTransaction(id);
+        return rentTransactionService.findRentTransaction(id);
     }
     
     public boolean RentTransactionDataOnDemand.modifyRentTransaction(RentTransaction obj) {
@@ -134,7 +124,7 @@ privileged aspect RentTransactionDataOnDemand_Roo_DataOnDemand {
     public void RentTransactionDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = RentTransaction.findRentTransactionEntries(from, to);
+        data = rentTransactionService.findRentTransactionEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'RentTransaction' illegally returned null");
         }
@@ -146,7 +136,7 @@ privileged aspect RentTransactionDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             RentTransaction obj = getNewTransientRentTransaction(i);
             try {
-                obj.persist();
+                rentTransactionService.saveRentTransaction(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

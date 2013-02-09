@@ -3,10 +3,10 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
 import com.sjsu.bikelet.domain.Bill;
 import com.sjsu.bikelet.domain.BillDataOnDemand;
+import com.sjsu.bikelet.service.BillService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,7 +29,10 @@ privileged aspect BillDataOnDemand_Roo_DataOnDemand {
     private List<Bill> BillDataOnDemand.data;
     
     @Autowired
-    private BikeLetUserDataOnDemand BillDataOnDemand.bikeLetUserDataOnDemand;
+    BikeLetUserDataOnDemand BillDataOnDemand.bikeLetUserDataOnDemand;
+    
+    @Autowired
+    BillService BillDataOnDemand.billService;
     
     public Bill BillDataOnDemand.getNewTransientBill(int index) {
         Bill obj = new Bill();
@@ -38,7 +41,6 @@ privileged aspect BillDataOnDemand_Roo_DataOnDemand {
         setCreatedDate(obj, index);
         setDescription(obj, index);
         setTotalcharges(obj, index);
-        setUserId(obj, index);
         return obj;
     }
     
@@ -70,11 +72,6 @@ privileged aspect BillDataOnDemand_Roo_DataOnDemand {
         obj.setTotalcharges(totalcharges);
     }
     
-    public void BillDataOnDemand.setUserId(Bill obj, int index) {
-        BikeLetUser userId = bikeLetUserDataOnDemand.getRandomBikeLetUser();
-        obj.setUserId(userId);
-    }
-    
     public Bill BillDataOnDemand.getSpecificBill(int index) {
         init();
         if (index < 0) {
@@ -85,14 +82,14 @@ privileged aspect BillDataOnDemand_Roo_DataOnDemand {
         }
         Bill obj = data.get(index);
         Long id = obj.getId();
-        return Bill.findBill(id);
+        return billService.findBill(id);
     }
     
     public Bill BillDataOnDemand.getRandomBill() {
         init();
         Bill obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return Bill.findBill(id);
+        return billService.findBill(id);
     }
     
     public boolean BillDataOnDemand.modifyBill(Bill obj) {
@@ -102,7 +99,7 @@ privileged aspect BillDataOnDemand_Roo_DataOnDemand {
     public void BillDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = Bill.findBillEntries(from, to);
+        data = billService.findBillEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'Bill' illegally returned null");
         }
@@ -114,7 +111,7 @@ privileged aspect BillDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             Bill obj = getNewTransientBill(i);
             try {
-                obj.persist();
+                billService.saveBill(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

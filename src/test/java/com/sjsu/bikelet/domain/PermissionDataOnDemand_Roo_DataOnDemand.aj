@@ -5,6 +5,7 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Permission;
 import com.sjsu.bikelet.domain.PermissionDataOnDemand;
+import com.sjsu.bikelet.service.PermissionService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect PermissionDataOnDemand_Roo_DataOnDemand {
@@ -21,6 +23,9 @@ privileged aspect PermissionDataOnDemand_Roo_DataOnDemand {
     private Random PermissionDataOnDemand.rnd = new SecureRandom();
     
     private List<Permission> PermissionDataOnDemand.data;
+    
+    @Autowired
+    PermissionService PermissionDataOnDemand.permissionService;
     
     public Permission PermissionDataOnDemand.getNewTransientPermission(int index) {
         Permission obj = new Permission();
@@ -55,14 +60,14 @@ privileged aspect PermissionDataOnDemand_Roo_DataOnDemand {
         }
         Permission obj = data.get(index);
         Long id = obj.getId();
-        return Permission.findPermission(id);
+        return permissionService.findPermission(id);
     }
     
     public Permission PermissionDataOnDemand.getRandomPermission() {
         init();
         Permission obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return Permission.findPermission(id);
+        return permissionService.findPermission(id);
     }
     
     public boolean PermissionDataOnDemand.modifyPermission(Permission obj) {
@@ -72,7 +77,7 @@ privileged aspect PermissionDataOnDemand_Roo_DataOnDemand {
     public void PermissionDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = Permission.findPermissionEntries(from, to);
+        data = permissionService.findPermissionEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'Permission' illegally returned null");
         }
@@ -84,7 +89,7 @@ privileged aspect PermissionDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             Permission obj = getNewTransientPermission(i);
             try {
-                obj.persist();
+                permissionService.savePermission(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

@@ -3,10 +3,10 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
 import com.sjsu.bikelet.domain.PaymentInfo;
 import com.sjsu.bikelet.domain.PaymentInfoDataOnDemand;
+import com.sjsu.bikelet.service.PaymentInfoService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,14 +26,16 @@ privileged aspect PaymentInfoDataOnDemand_Roo_DataOnDemand {
     private List<PaymentInfo> PaymentInfoDataOnDemand.data;
     
     @Autowired
-    private BikeLetUserDataOnDemand PaymentInfoDataOnDemand.bikeLetUserDataOnDemand;
+    BikeLetUserDataOnDemand PaymentInfoDataOnDemand.bikeLetUserDataOnDemand;
+    
+    @Autowired
+    PaymentInfoService PaymentInfoDataOnDemand.paymentInfoService;
     
     public PaymentInfo PaymentInfoDataOnDemand.getNewTransientPaymentInfo(int index) {
         PaymentInfo obj = new PaymentInfo();
         setCardNumber(obj, index);
         setCardUserName(obj, index);
         setPaymentId(obj, index);
-        setUserId(obj, index);
         return obj;
     }
     
@@ -55,11 +57,6 @@ privileged aspect PaymentInfoDataOnDemand_Roo_DataOnDemand {
         obj.setPaymentId(paymentId);
     }
     
-    public void PaymentInfoDataOnDemand.setUserId(PaymentInfo obj, int index) {
-        BikeLetUser userId = bikeLetUserDataOnDemand.getRandomBikeLetUser();
-        obj.setUserId(userId);
-    }
-    
     public PaymentInfo PaymentInfoDataOnDemand.getSpecificPaymentInfo(int index) {
         init();
         if (index < 0) {
@@ -70,14 +67,14 @@ privileged aspect PaymentInfoDataOnDemand_Roo_DataOnDemand {
         }
         PaymentInfo obj = data.get(index);
         Long id = obj.getId();
-        return PaymentInfo.findPaymentInfo(id);
+        return paymentInfoService.findPaymentInfo(id);
     }
     
     public PaymentInfo PaymentInfoDataOnDemand.getRandomPaymentInfo() {
         init();
         PaymentInfo obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return PaymentInfo.findPaymentInfo(id);
+        return paymentInfoService.findPaymentInfo(id);
     }
     
     public boolean PaymentInfoDataOnDemand.modifyPaymentInfo(PaymentInfo obj) {
@@ -87,7 +84,7 @@ privileged aspect PaymentInfoDataOnDemand_Roo_DataOnDemand {
     public void PaymentInfoDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = PaymentInfo.findPaymentInfoEntries(from, to);
+        data = paymentInfoService.findPaymentInfoEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'PaymentInfo' illegally returned null");
         }
@@ -99,7 +96,7 @@ privileged aspect PaymentInfoDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             PaymentInfo obj = getNewTransientPaymentInfo(i);
             try {
-                obj.persist();
+                paymentInfoService.savePaymentInfo(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

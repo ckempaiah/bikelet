@@ -5,8 +5,8 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.ProgramDataOnDemand;
-import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantDataOnDemand;
+import com.sjsu.bikelet.service.ProgramService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,7 +26,10 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
     private List<Program> ProgramDataOnDemand.data;
     
     @Autowired
-    private TenantDataOnDemand ProgramDataOnDemand.tenantDataOnDemand;
+    TenantDataOnDemand ProgramDataOnDemand.tenantDataOnDemand;
+    
+    @Autowired
+    ProgramService ProgramDataOnDemand.programService;
     
     public Program ProgramDataOnDemand.getNewTransientProgram(int index) {
         Program obj = new Program();
@@ -36,7 +39,6 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
         setMin_threshold(obj, index);
         setOrgName(obj, index);
         setProgramName(obj, index);
-        setTenantId(obj, index);
         return obj;
     }
     
@@ -79,11 +81,6 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
         obj.setProgramName(programName);
     }
     
-    public void ProgramDataOnDemand.setTenantId(Program obj, int index) {
-        Tenant tenantId = tenantDataOnDemand.getRandomTenant();
-        obj.setTenantId(tenantId);
-    }
-    
     public Program ProgramDataOnDemand.getSpecificProgram(int index) {
         init();
         if (index < 0) {
@@ -94,14 +91,14 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
         }
         Program obj = data.get(index);
         Long id = obj.getId();
-        return Program.findProgram(id);
+        return programService.findProgram(id);
     }
     
     public Program ProgramDataOnDemand.getRandomProgram() {
         init();
         Program obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return Program.findProgram(id);
+        return programService.findProgram(id);
     }
     
     public boolean ProgramDataOnDemand.modifyProgram(Program obj) {
@@ -111,7 +108,7 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
     public void ProgramDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = Program.findProgramEntries(from, to);
+        data = programService.findProgramEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'Program' illegally returned null");
         }
@@ -123,7 +120,7 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             Program obj = getNewTransientProgram(i);
             try {
-                obj.persist();
+                programService.saveProgram(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.LicensePolicy;
 import com.sjsu.bikelet.domain.LicensePolicyDataOnDemand;
 import com.sjsu.bikelet.domain.LicensePolicyIntegrationTest;
+import com.sjsu.bikelet.service.LicensePolicyService;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,12 +24,15 @@ privileged aspect LicensePolicyIntegrationTest_Roo_IntegrationTest {
     declare @type: LicensePolicyIntegrationTest: @Transactional;
     
     @Autowired
-    private LicensePolicyDataOnDemand LicensePolicyIntegrationTest.dod;
+    LicensePolicyDataOnDemand LicensePolicyIntegrationTest.dod;
+    
+    @Autowired
+    LicensePolicyService LicensePolicyIntegrationTest.licensePolicyService;
     
     @Test
-    public void LicensePolicyIntegrationTest.testCountLicensePolicys() {
+    public void LicensePolicyIntegrationTest.testCountAllLicensePolicys() {
         Assert.assertNotNull("Data on demand for 'LicensePolicy' failed to initialize correctly", dod.getRandomLicensePolicy());
-        long count = LicensePolicy.countLicensePolicys();
+        long count = licensePolicyService.countAllLicensePolicys();
         Assert.assertTrue("Counter for 'LicensePolicy' incorrectly reported there were no entries", count > 0);
     }
     
@@ -39,7 +42,7 @@ privileged aspect LicensePolicyIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'LicensePolicy' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'LicensePolicy' failed to provide an identifier", id);
-        obj = LicensePolicy.findLicensePolicy(id);
+        obj = licensePolicyService.findLicensePolicy(id);
         Assert.assertNotNull("Find method for 'LicensePolicy' illegally returned null for id '" + id + "'", obj);
         Assert.assertEquals("Find method for 'LicensePolicy' returned the incorrect identifier", id, obj.getId());
     }
@@ -47,9 +50,9 @@ privileged aspect LicensePolicyIntegrationTest_Roo_IntegrationTest {
     @Test
     public void LicensePolicyIntegrationTest.testFindAllLicensePolicys() {
         Assert.assertNotNull("Data on demand for 'LicensePolicy' failed to initialize correctly", dod.getRandomLicensePolicy());
-        long count = LicensePolicy.countLicensePolicys();
+        long count = licensePolicyService.countAllLicensePolicys();
         Assert.assertTrue("Too expensive to perform a find all test for 'LicensePolicy', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<LicensePolicy> result = LicensePolicy.findAllLicensePolicys();
+        List<LicensePolicy> result = licensePolicyService.findAllLicensePolicys();
         Assert.assertNotNull("Find all method for 'LicensePolicy' illegally returned null", result);
         Assert.assertTrue("Find all method for 'LicensePolicy' failed to return any data", result.size() > 0);
     }
@@ -57,11 +60,11 @@ privileged aspect LicensePolicyIntegrationTest_Roo_IntegrationTest {
     @Test
     public void LicensePolicyIntegrationTest.testFindLicensePolicyEntries() {
         Assert.assertNotNull("Data on demand for 'LicensePolicy' failed to initialize correctly", dod.getRandomLicensePolicy());
-        long count = LicensePolicy.countLicensePolicys();
+        long count = licensePolicyService.countAllLicensePolicys();
         if (count > 20) count = 20;
         int firstResult = 0;
         int maxResults = (int) count;
-        List<LicensePolicy> result = LicensePolicy.findLicensePolicyEntries(firstResult, maxResults);
+        List<LicensePolicy> result = licensePolicyService.findLicensePolicyEntries(firstResult, maxResults);
         Assert.assertNotNull("Find entries method for 'LicensePolicy' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'LicensePolicy' returned an incorrect number of entries", count, result.size());
     }
@@ -72,7 +75,7 @@ privileged aspect LicensePolicyIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'LicensePolicy' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'LicensePolicy' failed to provide an identifier", id);
-        obj = LicensePolicy.findLicensePolicy(id);
+        obj = licensePolicyService.findLicensePolicy(id);
         Assert.assertNotNull("Find method for 'LicensePolicy' illegally returned null for id '" + id + "'", obj);
         boolean modified =  dod.modifyLicensePolicy(obj);
         Integer currentVersion = obj.getVersion();
@@ -81,41 +84,41 @@ privileged aspect LicensePolicyIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void LicensePolicyIntegrationTest.testMergeUpdate() {
+    public void LicensePolicyIntegrationTest.testUpdateLicensePolicyUpdate() {
         LicensePolicy obj = dod.getRandomLicensePolicy();
         Assert.assertNotNull("Data on demand for 'LicensePolicy' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'LicensePolicy' failed to provide an identifier", id);
-        obj = LicensePolicy.findLicensePolicy(id);
+        obj = licensePolicyService.findLicensePolicy(id);
         boolean modified =  dod.modifyLicensePolicy(obj);
         Integer currentVersion = obj.getVersion();
-        LicensePolicy merged = obj.merge();
+        LicensePolicy merged = licensePolicyService.updateLicensePolicy(obj);
         obj.flush();
         Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
         Assert.assertTrue("Version for 'LicensePolicy' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
-    public void LicensePolicyIntegrationTest.testPersist() {
+    public void LicensePolicyIntegrationTest.testSaveLicensePolicy() {
         Assert.assertNotNull("Data on demand for 'LicensePolicy' failed to initialize correctly", dod.getRandomLicensePolicy());
         LicensePolicy obj = dod.getNewTransientLicensePolicy(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'LicensePolicy' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'LicensePolicy' identifier to be null", obj.getId());
-        obj.persist();
+        licensePolicyService.saveLicensePolicy(obj);
         obj.flush();
         Assert.assertNotNull("Expected 'LicensePolicy' identifier to no longer be null", obj.getId());
     }
     
     @Test
-    public void LicensePolicyIntegrationTest.testRemove() {
+    public void LicensePolicyIntegrationTest.testDeleteLicensePolicy() {
         LicensePolicy obj = dod.getRandomLicensePolicy();
         Assert.assertNotNull("Data on demand for 'LicensePolicy' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'LicensePolicy' failed to provide an identifier", id);
-        obj = LicensePolicy.findLicensePolicy(id);
-        obj.remove();
+        obj = licensePolicyService.findLicensePolicy(id);
+        licensePolicyService.deleteLicensePolicy(obj);
         obj.flush();
-        Assert.assertNull("Failed to remove 'LicensePolicy' with identifier '" + id + "'", LicensePolicy.findLicensePolicy(id));
+        Assert.assertNull("Failed to remove 'LicensePolicy' with identifier '" + id + "'", licensePolicyService.findLicensePolicy(id));
     }
     
 }

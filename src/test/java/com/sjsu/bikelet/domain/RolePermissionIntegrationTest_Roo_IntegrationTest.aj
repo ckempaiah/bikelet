@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.RolePermission;
 import com.sjsu.bikelet.domain.RolePermissionDataOnDemand;
 import com.sjsu.bikelet.domain.RolePermissionIntegrationTest;
+import com.sjsu.bikelet.service.RolePermissionService;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,12 +24,15 @@ privileged aspect RolePermissionIntegrationTest_Roo_IntegrationTest {
     declare @type: RolePermissionIntegrationTest: @Transactional;
     
     @Autowired
-    private RolePermissionDataOnDemand RolePermissionIntegrationTest.dod;
+    RolePermissionDataOnDemand RolePermissionIntegrationTest.dod;
+    
+    @Autowired
+    RolePermissionService RolePermissionIntegrationTest.rolePermissionService;
     
     @Test
-    public void RolePermissionIntegrationTest.testCountRolePermissions() {
+    public void RolePermissionIntegrationTest.testCountAllRolePermissions() {
         Assert.assertNotNull("Data on demand for 'RolePermission' failed to initialize correctly", dod.getRandomRolePermission());
-        long count = RolePermission.countRolePermissions();
+        long count = rolePermissionService.countAllRolePermissions();
         Assert.assertTrue("Counter for 'RolePermission' incorrectly reported there were no entries", count > 0);
     }
     
@@ -39,7 +42,7 @@ privileged aspect RolePermissionIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'RolePermission' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'RolePermission' failed to provide an identifier", id);
-        obj = RolePermission.findRolePermission(id);
+        obj = rolePermissionService.findRolePermission(id);
         Assert.assertNotNull("Find method for 'RolePermission' illegally returned null for id '" + id + "'", obj);
         Assert.assertEquals("Find method for 'RolePermission' returned the incorrect identifier", id, obj.getId());
     }
@@ -47,9 +50,9 @@ privileged aspect RolePermissionIntegrationTest_Roo_IntegrationTest {
     @Test
     public void RolePermissionIntegrationTest.testFindAllRolePermissions() {
         Assert.assertNotNull("Data on demand for 'RolePermission' failed to initialize correctly", dod.getRandomRolePermission());
-        long count = RolePermission.countRolePermissions();
+        long count = rolePermissionService.countAllRolePermissions();
         Assert.assertTrue("Too expensive to perform a find all test for 'RolePermission', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<RolePermission> result = RolePermission.findAllRolePermissions();
+        List<RolePermission> result = rolePermissionService.findAllRolePermissions();
         Assert.assertNotNull("Find all method for 'RolePermission' illegally returned null", result);
         Assert.assertTrue("Find all method for 'RolePermission' failed to return any data", result.size() > 0);
     }
@@ -57,11 +60,11 @@ privileged aspect RolePermissionIntegrationTest_Roo_IntegrationTest {
     @Test
     public void RolePermissionIntegrationTest.testFindRolePermissionEntries() {
         Assert.assertNotNull("Data on demand for 'RolePermission' failed to initialize correctly", dod.getRandomRolePermission());
-        long count = RolePermission.countRolePermissions();
+        long count = rolePermissionService.countAllRolePermissions();
         if (count > 20) count = 20;
         int firstResult = 0;
         int maxResults = (int) count;
-        List<RolePermission> result = RolePermission.findRolePermissionEntries(firstResult, maxResults);
+        List<RolePermission> result = rolePermissionService.findRolePermissionEntries(firstResult, maxResults);
         Assert.assertNotNull("Find entries method for 'RolePermission' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'RolePermission' returned an incorrect number of entries", count, result.size());
     }
@@ -72,7 +75,7 @@ privileged aspect RolePermissionIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'RolePermission' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'RolePermission' failed to provide an identifier", id);
-        obj = RolePermission.findRolePermission(id);
+        obj = rolePermissionService.findRolePermission(id);
         Assert.assertNotNull("Find method for 'RolePermission' illegally returned null for id '" + id + "'", obj);
         boolean modified =  dod.modifyRolePermission(obj);
         Integer currentVersion = obj.getVersion();
@@ -81,41 +84,41 @@ privileged aspect RolePermissionIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void RolePermissionIntegrationTest.testMergeUpdate() {
+    public void RolePermissionIntegrationTest.testUpdateRolePermissionUpdate() {
         RolePermission obj = dod.getRandomRolePermission();
         Assert.assertNotNull("Data on demand for 'RolePermission' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'RolePermission' failed to provide an identifier", id);
-        obj = RolePermission.findRolePermission(id);
+        obj = rolePermissionService.findRolePermission(id);
         boolean modified =  dod.modifyRolePermission(obj);
         Integer currentVersion = obj.getVersion();
-        RolePermission merged = obj.merge();
+        RolePermission merged = rolePermissionService.updateRolePermission(obj);
         obj.flush();
         Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
         Assert.assertTrue("Version for 'RolePermission' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
-    public void RolePermissionIntegrationTest.testPersist() {
+    public void RolePermissionIntegrationTest.testSaveRolePermission() {
         Assert.assertNotNull("Data on demand for 'RolePermission' failed to initialize correctly", dod.getRandomRolePermission());
         RolePermission obj = dod.getNewTransientRolePermission(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'RolePermission' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'RolePermission' identifier to be null", obj.getId());
-        obj.persist();
+        rolePermissionService.saveRolePermission(obj);
         obj.flush();
         Assert.assertNotNull("Expected 'RolePermission' identifier to no longer be null", obj.getId());
     }
     
     @Test
-    public void RolePermissionIntegrationTest.testRemove() {
+    public void RolePermissionIntegrationTest.testDeleteRolePermission() {
         RolePermission obj = dod.getRandomRolePermission();
         Assert.assertNotNull("Data on demand for 'RolePermission' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'RolePermission' failed to provide an identifier", id);
-        obj = RolePermission.findRolePermission(id);
-        obj.remove();
+        obj = rolePermissionService.findRolePermission(id);
+        rolePermissionService.deleteRolePermission(obj);
         obj.flush();
-        Assert.assertNull("Failed to remove 'RolePermission' with identifier '" + id + "'", RolePermission.findRolePermission(id));
+        Assert.assertNull("Failed to remove 'RolePermission' with identifier '" + id + "'", rolePermissionService.findRolePermission(id));
     }
     
 }

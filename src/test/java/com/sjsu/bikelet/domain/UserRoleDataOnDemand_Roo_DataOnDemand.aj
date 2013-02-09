@@ -3,12 +3,11 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.BikeLetRole;
 import com.sjsu.bikelet.domain.BikeLetRoleDataOnDemand;
-import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
 import com.sjsu.bikelet.domain.UserRole;
 import com.sjsu.bikelet.domain.UserRoleDataOnDemand;
+import com.sjsu.bikelet.service.UserRoleService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,26 +27,17 @@ privileged aspect UserRoleDataOnDemand_Roo_DataOnDemand {
     private List<UserRole> UserRoleDataOnDemand.data;
     
     @Autowired
-    private BikeLetRoleDataOnDemand UserRoleDataOnDemand.bikeLetRoleDataOnDemand;
+    BikeLetRoleDataOnDemand UserRoleDataOnDemand.bikeLetRoleDataOnDemand;
     
     @Autowired
-    private BikeLetUserDataOnDemand UserRoleDataOnDemand.bikeLetUserDataOnDemand;
+    BikeLetUserDataOnDemand UserRoleDataOnDemand.bikeLetUserDataOnDemand;
+    
+    @Autowired
+    UserRoleService UserRoleDataOnDemand.userRoleService;
     
     public UserRole UserRoleDataOnDemand.getNewTransientUserRole(int index) {
         UserRole obj = new UserRole();
-        setRoleId(obj, index);
-        setUserId(obj, index);
         return obj;
-    }
-    
-    public void UserRoleDataOnDemand.setRoleId(UserRole obj, int index) {
-        BikeLetRole roleId = bikeLetRoleDataOnDemand.getRandomBikeLetRole();
-        obj.setRoleId(roleId);
-    }
-    
-    public void UserRoleDataOnDemand.setUserId(UserRole obj, int index) {
-        BikeLetUser userId = bikeLetUserDataOnDemand.getRandomBikeLetUser();
-        obj.setUserId(userId);
     }
     
     public UserRole UserRoleDataOnDemand.getSpecificUserRole(int index) {
@@ -60,14 +50,14 @@ privileged aspect UserRoleDataOnDemand_Roo_DataOnDemand {
         }
         UserRole obj = data.get(index);
         Long id = obj.getId();
-        return UserRole.findUserRole(id);
+        return userRoleService.findUserRole(id);
     }
     
     public UserRole UserRoleDataOnDemand.getRandomUserRole() {
         init();
         UserRole obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return UserRole.findUserRole(id);
+        return userRoleService.findUserRole(id);
     }
     
     public boolean UserRoleDataOnDemand.modifyUserRole(UserRole obj) {
@@ -77,7 +67,7 @@ privileged aspect UserRoleDataOnDemand_Roo_DataOnDemand {
     public void UserRoleDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = UserRole.findUserRoleEntries(from, to);
+        data = userRoleService.findUserRoleEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'UserRole' illegally returned null");
         }
@@ -89,7 +79,7 @@ privileged aspect UserRoleDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             UserRole obj = getNewTransientUserRole(i);
             try {
-                obj.persist();
+                userRoleService.saveUserRole(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

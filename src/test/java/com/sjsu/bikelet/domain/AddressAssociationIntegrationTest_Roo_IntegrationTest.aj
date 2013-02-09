@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.AddressAssociation;
 import com.sjsu.bikelet.domain.AddressAssociationDataOnDemand;
 import com.sjsu.bikelet.domain.AddressAssociationIntegrationTest;
+import com.sjsu.bikelet.service.AddressAssociationService;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,12 +24,15 @@ privileged aspect AddressAssociationIntegrationTest_Roo_IntegrationTest {
     declare @type: AddressAssociationIntegrationTest: @Transactional;
     
     @Autowired
-    private AddressAssociationDataOnDemand AddressAssociationIntegrationTest.dod;
+    AddressAssociationDataOnDemand AddressAssociationIntegrationTest.dod;
+    
+    @Autowired
+    AddressAssociationService AddressAssociationIntegrationTest.addressAssociationService;
     
     @Test
-    public void AddressAssociationIntegrationTest.testCountAddressAssociations() {
+    public void AddressAssociationIntegrationTest.testCountAllAddressAssociations() {
         Assert.assertNotNull("Data on demand for 'AddressAssociation' failed to initialize correctly", dod.getRandomAddressAssociation());
-        long count = AddressAssociation.countAddressAssociations();
+        long count = addressAssociationService.countAllAddressAssociations();
         Assert.assertTrue("Counter for 'AddressAssociation' incorrectly reported there were no entries", count > 0);
     }
     
@@ -39,7 +42,7 @@ privileged aspect AddressAssociationIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'AddressAssociation' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'AddressAssociation' failed to provide an identifier", id);
-        obj = AddressAssociation.findAddressAssociation(id);
+        obj = addressAssociationService.findAddressAssociation(id);
         Assert.assertNotNull("Find method for 'AddressAssociation' illegally returned null for id '" + id + "'", obj);
         Assert.assertEquals("Find method for 'AddressAssociation' returned the incorrect identifier", id, obj.getId());
     }
@@ -47,9 +50,9 @@ privileged aspect AddressAssociationIntegrationTest_Roo_IntegrationTest {
     @Test
     public void AddressAssociationIntegrationTest.testFindAllAddressAssociations() {
         Assert.assertNotNull("Data on demand for 'AddressAssociation' failed to initialize correctly", dod.getRandomAddressAssociation());
-        long count = AddressAssociation.countAddressAssociations();
+        long count = addressAssociationService.countAllAddressAssociations();
         Assert.assertTrue("Too expensive to perform a find all test for 'AddressAssociation', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<AddressAssociation> result = AddressAssociation.findAllAddressAssociations();
+        List<AddressAssociation> result = addressAssociationService.findAllAddressAssociations();
         Assert.assertNotNull("Find all method for 'AddressAssociation' illegally returned null", result);
         Assert.assertTrue("Find all method for 'AddressAssociation' failed to return any data", result.size() > 0);
     }
@@ -57,11 +60,11 @@ privileged aspect AddressAssociationIntegrationTest_Roo_IntegrationTest {
     @Test
     public void AddressAssociationIntegrationTest.testFindAddressAssociationEntries() {
         Assert.assertNotNull("Data on demand for 'AddressAssociation' failed to initialize correctly", dod.getRandomAddressAssociation());
-        long count = AddressAssociation.countAddressAssociations();
+        long count = addressAssociationService.countAllAddressAssociations();
         if (count > 20) count = 20;
         int firstResult = 0;
         int maxResults = (int) count;
-        List<AddressAssociation> result = AddressAssociation.findAddressAssociationEntries(firstResult, maxResults);
+        List<AddressAssociation> result = addressAssociationService.findAddressAssociationEntries(firstResult, maxResults);
         Assert.assertNotNull("Find entries method for 'AddressAssociation' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'AddressAssociation' returned an incorrect number of entries", count, result.size());
     }
@@ -72,7 +75,7 @@ privileged aspect AddressAssociationIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'AddressAssociation' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'AddressAssociation' failed to provide an identifier", id);
-        obj = AddressAssociation.findAddressAssociation(id);
+        obj = addressAssociationService.findAddressAssociation(id);
         Assert.assertNotNull("Find method for 'AddressAssociation' illegally returned null for id '" + id + "'", obj);
         boolean modified =  dod.modifyAddressAssociation(obj);
         Integer currentVersion = obj.getVersion();
@@ -81,41 +84,41 @@ privileged aspect AddressAssociationIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void AddressAssociationIntegrationTest.testMergeUpdate() {
+    public void AddressAssociationIntegrationTest.testUpdateAddressAssociationUpdate() {
         AddressAssociation obj = dod.getRandomAddressAssociation();
         Assert.assertNotNull("Data on demand for 'AddressAssociation' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'AddressAssociation' failed to provide an identifier", id);
-        obj = AddressAssociation.findAddressAssociation(id);
+        obj = addressAssociationService.findAddressAssociation(id);
         boolean modified =  dod.modifyAddressAssociation(obj);
         Integer currentVersion = obj.getVersion();
-        AddressAssociation merged = obj.merge();
+        AddressAssociation merged = addressAssociationService.updateAddressAssociation(obj);
         obj.flush();
         Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
         Assert.assertTrue("Version for 'AddressAssociation' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
-    public void AddressAssociationIntegrationTest.testPersist() {
+    public void AddressAssociationIntegrationTest.testSaveAddressAssociation() {
         Assert.assertNotNull("Data on demand for 'AddressAssociation' failed to initialize correctly", dod.getRandomAddressAssociation());
         AddressAssociation obj = dod.getNewTransientAddressAssociation(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'AddressAssociation' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'AddressAssociation' identifier to be null", obj.getId());
-        obj.persist();
+        addressAssociationService.saveAddressAssociation(obj);
         obj.flush();
         Assert.assertNotNull("Expected 'AddressAssociation' identifier to no longer be null", obj.getId());
     }
     
     @Test
-    public void AddressAssociationIntegrationTest.testRemove() {
+    public void AddressAssociationIntegrationTest.testDeleteAddressAssociation() {
         AddressAssociation obj = dod.getRandomAddressAssociation();
         Assert.assertNotNull("Data on demand for 'AddressAssociation' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'AddressAssociation' failed to provide an identifier", id);
-        obj = AddressAssociation.findAddressAssociation(id);
-        obj.remove();
+        obj = addressAssociationService.findAddressAssociation(id);
+        addressAssociationService.deleteAddressAssociation(obj);
         obj.flush();
-        Assert.assertNull("Failed to remove 'AddressAssociation' with identifier '" + id + "'", AddressAssociation.findAddressAssociation(id));
+        Assert.assertNull("Failed to remove 'AddressAssociation' with identifier '" + id + "'", addressAssociationService.findAddressAssociation(id));
     }
     
 }

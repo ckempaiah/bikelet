@@ -24,7 +24,7 @@ privileged aspect SubscriptionPolicyIntegrationTest_Roo_IntegrationTest {
     declare @type: SubscriptionPolicyIntegrationTest: @Transactional;
     
     @Autowired
-    private SubscriptionPolicyDataOnDemand SubscriptionPolicyIntegrationTest.dod;
+    SubscriptionPolicyDataOnDemand SubscriptionPolicyIntegrationTest.dod;
     
     @Autowired
     SubscriptionPolicyService SubscriptionPolicyIntegrationTest.subscriptionPolicyService;

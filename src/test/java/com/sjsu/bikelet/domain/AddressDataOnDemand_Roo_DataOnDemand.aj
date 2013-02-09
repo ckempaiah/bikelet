@@ -5,8 +5,8 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Address;
 import com.sjsu.bikelet.domain.AddressDataOnDemand;
-import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
+import com.sjsu.bikelet.service.AddressService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,7 +26,10 @@ privileged aspect AddressDataOnDemand_Roo_DataOnDemand {
     private List<Address> AddressDataOnDemand.data;
     
     @Autowired
-    private BikeLetUserDataOnDemand AddressDataOnDemand.bikeLetUserDataOnDemand;
+    BikeLetUserDataOnDemand AddressDataOnDemand.bikeLetUserDataOnDemand;
+    
+    @Autowired
+    AddressService AddressDataOnDemand.addressService;
     
     public Address AddressDataOnDemand.getNewTransientAddress(int index) {
         Address obj = new Address();
@@ -37,7 +40,6 @@ privileged aspect AddressDataOnDemand_Roo_DataOnDemand {
         setCellphone(obj, index);
         setCity(obj, index);
         setCountry(obj, index);
-        setUserId(obj, index);
         setWorkphone(obj, index);
         setZipCode(obj, index);
         return obj;
@@ -90,11 +92,6 @@ privileged aspect AddressDataOnDemand_Roo_DataOnDemand {
         obj.setCountry(country);
     }
     
-    public void AddressDataOnDemand.setUserId(Address obj, int index) {
-        BikeLetUser userId = bikeLetUserDataOnDemand.getRandomBikeLetUser();
-        obj.setUserId(userId);
-    }
-    
     public void AddressDataOnDemand.setWorkphone(Address obj, int index) {
         String workphone = "workphone_" + index;
         if (workphone.length() > 15) {
@@ -121,14 +118,14 @@ privileged aspect AddressDataOnDemand_Roo_DataOnDemand {
         }
         Address obj = data.get(index);
         Long id = obj.getId();
-        return Address.findAddress(id);
+        return addressService.findAddress(id);
     }
     
     public Address AddressDataOnDemand.getRandomAddress() {
         init();
         Address obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return Address.findAddress(id);
+        return addressService.findAddress(id);
     }
     
     public boolean AddressDataOnDemand.modifyAddress(Address obj) {
@@ -138,7 +135,7 @@ privileged aspect AddressDataOnDemand_Roo_DataOnDemand {
     public void AddressDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = Address.findAddressEntries(from, to);
+        data = addressService.findAddressEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'Address' illegally returned null");
         }
@@ -150,7 +147,7 @@ privileged aspect AddressDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             Address obj = getNewTransientAddress(i);
             try {
-                obj.persist();
+                addressService.saveAddress(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

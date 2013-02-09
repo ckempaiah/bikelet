@@ -3,12 +3,11 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.LicensePolicy;
 import com.sjsu.bikelet.domain.LicensePolicyDataOnDemand;
-import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantDataOnDemand;
 import com.sjsu.bikelet.domain.TenantLicensePolicy;
 import com.sjsu.bikelet.domain.TenantLicensePolicyDataOnDemand;
+import com.sjsu.bikelet.service.TenantLicensePolicyService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,18 +30,19 @@ privileged aspect TenantLicensePolicyDataOnDemand_Roo_DataOnDemand {
     private List<TenantLicensePolicy> TenantLicensePolicyDataOnDemand.data;
     
     @Autowired
-    private LicensePolicyDataOnDemand TenantLicensePolicyDataOnDemand.licensePolicyDataOnDemand;
+    LicensePolicyDataOnDemand TenantLicensePolicyDataOnDemand.licensePolicyDataOnDemand;
     
     @Autowired
-    private TenantDataOnDemand TenantLicensePolicyDataOnDemand.tenantDataOnDemand;
+    TenantDataOnDemand TenantLicensePolicyDataOnDemand.tenantDataOnDemand;
+    
+    @Autowired
+    TenantLicensePolicyService TenantLicensePolicyDataOnDemand.tenantLicensePolicyService;
     
     public TenantLicensePolicy TenantLicensePolicyDataOnDemand.getNewTransientTenantLicensePolicy(int index) {
         TenantLicensePolicy obj = new TenantLicensePolicy();
         setIsTrial(obj, index);
         setLicenseEndDate(obj, index);
-        setLicenseId(obj, index);
         setLicenseStartDate(obj, index);
-        setTenantId(obj, index);
         return obj;
     }
     
@@ -56,19 +56,9 @@ privileged aspect TenantLicensePolicyDataOnDemand_Roo_DataOnDemand {
         obj.setLicenseEndDate(licenseEndDate);
     }
     
-    public void TenantLicensePolicyDataOnDemand.setLicenseId(TenantLicensePolicy obj, int index) {
-        LicensePolicy licenseId = licensePolicyDataOnDemand.getRandomLicensePolicy();
-        obj.setLicenseId(licenseId);
-    }
-    
     public void TenantLicensePolicyDataOnDemand.setLicenseStartDate(TenantLicensePolicy obj, int index) {
         Date licenseStartDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setLicenseStartDate(licenseStartDate);
-    }
-    
-    public void TenantLicensePolicyDataOnDemand.setTenantId(TenantLicensePolicy obj, int index) {
-        Tenant tenantId = tenantDataOnDemand.getSpecificTenant(index);
-        obj.setTenantId(tenantId);
     }
     
     public TenantLicensePolicy TenantLicensePolicyDataOnDemand.getSpecificTenantLicensePolicy(int index) {
@@ -81,14 +71,14 @@ privileged aspect TenantLicensePolicyDataOnDemand_Roo_DataOnDemand {
         }
         TenantLicensePolicy obj = data.get(index);
         Long id = obj.getId();
-        return TenantLicensePolicy.findTenantLicensePolicy(id);
+        return tenantLicensePolicyService.findTenantLicensePolicy(id);
     }
     
     public TenantLicensePolicy TenantLicensePolicyDataOnDemand.getRandomTenantLicensePolicy() {
         init();
         TenantLicensePolicy obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return TenantLicensePolicy.findTenantLicensePolicy(id);
+        return tenantLicensePolicyService.findTenantLicensePolicy(id);
     }
     
     public boolean TenantLicensePolicyDataOnDemand.modifyTenantLicensePolicy(TenantLicensePolicy obj) {
@@ -98,7 +88,7 @@ privileged aspect TenantLicensePolicyDataOnDemand_Roo_DataOnDemand {
     public void TenantLicensePolicyDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = TenantLicensePolicy.findTenantLicensePolicyEntries(from, to);
+        data = tenantLicensePolicyService.findTenantLicensePolicyEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'TenantLicensePolicy' illegally returned null");
         }
@@ -110,7 +100,7 @@ privileged aspect TenantLicensePolicyDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             TenantLicensePolicy obj = getNewTransientTenantLicensePolicy(i);
             try {
-                obj.persist();
+                tenantLicensePolicyService.saveTenantLicensePolicy(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

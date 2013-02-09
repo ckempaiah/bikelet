@@ -24,7 +24,7 @@ privileged aspect RentTransactionIntegrationTest_Roo_IntegrationTest {
     declare @type: RentTransactionIntegrationTest: @Transactional;
     
     @Autowired
-    private RentTransactionDataOnDemand RentTransactionIntegrationTest.dod;
+    RentTransactionDataOnDemand RentTransactionIntegrationTest.dod;
     
     @Autowired
     RentTransactionService RentTransactionIntegrationTest.rentTransactionService;

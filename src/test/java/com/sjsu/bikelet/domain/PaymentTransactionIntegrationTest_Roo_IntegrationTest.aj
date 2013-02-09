@@ -24,7 +24,7 @@ privileged aspect PaymentTransactionIntegrationTest_Roo_IntegrationTest {
     declare @type: PaymentTransactionIntegrationTest: @Transactional;
     
     @Autowired
-    private PaymentTransactionDataOnDemand PaymentTransactionIntegrationTest.dod;
+    PaymentTransactionDataOnDemand PaymentTransactionIntegrationTest.dod;
     
     @Autowired
     PaymentTransactionService PaymentTransactionIntegrationTest.paymentTransactionService;

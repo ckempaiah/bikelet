@@ -4,8 +4,8 @@
 package com.sjsu.bikelet.web;
 
 import com.sjsu.bikelet.domain.Bike;
-import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.service.BikeService;
+import com.sjsu.bikelet.service.TenantService;
 import com.sjsu.bikelet.web.BikeController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +26,9 @@ privileged aspect BikeController_Roo_Controller {
     
     @Autowired
     BikeService BikeController.bikeService;
+    
+    @Autowired
+    TenantService BikeController.tenantService;
     
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String BikeController.create(@Valid Bike bike, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
@@ -101,7 +104,7 @@ privileged aspect BikeController_Roo_Controller {
     void BikeController.populateEditForm(Model uiModel, Bike bike) {
         uiModel.addAttribute("bike", bike);
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("tenants", Tenant.findAllTenants());
+        uiModel.addAttribute("tenants", tenantService.findAllTenants());
     }
     
     String BikeController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

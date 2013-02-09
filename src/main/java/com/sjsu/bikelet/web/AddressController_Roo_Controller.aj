@@ -4,8 +4,8 @@
 package com.sjsu.bikelet.web;
 
 import com.sjsu.bikelet.domain.Address;
-import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.service.AddressService;
+import com.sjsu.bikelet.service.BikeLetUserService;
 import com.sjsu.bikelet.web.AddressController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +24,9 @@ privileged aspect AddressController_Roo_Controller {
     
     @Autowired
     AddressService AddressController.addressService;
+    
+    @Autowired
+    BikeLetUserService AddressController.bikeLetUserService;
     
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String AddressController.create(@Valid Address address, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
@@ -92,7 +95,7 @@ privileged aspect AddressController_Roo_Controller {
     
     void AddressController.populateEditForm(Model uiModel, Address address) {
         uiModel.addAttribute("address", address);
-        uiModel.addAttribute("bikeletusers", BikeLetUser.findAllBikeLetUsers());
+        uiModel.addAttribute("bikeletusers", bikeLetUserService.findAllBikeLetUsers());
     }
     
     String AddressController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

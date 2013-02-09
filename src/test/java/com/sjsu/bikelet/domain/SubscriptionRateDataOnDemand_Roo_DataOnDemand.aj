@@ -3,10 +3,10 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.SubscriptionPolicy;
 import com.sjsu.bikelet.domain.SubscriptionPolicyDataOnDemand;
 import com.sjsu.bikelet.domain.SubscriptionRate;
 import com.sjsu.bikelet.domain.SubscriptionRateDataOnDemand;
+import com.sjsu.bikelet.service.SubscriptionRateService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,7 +29,10 @@ privileged aspect SubscriptionRateDataOnDemand_Roo_DataOnDemand {
     private List<SubscriptionRate> SubscriptionRateDataOnDemand.data;
     
     @Autowired
-    private SubscriptionPolicyDataOnDemand SubscriptionRateDataOnDemand.subscriptionPolicyDataOnDemand;
+    SubscriptionPolicyDataOnDemand SubscriptionRateDataOnDemand.subscriptionPolicyDataOnDemand;
+    
+    @Autowired
+    SubscriptionRateService SubscriptionRateDataOnDemand.subscriptionRateService;
     
     public SubscriptionRate SubscriptionRateDataOnDemand.getNewTransientSubscriptionRate(int index) {
         SubscriptionRate obj = new SubscriptionRate();
@@ -38,7 +41,6 @@ privileged aspect SubscriptionRateDataOnDemand_Roo_DataOnDemand {
         setMembershipPerMonth(obj, index);
         setOrganizationShare(obj, index);
         setPolicyEndDate(obj, index);
-        setPolicyId(obj, index);
         setPolicyStartDate(obj, index);
         setUserShare(obj, index);
         return obj;
@@ -69,11 +71,6 @@ privileged aspect SubscriptionRateDataOnDemand_Roo_DataOnDemand {
         obj.setPolicyEndDate(policyEndDate);
     }
     
-    public void SubscriptionRateDataOnDemand.setPolicyId(SubscriptionRate obj, int index) {
-        SubscriptionPolicy policyId = subscriptionPolicyDataOnDemand.getRandomSubscriptionPolicy();
-        obj.setPolicyId(policyId);
-    }
-    
     public void SubscriptionRateDataOnDemand.setPolicyStartDate(SubscriptionRate obj, int index) {
         Date policyStartDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setPolicyStartDate(policyStartDate);
@@ -94,14 +91,14 @@ privileged aspect SubscriptionRateDataOnDemand_Roo_DataOnDemand {
         }
         SubscriptionRate obj = data.get(index);
         Long id = obj.getId();
-        return SubscriptionRate.findSubscriptionRate(id);
+        return subscriptionRateService.findSubscriptionRate(id);
     }
     
     public SubscriptionRate SubscriptionRateDataOnDemand.getRandomSubscriptionRate() {
         init();
         SubscriptionRate obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return SubscriptionRate.findSubscriptionRate(id);
+        return subscriptionRateService.findSubscriptionRate(id);
     }
     
     public boolean SubscriptionRateDataOnDemand.modifySubscriptionRate(SubscriptionRate obj) {
@@ -111,7 +108,7 @@ privileged aspect SubscriptionRateDataOnDemand_Roo_DataOnDemand {
     public void SubscriptionRateDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = SubscriptionRate.findSubscriptionRateEntries(from, to);
+        data = subscriptionRateService.findSubscriptionRateEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'SubscriptionRate' illegally returned null");
         }
@@ -123,7 +120,7 @@ privileged aspect SubscriptionRateDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             SubscriptionRate obj = getNewTransientSubscriptionRate(i);
             try {
-                obj.persist();
+                subscriptionRateService.saveSubscriptionRate(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

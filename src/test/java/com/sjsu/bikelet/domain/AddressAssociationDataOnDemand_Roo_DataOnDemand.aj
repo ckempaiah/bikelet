@@ -5,6 +5,7 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.AddressAssociation;
 import com.sjsu.bikelet.domain.AddressAssociationDataOnDemand;
+import com.sjsu.bikelet.service.AddressAssociationService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect AddressAssociationDataOnDemand_Roo_DataOnDemand {
@@ -21,6 +23,9 @@ privileged aspect AddressAssociationDataOnDemand_Roo_DataOnDemand {
     private Random AddressAssociationDataOnDemand.rnd = new SecureRandom();
     
     private List<AddressAssociation> AddressAssociationDataOnDemand.data;
+    
+    @Autowired
+    AddressAssociationService AddressAssociationDataOnDemand.addressAssociationService;
     
     public AddressAssociation AddressAssociationDataOnDemand.getNewTransientAddressAssociation(int index) {
         AddressAssociation obj = new AddressAssociation();
@@ -55,14 +60,14 @@ privileged aspect AddressAssociationDataOnDemand_Roo_DataOnDemand {
         }
         AddressAssociation obj = data.get(index);
         Long id = obj.getId();
-        return AddressAssociation.findAddressAssociation(id);
+        return addressAssociationService.findAddressAssociation(id);
     }
     
     public AddressAssociation AddressAssociationDataOnDemand.getRandomAddressAssociation() {
         init();
         AddressAssociation obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return AddressAssociation.findAddressAssociation(id);
+        return addressAssociationService.findAddressAssociation(id);
     }
     
     public boolean AddressAssociationDataOnDemand.modifyAddressAssociation(AddressAssociation obj) {
@@ -72,7 +77,7 @@ privileged aspect AddressAssociationDataOnDemand_Roo_DataOnDemand {
     public void AddressAssociationDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = AddressAssociation.findAddressAssociationEntries(from, to);
+        data = addressAssociationService.findAddressAssociationEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'AddressAssociation' illegally returned null");
         }
@@ -84,7 +89,7 @@ privileged aspect AddressAssociationDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             AddressAssociation obj = getNewTransientAddressAssociation(i);
             try {
-                obj.persist();
+                addressAssociationService.saveAddressAssociation(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

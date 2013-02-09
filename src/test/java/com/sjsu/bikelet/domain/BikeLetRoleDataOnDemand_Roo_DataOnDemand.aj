@@ -5,6 +5,7 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.BikeLetRole;
 import com.sjsu.bikelet.domain.BikeLetRoleDataOnDemand;
+import com.sjsu.bikelet.service.BikeLetRoleService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect BikeLetRoleDataOnDemand_Roo_DataOnDemand {
@@ -21,6 +23,9 @@ privileged aspect BikeLetRoleDataOnDemand_Roo_DataOnDemand {
     private Random BikeLetRoleDataOnDemand.rnd = new SecureRandom();
     
     private List<BikeLetRole> BikeLetRoleDataOnDemand.data;
+    
+    @Autowired
+    BikeLetRoleService BikeLetRoleDataOnDemand.bikeLetRoleService;
     
     public BikeLetRole BikeLetRoleDataOnDemand.getNewTransientBikeLetRole(int index) {
         BikeLetRole obj = new BikeLetRole();
@@ -43,14 +48,14 @@ privileged aspect BikeLetRoleDataOnDemand_Roo_DataOnDemand {
         }
         BikeLetRole obj = data.get(index);
         Long id = obj.getId();
-        return BikeLetRole.findBikeLetRole(id);
+        return bikeLetRoleService.findBikeLetRole(id);
     }
     
     public BikeLetRole BikeLetRoleDataOnDemand.getRandomBikeLetRole() {
         init();
         BikeLetRole obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return BikeLetRole.findBikeLetRole(id);
+        return bikeLetRoleService.findBikeLetRole(id);
     }
     
     public boolean BikeLetRoleDataOnDemand.modifyBikeLetRole(BikeLetRole obj) {
@@ -60,7 +65,7 @@ privileged aspect BikeLetRoleDataOnDemand_Roo_DataOnDemand {
     public void BikeLetRoleDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = BikeLetRole.findBikeLetRoleEntries(from, to);
+        data = bikeLetRoleService.findBikeLetRoleEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'BikeLetRole' illegally returned null");
         }
@@ -72,7 +77,7 @@ privileged aspect BikeLetRoleDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             BikeLetRole obj = getNewTransientBikeLetRole(i);
             try {
-                obj.persist();
+                bikeLetRoleService.saveBikeLetRole(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

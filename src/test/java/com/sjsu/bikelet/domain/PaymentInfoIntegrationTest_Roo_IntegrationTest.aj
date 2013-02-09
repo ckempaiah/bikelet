@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.PaymentInfo;
 import com.sjsu.bikelet.domain.PaymentInfoDataOnDemand;
 import com.sjsu.bikelet.domain.PaymentInfoIntegrationTest;
+import com.sjsu.bikelet.service.PaymentInfoService;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,12 +24,15 @@ privileged aspect PaymentInfoIntegrationTest_Roo_IntegrationTest {
     declare @type: PaymentInfoIntegrationTest: @Transactional;
     
     @Autowired
-    private PaymentInfoDataOnDemand PaymentInfoIntegrationTest.dod;
+    PaymentInfoDataOnDemand PaymentInfoIntegrationTest.dod;
+    
+    @Autowired
+    PaymentInfoService PaymentInfoIntegrationTest.paymentInfoService;
     
     @Test
-    public void PaymentInfoIntegrationTest.testCountPaymentInfoes() {
+    public void PaymentInfoIntegrationTest.testCountAllPaymentInfoes() {
         Assert.assertNotNull("Data on demand for 'PaymentInfo' failed to initialize correctly", dod.getRandomPaymentInfo());
-        long count = PaymentInfo.countPaymentInfoes();
+        long count = paymentInfoService.countAllPaymentInfoes();
         Assert.assertTrue("Counter for 'PaymentInfo' incorrectly reported there were no entries", count > 0);
     }
     
@@ -39,7 +42,7 @@ privileged aspect PaymentInfoIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'PaymentInfo' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'PaymentInfo' failed to provide an identifier", id);
-        obj = PaymentInfo.findPaymentInfo(id);
+        obj = paymentInfoService.findPaymentInfo(id);
         Assert.assertNotNull("Find method for 'PaymentInfo' illegally returned null for id '" + id + "'", obj);
         Assert.assertEquals("Find method for 'PaymentInfo' returned the incorrect identifier", id, obj.getId());
     }
@@ -47,9 +50,9 @@ privileged aspect PaymentInfoIntegrationTest_Roo_IntegrationTest {
     @Test
     public void PaymentInfoIntegrationTest.testFindAllPaymentInfoes() {
         Assert.assertNotNull("Data on demand for 'PaymentInfo' failed to initialize correctly", dod.getRandomPaymentInfo());
-        long count = PaymentInfo.countPaymentInfoes();
+        long count = paymentInfoService.countAllPaymentInfoes();
         Assert.assertTrue("Too expensive to perform a find all test for 'PaymentInfo', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<PaymentInfo> result = PaymentInfo.findAllPaymentInfoes();
+        List<PaymentInfo> result = paymentInfoService.findAllPaymentInfoes();
         Assert.assertNotNull("Find all method for 'PaymentInfo' illegally returned null", result);
         Assert.assertTrue("Find all method for 'PaymentInfo' failed to return any data", result.size() > 0);
     }
@@ -57,11 +60,11 @@ privileged aspect PaymentInfoIntegrationTest_Roo_IntegrationTest {
     @Test
     public void PaymentInfoIntegrationTest.testFindPaymentInfoEntries() {
         Assert.assertNotNull("Data on demand for 'PaymentInfo' failed to initialize correctly", dod.getRandomPaymentInfo());
-        long count = PaymentInfo.countPaymentInfoes();
+        long count = paymentInfoService.countAllPaymentInfoes();
         if (count > 20) count = 20;
         int firstResult = 0;
         int maxResults = (int) count;
-        List<PaymentInfo> result = PaymentInfo.findPaymentInfoEntries(firstResult, maxResults);
+        List<PaymentInfo> result = paymentInfoService.findPaymentInfoEntries(firstResult, maxResults);
         Assert.assertNotNull("Find entries method for 'PaymentInfo' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'PaymentInfo' returned an incorrect number of entries", count, result.size());
     }
@@ -72,7 +75,7 @@ privileged aspect PaymentInfoIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'PaymentInfo' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'PaymentInfo' failed to provide an identifier", id);
-        obj = PaymentInfo.findPaymentInfo(id);
+        obj = paymentInfoService.findPaymentInfo(id);
         Assert.assertNotNull("Find method for 'PaymentInfo' illegally returned null for id '" + id + "'", obj);
         boolean modified =  dod.modifyPaymentInfo(obj);
         Integer currentVersion = obj.getVersion();
@@ -81,41 +84,41 @@ privileged aspect PaymentInfoIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void PaymentInfoIntegrationTest.testMergeUpdate() {
+    public void PaymentInfoIntegrationTest.testUpdatePaymentInfoUpdate() {
         PaymentInfo obj = dod.getRandomPaymentInfo();
         Assert.assertNotNull("Data on demand for 'PaymentInfo' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'PaymentInfo' failed to provide an identifier", id);
-        obj = PaymentInfo.findPaymentInfo(id);
+        obj = paymentInfoService.findPaymentInfo(id);
         boolean modified =  dod.modifyPaymentInfo(obj);
         Integer currentVersion = obj.getVersion();
-        PaymentInfo merged = obj.merge();
+        PaymentInfo merged = paymentInfoService.updatePaymentInfo(obj);
         obj.flush();
         Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
         Assert.assertTrue("Version for 'PaymentInfo' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
-    public void PaymentInfoIntegrationTest.testPersist() {
+    public void PaymentInfoIntegrationTest.testSavePaymentInfo() {
         Assert.assertNotNull("Data on demand for 'PaymentInfo' failed to initialize correctly", dod.getRandomPaymentInfo());
         PaymentInfo obj = dod.getNewTransientPaymentInfo(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'PaymentInfo' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'PaymentInfo' identifier to be null", obj.getId());
-        obj.persist();
+        paymentInfoService.savePaymentInfo(obj);
         obj.flush();
         Assert.assertNotNull("Expected 'PaymentInfo' identifier to no longer be null", obj.getId());
     }
     
     @Test
-    public void PaymentInfoIntegrationTest.testRemove() {
+    public void PaymentInfoIntegrationTest.testDeletePaymentInfo() {
         PaymentInfo obj = dod.getRandomPaymentInfo();
         Assert.assertNotNull("Data on demand for 'PaymentInfo' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'PaymentInfo' failed to provide an identifier", id);
-        obj = PaymentInfo.findPaymentInfo(id);
-        obj.remove();
+        obj = paymentInfoService.findPaymentInfo(id);
+        paymentInfoService.deletePaymentInfo(obj);
         obj.flush();
-        Assert.assertNull("Failed to remove 'PaymentInfo' with identifier '" + id + "'", PaymentInfo.findPaymentInfo(id));
+        Assert.assertNull("Failed to remove 'PaymentInfo' with identifier '" + id + "'", paymentInfoService.findPaymentInfo(id));
     }
     
 }

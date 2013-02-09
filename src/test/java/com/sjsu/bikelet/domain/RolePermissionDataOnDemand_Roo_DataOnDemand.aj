@@ -3,12 +3,11 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.BikeLetRole;
 import com.sjsu.bikelet.domain.BikeLetRoleDataOnDemand;
-import com.sjsu.bikelet.domain.Permission;
 import com.sjsu.bikelet.domain.PermissionDataOnDemand;
 import com.sjsu.bikelet.domain.RolePermission;
 import com.sjsu.bikelet.domain.RolePermissionDataOnDemand;
+import com.sjsu.bikelet.service.RolePermissionService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,26 +27,17 @@ privileged aspect RolePermissionDataOnDemand_Roo_DataOnDemand {
     private List<RolePermission> RolePermissionDataOnDemand.data;
     
     @Autowired
-    private PermissionDataOnDemand RolePermissionDataOnDemand.permissionDataOnDemand;
+    PermissionDataOnDemand RolePermissionDataOnDemand.permissionDataOnDemand;
     
     @Autowired
-    private BikeLetRoleDataOnDemand RolePermissionDataOnDemand.bikeLetRoleDataOnDemand;
+    BikeLetRoleDataOnDemand RolePermissionDataOnDemand.bikeLetRoleDataOnDemand;
+    
+    @Autowired
+    RolePermissionService RolePermissionDataOnDemand.rolePermissionService;
     
     public RolePermission RolePermissionDataOnDemand.getNewTransientRolePermission(int index) {
         RolePermission obj = new RolePermission();
-        setPermissionId(obj, index);
-        setRoleId(obj, index);
         return obj;
-    }
-    
-    public void RolePermissionDataOnDemand.setPermissionId(RolePermission obj, int index) {
-        Permission permissionId = permissionDataOnDemand.getRandomPermission();
-        obj.setPermissionId(permissionId);
-    }
-    
-    public void RolePermissionDataOnDemand.setRoleId(RolePermission obj, int index) {
-        BikeLetRole roleId = bikeLetRoleDataOnDemand.getRandomBikeLetRole();
-        obj.setRoleId(roleId);
     }
     
     public RolePermission RolePermissionDataOnDemand.getSpecificRolePermission(int index) {
@@ -60,14 +50,14 @@ privileged aspect RolePermissionDataOnDemand_Roo_DataOnDemand {
         }
         RolePermission obj = data.get(index);
         Long id = obj.getId();
-        return RolePermission.findRolePermission(id);
+        return rolePermissionService.findRolePermission(id);
     }
     
     public RolePermission RolePermissionDataOnDemand.getRandomRolePermission() {
         init();
         RolePermission obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return RolePermission.findRolePermission(id);
+        return rolePermissionService.findRolePermission(id);
     }
     
     public boolean RolePermissionDataOnDemand.modifyRolePermission(RolePermission obj) {
@@ -77,7 +67,7 @@ privileged aspect RolePermissionDataOnDemand_Roo_DataOnDemand {
     public void RolePermissionDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = RolePermission.findRolePermissionEntries(from, to);
+        data = rolePermissionService.findRolePermissionEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'RolePermission' illegally returned null");
         }
@@ -89,7 +79,7 @@ privileged aspect RolePermissionDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             RolePermission obj = getNewTransientRolePermission(i);
             try {
-                obj.persist();
+                rolePermissionService.saveRolePermission(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

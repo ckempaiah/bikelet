@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.TenantLicensePolicy;
 import com.sjsu.bikelet.domain.TenantLicensePolicyDataOnDemand;
 import com.sjsu.bikelet.domain.TenantLicensePolicyIntegrationTest;
+import com.sjsu.bikelet.service.TenantLicensePolicyService;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,12 +24,15 @@ privileged aspect TenantLicensePolicyIntegrationTest_Roo_IntegrationTest {
     declare @type: TenantLicensePolicyIntegrationTest: @Transactional;
     
     @Autowired
-    private TenantLicensePolicyDataOnDemand TenantLicensePolicyIntegrationTest.dod;
+    TenantLicensePolicyDataOnDemand TenantLicensePolicyIntegrationTest.dod;
+    
+    @Autowired
+    TenantLicensePolicyService TenantLicensePolicyIntegrationTest.tenantLicensePolicyService;
     
     @Test
-    public void TenantLicensePolicyIntegrationTest.testCountTenantLicensePolicys() {
+    public void TenantLicensePolicyIntegrationTest.testCountAllTenantLicensePolicys() {
         Assert.assertNotNull("Data on demand for 'TenantLicensePolicy' failed to initialize correctly", dod.getRandomTenantLicensePolicy());
-        long count = TenantLicensePolicy.countTenantLicensePolicys();
+        long count = tenantLicensePolicyService.countAllTenantLicensePolicys();
         Assert.assertTrue("Counter for 'TenantLicensePolicy' incorrectly reported there were no entries", count > 0);
     }
     
@@ -39,7 +42,7 @@ privileged aspect TenantLicensePolicyIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'TenantLicensePolicy' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'TenantLicensePolicy' failed to provide an identifier", id);
-        obj = TenantLicensePolicy.findTenantLicensePolicy(id);
+        obj = tenantLicensePolicyService.findTenantLicensePolicy(id);
         Assert.assertNotNull("Find method for 'TenantLicensePolicy' illegally returned null for id '" + id + "'", obj);
         Assert.assertEquals("Find method for 'TenantLicensePolicy' returned the incorrect identifier", id, obj.getId());
     }
@@ -47,9 +50,9 @@ privileged aspect TenantLicensePolicyIntegrationTest_Roo_IntegrationTest {
     @Test
     public void TenantLicensePolicyIntegrationTest.testFindAllTenantLicensePolicys() {
         Assert.assertNotNull("Data on demand for 'TenantLicensePolicy' failed to initialize correctly", dod.getRandomTenantLicensePolicy());
-        long count = TenantLicensePolicy.countTenantLicensePolicys();
+        long count = tenantLicensePolicyService.countAllTenantLicensePolicys();
         Assert.assertTrue("Too expensive to perform a find all test for 'TenantLicensePolicy', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<TenantLicensePolicy> result = TenantLicensePolicy.findAllTenantLicensePolicys();
+        List<TenantLicensePolicy> result = tenantLicensePolicyService.findAllTenantLicensePolicys();
         Assert.assertNotNull("Find all method for 'TenantLicensePolicy' illegally returned null", result);
         Assert.assertTrue("Find all method for 'TenantLicensePolicy' failed to return any data", result.size() > 0);
     }
@@ -57,11 +60,11 @@ privileged aspect TenantLicensePolicyIntegrationTest_Roo_IntegrationTest {
     @Test
     public void TenantLicensePolicyIntegrationTest.testFindTenantLicensePolicyEntries() {
         Assert.assertNotNull("Data on demand for 'TenantLicensePolicy' failed to initialize correctly", dod.getRandomTenantLicensePolicy());
-        long count = TenantLicensePolicy.countTenantLicensePolicys();
+        long count = tenantLicensePolicyService.countAllTenantLicensePolicys();
         if (count > 20) count = 20;
         int firstResult = 0;
         int maxResults = (int) count;
-        List<TenantLicensePolicy> result = TenantLicensePolicy.findTenantLicensePolicyEntries(firstResult, maxResults);
+        List<TenantLicensePolicy> result = tenantLicensePolicyService.findTenantLicensePolicyEntries(firstResult, maxResults);
         Assert.assertNotNull("Find entries method for 'TenantLicensePolicy' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'TenantLicensePolicy' returned an incorrect number of entries", count, result.size());
     }
@@ -72,7 +75,7 @@ privileged aspect TenantLicensePolicyIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'TenantLicensePolicy' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'TenantLicensePolicy' failed to provide an identifier", id);
-        obj = TenantLicensePolicy.findTenantLicensePolicy(id);
+        obj = tenantLicensePolicyService.findTenantLicensePolicy(id);
         Assert.assertNotNull("Find method for 'TenantLicensePolicy' illegally returned null for id '" + id + "'", obj);
         boolean modified =  dod.modifyTenantLicensePolicy(obj);
         Integer currentVersion = obj.getVersion();
@@ -81,41 +84,41 @@ privileged aspect TenantLicensePolicyIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void TenantLicensePolicyIntegrationTest.testMergeUpdate() {
+    public void TenantLicensePolicyIntegrationTest.testUpdateTenantLicensePolicyUpdate() {
         TenantLicensePolicy obj = dod.getRandomTenantLicensePolicy();
         Assert.assertNotNull("Data on demand for 'TenantLicensePolicy' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'TenantLicensePolicy' failed to provide an identifier", id);
-        obj = TenantLicensePolicy.findTenantLicensePolicy(id);
+        obj = tenantLicensePolicyService.findTenantLicensePolicy(id);
         boolean modified =  dod.modifyTenantLicensePolicy(obj);
         Integer currentVersion = obj.getVersion();
-        TenantLicensePolicy merged = obj.merge();
+        TenantLicensePolicy merged = tenantLicensePolicyService.updateTenantLicensePolicy(obj);
         obj.flush();
         Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
         Assert.assertTrue("Version for 'TenantLicensePolicy' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
-    public void TenantLicensePolicyIntegrationTest.testPersist() {
+    public void TenantLicensePolicyIntegrationTest.testSaveTenantLicensePolicy() {
         Assert.assertNotNull("Data on demand for 'TenantLicensePolicy' failed to initialize correctly", dod.getRandomTenantLicensePolicy());
         TenantLicensePolicy obj = dod.getNewTransientTenantLicensePolicy(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'TenantLicensePolicy' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'TenantLicensePolicy' identifier to be null", obj.getId());
-        obj.persist();
+        tenantLicensePolicyService.saveTenantLicensePolicy(obj);
         obj.flush();
         Assert.assertNotNull("Expected 'TenantLicensePolicy' identifier to no longer be null", obj.getId());
     }
     
     @Test
-    public void TenantLicensePolicyIntegrationTest.testRemove() {
+    public void TenantLicensePolicyIntegrationTest.testDeleteTenantLicensePolicy() {
         TenantLicensePolicy obj = dod.getRandomTenantLicensePolicy();
         Assert.assertNotNull("Data on demand for 'TenantLicensePolicy' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'TenantLicensePolicy' failed to provide an identifier", id);
-        obj = TenantLicensePolicy.findTenantLicensePolicy(id);
-        obj.remove();
+        obj = tenantLicensePolicyService.findTenantLicensePolicy(id);
+        tenantLicensePolicyService.deleteTenantLicensePolicy(obj);
         obj.flush();
-        Assert.assertNull("Failed to remove 'TenantLicensePolicy' with identifier '" + id + "'", TenantLicensePolicy.findTenantLicensePolicy(id));
+        Assert.assertNull("Failed to remove 'TenantLicensePolicy' with identifier '" + id + "'", tenantLicensePolicyService.findTenantLicensePolicy(id));
     }
     
 }

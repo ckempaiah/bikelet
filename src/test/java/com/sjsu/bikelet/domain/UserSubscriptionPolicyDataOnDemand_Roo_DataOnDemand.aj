@@ -3,12 +3,11 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
-import com.sjsu.bikelet.domain.SubscriptionPolicy;
 import com.sjsu.bikelet.domain.SubscriptionPolicyDataOnDemand;
 import com.sjsu.bikelet.domain.UserSubscriptionPolicy;
 import com.sjsu.bikelet.domain.UserSubscriptionPolicyDataOnDemand;
+import com.sjsu.bikelet.service.UserSubscriptionPolicyService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,26 +27,17 @@ privileged aspect UserSubscriptionPolicyDataOnDemand_Roo_DataOnDemand {
     private List<UserSubscriptionPolicy> UserSubscriptionPolicyDataOnDemand.data;
     
     @Autowired
-    private SubscriptionPolicyDataOnDemand UserSubscriptionPolicyDataOnDemand.subscriptionPolicyDataOnDemand;
+    SubscriptionPolicyDataOnDemand UserSubscriptionPolicyDataOnDemand.subscriptionPolicyDataOnDemand;
     
     @Autowired
-    private BikeLetUserDataOnDemand UserSubscriptionPolicyDataOnDemand.bikeLetUserDataOnDemand;
+    BikeLetUserDataOnDemand UserSubscriptionPolicyDataOnDemand.bikeLetUserDataOnDemand;
+    
+    @Autowired
+    UserSubscriptionPolicyService UserSubscriptionPolicyDataOnDemand.userSubscriptionPolicyService;
     
     public UserSubscriptionPolicy UserSubscriptionPolicyDataOnDemand.getNewTransientUserSubscriptionPolicy(int index) {
         UserSubscriptionPolicy obj = new UserSubscriptionPolicy();
-        setPolicyId(obj, index);
-        setUserId(obj, index);
         return obj;
-    }
-    
-    public void UserSubscriptionPolicyDataOnDemand.setPolicyId(UserSubscriptionPolicy obj, int index) {
-        SubscriptionPolicy policyId = subscriptionPolicyDataOnDemand.getSpecificSubscriptionPolicy(index);
-        obj.setPolicyId(policyId);
-    }
-    
-    public void UserSubscriptionPolicyDataOnDemand.setUserId(UserSubscriptionPolicy obj, int index) {
-        BikeLetUser userId = bikeLetUserDataOnDemand.getSpecificBikeLetUser(index);
-        obj.setUserId(userId);
     }
     
     public UserSubscriptionPolicy UserSubscriptionPolicyDataOnDemand.getSpecificUserSubscriptionPolicy(int index) {
@@ -60,14 +50,14 @@ privileged aspect UserSubscriptionPolicyDataOnDemand_Roo_DataOnDemand {
         }
         UserSubscriptionPolicy obj = data.get(index);
         Long id = obj.getId();
-        return UserSubscriptionPolicy.findUserSubscriptionPolicy(id);
+        return userSubscriptionPolicyService.findUserSubscriptionPolicy(id);
     }
     
     public UserSubscriptionPolicy UserSubscriptionPolicyDataOnDemand.getRandomUserSubscriptionPolicy() {
         init();
         UserSubscriptionPolicy obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return UserSubscriptionPolicy.findUserSubscriptionPolicy(id);
+        return userSubscriptionPolicyService.findUserSubscriptionPolicy(id);
     }
     
     public boolean UserSubscriptionPolicyDataOnDemand.modifyUserSubscriptionPolicy(UserSubscriptionPolicy obj) {
@@ -77,7 +67,7 @@ privileged aspect UserSubscriptionPolicyDataOnDemand_Roo_DataOnDemand {
     public void UserSubscriptionPolicyDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = UserSubscriptionPolicy.findUserSubscriptionPolicyEntries(from, to);
+        data = userSubscriptionPolicyService.findUserSubscriptionPolicyEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'UserSubscriptionPolicy' illegally returned null");
         }
@@ -89,7 +79,7 @@ privileged aspect UserSubscriptionPolicyDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             UserSubscriptionPolicy obj = getNewTransientUserSubscriptionPolicy(i);
             try {
-                obj.persist();
+                userSubscriptionPolicyService.saveUserSubscriptionPolicy(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

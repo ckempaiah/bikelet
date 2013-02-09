@@ -126,7 +126,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Address, String> ApplicationConversionServiceFactoryBean.getAddressToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Address, java.lang.String>() {
             public String convert(Address address) {
-                return new StringBuilder().append(address.getAddressLine1()).append(" ").append(address.getAddressLine2()).append(" ").append(address.getCity()).append(" ").append(address.getAddressState()).toString();
+                return new StringBuilder().append(address.getAddressLine1()).append(' ').append(address.getAddressLine2()).append(' ').append(address.getCity()).append(' ').append(address.getAddressState()).toString();
             }
         };
     }
@@ -150,7 +150,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<AddressAssociation, String> ApplicationConversionServiceFactoryBean.getAddressAssociationToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.AddressAssociation, java.lang.String>() {
             public String convert(AddressAssociation addressAssociation) {
-                return new StringBuilder().append(addressAssociation.getEntityId()).append(" ").append(addressAssociation.getAddressId()).append(" ").append(addressAssociation.getEntityType()).toString();
+                return new StringBuilder().append(addressAssociation.getEntityId()).append(' ').append(addressAssociation.getAddressId()).append(' ').append(addressAssociation.getEntityType()).toString();
             }
         };
     }
@@ -174,7 +174,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Bike, String> ApplicationConversionServiceFactoryBean.getBikeToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Bike, java.lang.String>() {
             public String convert(Bike bike) {
-                return new StringBuilder().append(bike.getBikeHeight()).append(" ").append(bike.getBikeColor()).append(" ").append(bike.getBikeType()).append(" ").append(bike.getLastServiceDate()).toString();
+                return new StringBuilder().append(bike.getBikeHeight()).append(' ').append(bike.getBikeColor()).append(' ').append(bike.getBikeType()).append(' ').append(bike.getLastServiceDate()).toString();
             }
         };
     }
@@ -222,7 +222,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<BikeLetUser, String> ApplicationConversionServiceFactoryBean.getBikeLetUserToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.BikeLetUser, java.lang.String>() {
             public String convert(BikeLetUser bikeLetUser) {
-                return new StringBuilder().append(bikeLetUser.getFirstName()).append(" ").append(bikeLetUser.getLastName()).append(" ").append(bikeLetUser.getEmail()).append(" ").append(bikeLetUser.getPassword()).toString();
+                return new StringBuilder().append(bikeLetUser.getFirstName()).append(' ').append(bikeLetUser.getLastName()).append(' ').append(bikeLetUser.getEmail()).append(' ').append(bikeLetUser.getPassword()).toString();
             }
         };
     }
@@ -270,7 +270,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Bill, String> ApplicationConversionServiceFactoryBean.getBillToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Bill, java.lang.String>() {
             public String convert(Bill bill) {
-                return new StringBuilder().append(bill.getTotalcharges()).append(" ").append(bill.getDescription()).append(" ").append(bill.getCreatedDate()).append(" ").append(bill.getBillStartDate()).toString();
+                return new StringBuilder().append(bill.getTotalcharges()).append(' ').append(bill.getDescription()).append(' ').append(bill.getCreatedDate()).append(' ').append(bill.getBillStartDate()).toString();
             }
         };
     }
@@ -294,7 +294,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<BillTransaction, String> ApplicationConversionServiceFactoryBean.getBillTransactionToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.BillTransaction, java.lang.String>() {
             public String convert(BillTransaction billTransaction) {
-                return new StringBuilder().append(billTransaction.getTotalCost()).append(" ").append(billTransaction.getTransactionType()).append(" ").append(billTransaction.getStartDate()).append(" ").append(billTransaction.getEndDate()).toString();
+                return new StringBuilder().append(billTransaction.getTotalCost()).append(' ').append(billTransaction.getTransactionType()).append(' ').append(billTransaction.getStartDate()).append(' ').append(billTransaction.getEndDate()).toString();
             }
         };
     }
@@ -318,7 +318,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<LicensePolicy, String> ApplicationConversionServiceFactoryBean.getLicensePolicyToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.LicensePolicy, java.lang.String>() {
             public String convert(LicensePolicy licensePolicy) {
-                return new StringBuilder().append(licensePolicy.getLicenseName()).append(" ").append(licensePolicy.getLicenseCostPeruser()).append(" ").append(licensePolicy.getLicenseType()).append(" ").append(licensePolicy.getLicenseBaseCost()).toString();
+                return new StringBuilder().append(licensePolicy.getLicenseName()).append(' ').append(licensePolicy.getLicenseCostPeruser()).append(' ').append(licensePolicy.getLicenseType()).append(' ').append(licensePolicy.getLicenseBaseCost()).toString();
             }
         };
     }
@@ -342,7 +342,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<PaymentInfo, String> ApplicationConversionServiceFactoryBean.getPaymentInfoToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.PaymentInfo, java.lang.String>() {
             public String convert(PaymentInfo paymentInfo) {
-                return new StringBuilder().append(paymentInfo.getPaymentId()).append(" ").append(paymentInfo.getCardNumber()).append(" ").append(paymentInfo.getCardUserName()).toString();
+                return new StringBuilder().append(paymentInfo.getPaymentId()).append(' ').append(paymentInfo.getCardNumber()).append(' ').append(paymentInfo.getCardUserName()).toString();
             }
         };
     }
@@ -366,7 +366,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<PaymentTransaction, String> ApplicationConversionServiceFactoryBean.getPaymentTransactionToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.PaymentTransaction, java.lang.String>() {
             public String convert(PaymentTransaction paymentTransaction) {
-                return new StringBuilder().append(paymentTransaction.getStatus()).append(" ").append(paymentTransaction.getDateOfTransaction()).append(" ").append(paymentTransaction.getPermissionName()).append(" ").append(paymentTransaction.getDescription()).toString();
+                return new StringBuilder().append(paymentTransaction.getStatus()).append(' ').append(paymentTransaction.getDateOfTransaction()).append(' ').append(paymentTransaction.getPermissionName()).append(' ').append(paymentTransaction.getDescription()).toString();
             }
         };
     }
@@ -390,7 +390,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Permission, String> ApplicationConversionServiceFactoryBean.getPermissionToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Permission, java.lang.String>() {
             public String convert(Permission permission) {
-                return new StringBuilder().append(permission.getPermissionName()).append(" ").append(permission.getDescription()).toString();
+                return new StringBuilder().append(permission.getPermissionName()).append(' ').append(permission.getDescription()).toString();
             }
         };
     }
@@ -414,7 +414,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Program, String> ApplicationConversionServiceFactoryBean.getProgramToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Program, java.lang.String>() {
             public String convert(Program program) {
-                return new StringBuilder().append(program.getProgramName()).append(" ").append(program.getDescription()).append(" ").append(program.getOrgName()).append(" ").append(program.getContactId()).toString();
+                return new StringBuilder().append(program.getProgramName()).append(' ').append(program.getDescription()).append(' ').append(program.getOrgName()).append(' ').append(program.getContactId()).toString();
             }
         };
     }
@@ -438,7 +438,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<RentTransaction, String> ApplicationConversionServiceFactoryBean.getRentTransactionToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.RentTransaction, java.lang.String>() {
             public String convert(RentTransaction rentTransaction) {
-                return new StringBuilder().append(rentTransaction.getFromStationId()).append(" ").append(rentTransaction.getToStationId()).append(" ").append(rentTransaction.getTenantId()).append(" ").append(rentTransaction.getRentStartDate()).toString();
+                return new StringBuilder().append(rentTransaction.getFromStationId()).append(' ').append(rentTransaction.getToStationId()).append(' ').append(rentTransaction.getTenantId()).append(' ').append(rentTransaction.getRentStartDate()).toString();
             }
         };
     }
@@ -462,7 +462,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<RolePermission, String> ApplicationConversionServiceFactoryBean.getRolePermissionToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.RolePermission, java.lang.String>() {
             public String convert(RolePermission rolePermission) {
-                return new StringBuilder().toString();
+                return "(no displayable fields)";
             }
         };
     }
@@ -486,7 +486,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Station, String> ApplicationConversionServiceFactoryBean.getStationToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Station, java.lang.String>() {
             public String convert(Station station) {
-                return new StringBuilder().append(station.getLocation()).append(" ").append(station.getCapacity()).toString();
+                return new StringBuilder().append(station.getLocation()).append(' ').append(station.getCapacity()).toString();
             }
         };
     }
@@ -510,7 +510,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<SubscriptionPolicy, String> ApplicationConversionServiceFactoryBean.getSubscriptionPolicyToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.SubscriptionPolicy, java.lang.String>() {
             public String convert(SubscriptionPolicy subscriptionPolicy) {
-                return new StringBuilder().append(subscriptionPolicy.getPolicyName()).append(" ").append(subscriptionPolicy.getPolicyDescription()).toString();
+                return new StringBuilder().append(subscriptionPolicy.getPolicyName()).append(' ').append(subscriptionPolicy.getPolicyDescription()).toString();
             }
         };
     }
@@ -534,7 +534,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<SubscriptionRate, String> ApplicationConversionServiceFactoryBean.getSubscriptionRateToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.SubscriptionRate, java.lang.String>() {
             public String convert(SubscriptionRate subscriptionRate) {
-                return new StringBuilder().append(subscriptionRate.getMembershipPerMonth()).append(" ").append(subscriptionRate.getOrganizationShare()).append(" ").append(subscriptionRate.getUserShare()).append(" ").append(subscriptionRate.getFreeMinsPerDay()).toString();
+                return new StringBuilder().append(subscriptionRate.getMembershipPerMonth()).append(' ').append(subscriptionRate.getOrganizationShare()).append(' ').append(subscriptionRate.getUserShare()).append(' ').append(subscriptionRate.getFreeMinsPerDay()).toString();
             }
         };
     }
@@ -558,7 +558,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Tenant, String> ApplicationConversionServiceFactoryBean.getTenantToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Tenant, java.lang.String>() {
             public String convert(Tenant tenant) {
-                return new StringBuilder().append(tenant.getTenantName()).append(" ").append(tenant.getContactId()).toString();
+                return new StringBuilder().append(tenant.getTenantName()).append(' ').append(tenant.getContactId()).toString();
             }
         };
     }
@@ -582,7 +582,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<TenantLicensePolicy, String> ApplicationConversionServiceFactoryBean.getTenantLicensePolicyToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.TenantLicensePolicy, java.lang.String>() {
             public String convert(TenantLicensePolicy tenantLicensePolicy) {
-                return new StringBuilder().append(tenantLicensePolicy.getLicenseStartDate()).append(" ").append(tenantLicensePolicy.getLicenseEndDate()).toString();
+                return new StringBuilder().append(tenantLicensePolicy.getLicenseStartDate()).append(' ').append(tenantLicensePolicy.getLicenseEndDate()).toString();
             }
         };
     }
@@ -606,7 +606,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<UserRole, String> ApplicationConversionServiceFactoryBean.getUserRoleToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.UserRole, java.lang.String>() {
             public String convert(UserRole userRole) {
-                return new StringBuilder().toString();
+                return "(no displayable fields)";
             }
         };
     }
@@ -630,7 +630,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<UserSubscriptionPolicy, String> ApplicationConversionServiceFactoryBean.getUserSubscriptionPolicyToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.UserSubscriptionPolicy, java.lang.String>() {
             public String convert(UserSubscriptionPolicy userSubscriptionPolicy) {
-                return new StringBuilder().toString();
+                return "(no displayable fields)";
             }
         };
     }

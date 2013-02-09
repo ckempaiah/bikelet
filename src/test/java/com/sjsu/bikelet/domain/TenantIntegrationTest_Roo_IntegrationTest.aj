@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantDataOnDemand;
 import com.sjsu.bikelet.domain.TenantIntegrationTest;
+import com.sjsu.bikelet.service.TenantService;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,12 +24,15 @@ privileged aspect TenantIntegrationTest_Roo_IntegrationTest {
     declare @type: TenantIntegrationTest: @Transactional;
     
     @Autowired
-    private TenantDataOnDemand TenantIntegrationTest.dod;
+    TenantDataOnDemand TenantIntegrationTest.dod;
+    
+    @Autowired
+    TenantService TenantIntegrationTest.tenantService;
     
     @Test
-    public void TenantIntegrationTest.testCountTenants() {
+    public void TenantIntegrationTest.testCountAllTenants() {
         Assert.assertNotNull("Data on demand for 'Tenant' failed to initialize correctly", dod.getRandomTenant());
-        long count = Tenant.countTenants();
+        long count = tenantService.countAllTenants();
         Assert.assertTrue("Counter for 'Tenant' incorrectly reported there were no entries", count > 0);
     }
     
@@ -39,7 +42,7 @@ privileged aspect TenantIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'Tenant' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'Tenant' failed to provide an identifier", id);
-        obj = Tenant.findTenant(id);
+        obj = tenantService.findTenant(id);
         Assert.assertNotNull("Find method for 'Tenant' illegally returned null for id '" + id + "'", obj);
         Assert.assertEquals("Find method for 'Tenant' returned the incorrect identifier", id, obj.getId());
     }
@@ -47,9 +50,9 @@ privileged aspect TenantIntegrationTest_Roo_IntegrationTest {
     @Test
     public void TenantIntegrationTest.testFindAllTenants() {
         Assert.assertNotNull("Data on demand for 'Tenant' failed to initialize correctly", dod.getRandomTenant());
-        long count = Tenant.countTenants();
+        long count = tenantService.countAllTenants();
         Assert.assertTrue("Too expensive to perform a find all test for 'Tenant', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<Tenant> result = Tenant.findAllTenants();
+        List<Tenant> result = tenantService.findAllTenants();
         Assert.assertNotNull("Find all method for 'Tenant' illegally returned null", result);
         Assert.assertTrue("Find all method for 'Tenant' failed to return any data", result.size() > 0);
     }
@@ -57,11 +60,11 @@ privileged aspect TenantIntegrationTest_Roo_IntegrationTest {
     @Test
     public void TenantIntegrationTest.testFindTenantEntries() {
         Assert.assertNotNull("Data on demand for 'Tenant' failed to initialize correctly", dod.getRandomTenant());
-        long count = Tenant.countTenants();
+        long count = tenantService.countAllTenants();
         if (count > 20) count = 20;
         int firstResult = 0;
         int maxResults = (int) count;
-        List<Tenant> result = Tenant.findTenantEntries(firstResult, maxResults);
+        List<Tenant> result = tenantService.findTenantEntries(firstResult, maxResults);
         Assert.assertNotNull("Find entries method for 'Tenant' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'Tenant' returned an incorrect number of entries", count, result.size());
     }
@@ -72,7 +75,7 @@ privileged aspect TenantIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'Tenant' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'Tenant' failed to provide an identifier", id);
-        obj = Tenant.findTenant(id);
+        obj = tenantService.findTenant(id);
         Assert.assertNotNull("Find method for 'Tenant' illegally returned null for id '" + id + "'", obj);
         boolean modified =  dod.modifyTenant(obj);
         Integer currentVersion = obj.getVersion();
@@ -81,41 +84,41 @@ privileged aspect TenantIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void TenantIntegrationTest.testMergeUpdate() {
+    public void TenantIntegrationTest.testUpdateTenantUpdate() {
         Tenant obj = dod.getRandomTenant();
         Assert.assertNotNull("Data on demand for 'Tenant' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'Tenant' failed to provide an identifier", id);
-        obj = Tenant.findTenant(id);
+        obj = tenantService.findTenant(id);
         boolean modified =  dod.modifyTenant(obj);
         Integer currentVersion = obj.getVersion();
-        Tenant merged = obj.merge();
+        Tenant merged = tenantService.updateTenant(obj);
         obj.flush();
         Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
         Assert.assertTrue("Version for 'Tenant' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
-    public void TenantIntegrationTest.testPersist() {
+    public void TenantIntegrationTest.testSaveTenant() {
         Assert.assertNotNull("Data on demand for 'Tenant' failed to initialize correctly", dod.getRandomTenant());
         Tenant obj = dod.getNewTransientTenant(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'Tenant' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'Tenant' identifier to be null", obj.getId());
-        obj.persist();
+        tenantService.saveTenant(obj);
         obj.flush();
         Assert.assertNotNull("Expected 'Tenant' identifier to no longer be null", obj.getId());
     }
     
     @Test
-    public void TenantIntegrationTest.testRemove() {
+    public void TenantIntegrationTest.testDeleteTenant() {
         Tenant obj = dod.getRandomTenant();
         Assert.assertNotNull("Data on demand for 'Tenant' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'Tenant' failed to provide an identifier", id);
-        obj = Tenant.findTenant(id);
-        obj.remove();
+        obj = tenantService.findTenant(id);
+        tenantService.deleteTenant(obj);
         obj.flush();
-        Assert.assertNull("Failed to remove 'Tenant' with identifier '" + id + "'", Tenant.findTenant(id));
+        Assert.assertNull("Failed to remove 'Tenant' with identifier '" + id + "'", tenantService.findTenant(id));
     }
     
 }

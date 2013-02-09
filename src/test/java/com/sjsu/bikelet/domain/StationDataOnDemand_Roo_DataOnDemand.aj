@@ -3,12 +3,11 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.ProgramDataOnDemand;
 import com.sjsu.bikelet.domain.Station;
 import com.sjsu.bikelet.domain.StationDataOnDemand;
-import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantDataOnDemand;
+import com.sjsu.bikelet.service.StationService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,17 +27,18 @@ privileged aspect StationDataOnDemand_Roo_DataOnDemand {
     private List<Station> StationDataOnDemand.data;
     
     @Autowired
-    private ProgramDataOnDemand StationDataOnDemand.programDataOnDemand;
+    ProgramDataOnDemand StationDataOnDemand.programDataOnDemand;
     
     @Autowired
-    private TenantDataOnDemand StationDataOnDemand.tenantDataOnDemand;
+    TenantDataOnDemand StationDataOnDemand.tenantDataOnDemand;
+    
+    @Autowired
+    StationService StationDataOnDemand.stationService;
     
     public Station StationDataOnDemand.getNewTransientStation(int index) {
         Station obj = new Station();
         setCapacity(obj, index);
         setLocation(obj, index);
-        setProgramId(obj, index);
-        setTenantId(obj, index);
         return obj;
     }
     
@@ -52,16 +52,6 @@ privileged aspect StationDataOnDemand_Roo_DataOnDemand {
         obj.setLocation(location);
     }
     
-    public void StationDataOnDemand.setProgramId(Station obj, int index) {
-        Program programId = programDataOnDemand.getRandomProgram();
-        obj.setProgramId(programId);
-    }
-    
-    public void StationDataOnDemand.setTenantId(Station obj, int index) {
-        Tenant tenantId = tenantDataOnDemand.getRandomTenant();
-        obj.setTenantId(tenantId);
-    }
-    
     public Station StationDataOnDemand.getSpecificStation(int index) {
         init();
         if (index < 0) {
@@ -72,14 +62,14 @@ privileged aspect StationDataOnDemand_Roo_DataOnDemand {
         }
         Station obj = data.get(index);
         Long id = obj.getId();
-        return Station.findStation(id);
+        return stationService.findStation(id);
     }
     
     public Station StationDataOnDemand.getRandomStation() {
         init();
         Station obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return Station.findStation(id);
+        return stationService.findStation(id);
     }
     
     public boolean StationDataOnDemand.modifyStation(Station obj) {
@@ -89,7 +79,7 @@ privileged aspect StationDataOnDemand_Roo_DataOnDemand {
     public void StationDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = Station.findStationEntries(from, to);
+        data = stationService.findStationEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'Station' illegally returned null");
         }
@@ -101,7 +91,7 @@ privileged aspect StationDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             Station obj = getNewTransientStation(i);
             try {
-                obj.persist();
+                stationService.saveStation(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

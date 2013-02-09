@@ -4,8 +4,8 @@
 package com.sjsu.bikelet.web;
 
 import com.sjsu.bikelet.domain.Program;
-import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.service.ProgramService;
+import com.sjsu.bikelet.service.TenantService;
 import com.sjsu.bikelet.web.ProgramController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +24,9 @@ privileged aspect ProgramController_Roo_Controller {
     
     @Autowired
     ProgramService ProgramController.programService;
+    
+    @Autowired
+    TenantService ProgramController.tenantService;
     
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String ProgramController.create(@Valid Program program, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
@@ -92,7 +95,7 @@ privileged aspect ProgramController_Roo_Controller {
     
     void ProgramController.populateEditForm(Model uiModel, Program program) {
         uiModel.addAttribute("program", program);
-        uiModel.addAttribute("tenants", Tenant.findAllTenants());
+        uiModel.addAttribute("tenants", tenantService.findAllTenants());
     }
     
     String ProgramController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

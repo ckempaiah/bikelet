@@ -4,9 +4,10 @@
 package com.sjsu.bikelet.web;
 
 import com.sjsu.bikelet.domain.BikeLetUser;
-import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.service.BikeLetUserService;
+import com.sjsu.bikelet.service.ProgramService;
+import com.sjsu.bikelet.service.TenantService;
 import com.sjsu.bikelet.web.BikeLetUserController;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -28,6 +29,12 @@ privileged aspect BikeLetUserController_Roo_Controller {
     @Autowired
     BikeLetUserService BikeLetUserController.bikeLetUserService;
     
+    @Autowired
+    ProgramService BikeLetUserController.programService;
+    
+    @Autowired
+    TenantService BikeLetUserController.tenantService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String BikeLetUserController.create(@Valid BikeLetUser bikeLetUser, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -43,7 +50,7 @@ privileged aspect BikeLetUserController_Roo_Controller {
     public String BikeLetUserController.createForm(Model uiModel) {
         populateEditForm(uiModel, new BikeLetUser());
         List<String[]> dependencies = new ArrayList<String[]>();
-        if (Tenant.countTenants() == 0) {
+        if (tenantService.countAllTenants() == 0) {
             dependencies.add(new String[] { "tenant", "tenants" });
         }
         uiModel.addAttribute("dependencies", dependencies);
@@ -100,8 +107,8 @@ privileged aspect BikeLetUserController_Roo_Controller {
     
     void BikeLetUserController.populateEditForm(Model uiModel, BikeLetUser bikeLetUser) {
         uiModel.addAttribute("bikeLetUser", bikeLetUser);
-        uiModel.addAttribute("programs", Program.findAllPrograms());
-        uiModel.addAttribute("tenants", Tenant.findAllTenants());
+        uiModel.addAttribute("programs", programService.findAllPrograms());
+        uiModel.addAttribute("tenants", tenantService.findAllTenants());
     }
     
     String BikeLetUserController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

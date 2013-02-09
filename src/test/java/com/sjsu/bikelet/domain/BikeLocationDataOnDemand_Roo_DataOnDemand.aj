@@ -3,12 +3,11 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Bike;
 import com.sjsu.bikelet.domain.BikeDataOnDemand;
 import com.sjsu.bikelet.domain.BikeLocation;
 import com.sjsu.bikelet.domain.BikeLocationDataOnDemand;
-import com.sjsu.bikelet.domain.Station;
 import com.sjsu.bikelet.domain.StationDataOnDemand;
+import com.sjsu.bikelet.service.BikeLocationService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,28 +27,18 @@ privileged aspect BikeLocationDataOnDemand_Roo_DataOnDemand {
     private List<BikeLocation> BikeLocationDataOnDemand.data;
     
     @Autowired
-    private BikeDataOnDemand BikeLocationDataOnDemand.bikeDataOnDemand;
+    BikeDataOnDemand BikeLocationDataOnDemand.bikeDataOnDemand;
     
     @Autowired
-    private StationDataOnDemand BikeLocationDataOnDemand.stationDataOnDemand;
+    StationDataOnDemand BikeLocationDataOnDemand.stationDataOnDemand;
+    
+    @Autowired
+    BikeLocationService BikeLocationDataOnDemand.bikeLocationService;
     
     public BikeLocation BikeLocationDataOnDemand.getNewTransientBikeLocation(int index) {
         BikeLocation obj = new BikeLocation();
-        setBike(obj, index);
-        setBikeId(obj, index);
         setBikeStatus(obj, index);
-        setStationId(obj, index);
         return obj;
-    }
-    
-    public void BikeLocationDataOnDemand.setBike(BikeLocation obj, int index) {
-        Bike bike = bikeDataOnDemand.getRandomBike();
-        obj.setBike(bike);
-    }
-    
-    public void BikeLocationDataOnDemand.setBikeId(BikeLocation obj, int index) {
-        Bike bikeId = bikeDataOnDemand.getSpecificBike(index);
-        obj.setBikeId(bikeId);
     }
     
     public void BikeLocationDataOnDemand.setBikeStatus(BikeLocation obj, int index) {
@@ -58,11 +47,6 @@ privileged aspect BikeLocationDataOnDemand_Roo_DataOnDemand {
             bikeStatus = bikeStatus.substring(0, 10);
         }
         obj.setBikeStatus(bikeStatus);
-    }
-    
-    public void BikeLocationDataOnDemand.setStationId(BikeLocation obj, int index) {
-        Station stationId = stationDataOnDemand.getRandomStation();
-        obj.setStationId(stationId);
     }
     
     public BikeLocation BikeLocationDataOnDemand.getSpecificBikeLocation(int index) {
@@ -75,14 +59,14 @@ privileged aspect BikeLocationDataOnDemand_Roo_DataOnDemand {
         }
         BikeLocation obj = data.get(index);
         Long id = obj.getId();
-        return BikeLocation.findBikeLocation(id);
+        return bikeLocationService.findBikeLocation(id);
     }
     
     public BikeLocation BikeLocationDataOnDemand.getRandomBikeLocation() {
         init();
         BikeLocation obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return BikeLocation.findBikeLocation(id);
+        return bikeLocationService.findBikeLocation(id);
     }
     
     public boolean BikeLocationDataOnDemand.modifyBikeLocation(BikeLocation obj) {
@@ -92,7 +76,7 @@ privileged aspect BikeLocationDataOnDemand_Roo_DataOnDemand {
     public void BikeLocationDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = BikeLocation.findBikeLocationEntries(from, to);
+        data = bikeLocationService.findBikeLocationEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'BikeLocation' illegally returned null");
         }
@@ -104,7 +88,7 @@ privileged aspect BikeLocationDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             BikeLocation obj = getNewTransientBikeLocation(i);
             try {
-                obj.persist();
+                bikeLocationService.saveBikeLocation(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

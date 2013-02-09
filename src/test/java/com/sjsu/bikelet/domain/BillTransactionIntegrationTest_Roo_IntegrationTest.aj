@@ -24,7 +24,7 @@ privileged aspect BillTransactionIntegrationTest_Roo_IntegrationTest {
     declare @type: BillTransactionIntegrationTest: @Transactional;
     
     @Autowired
-    private BillTransactionDataOnDemand BillTransactionIntegrationTest.dod;
+    BillTransactionDataOnDemand BillTransactionIntegrationTest.dod;
     
     @Autowired
     BillTransactionService BillTransactionIntegrationTest.billTransactionService;

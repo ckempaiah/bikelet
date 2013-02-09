@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Permission;
 import com.sjsu.bikelet.domain.PermissionDataOnDemand;
 import com.sjsu.bikelet.domain.PermissionIntegrationTest;
+import com.sjsu.bikelet.service.PermissionService;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,12 +24,15 @@ privileged aspect PermissionIntegrationTest_Roo_IntegrationTest {
     declare @type: PermissionIntegrationTest: @Transactional;
     
     @Autowired
-    private PermissionDataOnDemand PermissionIntegrationTest.dod;
+    PermissionDataOnDemand PermissionIntegrationTest.dod;
+    
+    @Autowired
+    PermissionService PermissionIntegrationTest.permissionService;
     
     @Test
-    public void PermissionIntegrationTest.testCountPermissions() {
+    public void PermissionIntegrationTest.testCountAllPermissions() {
         Assert.assertNotNull("Data on demand for 'Permission' failed to initialize correctly", dod.getRandomPermission());
-        long count = Permission.countPermissions();
+        long count = permissionService.countAllPermissions();
         Assert.assertTrue("Counter for 'Permission' incorrectly reported there were no entries", count > 0);
     }
     
@@ -39,7 +42,7 @@ privileged aspect PermissionIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'Permission' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'Permission' failed to provide an identifier", id);
-        obj = Permission.findPermission(id);
+        obj = permissionService.findPermission(id);
         Assert.assertNotNull("Find method for 'Permission' illegally returned null for id '" + id + "'", obj);
         Assert.assertEquals("Find method for 'Permission' returned the incorrect identifier", id, obj.getId());
     }
@@ -47,9 +50,9 @@ privileged aspect PermissionIntegrationTest_Roo_IntegrationTest {
     @Test
     public void PermissionIntegrationTest.testFindAllPermissions() {
         Assert.assertNotNull("Data on demand for 'Permission' failed to initialize correctly", dod.getRandomPermission());
-        long count = Permission.countPermissions();
+        long count = permissionService.countAllPermissions();
         Assert.assertTrue("Too expensive to perform a find all test for 'Permission', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<Permission> result = Permission.findAllPermissions();
+        List<Permission> result = permissionService.findAllPermissions();
         Assert.assertNotNull("Find all method for 'Permission' illegally returned null", result);
         Assert.assertTrue("Find all method for 'Permission' failed to return any data", result.size() > 0);
     }
@@ -57,11 +60,11 @@ privileged aspect PermissionIntegrationTest_Roo_IntegrationTest {
     @Test
     public void PermissionIntegrationTest.testFindPermissionEntries() {
         Assert.assertNotNull("Data on demand for 'Permission' failed to initialize correctly", dod.getRandomPermission());
-        long count = Permission.countPermissions();
+        long count = permissionService.countAllPermissions();
         if (count > 20) count = 20;
         int firstResult = 0;
         int maxResults = (int) count;
-        List<Permission> result = Permission.findPermissionEntries(firstResult, maxResults);
+        List<Permission> result = permissionService.findPermissionEntries(firstResult, maxResults);
         Assert.assertNotNull("Find entries method for 'Permission' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'Permission' returned an incorrect number of entries", count, result.size());
     }
@@ -72,7 +75,7 @@ privileged aspect PermissionIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'Permission' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'Permission' failed to provide an identifier", id);
-        obj = Permission.findPermission(id);
+        obj = permissionService.findPermission(id);
         Assert.assertNotNull("Find method for 'Permission' illegally returned null for id '" + id + "'", obj);
         boolean modified =  dod.modifyPermission(obj);
         Integer currentVersion = obj.getVersion();
@@ -81,41 +84,41 @@ privileged aspect PermissionIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void PermissionIntegrationTest.testMergeUpdate() {
+    public void PermissionIntegrationTest.testUpdatePermissionUpdate() {
         Permission obj = dod.getRandomPermission();
         Assert.assertNotNull("Data on demand for 'Permission' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'Permission' failed to provide an identifier", id);
-        obj = Permission.findPermission(id);
+        obj = permissionService.findPermission(id);
         boolean modified =  dod.modifyPermission(obj);
         Integer currentVersion = obj.getVersion();
-        Permission merged = obj.merge();
+        Permission merged = permissionService.updatePermission(obj);
         obj.flush();
         Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
         Assert.assertTrue("Version for 'Permission' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
-    public void PermissionIntegrationTest.testPersist() {
+    public void PermissionIntegrationTest.testSavePermission() {
         Assert.assertNotNull("Data on demand for 'Permission' failed to initialize correctly", dod.getRandomPermission());
         Permission obj = dod.getNewTransientPermission(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'Permission' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'Permission' identifier to be null", obj.getId());
-        obj.persist();
+        permissionService.savePermission(obj);
         obj.flush();
         Assert.assertNotNull("Expected 'Permission' identifier to no longer be null", obj.getId());
     }
     
     @Test
-    public void PermissionIntegrationTest.testRemove() {
+    public void PermissionIntegrationTest.testDeletePermission() {
         Permission obj = dod.getRandomPermission();
         Assert.assertNotNull("Data on demand for 'Permission' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'Permission' failed to provide an identifier", id);
-        obj = Permission.findPermission(id);
-        obj.remove();
+        obj = permissionService.findPermission(id);
+        permissionService.deletePermission(obj);
         obj.flush();
-        Assert.assertNull("Failed to remove 'Permission' with identifier '" + id + "'", Permission.findPermission(id));
+        Assert.assertNull("Failed to remove 'Permission' with identifier '" + id + "'", permissionService.findPermission(id));
     }
     
 }

@@ -5,8 +5,8 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.Bike;
 import com.sjsu.bikelet.domain.BikeDataOnDemand;
-import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantDataOnDemand;
+import com.sjsu.bikelet.service.BikeService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,7 +29,10 @@ privileged aspect BikeDataOnDemand_Roo_DataOnDemand {
     private List<Bike> BikeDataOnDemand.data;
     
     @Autowired
-    private TenantDataOnDemand BikeDataOnDemand.tenantDataOnDemand;
+    TenantDataOnDemand BikeDataOnDemand.tenantDataOnDemand;
+    
+    @Autowired
+    BikeService BikeDataOnDemand.bikeService;
     
     public Bike BikeDataOnDemand.getNewTransientBike(int index) {
         Bike obj = new Bike();
@@ -38,7 +41,6 @@ privileged aspect BikeDataOnDemand_Roo_DataOnDemand {
         setBikeStatus(obj, index);
         setBikeType(obj, index);
         setLastServiceDate(obj, index);
-        setTenantId(obj, index);
         setWheelSize(obj, index);
         return obj;
     }
@@ -77,11 +79,6 @@ privileged aspect BikeDataOnDemand_Roo_DataOnDemand {
         obj.setLastServiceDate(lastServiceDate);
     }
     
-    public void BikeDataOnDemand.setTenantId(Bike obj, int index) {
-        Tenant tenantId = tenantDataOnDemand.getRandomTenant();
-        obj.setTenantId(tenantId);
-    }
-    
     public void BikeDataOnDemand.setWheelSize(Bike obj, int index) {
         String wheelSize = "wheelSiz_" + index;
         if (wheelSize.length() > 10) {
@@ -100,14 +97,14 @@ privileged aspect BikeDataOnDemand_Roo_DataOnDemand {
         }
         Bike obj = data.get(index);
         Long id = obj.getId();
-        return Bike.findBike(id);
+        return bikeService.findBike(id);
     }
     
     public Bike BikeDataOnDemand.getRandomBike() {
         init();
         Bike obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return Bike.findBike(id);
+        return bikeService.findBike(id);
     }
     
     public boolean BikeDataOnDemand.modifyBike(Bike obj) {
@@ -117,7 +114,7 @@ privileged aspect BikeDataOnDemand_Roo_DataOnDemand {
     public void BikeDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = Bike.findBikeEntries(from, to);
+        data = bikeService.findBikeEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'Bike' illegally returned null");
         }
@@ -129,7 +126,7 @@ privileged aspect BikeDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             Bike obj = getNewTransientBike(i);
             try {
-                obj.persist();
+                bikeService.saveBike(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

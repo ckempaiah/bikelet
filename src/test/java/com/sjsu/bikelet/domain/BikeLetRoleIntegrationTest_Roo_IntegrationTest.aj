@@ -24,7 +24,7 @@ privileged aspect BikeLetRoleIntegrationTest_Roo_IntegrationTest {
     declare @type: BikeLetRoleIntegrationTest: @Transactional;
     
     @Autowired
-    private BikeLetRoleDataOnDemand BikeLetRoleIntegrationTest.dod;
+    BikeLetRoleDataOnDemand BikeLetRoleIntegrationTest.dod;
     
     @Autowired
     BikeLetRoleService BikeLetRoleIntegrationTest.bikeLetRoleService;

@@ -5,10 +5,10 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
-import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.ProgramDataOnDemand;
 import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantDataOnDemand;
+import com.sjsu.bikelet.service.BikeLetUserService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,10 +28,13 @@ privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
     private List<BikeLetUser> BikeLetUserDataOnDemand.data;
     
     @Autowired
-    private ProgramDataOnDemand BikeLetUserDataOnDemand.programDataOnDemand;
+    ProgramDataOnDemand BikeLetUserDataOnDemand.programDataOnDemand;
     
     @Autowired
-    private TenantDataOnDemand BikeLetUserDataOnDemand.tenantDataOnDemand;
+    TenantDataOnDemand BikeLetUserDataOnDemand.tenantDataOnDemand;
+    
+    @Autowired
+    BikeLetUserService BikeLetUserDataOnDemand.bikeLetUserService;
     
     public BikeLetUser BikeLetUserDataOnDemand.getNewTransientBikeLetUser(int index) {
         BikeLetUser obj = new BikeLetUser();
@@ -39,7 +42,6 @@ privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
         setFirstName(obj, index);
         setLastName(obj, index);
         setPassword(obj, index);
-        setProgramId(obj, index);
         setTenantId(obj, index);
         return obj;
     }
@@ -76,11 +78,6 @@ privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
         obj.setPassword(password);
     }
     
-    public void BikeLetUserDataOnDemand.setProgramId(BikeLetUser obj, int index) {
-        Program programId = programDataOnDemand.getRandomProgram();
-        obj.setProgramId(programId);
-    }
-    
     public void BikeLetUserDataOnDemand.setTenantId(BikeLetUser obj, int index) {
         Tenant tenantId = tenantDataOnDemand.getRandomTenant();
         obj.setTenantId(tenantId);
@@ -96,14 +93,14 @@ privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
         }
         BikeLetUser obj = data.get(index);
         Long id = obj.getId();
-        return BikeLetUser.findBikeLetUser(id);
+        return bikeLetUserService.findBikeLetUser(id);
     }
     
     public BikeLetUser BikeLetUserDataOnDemand.getRandomBikeLetUser() {
         init();
         BikeLetUser obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return BikeLetUser.findBikeLetUser(id);
+        return bikeLetUserService.findBikeLetUser(id);
     }
     
     public boolean BikeLetUserDataOnDemand.modifyBikeLetUser(BikeLetUser obj) {
@@ -113,7 +110,7 @@ privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
     public void BikeLetUserDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = BikeLetUser.findBikeLetUserEntries(from, to);
+        data = bikeLetUserService.findBikeLetUserEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'BikeLetUser' illegally returned null");
         }
@@ -125,7 +122,7 @@ privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             BikeLetUser obj = getNewTransientBikeLetUser(i);
             try {
-                obj.persist();
+                bikeLetUserService.saveBikeLetUser(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

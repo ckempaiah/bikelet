@@ -3,14 +3,12 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLetUserDataOnDemand;
-import com.sjsu.bikelet.domain.Bill;
 import com.sjsu.bikelet.domain.BillDataOnDemand;
-import com.sjsu.bikelet.domain.PaymentInfo;
 import com.sjsu.bikelet.domain.PaymentInfoDataOnDemand;
 import com.sjsu.bikelet.domain.PaymentTransaction;
 import com.sjsu.bikelet.domain.PaymentTransactionDataOnDemand;
+import com.sjsu.bikelet.service.PaymentTransactionService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,29 +31,24 @@ privileged aspect PaymentTransactionDataOnDemand_Roo_DataOnDemand {
     private List<PaymentTransaction> PaymentTransactionDataOnDemand.data;
     
     @Autowired
-    private BillDataOnDemand PaymentTransactionDataOnDemand.billDataOnDemand;
+    BillDataOnDemand PaymentTransactionDataOnDemand.billDataOnDemand;
     
     @Autowired
-    private PaymentInfoDataOnDemand PaymentTransactionDataOnDemand.paymentInfoDataOnDemand;
+    PaymentInfoDataOnDemand PaymentTransactionDataOnDemand.paymentInfoDataOnDemand;
     
     @Autowired
-    private BikeLetUserDataOnDemand PaymentTransactionDataOnDemand.bikeLetUserDataOnDemand;
+    BikeLetUserDataOnDemand PaymentTransactionDataOnDemand.bikeLetUserDataOnDemand;
+    
+    @Autowired
+    PaymentTransactionService PaymentTransactionDataOnDemand.paymentTransactionService;
     
     public PaymentTransaction PaymentTransactionDataOnDemand.getNewTransientPaymentTransaction(int index) {
         PaymentTransaction obj = new PaymentTransaction();
-        setBillId(obj, index);
         setDateOfTransaction(obj, index);
         setDescription(obj, index);
-        setPaymentId(obj, index);
         setPermissionName(obj, index);
         setStatus(obj, index);
-        setUserId(obj, index);
         return obj;
-    }
-    
-    public void PaymentTransactionDataOnDemand.setBillId(PaymentTransaction obj, int index) {
-        Bill billId = billDataOnDemand.getSpecificBill(index);
-        obj.setBillId(billId);
     }
     
     public void PaymentTransactionDataOnDemand.setDateOfTransaction(PaymentTransaction obj, int index) {
@@ -71,11 +64,6 @@ privileged aspect PaymentTransactionDataOnDemand_Roo_DataOnDemand {
         obj.setDescription(description);
     }
     
-    public void PaymentTransactionDataOnDemand.setPaymentId(PaymentTransaction obj, int index) {
-        PaymentInfo paymentId = paymentInfoDataOnDemand.getRandomPaymentInfo();
-        obj.setPaymentId(paymentId);
-    }
-    
     public void PaymentTransactionDataOnDemand.setPermissionName(PaymentTransaction obj, int index) {
         String permissionName = "permissionName_" + index;
         if (permissionName.length() > 30) {
@@ -89,11 +77,6 @@ privileged aspect PaymentTransactionDataOnDemand_Roo_DataOnDemand {
         obj.setStatus(status);
     }
     
-    public void PaymentTransactionDataOnDemand.setUserId(PaymentTransaction obj, int index) {
-        BikeLetUser userId = bikeLetUserDataOnDemand.getRandomBikeLetUser();
-        obj.setUserId(userId);
-    }
-    
     public PaymentTransaction PaymentTransactionDataOnDemand.getSpecificPaymentTransaction(int index) {
         init();
         if (index < 0) {
@@ -104,14 +87,14 @@ privileged aspect PaymentTransactionDataOnDemand_Roo_DataOnDemand {
         }
         PaymentTransaction obj = data.get(index);
         Long id = obj.getId();
-        return PaymentTransaction.findPaymentTransaction(id);
+        return paymentTransactionService.findPaymentTransaction(id);
     }
     
     public PaymentTransaction PaymentTransactionDataOnDemand.getRandomPaymentTransaction() {
         init();
         PaymentTransaction obj = data.get(rnd.nextInt(data.size()));
         Long id = obj.getId();
-        return PaymentTransaction.findPaymentTransaction(id);
+        return paymentTransactionService.findPaymentTransaction(id);
     }
     
     public boolean PaymentTransactionDataOnDemand.modifyPaymentTransaction(PaymentTransaction obj) {
@@ -121,7 +104,7 @@ privileged aspect PaymentTransactionDataOnDemand_Roo_DataOnDemand {
     public void PaymentTransactionDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = PaymentTransaction.findPaymentTransactionEntries(from, to);
+        data = paymentTransactionService.findPaymentTransactionEntries(from, to);
         if (data == null) {
             throw new IllegalStateException("Find entries implementation for 'PaymentTransaction' illegally returned null");
         }
@@ -133,7 +116,7 @@ privileged aspect PaymentTransactionDataOnDemand_Roo_DataOnDemand {
         for (int i = 0; i < 10; i++) {
             PaymentTransaction obj = getNewTransientPaymentTransaction(i);
             try {
-                obj.persist();
+                paymentTransactionService.savePaymentTransaction(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

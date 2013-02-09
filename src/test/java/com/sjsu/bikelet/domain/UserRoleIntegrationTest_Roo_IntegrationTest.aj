@@ -24,7 +24,7 @@ privileged aspect UserRoleIntegrationTest_Roo_IntegrationTest {
     declare @type: UserRoleIntegrationTest: @Transactional;
     
     @Autowired
-    private UserRoleDataOnDemand UserRoleIntegrationTest.dod;
+    UserRoleDataOnDemand UserRoleIntegrationTest.dod;
     
     @Autowired
     UserRoleService UserRoleIntegrationTest.userRoleService;

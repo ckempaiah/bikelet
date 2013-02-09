@@ -3,9 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
-import com.sjsu.bikelet.domain.Bike;
 import com.sjsu.bikelet.domain.BikeDataOnDemand;
 import com.sjsu.bikelet.domain.BikeIntegrationTest;
+import com.sjsu.bikelet.service.BikeService;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,12 +24,15 @@ privileged aspect BikeIntegrationTest_Roo_IntegrationTest {
     declare @type: BikeIntegrationTest: @Transactional;
     
     @Autowired
-    private BikeDataOnDemand BikeIntegrationTest.dod;
+    BikeDataOnDemand BikeIntegrationTest.dod;
+    
+    @Autowired
+    BikeService BikeIntegrationTest.bikeService;
     
     @Test
-    public void BikeIntegrationTest.testCountBikes() {
+    public void BikeIntegrationTest.testCountAllBikes() {
         Assert.assertNotNull("Data on demand for 'Bike' failed to initialize correctly", dod.getRandomBike());
-        long count = Bike.countBikes();
+        long count = bikeService.countAllBikes();
         Assert.assertTrue("Counter for 'Bike' incorrectly reported there were no entries", count > 0);
     }
     
@@ -39,7 +42,7 @@ privileged aspect BikeIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'Bike' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'Bike' failed to provide an identifier", id);
-        obj = Bike.findBike(id);
+        obj = bikeService.findBike(id);
         Assert.assertNotNull("Find method for 'Bike' illegally returned null for id '" + id + "'", obj);
         Assert.assertEquals("Find method for 'Bike' returned the incorrect identifier", id, obj.getId());
     }
@@ -47,9 +50,9 @@ privileged aspect BikeIntegrationTest_Roo_IntegrationTest {
     @Test
     public void BikeIntegrationTest.testFindAllBikes() {
         Assert.assertNotNull("Data on demand for 'Bike' failed to initialize correctly", dod.getRandomBike());
-        long count = Bike.countBikes();
+        long count = bikeService.countAllBikes();
         Assert.assertTrue("Too expensive to perform a find all test for 'Bike', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<Bike> result = Bike.findAllBikes();
+        List<Bike> result = bikeService.findAllBikes();
         Assert.assertNotNull("Find all method for 'Bike' illegally returned null", result);
         Assert.assertTrue("Find all method for 'Bike' failed to return any data", result.size() > 0);
     }
@@ -57,11 +60,11 @@ privileged aspect BikeIntegrationTest_Roo_IntegrationTest {
     @Test
     public void BikeIntegrationTest.testFindBikeEntries() {
         Assert.assertNotNull("Data on demand for 'Bike' failed to initialize correctly", dod.getRandomBike());
-        long count = Bike.countBikes();
+        long count = bikeService.countAllBikes();
         if (count > 20) count = 20;
         int firstResult = 0;
         int maxResults = (int) count;
-        List<Bike> result = Bike.findBikeEntries(firstResult, maxResults);
+        List<Bike> result = bikeService.findBikeEntries(firstResult, maxResults);
         Assert.assertNotNull("Find entries method for 'Bike' illegally returned null", result);
         Assert.assertEquals("Find entries method for 'Bike' returned an incorrect number of entries", count, result.size());
     }
@@ -72,7 +75,7 @@ privileged aspect BikeIntegrationTest_Roo_IntegrationTest {
         Assert.assertNotNull("Data on demand for 'Bike' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'Bike' failed to provide an identifier", id);
-        obj = Bike.findBike(id);
+        obj = bikeService.findBike(id);
         Assert.assertNotNull("Find method for 'Bike' illegally returned null for id '" + id + "'", obj);
         boolean modified =  dod.modifyBike(obj);
         Integer currentVersion = obj.getVersion();
@@ -81,41 +84,41 @@ privileged aspect BikeIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void BikeIntegrationTest.testMergeUpdate() {
+    public void BikeIntegrationTest.testUpdateBikeUpdate() {
         Bike obj = dod.getRandomBike();
         Assert.assertNotNull("Data on demand for 'Bike' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'Bike' failed to provide an identifier", id);
-        obj = Bike.findBike(id);
+        obj = bikeService.findBike(id);
         boolean modified =  dod.modifyBike(obj);
         Integer currentVersion = obj.getVersion();
-        Bike merged = obj.merge();
+        Bike merged = bikeService.updateBike(obj);
         obj.flush();
         Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
         Assert.assertTrue("Version for 'Bike' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
     @Test
-    public void BikeIntegrationTest.testPersist() {
+    public void BikeIntegrationTest.testSaveBike() {
         Assert.assertNotNull("Data on demand for 'Bike' failed to initialize correctly", dod.getRandomBike());
         Bike obj = dod.getNewTransientBike(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'Bike' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'Bike' identifier to be null", obj.getId());
-        obj.persist();
+        bikeService.saveBike(obj);
         obj.flush();
         Assert.assertNotNull("Expected 'Bike' identifier to no longer be null", obj.getId());
     }
     
     @Test
-    public void BikeIntegrationTest.testRemove() {
+    public void BikeIntegrationTest.testDeleteBike() {
         Bike obj = dod.getRandomBike();
         Assert.assertNotNull("Data on demand for 'Bike' failed to initialize correctly", obj);
         Long id = obj.getId();
         Assert.assertNotNull("Data on demand for 'Bike' failed to provide an identifier", id);
-        obj = Bike.findBike(id);
-        obj.remove();
+        obj = bikeService.findBike(id);
+        bikeService.deleteBike(obj);
         obj.flush();
-        Assert.assertNull("Failed to remove 'Bike' with identifier '" + id + "'", Bike.findBike(id));
+        Assert.assertNull("Failed to remove 'Bike' with identifier '" + id + "'", bikeService.findBike(id));
     }
     
 }

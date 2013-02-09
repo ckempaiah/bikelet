@@ -24,7 +24,7 @@ privileged aspect ProgramIntegrationTest_Roo_IntegrationTest {
     declare @type: ProgramIntegrationTest: @Transactional;
     
     @Autowired
-    private ProgramDataOnDemand ProgramIntegrationTest.dod;
+    ProgramDataOnDemand ProgramIntegrationTest.dod;
     
     @Autowired
     ProgramService ProgramIntegrationTest.programService;
