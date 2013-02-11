@@ -4,7 +4,10 @@
     <jsp:output omit-xml-declaration="yes"/>
     <form:create id="fc_com_sjsu_bikelet_domain_Station" modelAttribute="station" path="/stations" render="${empty dependencies}" z="OAJglP7b9SJ5X8s4fj+6Ls2OL5k=">
         <field:input field="location" id="c_com_sjsu_bikelet_domain_Station_location" required="true" z="pzi1sQsrJID5A8OnfalXZPSAvSE="/>
-        <field:select field="tenantId" id="c_com_sjsu_bikelet_domain_Station_tenantId" itemValue="id" items="${tenants}" path="/tenants" z="VY44Z2VDuVVmI4yT7pX2Iv6HrgY="/>
+        
+        <field:simple field="tenantId.tenantName" id="c_com_sjsu_bikelet_domain_Station_tenantId" text="${station.tenantId.tenantName}" z="user-managed"/>
+        <field:hidden field="tenantId.id" id="c_com_sjsu_bikelet_domain_Station_tenantId_id" z="VY44Z2VDuVVmI4yT7pX2Iv6HrgY="/>
+
         <field:select field="programId" id="c_com_sjsu_bikelet_domain_Station_programId" itemValue="id" items="${programs}" path="/programs" z="AEoVYU7aq/lYi9c4j6biJHiV6G8="/>
         <field:input field="capacity" id="c_com_sjsu_bikelet_domain_Station_capacity" validationMessageCode="field_invalid_integer" z="7BWvdAb/5OE1etQl5ZNc/cwv/E4="/>
     </form:create>

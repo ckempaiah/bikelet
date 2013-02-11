@@ -24,4 +24,5 @@ public interface ProgramService {
 
 	public abstract Program updateProgram(Program program);
 
+	public abstract List<Program> findAllProgramsByTenant(Long tenantId);
 }

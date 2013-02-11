@@ -114,6 +114,9 @@ public class ProgramController {
             return "programs/bikeletusers/update";
         }
         uiModel.asMap().clear();
+		bikeLetUser.setProgramId(programService.findProgram(bikeLetUser.getProgramId().getId()));
+		bikeLetUser.setTenantId(tenantService.findTenant(bikeLetUser.getTenantId().getId()));	
+
         bikeLetUserService.updateBikeLetUser(bikeLetUser);
         return "redirect:/programs/" + programId + "/bikeletusers/" + encodeUrlPathSegment(bikeLetUser.getId().toString(), httpServletRequest);
     }

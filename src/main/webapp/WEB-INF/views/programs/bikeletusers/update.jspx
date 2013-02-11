@@ -7,7 +7,11 @@
         <field:input field="lastName" id="c_com_sjsu_bikelet_domain_BikeLetUser_lastName" max="30" min="2" required="true" z="WpqA1PSesVdvamoeHr+T5CKjyQ8="/>
         <field:textarea field="email" id="c_com_sjsu_bikelet_domain_BikeLetUser_email" required="true" validationMessageCode="field_invalid_email" z="Eh7PSWUOGEMn40lfOGLlAJ0+F0g="/>
         <field:input field="password" id="c_com_sjsu_bikelet_domain_BikeLetUser_password" max="15" min="6" required="true" z="ZQrxDVOmEQHim7TikqDh2H42mIw="/>
-        <field:select field="tenantId" id="c_com_sjsu_bikelet_domain_BikeLetUser_tenantId" itemValue="id" items="${tenants}" path="/tenants" required="true" z="gUUpJvUsX9GBCYywrY2lJyX026M="/>
-        <field:select field="programId" id="c_com_sjsu_bikelet_domain_BikeLetUser_programId" itemValue="id" items="${programs}" path="/programs" z="Sk71Uhtbc3CaBMQ8R9OEYUwPqzc="/>
+        <field:simple field="tenantId.tenantName" id="c_com_sjsu_bikelet_domain_BikeLetUser_tenantId" text="${bikeLetUser.tenantId.tenantName}" z="user-managed"/>
+        <field:hidden field="tenantId.id" id="c_com_sjsu_bikelet_domain_BikeLetUser_tenantId_id" z="gUUpJvUsX9GBCYywrY2lJyX026M="/>
+
+        <field:simple field="programId.name" id="c_com_sjsu_bikelet_domain_BikeLetUser_programId" text="${bikeLetUser.programId.programName}" z="user-managed"/>
+        <field:hidden field="programId.id" id="c_com_sjsu_bikelet_domain_BikeLetUser_programId_id" z="Sk71Uhtbc3CaBMQ8R9OEYUwPqzc="/>
+
     </form:update>
 </div>
