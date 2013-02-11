@@ -24,8 +24,16 @@ privileged aspect BikeLetUser_Roo_Jpa_ActiveRecord {
         return entityManager().createQuery("SELECT COUNT(o) FROM BikeLetUser o", Long.class).getSingleResult();
     }
     
+    public static long BikeLetUser.countBikeLetUsersByProgram(Long programId) {
+        return entityManager().createQuery("SELECT COUNT(o) FROM BikeLetUser o where o.programId.id = :programId", Long.class).setParameter("programId", programId).getSingleResult();
+    }
+    
     public static List<BikeLetUser> BikeLetUser.findAllBikeLetUsers() {
-        return entityManager().createQuery("SELECT o FROM BikeLetUser o", BikeLetUser.class).getResultList();
+        return entityManager().createQuery("SELECT o FROM BikeLetUser o ", BikeLetUser.class).getResultList();
+    }
+    
+    public static List<BikeLetUser> BikeLetUser.findAllBikeLetUsersByProgram(Long programId) {
+        return entityManager().createQuery("SELECT o FROM BikeLetUser o where o.programId.id = :programId", BikeLetUser.class).setParameter("programId", programId).getResultList();
     }
     
     public static BikeLetUser BikeLetUser.findBikeLetUser(Long id) {
@@ -35,6 +43,10 @@ privileged aspect BikeLetUser_Roo_Jpa_ActiveRecord {
     
     public static List<BikeLetUser> BikeLetUser.findBikeLetUserEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM BikeLetUser o", BikeLetUser.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
+
+    public static List<BikeLetUser> BikeLetUser.findBikeLetUserEntriesByProgram(Long programId, int firstResult, int maxResults) {
+        return entityManager().createQuery("SELECT o FROM BikeLetUser o where o.programId.id = :programId", BikeLetUser.class).setParameter("programId", programId).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
     @Transactional

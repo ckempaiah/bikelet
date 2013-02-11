@@ -24,6 +24,18 @@
         </c:when>
         <c:otherwise>
           <spring:message arguments="${label}" code="entity_not_found" />
+          <spring:message var="typeName" code="menu_item_${fn:toLowerCase(fn:split(id,'_')[fn:length(fn:split(id,'_')) - 1])}_new_label" htmlEscape="false" />
+          <br/>
+          <span class="new">
+              <spring:url value="${path}" var="create_url">
+                <spring:param name="form" />
+              </spring:url>
+              <a href="${create_url}">
+                <spring:url value="/resources/images/add.png" var="create_img_url" />
+                <spring:message arguments="${typeName}" code="global_menu_new" var="add_message" htmlEscape="false" />
+                <img alt="${fn:escapeXml(add_message)}" src="${create_img_url}" title="${fn:escapeXml(add_message)}" />
+              </a>
+          </span>
         </c:otherwise>
       </c:choose>
     </util:panel>

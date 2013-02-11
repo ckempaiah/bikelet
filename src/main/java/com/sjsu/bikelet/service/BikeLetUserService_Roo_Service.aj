@@ -8,12 +8,4 @@ import com.sjsu.bikelet.service.BikeLetUserService;
 import java.util.List;
 
 privileged aspect BikeLetUserService_Roo_Service {
-    
-    public abstract long BikeLetUserService.countAllBikeLetUsers();    
-    public abstract void BikeLetUserService.deleteBikeLetUser(BikeLetUser bikeLetUser);    
-    public abstract BikeLetUser BikeLetUserService.findBikeLetUser(Long id);    
-    public abstract List<BikeLetUser> BikeLetUserService.findAllBikeLetUsers();    
-    public abstract List<BikeLetUser> BikeLetUserService.findBikeLetUserEntries(int firstResult, int maxResults);    
-    public abstract void BikeLetUserService.saveBikeLetUser(BikeLetUser bikeLetUser);    
-    public abstract BikeLetUser BikeLetUserService.updateBikeLetUser(BikeLetUser bikeLetUser);    
 }

@@ -19,6 +19,10 @@ privileged aspect BikeLetUserServiceImpl_Roo_Service {
         return BikeLetUser.countBikeLetUsers();
     }
     
+    public long BikeLetUserServiceImpl.countAllBikeLetUsersByProgram(Long programId) {
+        return BikeLetUser.countBikeLetUsersByProgram(programId);
+    }
+    
     public void BikeLetUserServiceImpl.deleteBikeLetUser(BikeLetUser bikeLetUser) {
         bikeLetUser.remove();
     }
@@ -31,8 +35,16 @@ privileged aspect BikeLetUserServiceImpl_Roo_Service {
         return BikeLetUser.findAllBikeLetUsers();
     }
     
+    public List<BikeLetUser> BikeLetUserServiceImpl.findAllBikeLetUsersByProgram(Long programId) {
+        return BikeLetUser.findAllBikeLetUsersByProgram(programId);
+    }
+    
     public List<BikeLetUser> BikeLetUserServiceImpl.findBikeLetUserEntries(int firstResult, int maxResults) {
         return BikeLetUser.findBikeLetUserEntries(firstResult, maxResults);
+    }
+
+    public List<BikeLetUser> BikeLetUserServiceImpl.findBikeLetUserEntriesByProgram(Long programId, int firstResult, int maxResults) {
+        return BikeLetUser.findBikeLetUserEntriesByProgram(programId, firstResult, maxResults);
     }
     
     public void BikeLetUserServiceImpl.saveBikeLetUser(BikeLetUser bikeLetUser) {
