@@ -33,7 +33,6 @@ import com.sjsu.bikelet.service.BikeLocationService;
 import com.sjsu.bikelet.service.BikeService;
 import com.sjsu.bikelet.service.BillService;
 import com.sjsu.bikelet.service.BillTransactionService;
-import com.sjsu.bikelet.service.LicensePolicyService;
 import com.sjsu.bikelet.service.PaymentInfoService;
 import com.sjsu.bikelet.service.PaymentTransactionService;
 import com.sjsu.bikelet.service.PermissionService;
@@ -80,9 +79,6 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     
     @Autowired
     BillTransactionService ApplicationConversionServiceFactoryBean.billTransactionService;
-    
-    @Autowired
-    LicensePolicyService ApplicationConversionServiceFactoryBean.licensePolicyService;
     
     @Autowired
     PaymentInfoService ApplicationConversionServiceFactoryBean.paymentInfoService;
@@ -311,22 +307,6 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         return new org.springframework.core.convert.converter.Converter<java.lang.String, com.sjsu.bikelet.domain.BillTransaction>() {
             public com.sjsu.bikelet.domain.BillTransaction convert(String id) {
                 return getObject().convert(getObject().convert(id, Long.class), BillTransaction.class);
-            }
-        };
-    }
-    
-    public Converter<LicensePolicy, String> ApplicationConversionServiceFactoryBean.getLicensePolicyToStringConverter() {
-        return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.LicensePolicy, java.lang.String>() {
-            public String convert(LicensePolicy licensePolicy) {
-                return new StringBuilder().append(licensePolicy.getLicenseName()).append(' ').append(licensePolicy.getLicenseCostPeruser()).append(' ').append(licensePolicy.getLicenseType()).append(' ').append(licensePolicy.getLicenseBaseCost()).toString();
-            }
-        };
-    }
-    
-    public Converter<Long, LicensePolicy> ApplicationConversionServiceFactoryBean.getIdToLicensePolicyConverter() {
-        return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.LicensePolicy>() {
-            public com.sjsu.bikelet.domain.LicensePolicy convert(java.lang.Long id) {
-                return licensePolicyService.findLicensePolicy(id);
             }
         };
     }

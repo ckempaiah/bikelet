@@ -9,5 +9,6 @@
         <field:display field="password" id="s_com_sjsu_bikelet_domain_BikeLetUser_password" object="${bikeletuser}" z="hAvAHQO58McDNA2BTw9Dcan0b34="/>
         <field:display field="tenantId" id="s_com_sjsu_bikelet_domain_BikeLetUser_tenantId" object="${bikeletuser}" z="IbbrlUZ6Bzd+rl1e0FXaFcI+2UI="/>
         <field:display field="programId" id="s_com_sjsu_bikelet_domain_BikeLetUser_programId" object="${bikeletuser}" z="0gJAqxnKY8qiqRSOKAmBmA2Tze8="/>
+        <field:display field="userName" id="s_com_sjsu_bikelet_domain_BikeLetUser_userName" object="${bikeletuser}" z="seEOLApGnhxyWAmg23KFrahnKSQ="/>
     </page:show>
 </div>

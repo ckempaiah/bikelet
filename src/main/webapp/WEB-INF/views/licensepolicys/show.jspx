@@ -5,8 +5,8 @@
     <page:show id="ps_com_sjsu_bikelet_domain_LicensePolicy" object="${licensepolicy}" path="/licensepolicys" z="Jl2nxJa/S0nLbagV+xPk2d+fCqA=">
         <field:display field="licenseName" id="s_com_sjsu_bikelet_domain_LicensePolicy_licenseName" object="${licensepolicy}" z="nY8iu9cB9T0jVNPfCABlyeCKHYE="/>
         <field:display field="licenseCostPeruser" id="s_com_sjsu_bikelet_domain_LicensePolicy_licenseCostPeruser" object="${licensepolicy}" z="exSQn6Y+EAIBoK2ALfzMneM+ICQ="/>
-        <field:display field="licenseType" id="s_com_sjsu_bikelet_domain_LicensePolicy_licenseType" object="${licensepolicy}" z="+j9GJrSC70qUp+4+5k9tvGIs6E4="/>
         <field:display field="licenseBaseCost" id="s_com_sjsu_bikelet_domain_LicensePolicy_licenseBaseCost" object="${licensepolicy}" z="xogJGJSbUeod1ql1JkYz5vlsVZs="/>
         <field:display field="freeTrialPeriodInDays" id="s_com_sjsu_bikelet_domain_LicensePolicy_freeTrialPeriodInDays" object="${licensepolicy}" z="isMpnvRn5cuXJ9jqD46ZilXxQ84="/>
+        <field:display field="licenseType" id="s_com_sjsu_bikelet_domain_LicensePolicy_licenseType" object="${licensepolicy}" z="+j9GJrSC70qUp+4+5k9tvGIs6E4="/>
     </page:show>
 </div>

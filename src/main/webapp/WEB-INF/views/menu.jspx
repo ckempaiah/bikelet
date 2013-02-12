@@ -1,27 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu" id="menu" version="2.0">
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu" xmlns:sec="http://www.springframework.org/security/tags" id="menu" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <menu:menu id="_menu" z="nZaf43BjUg1iM0v70HJVEsXDopc=">
-        <menu:category id="c_bikelocation" z="KlEGq6lhBXAsC3XRu0DUC6TFv9I=">
-            <menu:item id="i_bikelocation_new" messageCode="global_menu_new" url="/bikelocations?form" z="j9pPAvVcGB9oRXsB95lvDb0+8wg="/>
-            <menu:item id="i_bikelocation_list" messageCode="global_menu_list" url="/bikelocations?page=1&amp;size=${empty param.size ? 10 : param.size}" z="uKJ67g8rk6hNpuZUeTezYUbR4fg="/>
-        </menu:category>
+        <sec:authorize ifAllGranted="ROLE_ADMIN">
+            <menu:category id="c_tenant" z="6qlPS7h/GRYr7mJcuP72C5uS40A=">
+                <menu:item id="i_tenant_new" messageCode="global_menu_new" url="/tenants?form" z="DT9ziYYt92UHaguH6YTZOiKjEV4="/>
+                <menu:item id="i_tenant_list" messageCode="global_menu_list" url="/tenants?page=1&amp;size=${empty param.size ? 10 : param.size}" z="cWauydzubJULJsPj4IlP/8cOvU8="/>
+            </menu:category>
+            <menu:category id="c_licensepolicy" z="OLe/u0HENr+xAU3W3D1LPdMybnU=">
+                <menu:item id="i_licensepolicy_new" messageCode="global_menu_new" url="/licensepolicys?form" z="zSlOMC4uwILxfkF1EguMcW4BNZ4="/>
+                <menu:item id="i_licensepolicy_list" messageCode="global_menu_list" url="/licensepolicys?page=1&amp;size=${empty param.size ? 10 : param.size}" z="FIaF8DtxPoZE0/07ZGflZx+vzho="/>
+            </menu:category>
+            <menu:category id="c_tenantlicensepolicy" z="aT9l365+p7QsP7v036A9wgnEJq4=">
+                <menu:item id="i_tenantlicensepolicy_new" messageCode="global_menu_new" url="/tenantlicensepolicys?form" z="AfHDEZM+nX1y8SrCnsbg8f3eibU="/>
+                <menu:item id="i_tenantlicensepolicy_list" messageCode="global_menu_list" url="/tenantlicensepolicys?page=1&amp;size=${empty param.size ? 10 : param.size}" z="soa51o841Z80fbOr9n7/FuAFBIk="/>
+            </menu:category>
+        </sec:authorize>
+        <sec:authorize ifAllGranted="ROLE_TENANT">
+            <menu:category id="c_program" z="YGxVV4/fAoI1UpA5Qj+HrGbzkYw=">
+                <menu:item id="i_program_new" messageCode="global_menu_new" url="/programs?form" z="zDcnKu0MxAKfjglkepWRPV+CgbM="/>
+                <menu:item id="i_program_list" messageCode="global_menu_list" url="/programs?page=1&amp;size=${empty param.size ? 10 : param.size}" z="Wo9hPjCt4LuJjE285foaXnjcGTM="/>
+            </menu:category>
+            <menu:category id="c_bikelocation" z="KlEGq6lhBXAsC3XRu0DUC6TFv9I=">
+                <menu:item id="i_bikelocation_new" messageCode="global_menu_new" url="/bikelocations?form" z="j9pPAvVcGB9oRXsB95lvDb0+8wg="/>
+                <menu:item id="i_bikelocation_list" messageCode="global_menu_list" url="/bikelocations?page=1&amp;size=${empty param.size ? 10 : param.size}" z="uKJ67g8rk6hNpuZUeTezYUbR4fg="/>
+            </menu:category>
+
+            <menu:category id="c_subscriptionrate" z="Ejj9MWXd+HObhk1rAVL/DU74iH8=">
+                <menu:item id="i_subscriptionrate_new" messageCode="global_menu_new" url="/subscriptionrates?form" z="PlVDmQTJbyTkdpxL255jK9m0poE="/>
+                <menu:item id="i_subscriptionrate_list" messageCode="global_menu_list" url="/subscriptionrates?page=1&amp;size=${empty param.size ? 10 : param.size}" z="Gi6LjcScBy97krr9XXp7UenL1Nk="/>
+            </menu:category>
+            <menu:category id="c_subscriptionpolicy" z="jCc5P+QUoLTG7dIv3clrhESy8WU=">
+                <menu:item id="i_subscriptionpolicy_new" messageCode="global_menu_new" url="/subscriptionpolicys?form" z="HIpeeUH+2fKWng9H4uPx6eBrOLo="/>
+                <menu:item id="i_subscriptionpolicy_list" messageCode="global_menu_list" url="/subscriptionpolicys?page=1&amp;size=${empty param.size ? 10 : param.size}" z="i2gmgIKGouaYquTzF0MISDChQIY="/>
+            </menu:category>
+            <menu:category id="c_usersubscriptionpolicy" z="2K2E8bDZhqUZRim7l/RLttghU5I=">
+                <menu:item id="i_usersubscriptionpolicy_new" messageCode="global_menu_new" url="/usersubscriptionpolicys?form" z="UIBU089Ofgwo25skZpWKF5H6xMM="/>
+                <menu:item id="i_usersubscriptionpolicy_list" messageCode="global_menu_list" url="/usersubscriptionpolicys?page=1&amp;size=${empty param.size ? 10 : param.size}" z="sY59B5/QIAWRfuUcKe+lL8h0yWI="/>
+            </menu:category>
+            <menu:category id="c_bike" z="pf9l7GuazB4KidXK/n+gRNP16qY=">
+                <menu:item id="i_bike_new" messageCode="global_menu_new" url="/bikes?form" z="xLBfffbYtDL2aJIGO745KPN2XbE="/>
+                <menu:item id="i_bike_list" messageCode="global_menu_list" url="/bikes?page=1&amp;size=${empty param.size ? 10 : param.size}" z="LD6EfAyb02dy9mgbbFIyf+A6M9A="/>
+            </menu:category>
+            <menu:category id="c_station" z="8Tyud/saift7IdDHuqUqD7JjywA=">
+                <menu:item id="i_station_new" messageCode="global_menu_new" url="/stations?form" z="jL0gH9x4u0kH/1huz0bZM5+ua8g="/>
+                <menu:item id="i_station_list" messageCode="global_menu_list" url="/stations?page=1&amp;size=${empty param.size ? 10 : param.size}" z="2lGPeju7TsAqlchQ1e/Yga2lg/4="/>
+            </menu:category>
+        </sec:authorize>
+        <sec:authorize ifAllGranted="ROLE_USER">
         <menu:category id="c_address" z="my5R1aInTRohGzWz9TL4j8LX/vE=">
             <menu:item id="i_address_new" messageCode="global_menu_new" url="/addresses?form" z="vg+UZ0neKcizSzKiVzXeI3oY1BA="/>
             <menu:item id="i_address_list" messageCode="global_menu_list" url="/addresses?page=1&amp;size=${empty param.size ? 10 : param.size}" z="u8ooCATbc0N+VHl1spo80t0zy+k="/>
         </menu:category>
-        <menu:category id="c_subscriptionrate" z="Ejj9MWXd+HObhk1rAVL/DU74iH8=">
-            <menu:item id="i_subscriptionrate_new" messageCode="global_menu_new" url="/subscriptionrates?form" z="PlVDmQTJbyTkdpxL255jK9m0poE="/>
-            <menu:item id="i_subscriptionrate_list" messageCode="global_menu_list" url="/subscriptionrates?page=1&amp;size=${empty param.size ? 10 : param.size}" z="Gi6LjcScBy97krr9XXp7UenL1Nk="/>
-        </menu:category>
         <menu:category id="c_permission" z="O2pc/m0o+alBHu9Y56NNxpuni0o=">
             <menu:item id="i_permission_new" messageCode="global_menu_new" url="/permissions?form" z="QZdS5VM0wmJorb98ZymMXrz04ZU="/>
             <menu:item id="i_permission_list" messageCode="global_menu_list" url="/permissions?page=1&amp;size=${empty param.size ? 10 : param.size}" z="8ZPeUK3SRla1thJvoC2c+MOpaZU="/>
-        </menu:category>
-        <menu:category id="c_licensepolicy" z="OLe/u0HENr+xAU3W3D1LPdMybnU=">
-            <menu:item id="i_licensepolicy_new" messageCode="global_menu_new" url="/licensepolicys?form" z="zSlOMC4uwILxfkF1EguMcW4BNZ4="/>
-            <menu:item id="i_licensepolicy_list" messageCode="global_menu_list" url="/licensepolicys?page=1&amp;size=${empty param.size ? 10 : param.size}" z="FIaF8DtxPoZE0/07ZGflZx+vzho="/>
         </menu:category>
         <menu:category id="c_bill" z="hAQcl5fPVV+gFU4o9uZs4YSdxCs=">
             <menu:item id="i_bill_new" messageCode="global_menu_new" url="/bills?form" z="cVovhzw6GT+ic6ihf14TyR5AdJ8="/>
@@ -35,22 +69,11 @@
             <menu:item id="i_renttransaction_new" messageCode="global_menu_new" url="/renttransactions?form" z="diE9w/SH/PD595htckSsyPnKjYE="/>
             <menu:item id="i_renttransaction_list" messageCode="global_menu_list" url="/renttransactions?page=1&amp;size=${empty param.size ? 10 : param.size}" z="dwpdzFQm+jv5XUDzGtrxnOJu6jA="/>
         </menu:category>
-        <menu:category id="c_subscriptionpolicy" z="jCc5P+QUoLTG7dIv3clrhESy8WU=">
-            <menu:item id="i_subscriptionpolicy_new" messageCode="global_menu_new" url="/subscriptionpolicys?form" z="HIpeeUH+2fKWng9H4uPx6eBrOLo="/>
-            <menu:item id="i_subscriptionpolicy_list" messageCode="global_menu_list" url="/subscriptionpolicys?page=1&amp;size=${empty param.size ? 10 : param.size}" z="i2gmgIKGouaYquTzF0MISDChQIY="/>
-        </menu:category>
         <menu:category id="c_bikeletrole" z="JODVa6LbphAfAV8NOpFRaMO3bHA=">
             <menu:item id="i_bikeletrole_new" messageCode="global_menu_new" url="/bikeletroles?form" z="CBe8Fxd+j2FI4KPXqXusxMY0Nf4="/>
             <menu:item id="i_bikeletrole_list" messageCode="global_menu_list" url="/bikeletroles?page=1&amp;size=${empty param.size ? 10 : param.size}" z="mMpm8DQ11NJBiblQQSHRI1cqVcw="/>
         </menu:category>
-        <menu:category id="c_tenant" z="6qlPS7h/GRYr7mJcuP72C5uS40A=">
-            <menu:item id="i_tenant_new" messageCode="global_menu_new" url="/tenants?form" z="DT9ziYYt92UHaguH6YTZOiKjEV4="/>
-            <menu:item id="i_tenant_list" messageCode="global_menu_list" url="/tenants?page=1&amp;size=${empty param.size ? 10 : param.size}" z="cWauydzubJULJsPj4IlP/8cOvU8="/>
-        </menu:category>
-        <menu:category id="c_bike" z="pf9l7GuazB4KidXK/n+gRNP16qY=">
-            <menu:item id="i_bike_new" messageCode="global_menu_new" url="/bikes?form" z="xLBfffbYtDL2aJIGO745KPN2XbE="/>
-            <menu:item id="i_bike_list" messageCode="global_menu_list" url="/bikes?page=1&amp;size=${empty param.size ? 10 : param.size}" z="LD6EfAyb02dy9mgbbFIyf+A6M9A="/>
-        </menu:category>
+
         <menu:category id="c_bikeletuser" z="rsJWGnRXQ8ErKeFECt7c5WFKAbU=">
             <menu:item id="i_bikeletuser_new" messageCode="global_menu_new" url="/bikeletusers?form" z="rSDYR7HwVyXtnJOzdBFtrg7nD88="/>
             <menu:item id="i_bikeletuser_list" messageCode="global_menu_list" url="/bikeletusers?page=1&amp;size=${empty param.size ? 10 : param.size}" z="aM3dQOqXhSFBPJA01N1Vicv98Kw="/>
@@ -59,10 +82,7 @@
             <menu:item id="i_paymenttransaction_new" messageCode="global_menu_new" url="/paymenttransactions?form" z="y9IXiSwtdIPPZR30aWlRGDkVfVY="/>
             <menu:item id="i_paymenttransaction_list" messageCode="global_menu_list" url="/paymenttransactions?page=1&amp;size=${empty param.size ? 10 : param.size}" z="WXGOEe57mR+ituiNpIXwPVvN0H0="/>
         </menu:category>
-        <menu:category id="c_program" z="YGxVV4/fAoI1UpA5Qj+HrGbzkYw=">
-            <menu:item id="i_program_new" messageCode="global_menu_new" url="/programs?form" z="zDcnKu0MxAKfjglkepWRPV+CgbM="/>
-            <menu:item id="i_program_list" messageCode="global_menu_list" url="/programs?page=1&amp;size=${empty param.size ? 10 : param.size}" z="Wo9hPjCt4LuJjE285foaXnjcGTM="/>
-        </menu:category>
+
         <menu:category id="c_billtransaction" z="oyg+3opPZPL1afbUGHBwSGH5CzQ=">
             <menu:item id="i_billtransaction_new" messageCode="global_menu_new" url="/billtransactions?form" z="BVnlxbiQ6KVX4JtOovJymiiahsU="/>
             <menu:item id="i_billtransaction_list" messageCode="global_menu_list" url="/billtransactions?page=1&amp;size=${empty param.size ? 10 : param.size}" z="l5HaW2wfxXT77NmZR4eBP/jfhF0="/>
@@ -75,21 +95,10 @@
             <menu:item id="i_addressassociation_new" messageCode="global_menu_new" url="/addressassociations?form" z="ROCEY9VjVUjBpDMwftY3JDRY50Q="/>
             <menu:item id="i_addressassociation_list" messageCode="global_menu_list" url="/addressassociations?page=1&amp;size=${empty param.size ? 10 : param.size}" z="ioZxty1adGghCDjBJjVGHCeGQp4="/>
         </menu:category>
-        <menu:category id="c_usersubscriptionpolicy" z="2K2E8bDZhqUZRim7l/RLttghU5I=">
-            <menu:item id="i_usersubscriptionpolicy_new" messageCode="global_menu_new" url="/usersubscriptionpolicys?form" z="UIBU089Ofgwo25skZpWKF5H6xMM="/>
-            <menu:item id="i_usersubscriptionpolicy_list" messageCode="global_menu_list" url="/usersubscriptionpolicys?page=1&amp;size=${empty param.size ? 10 : param.size}" z="sY59B5/QIAWRfuUcKe+lL8h0yWI="/>
-        </menu:category>
         <menu:category id="c_paymentinfo" z="Pq6EI3Cv8/pMjW0yJtV7X7yT34A=">
             <menu:item id="i_paymentinfo_new" messageCode="global_menu_new" url="/paymentinfoes?form" z="0dfGlOFfVB2+ryES5XMxvkTenj4="/>
             <menu:item id="i_paymentinfo_list" messageCode="global_menu_list" url="/paymentinfoes?page=1&amp;size=${empty param.size ? 10 : param.size}" z="OLAg1UlweddUk9rkOndSJbLXuew="/>
         </menu:category>
-        <menu:category id="c_tenantlicensepolicy" z="aT9l365+p7QsP7v036A9wgnEJq4=">
-            <menu:item id="i_tenantlicensepolicy_new" messageCode="global_menu_new" url="/tenantlicensepolicys?form" z="AfHDEZM+nX1y8SrCnsbg8f3eibU="/>
-            <menu:item id="i_tenantlicensepolicy_list" messageCode="global_menu_list" url="/tenantlicensepolicys?page=1&amp;size=${empty param.size ? 10 : param.size}" z="soa51o841Z80fbOr9n7/FuAFBIk="/>
-        </menu:category>
-        <menu:category id="c_station" z="8Tyud/saift7IdDHuqUqD7JjywA=">
-            <menu:item id="i_station_new" messageCode="global_menu_new" url="/stations?form" z="jL0gH9x4u0kH/1huz0bZM5+ua8g="/>
-            <menu:item id="i_station_list" messageCode="global_menu_list" url="/stations?page=1&amp;size=${empty param.size ? 10 : param.size}" z="2lGPeju7TsAqlchQ1e/Yga2lg/4="/>
-        </menu:category>
+        </sec:authorize>
     </menu:menu>
 </div>

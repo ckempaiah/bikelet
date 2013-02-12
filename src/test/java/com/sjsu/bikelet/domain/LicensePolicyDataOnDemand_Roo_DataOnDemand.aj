@@ -5,6 +5,7 @@ package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.LicensePolicy;
 import com.sjsu.bikelet.domain.LicensePolicyDataOnDemand;
+import com.sjsu.bikelet.model.LicenseTypeEnum;
 import com.sjsu.bikelet.service.LicensePolicyService;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ privileged aspect LicensePolicyDataOnDemand_Roo_DataOnDemand {
     }
     
     public void LicensePolicyDataOnDemand.setLicenseType(LicensePolicy obj, int index) {
-        Integer licenseType = new Integer(index);
+        LicenseTypeEnum licenseType = LicenseTypeEnum.class.getEnumConstants()[0];
         obj.setLicenseType(licenseType);
     }
     

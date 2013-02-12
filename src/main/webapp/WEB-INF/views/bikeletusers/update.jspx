@@ -9,5 +9,6 @@
         <field:input field="password" id="c_com_sjsu_bikelet_domain_BikeLetUser_password" max="15" min="6" required="true" z="ZQrxDVOmEQHim7TikqDh2H42mIw="/>
         <field:select field="tenantId" id="c_com_sjsu_bikelet_domain_BikeLetUser_tenantId" itemValue="id" items="${tenants}" path="/tenants" required="true" z="gUUpJvUsX9GBCYywrY2lJyX026M="/>
         <field:select field="programId" id="c_com_sjsu_bikelet_domain_BikeLetUser_programId" itemValue="id" items="${programs}" path="/programs" z="Sk71Uhtbc3CaBMQ8R9OEYUwPqzc="/>
+        <field:input field="userName" id="c_com_sjsu_bikelet_domain_BikeLetUser_userName" required="true" z="TzAgCndlIwt1G3EzEOQsjXf232I="/>
     </form:update>
 </div>

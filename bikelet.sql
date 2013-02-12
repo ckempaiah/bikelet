@@ -95,6 +95,7 @@ CREATE TABLE bike_let_user
 (
    id bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
    email varchar(40) NOT NULL,
+   user_name varchar(50) NOT NULL,
    first_name varchar(30) NOT NULL,
    last_name varchar(30) NOT NULL,
    password varchar(15) NOT NULL,
@@ -144,7 +145,7 @@ CREATE TABLE license_policy
    license_base_cost double,
    license_cost_peruser double,
    license_name varchar(100),
-   license_type int,
+   license_type varchar(50),
    version int
 )
 ;

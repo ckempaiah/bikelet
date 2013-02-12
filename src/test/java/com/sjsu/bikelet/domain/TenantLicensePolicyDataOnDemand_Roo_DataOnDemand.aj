@@ -3,7 +3,9 @@
 
 package com.sjsu.bikelet.domain;
 
+import com.sjsu.bikelet.domain.LicensePolicy;
 import com.sjsu.bikelet.domain.LicensePolicyDataOnDemand;
+import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantDataOnDemand;
 import com.sjsu.bikelet.domain.TenantLicensePolicy;
 import com.sjsu.bikelet.domain.TenantLicensePolicyDataOnDemand;
@@ -42,7 +44,9 @@ privileged aspect TenantLicensePolicyDataOnDemand_Roo_DataOnDemand {
         TenantLicensePolicy obj = new TenantLicensePolicy();
         setIsTrial(obj, index);
         setLicenseEndDate(obj, index);
+        setLicenseId(obj, index);
         setLicenseStartDate(obj, index);
+        setTenantId(obj, index);
         return obj;
     }
     
@@ -56,9 +60,19 @@ privileged aspect TenantLicensePolicyDataOnDemand_Roo_DataOnDemand {
         obj.setLicenseEndDate(licenseEndDate);
     }
     
+    public void TenantLicensePolicyDataOnDemand.setLicenseId(TenantLicensePolicy obj, int index) {
+        LicensePolicy licenseId = licensePolicyDataOnDemand.getRandomLicensePolicy();
+        obj.setLicenseId(licenseId);
+    }
+    
     public void TenantLicensePolicyDataOnDemand.setLicenseStartDate(TenantLicensePolicy obj, int index) {
         Date licenseStartDate = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setLicenseStartDate(licenseStartDate);
+    }
+    
+    public void TenantLicensePolicyDataOnDemand.setTenantId(TenantLicensePolicy obj, int index) {
+        Tenant tenantId = tenantDataOnDemand.getSpecificTenant(index);
+        obj.setTenantId(tenantId);
     }
     
     public TenantLicensePolicy TenantLicensePolicyDataOnDemand.getSpecificTenantLicensePolicy(int index) {

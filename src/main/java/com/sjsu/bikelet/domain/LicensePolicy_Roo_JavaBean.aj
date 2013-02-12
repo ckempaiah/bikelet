@@ -4,6 +4,7 @@
 package com.sjsu.bikelet.domain;
 
 import com.sjsu.bikelet.domain.LicensePolicy;
+import com.sjsu.bikelet.model.LicenseTypeEnum;
 
 privileged aspect LicensePolicy_Roo_JavaBean {
     
@@ -23,14 +24,6 @@ privileged aspect LicensePolicy_Roo_JavaBean {
         this.licenseCostPeruser = licenseCostPeruser;
     }
     
-    public Integer LicensePolicy.getLicenseType() {
-        return this.licenseType;
-    }
-    
-    public void LicensePolicy.setLicenseType(Integer licenseType) {
-        this.licenseType = licenseType;
-    }
-    
     public Double LicensePolicy.getLicenseBaseCost() {
         return this.licenseBaseCost;
     }
@@ -45,6 +38,14 @@ privileged aspect LicensePolicy_Roo_JavaBean {
     
     public void LicensePolicy.setFreeTrialPeriodInDays(Integer freeTrialPeriodInDays) {
         this.freeTrialPeriodInDays = freeTrialPeriodInDays;
+    }
+    
+    public LicenseTypeEnum LicensePolicy.getLicenseType() {
+        return this.licenseType;
+    }
+    
+    public void LicensePolicy.setLicenseType(LicenseTypeEnum licenseType) {
+        this.licenseType = licenseType;
     }
     
 }

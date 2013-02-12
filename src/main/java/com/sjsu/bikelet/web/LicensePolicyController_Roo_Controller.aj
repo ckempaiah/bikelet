@@ -4,9 +4,11 @@
 package com.sjsu.bikelet.web;
 
 import com.sjsu.bikelet.domain.LicensePolicy;
+import com.sjsu.bikelet.model.LicenseTypeEnum;
 import com.sjsu.bikelet.service.LicensePolicyService;
 import com.sjsu.bikelet.web.LicensePolicyController;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +93,7 @@ privileged aspect LicensePolicyController_Roo_Controller {
     
     void LicensePolicyController.populateEditForm(Model uiModel, LicensePolicy licensePolicy) {
         uiModel.addAttribute("licensePolicy", licensePolicy);
+        uiModel.addAttribute("licensetypeenums", Arrays.asList(LicenseTypeEnum.values()));
     }
     
     String LicensePolicyController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

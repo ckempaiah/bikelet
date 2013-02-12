@@ -35,10 +35,6 @@ privileged aspect TenantLicensePolicyServiceImpl_Roo_Service {
         return TenantLicensePolicy.findTenantLicensePolicyEntries(firstResult, maxResults);
     }
     
-    public void TenantLicensePolicyServiceImpl.saveTenantLicensePolicy(TenantLicensePolicy tenantLicensePolicy) {
-        tenantLicensePolicy.persist();
-    }
-    
     public TenantLicensePolicy TenantLicensePolicyServiceImpl.updateTenantLicensePolicy(TenantLicensePolicy tenantLicensePolicy) {
         return tenantLicensePolicy.merge();
     }

@@ -43,6 +43,7 @@ privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
         setLastName(obj, index);
         setPassword(obj, index);
         setTenantId(obj, index);
+        setUserName(obj, index);
         return obj;
     }
     
@@ -81,6 +82,11 @@ privileged aspect BikeLetUserDataOnDemand_Roo_DataOnDemand {
     public void BikeLetUserDataOnDemand.setTenantId(BikeLetUser obj, int index) {
         Tenant tenantId = tenantDataOnDemand.getRandomTenant();
         obj.setTenantId(tenantId);
+    }
+    
+    public void BikeLetUserDataOnDemand.setUserName(BikeLetUser obj, int index) {
+        String userName = "userName_" + index;
+        obj.setUserName(userName);
     }
     
     public BikeLetUser BikeLetUserDataOnDemand.getSpecificBikeLetUser(int index) {

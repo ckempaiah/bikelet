@@ -3,12 +3,16 @@
 
 package com.sjsu.bikelet.web;
 
+import com.sjsu.bikelet.domain.LicensePolicy;
+import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.TenantLicensePolicy;
 import com.sjsu.bikelet.service.LicensePolicyService;
 import com.sjsu.bikelet.service.TenantLicensePolicyService;
 import com.sjsu.bikelet.service.TenantService;
 import com.sjsu.bikelet.web.TenantLicensePolicyController;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.joda.time.format.DateTimeFormat;
@@ -34,20 +38,17 @@ privileged aspect TenantLicensePolicyController_Roo_Controller {
     @Autowired
     TenantService TenantLicensePolicyController.tenantService;
     
-    @RequestMapping(method = RequestMethod.POST, produces = "text/html")
-    public String TenantLicensePolicyController.create(@Valid TenantLicensePolicy tenantLicensePolicy, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
-            populateEditForm(uiModel, tenantLicensePolicy);
-            return "tenantlicensepolicys/create";
-        }
-        uiModel.asMap().clear();
-        tenantLicensePolicyService.saveTenantLicensePolicy(tenantLicensePolicy);
-        return "redirect:/tenantlicensepolicys/" + encodeUrlPathSegment(tenantLicensePolicy.getId().toString(), httpServletRequest);
-    }
-    
     @RequestMapping(params = "form", produces = "text/html")
     public String TenantLicensePolicyController.createForm(Model uiModel) {
         populateEditForm(uiModel, new TenantLicensePolicy());
+        List<String[]> dependencies = new ArrayList<String[]>();
+        if (tenantService.countAllTenants() == 0) {
+            dependencies.add(new String[] { "tenant", "tenants" });
+        }
+        if (licensePolicyService.countAllLicensePolicys() == 0) {
+            dependencies.add(new String[] { "licensepolicy", "licensepolicys" });
+        }
+        uiModel.addAttribute("dependencies", dependencies);
         return "tenantlicensepolicys/create";
     }
     

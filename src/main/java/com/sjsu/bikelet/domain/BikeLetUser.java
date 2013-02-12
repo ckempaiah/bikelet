@@ -1,5 +1,6 @@
 package com.sjsu.bikelet.domain;
 
+import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -34,4 +35,8 @@ public class BikeLetUser {
 
     @ManyToOne
     private Program programId;
+
+    @NotNull
+    @Column(name = "user_name")
+    private String userName;
 }

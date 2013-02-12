@@ -57,4 +57,12 @@ privileged aspect BikeLetUser_Roo_JavaBean {
         this.programId = programId;
     }
     
+    public String BikeLetUser.getUserName() {
+        return this.userName;
+    }
+    
+    public void BikeLetUser.setUserName(String userName) {
+        this.userName = userName;
+    }
+    
 }

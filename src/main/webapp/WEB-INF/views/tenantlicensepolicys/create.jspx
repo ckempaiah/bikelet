@@ -6,8 +6,8 @@
         <field:datetime dateTimePattern="${tenantLicensePolicy_licensestartdate_date_format}" field="licenseStartDate" id="c_com_sjsu_bikelet_domain_TenantLicensePolicy_licenseStartDate" z="3P73DQ8uzv2YcHbcqDYBoWxFeko="/>
         <field:datetime dateTimePattern="${tenantLicensePolicy_licenseenddate_date_format}" field="licenseEndDate" id="c_com_sjsu_bikelet_domain_TenantLicensePolicy_licenseEndDate" z="Caa56hZeOp2xKIrV++oAZ8XJcDM="/>
         <field:checkbox field="isTrial" id="c_com_sjsu_bikelet_domain_TenantLicensePolicy_isTrial" z="iX0NSEqB1YVQQGieFtoBuY4KqJg="/>
-        <field:select field="tenantId" id="c_com_sjsu_bikelet_domain_TenantLicensePolicy_tenantId" itemValue="id" items="${tenants}" path="/tenants" z="FvZjN1+Q8wSNFjngbQ5YHd21XO8="/>
-        <field:select field="licenseId" id="c_com_sjsu_bikelet_domain_TenantLicensePolicy_licenseId" itemValue="id" items="${licensepolicys}" path="/licensepolicys" z="LkG8Zuj8BltsxsqkhHsEiXMthIs="/>
+        <field:select field="tenantId" id="c_com_sjsu_bikelet_domain_TenantLicensePolicy_tenantId" itemValue="id" items="${tenants}" path="/tenants" required="true" z="T4jfv5U2qiudYlpLeVfeXfBTX1s="/>
+        <field:select field="licenseId" id="c_com_sjsu_bikelet_domain_TenantLicensePolicy_licenseId" itemValue="id" items="${licensepolicys}" path="/licensepolicys" required="true" z="sfBLqxdNtyJAxYTbs20nwvUrNA8="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_com_sjsu_bikelet_domain_TenantLicensePolicy" render="${not empty dependencies}" z="XO0WJxKMiLJTOo7Qfe4+HmdRuMU="/>
 </div>
