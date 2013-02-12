@@ -25,7 +25,7 @@ public class Program {
     @Size(max = 30)
     private String orgName;
 
-    private Integer contactId;
+    private Long contactId;
 
     private Integer min_threshold;
 

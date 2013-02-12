@@ -18,9 +18,9 @@ public class RentTransaction {
 
     private Integer fromStationId;
 
-    private Integer toStationId;
+    private Long toStationId;
 
-    private Integer tenantId;
+    private Long tenantId;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")

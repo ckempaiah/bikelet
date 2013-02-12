@@ -36,7 +36,7 @@ privileged aspect AddressAssociationDataOnDemand_Roo_DataOnDemand {
     }
     
     public void AddressAssociationDataOnDemand.setAddressId(AddressAssociation obj, int index) {
-        Integer addressId = new Integer(index);
+        Long addressId = new Integer(index).longValue();
         obj.setAddressId(addressId);
     }
     

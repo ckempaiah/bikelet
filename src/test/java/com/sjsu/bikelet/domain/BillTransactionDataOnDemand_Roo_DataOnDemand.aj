@@ -59,7 +59,7 @@ privileged aspect BillTransactionDataOnDemand_Roo_DataOnDemand {
     }
     
     public void BillTransactionDataOnDemand.setReferenceEntityId(BillTransaction obj, int index) {
-        Integer referenceEntityId = new Integer(index);
+        Long referenceEntityId = new Long(index);
         obj.setReferenceEntityId(referenceEntityId);
     }
     

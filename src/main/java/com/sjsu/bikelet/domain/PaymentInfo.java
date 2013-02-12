@@ -12,8 +12,6 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooJpaActiveRecord
 public class PaymentInfo {
 
-    private Integer paymentId;
-
     @NotNull
     @Size(min = 12, max = 19)
     private String cardNumber;

@@ -88,12 +88,12 @@ privileged aspect RentTransactionDataOnDemand_Roo_DataOnDemand {
     }
     
     public void RentTransactionDataOnDemand.setTenantId(RentTransaction obj, int index) {
-        Integer tenantId = new Integer(index);
+        Long tenantId = new Long(index);
         obj.setTenantId(tenantId);
     }
     
     public void RentTransactionDataOnDemand.setToStationId(RentTransaction obj, int index) {
-        Integer toStationId = new Integer(index);
+        Long toStationId = new Long(index);
         obj.setToStationId(toStationId);
     }
     

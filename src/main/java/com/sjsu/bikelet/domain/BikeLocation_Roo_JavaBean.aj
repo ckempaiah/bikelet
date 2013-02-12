@@ -17,14 +17,7 @@ privileged aspect BikeLocation_Roo_JavaBean {
         this.bikeStatus = bikeStatus;
     }
     
-    public Bike BikeLocation.getBike() {
-        return this.bike;
-    }
-    
-    public void BikeLocation.setBike(Bike bike) {
-        this.bike = bike;
-    }
-    
+
     public Station BikeLocation.getStationId() {
         return this.stationId;
     }

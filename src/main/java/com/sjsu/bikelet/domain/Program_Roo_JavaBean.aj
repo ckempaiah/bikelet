@@ -40,11 +40,11 @@ privileged aspect Program_Roo_JavaBean {
         this.orgName = orgName;
     }
     
-    public Integer Program.getContactId() {
+    public Long Program.getContactId() {
         return this.contactId;
     }
     
-    public void Program.setContactId(Integer contactId) {
+    public void Program.setContactId(Long contactId) {
         this.contactId = contactId;
     }
     

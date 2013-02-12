@@ -322,7 +322,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<PaymentInfo, String> ApplicationConversionServiceFactoryBean.getPaymentInfoToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.PaymentInfo, java.lang.String>() {
             public String convert(PaymentInfo paymentInfo) {
-                return new StringBuilder().append(paymentInfo.getPaymentId()).append(' ').append(paymentInfo.getCardNumber()).append(' ').append(paymentInfo.getCardUserName()).toString();
+                return new StringBuilder().append(paymentInfo.getId()).append(' ').append(paymentInfo.getCardNumber()).append(' ').append(paymentInfo.getCardUserName()).toString();
             }
         };
     }
@@ -394,7 +394,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Program, String> ApplicationConversionServiceFactoryBean.getProgramToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Program, java.lang.String>() {
             public String convert(Program program) {
-                return new StringBuilder().append(program.getProgramName()).toString();
+                return new StringBuilder().append(program.getProgramName()).append(' ').append(program.getDescription()).append(' ').append(program.getOrgName()).append(' ').append(program.getContactId()).toString();
             }
         };
     }
@@ -410,8 +410,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<String, Program> ApplicationConversionServiceFactoryBean.getStringToProgramConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.String, com.sjsu.bikelet.domain.Program>() {
             public com.sjsu.bikelet.domain.Program convert(String id) {
-                //return getObject().convert(getObject().convert(id, Long.class), Program.class);
-                return programService.findProgram(new Long(id));
+                return getObject().convert(getObject().convert(id, Long.class), Program.class);
             }
         };
     }
@@ -539,7 +538,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Tenant, String> ApplicationConversionServiceFactoryBean.getTenantToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Tenant, java.lang.String>() {
             public String convert(Tenant tenant) {
-                return new StringBuilder().append(tenant.getTenantName()).toString();
+                return new StringBuilder().append(tenant.getTenantName()).append(' ').append(tenant.getContactId()).toString();
             }
         };
     }
@@ -555,8 +554,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<String, Tenant> ApplicationConversionServiceFactoryBean.getStringToTenantConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.String, com.sjsu.bikelet.domain.Tenant>() {
             public com.sjsu.bikelet.domain.Tenant convert(String id) {
-                //return getObject().convert(getObject().convert(id, Long.class), Tenant.class);
-                return tenantService.findTenant(new Long(id));
+                return getObject().convert(getObject().convert(id, Long.class), Tenant.class);
             }
         };
     }

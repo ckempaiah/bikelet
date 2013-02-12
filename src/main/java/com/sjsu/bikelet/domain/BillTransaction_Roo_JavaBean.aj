@@ -57,11 +57,11 @@ privileged aspect BillTransaction_Roo_JavaBean {
         this.bill = bill;
     }
     
-    public Integer BillTransaction.getReferenceEntityId() {
+    public Long BillTransaction.getReferenceEntityId() {
         return this.referenceEntityId;
     }
     
-    public void BillTransaction.setReferenceEntityId(Integer referenceEntityId) {
+    public void BillTransaction.setReferenceEntityId(Long referenceEntityId) {
         this.referenceEntityId = referenceEntityId;
     }
     

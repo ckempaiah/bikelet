@@ -35,7 +35,7 @@ privileged aspect PaymentInfoDataOnDemand_Roo_DataOnDemand {
         PaymentInfo obj = new PaymentInfo();
         setCardNumber(obj, index);
         setCardUserName(obj, index);
-        setPaymentId(obj, index);
+
         return obj;
     }
     
@@ -52,11 +52,7 @@ privileged aspect PaymentInfoDataOnDemand_Roo_DataOnDemand {
         obj.setCardUserName(cardUserName);
     }
     
-    public void PaymentInfoDataOnDemand.setPaymentId(PaymentInfo obj, int index) {
-        Integer paymentId = new Integer(index);
-        obj.setPaymentId(paymentId);
-    }
-    
+
     public PaymentInfo PaymentInfoDataOnDemand.getSpecificPaymentInfo(int index) {
         init();
         if (index < 0) {

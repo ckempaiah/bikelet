@@ -11,7 +11,7 @@ public class AddressAssociation {
 
     private Integer entityId;
 
-    private Integer addressId;
+    private Long addressId;
 
     private Integer entityType;
 }

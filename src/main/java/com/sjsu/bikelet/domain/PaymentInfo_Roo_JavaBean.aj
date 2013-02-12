@@ -8,14 +8,7 @@ import com.sjsu.bikelet.domain.PaymentInfo;
 
 privileged aspect PaymentInfo_Roo_JavaBean {
     
-    public Integer PaymentInfo.getPaymentId() {
-        return this.paymentId;
-    }
-    
-    public void PaymentInfo.setPaymentId(Integer paymentId) {
-        this.paymentId = paymentId;
-    }
-    
+
     public String PaymentInfo.getCardNumber() {
         return this.cardNumber;
     }

@@ -47,6 +47,7 @@ privileged aspect PaymentTransactionDataOnDemand_Roo_DataOnDemand {
         setDateOfTransaction(obj, index);
         setDescription(obj, index);
         setPermissionName(obj, index);
+        obj.setPaymentId(paymentInfoDataOnDemand.getSpecificPaymentInfo(index));
         setStatus(obj, index);
         return obj;
     }

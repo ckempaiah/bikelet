@@ -18,19 +18,19 @@ privileged aspect RentTransaction_Roo_JavaBean {
         this.fromStationId = fromStationId;
     }
     
-    public Integer RentTransaction.getToStationId() {
+    public Long RentTransaction.getToStationId() {
         return this.toStationId;
     }
     
-    public void RentTransaction.setToStationId(Integer toStationId) {
+    public void RentTransaction.setToStationId(Long toStationId) {
         this.toStationId = toStationId;
     }
     
-    public Integer RentTransaction.getTenantId() {
+    public Long RentTransaction.getTenantId() {
         return this.tenantId;
     }
     
-    public void RentTransaction.setTenantId(Integer tenantId) {
+    public void RentTransaction.setTenantId(Long tenantId) {
         this.tenantId = tenantId;
     }
     

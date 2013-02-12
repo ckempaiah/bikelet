@@ -15,11 +15,11 @@ privileged aspect AddressAssociation_Roo_JavaBean {
         this.entityId = entityId;
     }
     
-    public Integer AddressAssociation.getAddressId() {
+    public Long AddressAssociation.getAddressId() {
         return this.addressId;
     }
     
-    public void AddressAssociation.setAddressId(Integer addressId) {
+    public void AddressAssociation.setAddressId(Long addressId) {
         this.addressId = addressId;
     }
     

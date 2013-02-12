@@ -1,5 +1,6 @@
 package com.sjsu.bikelet.domain;
 
+import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Size;
@@ -14,9 +15,6 @@ public class BikeLocation {
 
     @Size(max = 10)
     private String bikeStatus;
-
-    @ManyToOne
-    private Bike bike;
 
     @ManyToOne
     private Station stationId;

@@ -43,7 +43,7 @@ privileged aspect ProgramDataOnDemand_Roo_DataOnDemand {
     }
     
     public void ProgramDataOnDemand.setContactId(Program obj, int index) {
-        Integer contactId = new Integer(index);
+        Long contactId = new Long(index);
         obj.setContactId(contactId);
     }
     
