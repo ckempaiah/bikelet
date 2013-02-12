@@ -8,4 +8,20 @@ import com.sjsu.bikelet.service.ProgramService;
 import java.util.List;
 
 privileged aspect ProgramService_Roo_Service {
- }
+
+	public abstract long ProgramService.countAllPrograms();
+
+	public abstract void ProgramService.deleteProgram(Program program);
+
+	public abstract Program ProgramService.findProgram(Long id);
+
+	public abstract List<Program> ProgramService.findAllPrograms();
+
+	public abstract List<Program> ProgramService.findProgramEntries(int firstResult,
+			int maxResults);
+
+	public abstract void ProgramService.saveProgram(Program program);
+
+	public abstract Program ProgramService.updateProgram(Program program);
+
+ } 

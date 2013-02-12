@@ -73,9 +73,5 @@ privileged aspect Program_Roo_Jpa_ActiveRecord {
         this.entityManager.flush();
         return merged;
     }
-    
-    public static List<Program> Program.findAllProgramsByTenant(Long tenantId) {
-        return entityManager().createQuery("SELECT o FROM Program o where o.tenantId.id = :tenantId", Program.class).setParameter("tenantId", tenantId).getResultList();
-    }
-    
+
 }

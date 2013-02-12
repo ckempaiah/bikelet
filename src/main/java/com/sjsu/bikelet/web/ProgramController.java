@@ -47,7 +47,7 @@ public class ProgramController {
 			HttpServletRequest httpServletRequest) {
 		if (bindingResult.hasErrors()) {
 			populateEditUserForm(uiModel, bikeLetUser);
-			return "programs/" + bikeLetUser.getProgramId().getId() +  "/bikeletusers/create";
+			return "programs/bikeletusers/create";
 		}
 		uiModel.asMap().clear();
 		bikeLetUser.setProgramId(programService.findProgram(bikeLetUser.getProgramId().getId()));

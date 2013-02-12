@@ -43,8 +43,5 @@ privileged aspect ProgramServiceImpl_Roo_Service {
         return program.merge();
     }
     
-    public List<Program> ProgramServiceImpl.findAllProgramsByTenant(Long tenantId) {
-        return Program.findAllProgramsByTenant(tenantId);
-    }
-    
+
 }

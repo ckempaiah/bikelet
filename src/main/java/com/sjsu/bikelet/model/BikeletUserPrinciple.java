@@ -15,10 +15,14 @@ import java.util.Collection;
  */
 public class BikeletUserPrinciple extends User {
     private Long userId;
+    private Long tenantId;
+    private Long programId;
 
-    public BikeletUserPrinciple(Long userId, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+    public BikeletUserPrinciple(Long userId, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, Long tenantId, Long programId) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.userId = userId;
+        this.tenantId = tenantId;
+        this.programId = programId;
     }
 
     public Long getUserId() {
@@ -28,4 +32,21 @@ public class BikeletUserPrinciple extends User {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+	public Long getTenantId() {
+		return tenantId;
+	}
+
+	public void setTenantId(Long tenantId) {
+		this.tenantId = tenantId;
+	}
+
+	public Long getProgramId() {
+		return programId;
+	}
+
+	public void setProgramId(Long programId) {
+		this.programId = programId;
+	}
+    
 }

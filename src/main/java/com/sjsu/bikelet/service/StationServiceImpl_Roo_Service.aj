@@ -19,10 +19,6 @@ privileged aspect StationServiceImpl_Roo_Service {
         return Station.countStations();
     }
     
-    public long StationServiceImpl.countAllStationsByTenant(Long tenantId) {
-        return Station.countStationsByTenant(tenantId);
-    }
-    
     public void StationServiceImpl.deleteStation(Station station) {
         station.remove();
     }
@@ -35,16 +31,8 @@ privileged aspect StationServiceImpl_Roo_Service {
         return Station.findAllStations();
     }
     
-    public List<Station> StationServiceImpl.findAllStationsByTenant(Long tenantId) {
-        return Station.findAllStationsByTenant(tenantId);
-    }
-    
     public List<Station> StationServiceImpl.findStationEntries(int firstResult, int maxResults) {
         return Station.findStationEntries(firstResult, maxResults);
-    }
-    
-    public List<Station> StationServiceImpl.findStationEntriesByTenant(Long tenantId, int firstResult, int maxResults) {
-        return Station.findStationEntriesByTenant(tenantId, firstResult, maxResults);
     }
     
     public void StationServiceImpl.saveStation(Station station) {

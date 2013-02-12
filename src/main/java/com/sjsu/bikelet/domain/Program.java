@@ -1,6 +1,7 @@
 package com.sjsu.bikelet.domain;
 
 import javax.persistence.ManyToOne;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -30,4 +31,9 @@ public class Program {
     private Integer min_threshold;
 
     private Integer max_threshold;
+    
+    public static List<Program> findAllProgramsByTenant(Long tenantId) {
+        return entityManager().createQuery("SELECT o FROM Program o where o.tenantId.id = :tenantId", Program.class).setParameter("tenantId", tenantId).getResultList();
+    }
+
 }

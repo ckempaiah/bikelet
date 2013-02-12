@@ -13,4 +13,16 @@
 <definition extends="default" name="stations/update">
         <put-attribute name="body" value="/WEB-INF/views/stations/update.jspx"/>
     </definition>
+    <definition extends="default" name="stations/bikes/list">
+        <put-attribute name="body" value="/WEB-INF/views/stations/bikes/list.jspx"/>
+    </definition>
+<definition extends="default" name="stations/bikes/show">
+        <put-attribute name="body" value="/WEB-INF/views/stations/bikes/show.jspx"/>
+    </definition>
+<definition extends="default" name="stations/bikes/create">
+        <put-attribute name="body" value="/WEB-INF/views/stations/bikes/create.jspx"/>
+    </definition>
+<definition extends="default" name="stations/bikes/update">
+        <put-attribute name="body" value="/WEB-INF/views/stations/bikes/update.jspx"/>
+    </definition>
 </tiles-definitions>

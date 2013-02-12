@@ -42,6 +42,8 @@ public class BikeletAuthenticationProvider extends AbstractUserDetailsAuthentica
     @Override
     protected UserDetails retrieveUser(String userName, UsernamePasswordAuthenticationToken authenticationToken) throws AuthenticationException {
         BikeLetUser user = null;
+        Long tenantId = null;
+        Long programId = null;
         String password = (String) authenticationToken.getCredentials();
         if (StringUtils.isBlank(password)) {
             throw new BadCredentialsException("Please enter password");
@@ -62,6 +64,12 @@ public class BikeletAuthenticationProvider extends AbstractUserDetailsAuthentica
                 authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
             }
 
+            if (user.getTenantId() != null) {
+            	tenantId = user.getTenantId().getId();
+            }
+            if (user.getProgramId() != null) {
+            	tenantId = user.getProgramId().getId();
+            }
         } catch (EmptyResultDataAccessException e) {
             throw new BadCredentialsException("Invalid username or password");
         } catch (EntityNotFoundException e) {
@@ -74,6 +82,8 @@ public class BikeletAuthenticationProvider extends AbstractUserDetailsAuthentica
                 true, // account not expired
                 true, // credentials not expired
                 true, // account not locked
-                authorities);
+                authorities,
+                tenantId,
+                programId);
     }
 }
