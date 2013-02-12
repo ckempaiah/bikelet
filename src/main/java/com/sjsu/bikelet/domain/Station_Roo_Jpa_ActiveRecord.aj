@@ -24,8 +24,20 @@ privileged aspect Station_Roo_Jpa_ActiveRecord {
         return entityManager().createQuery("SELECT COUNT(o) FROM Station o", Long.class).getSingleResult();
     }
     
+    public static long Station.countStationsByTenant(Long tenantId) {
+    	if (tenantId == null)
+    		return countStations();
+        return entityManager().createQuery("SELECT COUNT(o) FROM Station o where o.tenantId.id = :tenantId", Long.class).setParameter("tenantId", tenantId).getSingleResult();
+    }
+    
     public static List<Station> Station.findAllStations() {
         return entityManager().createQuery("SELECT o FROM Station o", Station.class).getResultList();
+    }
+    
+    public static List<Station> Station.findAllStationsByTenant(Long tenantId) {
+    	if (tenantId == null)
+    		return findAllStations();
+        return entityManager().createQuery("SELECT o FROM Station o where o.tenantId.id = :tenantId", Station.class).setParameter("tenantId", tenantId).getResultList();
     }
     
     public static Station Station.findStation(Long id) {
@@ -35,6 +47,12 @@ privileged aspect Station_Roo_Jpa_ActiveRecord {
     
     public static List<Station> Station.findStationEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM Station o", Station.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
+    
+    public static List<Station> Station.findStationEntriesByTenant(Long tenantId, int firstResult, int maxResults) {
+    	if (tenantId == null)
+    		return findStationEntries(firstResult, maxResults);
+        return entityManager().createQuery("SELECT o FROM Station o where o.tenantId.id = :tenantId", Station.class).setParameter("tenantId", tenantId).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
     @Transactional
