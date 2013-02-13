@@ -88,10 +88,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     
     @Autowired
     PermissionService ApplicationConversionServiceFactoryBean.permissionService;
-    
-    @Autowired
-    ProgramService ApplicationConversionServiceFactoryBean.programService;
-    
+   
     @Autowired
     RentTransactionService ApplicationConversionServiceFactoryBean.rentTransactionService;
     
@@ -107,8 +104,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     @Autowired
     SubscriptionRateService ApplicationConversionServiceFactoryBean.subscriptionRateService;
     
-    @Autowired
-    TenantService ApplicationConversionServiceFactoryBean.tenantService;
+
     
     @Autowired
     TenantLicensePolicyService ApplicationConversionServiceFactoryBean.tenantLicensePolicyService;
@@ -391,14 +387,6 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         };
     }
     
-    public Converter<Program, String> ApplicationConversionServiceFactoryBean.getProgramToStringConverter() {
-        return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Program, java.lang.String>() {
-            public String convert(Program program) {
-                return new StringBuilder().append(program.getProgramName()).append(' ').append(program.getDescription()).append(' ').append(program.getOrgName()).append(' ').append(program.getContactId()).toString();
-            }
-        };
-    }
-    
     public Converter<Long, Program> ApplicationConversionServiceFactoryBean.getIdToProgramConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.Program>() {
             public com.sjsu.bikelet.domain.Program convert(java.lang.Long id) {
@@ -406,15 +394,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
             }
         };
     }
-    
-    public Converter<String, Program> ApplicationConversionServiceFactoryBean.getStringToProgramConverter() {
-        return new org.springframework.core.convert.converter.Converter<java.lang.String, com.sjsu.bikelet.domain.Program>() {
-            public com.sjsu.bikelet.domain.Program convert(String id) {
-                return getObject().convert(getObject().convert(id, Long.class), Program.class);
-            }
-        };
-    }
-    
+     
     public Converter<RentTransaction, String> ApplicationConversionServiceFactoryBean.getRentTransactionToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.RentTransaction, java.lang.String>() {
             public String convert(RentTransaction rentTransaction) {
@@ -535,26 +515,10 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         };
     }
     
-    public Converter<Tenant, String> ApplicationConversionServiceFactoryBean.getTenantToStringConverter() {
-        return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Tenant, java.lang.String>() {
-            public String convert(Tenant tenant) {
-                return new StringBuilder().append(tenant.getTenantName()).append(' ').append(tenant.getContactId()).toString();
-            }
-        };
-    }
-    
     public Converter<Long, Tenant> ApplicationConversionServiceFactoryBean.getIdToTenantConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.Tenant>() {
             public com.sjsu.bikelet.domain.Tenant convert(java.lang.Long id) {
                 return tenantService.findTenant(id);
-            }
-        };
-    }
-    
-    public Converter<String, Tenant> ApplicationConversionServiceFactoryBean.getStringToTenantConverter() {
-        return new org.springframework.core.convert.converter.Converter<java.lang.String, com.sjsu.bikelet.domain.Tenant>() {
-            public com.sjsu.bikelet.domain.Tenant convert(String id) {
-                return getObject().convert(getObject().convert(id, Long.class), Tenant.class);
             }
         };
     }

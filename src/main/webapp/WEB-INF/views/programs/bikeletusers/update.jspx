@@ -3,6 +3,8 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:update id="fu_com_sjsu_bikelet_domain_BikeLetUser" modelAttribute="bikeLetUser" path="/programs/${programId}/bikeletusers" versionField="Version" z="abwzSkkp5XU5kZVBngOJ+oWC4LM=">
+        <field:input field="userName" id="c_com_sjsu_bikelet_domain_BikeLetUser_userName" max="30" min="2" required="true" />
+        
         <field:input field="firstName" id="c_com_sjsu_bikelet_domain_BikeLetUser_firstName" max="30" min="2" required="true" z="VLEypxbwaF03b0ocQLKX4lNjOso="/>
         <field:input field="lastName" id="c_com_sjsu_bikelet_domain_BikeLetUser_lastName" max="30" min="2" required="true" z="WpqA1PSesVdvamoeHr+T5CKjyQ8="/>
         <field:textarea field="email" id="c_com_sjsu_bikelet_domain_BikeLetUser_email" required="true" validationMessageCode="field_invalid_email" z="Eh7PSWUOGEMn40lfOGLlAJ0+F0g="/>

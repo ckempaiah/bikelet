@@ -8,6 +8,12 @@ import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
+import com.sjsu.bikelet.domain.BikeLetUser;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Transactional;
+
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord
@@ -39,4 +45,16 @@ public class BikeLetUser {
     @NotNull
     @Column(name = "user_name")
     private String userName;
+    
+    public static long countBikeLetUsersByProgram(Long programId) {
+        return entityManager().createQuery("SELECT COUNT(o) FROM BikeLetUser o where o.programId.id = :programId", Long.class).setParameter("programId", programId).getSingleResult();
+    }
+    
+    public static List<BikeLetUser> findAllBikeLetUsersByProgram(Long programId) {
+        return entityManager().createQuery("SELECT o FROM BikeLetUser o where o.programId.id = :programId", BikeLetUser.class).setParameter("programId", programId).getResultList();
+    }
+
+    public static List<BikeLetUser> findBikeLetUserEntriesByProgram(Long programId, int firstResult, int maxResults) {
+        return entityManager().createQuery("SELECT o FROM BikeLetUser o where o.programId.id = :programId", BikeLetUser.class).setParameter("programId", programId).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
 }

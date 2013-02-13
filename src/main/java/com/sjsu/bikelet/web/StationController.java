@@ -28,16 +28,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RooWebScaffold(path = "stations", formBackingObject = Station.class)
 public class StationController {
-
-    @Autowired
-	StationService stationService;
-	    
-	@Autowired
-	ProgramService programService;
-	    
-	@Autowired
-	TenantService tenantService;
-	    
+	
+	
 	@RequestMapping(method = RequestMethod.POST, produces = "text/html")
 	public String create(@Valid Station station, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
 	    if (bindingResult.hasErrors()) {
@@ -49,23 +41,7 @@ public class StationController {
 	    stationService.saveStation(station);
 	    return "redirect:/stations/" + encodeUrlPathSegment(station.getId().toString(), httpServletRequest);
 	}
-	    
-    @RequestMapping(params = "form", produces = "text/html")
-    public String createForm(Model uiModel) {
-    	Long tenantId = Utils.getLogonTenantId();
-    	Station station = new Station();
-    	station.setTenantId(tenantService.findTenant(tenantId));
-        populateEditForm(uiModel, station);
-        return "stations/create";
-    }
-	    
-    @RequestMapping(value = "/{id}", produces = "text/html")
-    public String show(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("station", stationService.findStation(id));
-        uiModel.addAttribute("itemId", id);
-        return "stations/show";
-    }
-	    
+	
     @RequestMapping(produces = "text/html")
     public String list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
     	Long tenantId = Utils.getLogonTenantId();
@@ -92,38 +68,10 @@ public class StationController {
         stationService.updateStation(station);
         return "redirect:/stations/" + encodeUrlPathSegment(station.getId().toString(), httpServletRequest);
     }
-	    
-    @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
-    public String updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, stationService.findStation(id));
-        return "stations/update";
-    }
-	    
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
-    public String delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        Station station = stationService.findStation(id);
-        stationService.deleteStation(station);
-        uiModel.asMap().clear();
-        uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
-        uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
-        return "redirect:/stations";
-    }
-	    
+
     void populateEditForm(Model uiModel, Station station) {
     	Long tenantId = Utils.getLogonTenantId();
         uiModel.addAttribute("station", station);
         uiModel.addAttribute("programs", programService.findAllProgramsByTenant(tenantId));
     }
-	    
-    String encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {
-        String enc = httpServletRequest.getCharacterEncoding();
-        if (enc == null) {
-            enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
-        }
-        try {
-            pathSegment = UriUtils.encodePathSegment(pathSegment, enc);
-        } catch (UnsupportedEncodingException uee) {}
-        return pathSegment;
-    }
-	    
 }

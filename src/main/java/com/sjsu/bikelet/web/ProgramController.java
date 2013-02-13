@@ -2,10 +2,14 @@ package com.sjsu.bikelet.web;
 
 import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.BikeLetUser;
+import com.sjsu.bikelet.domain.UserRole;
+import com.sjsu.bikelet.domain.BikeLetRole;
 import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.service.ProgramService;
-import com.sjsu.bikelet.service.TenantService;
 import com.sjsu.bikelet.service.BikeLetUserService;
+import com.sjsu.bikelet.service.TenantService;
+import com.sjsu.bikelet.service.UserRoleService;
+import com.sjsu.bikelet.service.BikeLetRoleService;
 import com.sjsu.bikelet.web.ProgramController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
@@ -32,15 +36,6 @@ import java.lang.Long;
 @RooWebScaffold(path = "programs", formBackingObject = Program.class)
 public class ProgramController {
 
-	@Autowired
-	ProgramService programService;
-
-	@Autowired
-	BikeLetUserService bikeLetUserService;
-	
-	@Autowired
-	TenantService tenantService;
-
 	@RequestMapping(value = "/{id}/bikeletusers", method = RequestMethod.POST, produces = "text/html")
 	public String createUser(@Valid BikeLetUser bikeLetUser,
 			BindingResult bindingResult, Model uiModel,
@@ -53,11 +48,18 @@ public class ProgramController {
 		bikeLetUser.setProgramId(programService.findProgram(bikeLetUser.getProgramId().getId()));
 		bikeLetUser.setTenantId(tenantService.findTenant(bikeLetUser.getTenantId().getId()));	
 		bikeLetUserService.saveBikeLetUser(bikeLetUser);
+		// Add the user role
+		BikeLetUser user = bikeLetUserService.findBikeLetUser(bikeLetUser.getId());
+		BikeLetRole role = bikeLetRoleService.findBikeLetRoleByName("ROLE_USER");
+		UserRole userRole = new UserRole();
+		userRole.setUserId(user);
+		userRole.setRoleId(role);
+		userRoleService.saveUserRole(userRole);
 		return "redirect:/programs/" + bikeLetUser.getProgramId().getId() +  "/bikeletusers";
 	}
 
 	@RequestMapping(value = "/{id}/bikeletusers", params = "form", produces = "text/html")
-	public String createForm(@PathVariable("id") Long id, Model uiModel) {
+	public String createUserForm(@PathVariable("id") Long id, Model uiModel) {
 		Program program = programService.findProgram(id);
 		BikeLetUser bikeLetUser = new BikeLetUser();
 		bikeLetUser.setProgramId(program);
@@ -70,34 +72,6 @@ public class ProgramController {
 		uiModel.addAttribute("dependencies", dependencies);
 		return "programs/bikeletusers/create";
 	}
-
-	@RequestMapping(method = RequestMethod.POST, produces = "text/html")
-	public String create(@Valid Program program, BindingResult bindingResult,
-			Model uiModel, HttpServletRequest httpServletRequest) {
-		if (bindingResult.hasErrors()) {
-			populateEditForm(uiModel, program);
-			return "programs/create";
-		}
-		uiModel.asMap().clear();
-		programService.saveProgram(program);
-		return "redirect:/programs/"
-				+ encodeUrlPathSegment(program.getId().toString(),
-						httpServletRequest);
-	}
-
-	@RequestMapping(params = "form", produces = "text/html")
-	public String createForm(Model uiModel) {
-		populateEditForm(uiModel, new Program());
-		return "programs/create";
-	}
-
-	@RequestMapping(value = "/{id}", produces = "text/html")
-	public String show(@PathVariable("id") Long id, Model uiModel) {
-		uiModel.addAttribute("program", programService.findProgram(id));
-		uiModel.addAttribute("itemId", id);
-		return "programs/show";
-	}
-	
 	
 	@RequestMapping(value = "/{id}/bikeletusers/{userId}", produces = "text/html")
 	public String showUser(@PathVariable("id") Long id, @PathVariable("userId") Long userId, Model uiModel) {
@@ -185,43 +159,6 @@ public class ProgramController {
 		return "programs/list";
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, produces = "text/html")
-	public String update(@Valid Program program, BindingResult bindingResult,
-			Model uiModel, HttpServletRequest httpServletRequest) {
-		if (bindingResult.hasErrors()) {
-			populateEditForm(uiModel, program);
-			return "programs/update";
-		}
-		uiModel.asMap().clear();
-		programService.updateProgram(program);
-		return "redirect:/programs/"
-				+ encodeUrlPathSegment(program.getId().toString(),
-						httpServletRequest);
-	}
-
-	@RequestMapping(value = "/{id}", params = "form", produces = "text/html")
-	public String updateForm(@PathVariable("id") Long id, Model uiModel) {
-		populateEditForm(uiModel, programService.findProgram(id));
-		return "programs/update";
-	}
-
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
-	public String delete(@PathVariable("id") Long id,
-			@RequestParam(value = "page", required = false) Integer page,
-			@RequestParam(value = "size", required = false) Integer size,
-			Model uiModel) {
-		Program program = programService.findProgram(id);
-		programService.deleteProgram(program);
-		uiModel.asMap().clear();
-		uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
-		uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
-		return "redirect:/programs";
-	}
-
-	void populateEditForm(Model uiModel, Program program) {
-		uiModel.addAttribute("program", program);
-		uiModel.addAttribute("tenants", Tenant.findAllTenants());
-	}
 
 	void populateEditUserForm(Model uiModel, BikeLetUser bikeLetUser) {
 		uiModel.addAttribute("bikeLetUser", bikeLetUser);
@@ -229,18 +166,4 @@ public class ProgramController {
 		uiModel.addAttribute("programs", programService.findAllPrograms());
 		uiModel.addAttribute("tenants", tenantService.findAllTenants());
 	}
-
-	String encodeUrlPathSegment(String pathSegment,
-			HttpServletRequest httpServletRequest) {
-		String enc = httpServletRequest.getCharacterEncoding();
-		if (enc == null) {
-			enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
-		}
-		try {
-			pathSegment = UriUtils.encodePathSegment(pathSegment, enc);
-		} catch (UnsupportedEncodingException uee) {
-		}
-		return pathSegment;
-	}
-
 }

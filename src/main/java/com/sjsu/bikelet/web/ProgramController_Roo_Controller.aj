@@ -5,8 +5,13 @@ package com.sjsu.bikelet.web;
 
 import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.Tenant;
+import com.sjsu.bikelet.domain.UserRole;
+import com.sjsu.bikelet.domain.BikeLetRole;
 import com.sjsu.bikelet.service.ProgramService;
 import com.sjsu.bikelet.service.BikeLetUserService;
+import com.sjsu.bikelet.service.TenantService;
+import com.sjsu.bikelet.service.UserRoleService;
+import com.sjsu.bikelet.service.BikeLetRoleService;
 import com.sjsu.bikelet.web.ProgramController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,5 +27,99 @@ import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 
 privileged aspect ProgramController_Roo_Controller {
+
+	@Autowired
+	ProgramService ProgramController.programService;
+
+	@Autowired
+	BikeLetUserService ProgramController.bikeLetUserService;
+	
+	@Autowired
+	TenantService ProgramController.tenantService;
+	
+	@Autowired
+	UserRoleService ProgramController.userRoleService;
+	
+	@Autowired
+	BikeLetRoleService ProgramController.bikeLetRoleService;
+
+	@RequestMapping(method = RequestMethod.POST, produces = "text/html")
+	public String ProgramController.create(@Valid Program program, BindingResult bindingResult,
+			Model uiModel, HttpServletRequest httpServletRequest) {
+		if (bindingResult.hasErrors()) {
+			populateEditForm(uiModel, program);
+			return "programs/create";
+		}
+		uiModel.asMap().clear();
+		programService.saveProgram(program);
+		return "redirect:/programs/"
+				+ encodeUrlPathSegment(program.getId().toString(),
+						httpServletRequest);
+	}
+
+	@RequestMapping(params = "form", produces = "text/html")
+	public String ProgramController.createForm(Model uiModel) {
+		populateEditForm(uiModel, new Program());
+		return "programs/create";
+	}
+
+	@RequestMapping(value = "/{id}", produces = "text/html")
+	public String ProgramController.show(@PathVariable("id") Long id, Model uiModel) {
+		uiModel.addAttribute("program", programService.findProgram(id));
+		uiModel.addAttribute("itemId", id);
+		return "programs/show";
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT, produces = "text/html")
+	public String ProgramController.update(@Valid Program program, BindingResult bindingResult,
+			Model uiModel, HttpServletRequest httpServletRequest) {
+		if (bindingResult.hasErrors()) {
+			populateEditForm(uiModel, program);
+			return "programs/update";
+		}
+		uiModel.asMap().clear();
+		programService.updateProgram(program);
+		return "redirect:/programs/"
+				+ encodeUrlPathSegment(program.getId().toString(),
+						httpServletRequest);
+	}
+
+	@RequestMapping(value = "/{id}", params = "form", produces = "text/html")
+	public String ProgramController.updateForm(@PathVariable("id") Long id, Model uiModel) {
+		populateEditForm(uiModel, programService.findProgram(id));
+		return "programs/update";
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
+	public String ProgramController.delete(@PathVariable("id") Long id,
+			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "size", required = false) Integer size,
+			Model uiModel) {
+		Program program = programService.findProgram(id);
+		programService.deleteProgram(program);
+		uiModel.asMap().clear();
+		uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
+		uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
+		return "redirect:/programs";
+	}
+
+	void ProgramController.populateEditForm(Model uiModel, Program program) {
+		uiModel.addAttribute("program", program);
+		uiModel.addAttribute("tenants", Tenant.findAllTenants());
+	}
+
+	String ProgramController.encodeUrlPathSegment(String pathSegment,
+			HttpServletRequest httpServletRequest) {
+		String enc = httpServletRequest.getCharacterEncoding();
+		if (enc == null) {
+			enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
+		}
+		try {
+			pathSegment = UriUtils.encodePathSegment(pathSegment, enc);
+		} catch (UnsupportedEncodingException uee) {
+		}
+		return pathSegment;
+	}
+
     
 }
