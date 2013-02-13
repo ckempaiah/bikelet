@@ -2,7 +2,7 @@
 <div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <form:create id="fc_com_sjsu_bikelet_domain_Program" modelAttribute="program" path="/programs" render="${empty dependencies}" z="/hlO0nM1GsK6n7fDULL5G6yDAhw=">
+    <form:create-program id="fc_com_sjsu_bikelet_domain_Program" modelAttribute="program" path="/programs" render="${empty dependencies}" z="/hlO0nM1GsK6n7fDULL5G6yDAhw=">
         <field:textarea field="programName" id="c_com_sjsu_bikelet_domain_Program_programName" z="uJaNbSDRp2Ba+QaZEi9cXwo2lzA="/>
         <field:textarea field="description" id="c_com_sjsu_bikelet_domain_Program_description" z="rjRyOrw+xcrav+WkZaMGff0p35M="/>
         <field:select field="tenantId" id="c_com_sjsu_bikelet_domain_Program_tenantId" itemValue="id" items="${tenants}" path="/tenants" z="6QK2RVBQ9Q8VCTSOs1Ex5NdN5pc="/>
@@ -10,6 +10,6 @@
         <field:input field="contactId" id="c_com_sjsu_bikelet_domain_Program_contactId" validationMessageCode="field_invalid_integer" z="WBJIp5w27eIYlI9dhzxd4K0iELY="/>
         <field:input field="min_threshold" id="c_com_sjsu_bikelet_domain_Program_min_threshold" validationMessageCode="field_invalid_integer" z="IrgTQE4QunwIuE91fTUHun7+UqI="/>
         <field:input field="max_threshold" id="c_com_sjsu_bikelet_domain_Program_max_threshold" validationMessageCode="field_invalid_integer" z="46dF42Q9TUIFE2IbwFhJnUFR9lU="/>
-    </form:create>
+    </form:create-program>
     <form:dependency dependencies="${dependencies}" id="d_com_sjsu_bikelet_domain_Program" render="${not empty dependencies}" z="3WuZP0Mw4xe7Ahi+x0D1aZis61Y="/>
 </div>

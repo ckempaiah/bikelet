@@ -1,5 +1,7 @@
 package com.sjsu.bikelet.domain;
 
+import java.util.List;
+
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,4 +23,8 @@ public class SubscriptionPolicy {
 
     @ManyToOne
     private Program programId;
+    
+//    public static List<SubscriptionPolicy> SubscriptionPolicy.findAllProgramsByTenant(Long programId) {
+//        return entityManager().createQuery("SELECT o FROM SubscriptionPolicy o where o.programId.id = :programId", SubscriptionPolicy.class).setParameter("programId", programId).getResultList();
+//    }
 }

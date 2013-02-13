@@ -43,20 +43,6 @@ privileged aspect ProgramController_Roo_Controller {
 	@Autowired
 	BikeLetRoleService ProgramController.bikeLetRoleService;
 
-	@RequestMapping(method = RequestMethod.POST, produces = "text/html")
-	public String ProgramController.create(@Valid Program program, BindingResult bindingResult,
-			Model uiModel, HttpServletRequest httpServletRequest) {
-		if (bindingResult.hasErrors()) {
-			populateEditForm(uiModel, program);
-			return "programs/create";
-		}
-		uiModel.asMap().clear();
-		programService.saveProgram(program);
-		return "redirect:/programs/"
-				+ encodeUrlPathSegment(program.getId().toString(),
-						httpServletRequest);
-	}
-
 	@RequestMapping(params = "form", produces = "text/html")
 	public String ProgramController.createForm(Model uiModel) {
 		populateEditForm(uiModel, new Program());

@@ -10,6 +10,7 @@
             <table:column id="c_com_sjsu_bikelet_domain_SubscriptionRate_freeMinsPerDay" property="freeMinsPerDay" z="mWJpiuyMVIO3+fEsgVBAs+s6ChI="/>
             <table:column id="c_com_sjsu_bikelet_domain_SubscriptionRate_excessChargePerMin" property="excessChargePerMin" z="HjYID2rDLO7Mh14eL35vxDMbjEc="/>
             <table:column date="true" dateTimePattern="${subscriptionRate_policystartdate_date_format}" id="c_com_sjsu_bikelet_domain_SubscriptionRate_policyStartDate" property="policyStartDate" z="PchuWI4z4DMso4TILmIaUCq8nXI="/>
+            <table:column date="true" dateTimePattern="${subscriptionRate_policyenddate_date_format}" id="c_com_sjsu_bikelet_domain_SubscriptionRate_policyEndDate" property="policyEndDate" z="PchuWI4z4DMso4TILmIaUCq8nXI="/>
         </table:table>
     </page:list>
 </div>

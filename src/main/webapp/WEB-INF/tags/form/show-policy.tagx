@@ -8,8 +8,7 @@
   <jsp:directive.attribute name="create" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'create' link into table (default true)" />
   <jsp:directive.attribute name="update" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'update' link into table (default true)" />
   <jsp:directive.attribute name="delete" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'delete' link into table (default true)" />
-  <jsp:directive.attribute name="manageUser" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'manageUser' link into table (default true)" />
-   <jsp:directive.attribute name="managePolicy" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'managePolicy' link into table (default true)" />
+  <jsp:directive.attribute name="managePolicy" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'managePolicy' link into table (default true)" />
   <jsp:directive.attribute name="label" type="java.lang.String" required="false" rtexprvalue="true" description="The label used for this object, will default to a message bundle if not supplied" />
   <jsp:directive.attribute name="render" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate if the contents of this tag and all enclosed tags should be rendered (default 'true')" />
   <jsp:directive.attribute name="openPane" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Control if the title pane is opened or closed by default (default: true)" />
@@ -36,10 +35,7 @@
       <c:set var="delete" value="true" />
     </c:if>
 
-    <c:if test="${empty manageUser}">
-      <c:set var="manageUser" value="true" />
-    </c:if>
-     <c:if test="${empty managePolicy}">
+    <c:if test="${empty managePolicy}">
       <c:set var="managePolicy" value="true" />
     </c:if>
 
@@ -53,19 +49,8 @@
           <jsp:doBody />
           <div class="quicklinks">
             <span>
-              <c:if test="${manageUser}">
-                <spring:url value="${path}/${itemId}/bikeletusers" var="manage_user_form_url">
-                </spring:url>
-                <spring:url value="/resources/images/users.png" var="manage_user_image_url" />
-                <spring:message arguments="${typeName}" code="entity_manage_user" var="manage_user_label" htmlEscape="false" />
-                <a href="${manage_user_form_url}" alt="${fn:escapeXml(manage_user_label)}" title="${fn:escapeXml(manage_user_label)}">
-                  <img alt="${fn:escapeXml(manage_user_label)}" class="image" src="${manage_user_image_url}" title="${fn:escapeXml(manage_user_label)}" />
-                </a>
-              </c:if>
-            </span>
-            <span>
               <c:if test="${managePolicy}">
-                <spring:url value="${path}/${itemId}/subscriptionpolicys" var="manage_policy_form_url">
+                <spring:url value="${path}/${itemId}/policies" var="manage_policy_form_url">
                 </spring:url>
                 <spring:url value="/resources/images/rateicon.png" var="manage_policy_image_url" />
                 <spring:message arguments="${typeName}" code="entity_manage_rate" var="manage_policy_label" htmlEscape="false" />

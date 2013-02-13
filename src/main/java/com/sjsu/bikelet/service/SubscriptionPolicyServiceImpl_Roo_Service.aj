@@ -3,6 +3,7 @@
 
 package com.sjsu.bikelet.service;
 
+import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.SubscriptionPolicy;
 import com.sjsu.bikelet.service.SubscriptionPolicyServiceImpl;
 import java.util.List;
@@ -42,5 +43,4 @@ privileged aspect SubscriptionPolicyServiceImpl_Roo_Service {
     public SubscriptionPolicy SubscriptionPolicyServiceImpl.updateSubscriptionPolicy(SubscriptionPolicy subscriptionPolicy) {
         return subscriptionPolicy.merge();
     }
-    
 }

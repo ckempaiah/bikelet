@@ -28,17 +28,7 @@ privileged aspect SubscriptionPolicyController_Roo_Controller {
     @Autowired
     ProgramService SubscriptionPolicyController.programService;
     
-    @RequestMapping(method = RequestMethod.POST, produces = "text/html")
-    public String SubscriptionPolicyController.create(@Valid SubscriptionPolicy subscriptionPolicy, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
-            populateEditForm(uiModel, subscriptionPolicy);
-            return "subscriptionpolicys/create";
-        }
-        uiModel.asMap().clear();
-        subscriptionPolicyService.saveSubscriptionPolicy(subscriptionPolicy);
-        return "redirect:/subscriptionpolicys/" + encodeUrlPathSegment(subscriptionPolicy.getId().toString(), httpServletRequest);
-    }
-    
+   
     @RequestMapping(params = "form", produces = "text/html")
     public String SubscriptionPolicyController.createForm(Model uiModel) {
         populateEditForm(uiModel, new SubscriptionPolicy());

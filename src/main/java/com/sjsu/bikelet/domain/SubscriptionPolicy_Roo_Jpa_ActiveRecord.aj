@@ -73,5 +73,11 @@ privileged aspect SubscriptionPolicy_Roo_Jpa_ActiveRecord {
         this.entityManager.flush();
         return merged;
     }
+    public static List<SubscriptionPolicy> SubscriptionPolicy.findAllPoliciesByProgram(Long programId) {
+        return entityManager().createQuery("SELECT o FROM SubscriptionPolicy o where o.programId.id = :programId", SubscriptionPolicy.class).setParameter("programId", programId).getResultList();
+    }
+    
+    
+    
     
 }

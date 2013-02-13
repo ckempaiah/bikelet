@@ -35,6 +35,18 @@ import java.lang.Long;
 @Controller
 @RooWebScaffold(path = "programs", formBackingObject = Program.class)
 public class ProgramController {
+	
+	@RequestMapping(method = RequestMethod.POST, produces = "text/html")
+	public String create(@Valid Program program, BindingResult bindingResult,
+			Model uiModel, HttpServletRequest httpServletRequest) {
+		if (bindingResult.hasErrors()) {
+			populateEditForm(uiModel, program);
+			return "programs/create";
+		}
+		uiModel.asMap().clear();
+		programService.saveProgram(program);
+		return "redirect:/subscriptionpolicys?form";
+	}
 
 	@RequestMapping(value = "/{id}/bikeletusers", method = RequestMethod.POST, produces = "text/html")
 	public String createUser(@Valid BikeLetUser bikeLetUser,

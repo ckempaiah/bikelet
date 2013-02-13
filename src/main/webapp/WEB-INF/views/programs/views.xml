@@ -73,5 +73,17 @@
             name="body"
             value="/WEB-INF/views/programs/bikeletusers/update.jspx" />
     </definition>
+     <definition extends="default" name="programs/showpolicy">
+        <put-attribute name="body" value="/WEB-INF/views/programs/showpolicy.jspx"/>
+    </definition>
+<definition extends="default" name="programs/subscriptionpolicys/show">
+        <put-attribute name="body" value="/WEB-INF/views/programs/subscriptionpolicys/show.jspx"/>
+    </definition>
+<definition extends="default" name="programs/subscriptionpolicys/create">
+        <put-attribute name="body" value="/WEB-INF/views/programs/subscriptionpolicys/create.jspx"/>
+    </definition>
+<definition extends="default" name="programs/subscriptionpolicys/update">
+        <put-attribute name="body" value="/WEB-INF/views/programs/subscriptionpolicys/update.jspx"/>
+    </definition>
 
 </tiles-definitions>

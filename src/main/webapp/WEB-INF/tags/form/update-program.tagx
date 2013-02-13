@@ -48,6 +48,15 @@
                   <img alt="${fn:escapeXml(manage_user_label)}" class="image" src="${manage_user_image_url}" title="${fn:escapeXml(manage_user_label)}" />
                 </a>
             </span>
+            <span>
+                <spring:url value="${path}/${programId}/subscriptionpolicys" var="manage_rate_form_url">
+                </spring:url>
+                <spring:url value="/resources/images/rateicon.png" var="manage_rate_image_url" />
+                <spring:message arguments="SubscriptionPolicy" code="entity_manage_rate" var="manage_rate_label" htmlEscape="false" />
+                <a href="${manage_rate_form_url}" alt="${fn:escapeXml(manage_rate_label)}" title="${fn:escapeXml(manage_rate_label)}">
+                  <img alt="${fn:escapeXml(manage_rate_label)}" class="image" src="${manage_rate_image_url}" title="${fn:escapeXml(manage_rate_label)}" />
+                </a>
+            </span>
         </div>
         <form:hidden id="_${fn:escapeXml(idField)}_id" path="${fn:escapeXml(idField)}" />
         <c:if test="${versionField ne 'none'}">
