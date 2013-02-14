@@ -20,7 +20,6 @@ DROP TABLE IF EXISTS  station;
 
 DROP TABLE IF EXISTS  subscription_policy;
 
-DROP TABLE IF EXISTS  program;
 
 DROP TABLE IF EXISTS  payment_info;
 
@@ -41,6 +40,8 @@ DROP TABLE IF EXISTS  bike;
 DROP TABLE IF EXISTS  bike_let_user;
 
 DROP TABLE IF EXISTS  bike_let_role;
+
+DROP TABLE IF EXISTS  program;
 
 DROP TABLE IF EXISTS  tenant;
 
@@ -197,7 +198,7 @@ CREATE TABLE program
 CREATE TABLE rent_transaction
 (
    id bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
-   comments text NOT NULL,
+   comments varchar(500) NOT NULL,
    from_station_id int,
    rate_id int,
    user_id bigint NOT NULL,
@@ -212,9 +213,10 @@ CREATE TABLE rent_transaction
 ;
 CREATE TABLE role_permission
 (
-   id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+   id bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
    permission_id bigint NOT NULL,
-   role_id bigint NOT NULL
+   role_id bigint NOT NULL,
+   version int
 )
 ;
 CREATE TABLE station
