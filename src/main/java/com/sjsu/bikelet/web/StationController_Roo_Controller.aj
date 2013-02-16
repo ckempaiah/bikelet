@@ -10,6 +10,8 @@ import com.sjsu.bikelet.web.Utils;
 import com.sjsu.bikelet.service.ProgramService;
 import com.sjsu.bikelet.service.StationService;
 import com.sjsu.bikelet.service.TenantService;
+import com.sjsu.bikelet.service.BikeService;
+import com.sjsu.bikelet.service.BikeLocationService;
 import com.sjsu.bikelet.web.StationController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +39,13 @@ privileged aspect StationController_Roo_Controller {
 	    
 	@Autowired
 	TenantService StationController.tenantService;
+	
+	@Autowired
+	BikeService StationController.bikeService;
+	
+	@Autowired
+	BikeLocationService StationController.bikeLocationService;
+	 
 	    
     @RequestMapping(params = "form", produces = "text/html")
     public String StationController.createForm(Model uiModel) {

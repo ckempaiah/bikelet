@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+<div xmlns:jsp="http://java.sun.com/JSP/Page"  xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"  xmlns:spring="http://www.springframework.org/tags" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:list id="pl_com_sjsu_bikelet_domain_Bike" items="${bikes}" z="+Mz2y79BM4IthjoAEPkiG3PTz5c=">
-        <table:table data="${bikes}" id="l_com_sjsu_bikelet_domain_Bike" path="/bikes" z="4BGhcoGr7nBluYExL0Tl6CcasMg=">
+        <table:table data="${bikes}" id="l_com_sjsu_bikelet_domain_Bike" path="/stations/${stationId}/bikes" z="4BGhcoGr7nBluYExL0Tl6CcasMg=">
             <table:column id="c_com_sjsu_bikelet_domain_Bike_bikeHeight" property="bikeHeight" z="M/XStoF9qEZHMs+49veymidcfdw="/>
             <table:column id="c_com_sjsu_bikelet_domain_Bike_bikeColor" property="bikeColor" z="92/P5kX3T2JRVALBStHFsrxgpmg="/>
             <table:column id="c_com_sjsu_bikelet_domain_Bike_bikeType" property="bikeType" z="la+j+2q2RmxIAkZdKu/oU9yslh8="/>
@@ -12,4 +12,16 @@
             <table:column id="c_com_sjsu_bikelet_domain_Bike_bikeStatus" property="bikeStatus" z="rV/7ji5Iwlkp7Az4PRku+ep8l1M="/>
         </table:table>
     </page:list>
+	<br/>
+    <span class="new">
+        <spring:url value="/stations/${stationId}" var="back_url">
+        </spring:url>
+        <c:set var="typeName" value="Station" />
+        <a href="${back_url}">
+          <spring:url value="/resources/images/back.png" var="back_img_url" />
+          <spring:message arguments="${typeName}" code="global_back" var="back_message" htmlEscape="false" />
+          <img alt="${fn:escapeXml(back_message)}" src="${back_img_url}" title="${fn:escapeXml(back_message)}" />
+        </a>
+    </span>
+
 </div>

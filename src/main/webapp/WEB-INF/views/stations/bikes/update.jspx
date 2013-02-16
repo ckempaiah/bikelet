@@ -2,13 +2,14 @@
 <div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <form:update id="fu_com_sjsu_bikelet_domain_Bike" modelAttribute="bike" path="/bikes" versionField="Version" z="qLBTZ5sCljncLtEY2acD6ju2zP0=">
+    <form:update id="fu_com_sjsu_bikelet_domain_Bike" modelAttribute="bike" path="/stations/${stationId}/bikes" versionField="Version" z="qLBTZ5sCljncLtEY2acD6ju2zP0=">
         <field:input field="bikeHeight" id="c_com_sjsu_bikelet_domain_Bike_bikeHeight" validationMessageCode="field_invalid_integer" z="fTcpIIbo0NFa7GGy0HkfgRjA1RU="/>
         <field:input field="bikeColor" id="c_com_sjsu_bikelet_domain_Bike_bikeColor" max="10" z="hGaAh6Gmwi2L4bleEJobrsdM5rA="/>
         <field:input field="bikeType" id="c_com_sjsu_bikelet_domain_Bike_bikeType" max="20" min="2" required="true" z="9lNCSoFgPqiIUa/ClQrUNmAS4PU="/>
         <field:datetime dateTimePattern="${bike_lastservicedate_date_format}" field="lastServiceDate" id="c_com_sjsu_bikelet_domain_Bike_lastServiceDate" z="+O/Sq5CMaFjLYRU1j0mZvb7vz/M="/>
         <field:input field="wheelSize" id="c_com_sjsu_bikelet_domain_Bike_wheelSize" max="10" z="fb0uGrL+802piXH8tAmixHr45mg="/>
         <field:input field="bikeStatus" id="c_com_sjsu_bikelet_domain_Bike_bikeStatus" max="10" z="Vz8Z5MCDg2CbqcDFbilU+hFDWpQ="/>
-        <field:select field="tenantId" id="c_com_sjsu_bikelet_domain_Bike_tenantId" itemValue="id" items="${tenants}" path="/tenants" z="PtpoxBGgULwvI6dTsuBQfzY7ZBM="/>
+        <field:simple field="tenantId.tenantName" id="c_com_sjsu_bikelet_domain_Bike_tenantId" text="${bike.tenantId.tenantName}" z="user-managed"/>
+        <field:hidden field="tenantId.id" id="c_com_sjsu_bikelet_domain_Bike_tenantId_id" z="PtpoxBGgULwvI6dTsuBQfzY7ZBM="/>
     </form:update>
 </div>

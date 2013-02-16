@@ -2,7 +2,7 @@
 <div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <page:show id="ps_com_sjsu_bikelet_domain_Bike" object="${bike}" path="/bikes" z="c+53l/xzfI/GcrKvPovXLfcRJZM=">
+    <page:show id="ps_com_sjsu_bikelet_domain_Bike" object="${bike}" path="/stations/${stationId}/bikes" z="c+53l/xzfI/GcrKvPovXLfcRJZM=">
         <field:display field="bikeHeight" id="s_com_sjsu_bikelet_domain_Bike_bikeHeight" object="${bike}" z="4K8qULvhsQtMrUFUNV1hcx9/ZJM="/>
         <field:display field="bikeColor" id="s_com_sjsu_bikelet_domain_Bike_bikeColor" object="${bike}" z="qIYTn2HBuTfLZT+MqsLU6OdtRMo="/>
         <field:display field="bikeType" id="s_com_sjsu_bikelet_domain_Bike_bikeType" object="${bike}" z="vMYNTTn4gCvwDkxF8/Ad0G22s8Y="/>

@@ -1,6 +1,7 @@
 package com.sjsu.bikelet.domain;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -11,6 +12,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.sjsu.bikelet.model.BikeStatusEnum;
+
 
 @RooJavaBean
 @RooToString
@@ -38,4 +46,17 @@ public class Bike {
 
     @ManyToOne
     private Tenant tenantId;
+    
+    public static long countBikesByStation(Long stationId) {
+        return entityManager().createQuery("SELECT COUNT(o) FROM BikeLocation o where o.stationId.id = :stationId and o.bikeStatus = :bikeStatus", Long.class).setParameter("stationId", stationId).setParameter("bikeStatus", BikeStatusEnum.Available.toString()).getSingleResult();
+    }
+    
+    public static List<Bike> findAllBikesByStation(Long stationId) {
+        return entityManager().createQuery("SELECT o.bikeId FROM BikeLocation o where o.stationId.id = :stationId and o.bikeStatus = :bikeStatus", Bike.class).setParameter("stationId", stationId).setParameter("bikeStatus", BikeStatusEnum.Available.toString()).getResultList();
+    }
+    
+    public static List<Bike> findBikeEntriesByStation(Long stationId, int firstResult, int maxResults) {
+        return entityManager().createQuery("SELECT o.bikeId FROM BikeLocation o where o.stationId.id = :stationId and o.bikeStatus = :bikeStatus", Bike.class).setParameter("stationId", stationId).setParameter("bikeStatus", BikeStatusEnum.Available.toString()).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
+
 }

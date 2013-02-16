@@ -2,7 +2,7 @@
 <div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <page:show-program id="ps_com_sjsu_bikelet_domain_Program" object="${program}" path="/programs" z="mIWXQyxVeXR9mA6f9Z0dUowGok8=">
+    <page:show id="ps_com_sjsu_bikelet_domain_Program" object="${program}" managePolicy="true" manageUser="true" path="/programs" z="mIWXQyxVeXR9mA6f9Z0dUowGok8=">
         <field:display field="programName" id="s_com_sjsu_bikelet_domain_Program_programName" object="${program}" z="aojdZJ+S5XOQLNAkBFrqdGqPye0="/>
         <field:display field="description" id="s_com_sjsu_bikelet_domain_Program_description" object="${program}" z="lBpbUumxtIU39gQVXL9ypGKBNHs="/>
         <field:display field="tenantId" id="s_com_sjsu_bikelet_domain_Program_tenantId" object="${program}" z="HcN186Y5lCqRn/uTpB+cR/96AnY="/>
@@ -10,5 +10,5 @@
         <field:display field="contactId" id="s_com_sjsu_bikelet_domain_Program_contactId" object="${program}" z="b2manlGPCuLh27VigeniA6Zq+PU="/>
         <field:display field="min_threshold" id="s_com_sjsu_bikelet_domain_Program_min_threshold" object="${program}" z="kG+vVbyahKvL3LLPi3zPdGVyeg0="/>
         <field:display field="max_threshold" id="s_com_sjsu_bikelet_domain_Program_max_threshold" object="${program}" z="XVpmKtqJbksQXXpLCNg3lxrMAgM="/>
-    </page:show-program>
+    </page:show>
 </div>
