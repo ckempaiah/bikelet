@@ -15,5 +15,7 @@
         <field:simple field="programId.name" id="c_com_sjsu_bikelet_domain_BikeLetUser_programId" text="${bikeLetUser.programId.programName}" z="user-managed"/>
         <field:hidden field="programId.id" id="c_com_sjsu_bikelet_domain_BikeLetUser_programId_id" z="Sk71Uhtbc3CaBMQ8R9OEYUwPqzc="/>
 
+   		<field:select field="subscriptionPolicy" id="c_com_sjsu_bikelet_domain_BikeLetUser_subscriptionPolicy" itemValue="id" items="${subscriptionPolicies}" path="subscriptionpolicys" z="AEoVYU7aq/lYi9c4j6biJHiV6G8="/>
+    
     </form:update>
 </div>

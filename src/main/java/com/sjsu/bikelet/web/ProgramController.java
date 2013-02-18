@@ -7,6 +7,7 @@ import com.sjsu.bikelet.domain.SubscriptionRate;
 import com.sjsu.bikelet.domain.UserRole;
 import com.sjsu.bikelet.domain.BikeLetRole;
 import com.sjsu.bikelet.domain.Tenant;
+import com.sjsu.bikelet.domain.UserSubscriptionPolicy;
 import com.sjsu.bikelet.service.ProgramService;
 import com.sjsu.bikelet.service.BikeLetUserService;
 import com.sjsu.bikelet.service.SubscriptionPolicyService;
@@ -14,6 +15,7 @@ import com.sjsu.bikelet.service.SubscriptionRateService;
 import com.sjsu.bikelet.service.TenantService;
 import com.sjsu.bikelet.service.UserRoleService;
 import com.sjsu.bikelet.service.BikeLetRoleService;
+import com.sjsu.bikelet.service.UserSubscriptionPolicyService;
 import com.sjsu.bikelet.web.ProgramController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +46,9 @@ public class ProgramController {
 	
 	@Autowired
 	SubscriptionRateService subscriptionRateService;
+	
+	@Autowired
+	UserSubscriptionPolicyService userSubscriptionPolicyService;
 	
 	@RequestMapping(method = RequestMethod.POST, produces = "text/html")
 	public String create(@Valid Program program, BindingResult bindingResult,
@@ -77,6 +82,12 @@ public class ProgramController {
 		userRole.setUserId(user);
 		userRole.setRoleId(role);
 		userRoleService.saveUserRole(userRole);
+		// Add the user policy
+		UserSubscriptionPolicy userSubscriptionPolicy = new UserSubscriptionPolicy();
+		SubscriptionPolicy subscriptionPolicy = subscriptionPolicyService.findSubscriptionPolicy(bikeLetUser.getSubscriptionPolicy().getId());
+		userSubscriptionPolicy.setPolicyId(subscriptionPolicy);
+		userSubscriptionPolicy.setUserId(user);
+		userSubscriptionPolicyService.saveUserSubscriptionPolicy(userSubscriptionPolicy);
 		return "redirect:/programs/" + bikeLetUser.getProgramId().getId() +  "/bikeletusers";
 	}
 	
@@ -161,7 +172,11 @@ public class ProgramController {
 	
 	@RequestMapping(value = "/{id}/bikeletusers/{userId}", produces = "text/html")
 	public String showUser(@PathVariable("id") Long id, @PathVariable("userId") Long userId, Model uiModel) {
-	    uiModel.addAttribute("bikeletuser", bikeLetUserService.findBikeLetUser(userId));
+		BikeLetUser user = bikeLetUserService.findBikeLetUser(userId);
+		UserSubscriptionPolicy userSubscriptionPolicy = userSubscriptionPolicyService.findUserSubscriptionPolicyByUser(userId);
+		if (userSubscriptionPolicy != null)
+			user.setSubscriptionPolicy(userSubscriptionPolicy.getPolicyId());
+	    uiModel.addAttribute("bikeletuser", user);
 	    uiModel.addAttribute("itemId", userId);
 	    uiModel.addAttribute("programId", id);
 	    return "programs/bikeletusers/show";
@@ -194,8 +209,18 @@ public class ProgramController {
         uiModel.asMap().clear();
 		bikeLetUser.setProgramId(programService.findProgram(bikeLetUser.getProgramId().getId()));
 		bikeLetUser.setTenantId(tenantService.findTenant(bikeLetUser.getTenantId().getId()));	
-
-        bikeLetUserService.updateBikeLetUser(bikeLetUser);
+		bikeLetUserService.updateBikeLetUser(bikeLetUser);
+		
+        // Update the policy
+        UserSubscriptionPolicy userSubscriptionPolicy = userSubscriptionPolicyService.findUserSubscriptionPolicyByUser(bikeLetUser.getId());
+        
+        SubscriptionPolicy subscriptionPolicy = subscriptionPolicyService.findSubscriptionPolicy(bikeLetUser.getSubscriptionPolicy().getId());
+		
+		userSubscriptionPolicy.setPolicyId(subscriptionPolicy);
+		userSubscriptionPolicyService.updateUserSubscriptionPolicy(userSubscriptionPolicy);
+	
+        
+        
         return "redirect:/programs/" + programId + "/bikeletusers/" + encodeUrlPathSegment(bikeLetUser.getId().toString(), httpServletRequest);
     }
     
@@ -229,7 +254,12 @@ public class ProgramController {
 	    
 	@RequestMapping(value = "/{id}/bikeletusers/{userId}", params = "form", produces = "text/html")
 	public String updateUserForm(@PathVariable("id") Long id, @PathVariable("userId") Long userId, Model uiModel) {
-	    populateEditUserForm(uiModel, bikeLetUserService.findBikeLetUser(userId));
+		BikeLetUser user = bikeLetUserService.findBikeLetUser(userId);
+		UserSubscriptionPolicy userSubscriptionPolicy = userSubscriptionPolicyService.findUserSubscriptionPolicyByUser(userId);
+		if (userSubscriptionPolicy != null)
+		user.setSubscriptionPolicy(userSubscriptionPolicy.getPolicyId());
+		
+	    populateEditUserForm(uiModel, user);
 	    return "programs/bikeletusers/update";
 	}
 	
@@ -325,7 +355,8 @@ public class ProgramController {
 				Model uiModel) {
 		 uiModel.addAttribute("programId", id);
 		 uiModel.addAttribute("policyId", policyId);
-
+		 // TODO: Cheng: There are missing checkin from subscriptionRateService, remove this comment later
+		 /*
 		 if (page != null || size != null) {
 	            int sizeNo = size == null ? 10 : size.intValue();
 	            final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
@@ -335,9 +366,10 @@ public class ProgramController {
 	        } else {
 	            uiModel.addAttribute("subscriptionrates", subscriptionRateService.findAllSubscriptionRatesByPolicy(policyId));
 	        }
+	        */
 	        return "programs/subscriptionpolicys/subscriptionrates/list";
 	    }
-
+		
 	@RequestMapping(produces = "text/html")
 	public String list(
 			@RequestParam(value = "page", required = false) Integer page,
@@ -367,6 +399,7 @@ public class ProgramController {
 		uiModel.addAttribute("programId", bikeLetUser.getProgramId().getId());
 		uiModel.addAttribute("programs", programService.findAllPrograms());
 		uiModel.addAttribute("tenants", tenantService.findAllTenants());
+	    uiModel.addAttribute("subscriptionPolicies", subscriptionPolicyService.findAllSubscriptionPolicysByProgram(bikeLetUser.getProgramId().getId()));  
 	}
 	
 	void populateEditPolicyForm(Model uiModel, SubscriptionPolicy subscriptionPolicy) {
