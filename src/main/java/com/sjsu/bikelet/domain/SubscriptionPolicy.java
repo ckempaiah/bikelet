@@ -27,4 +27,15 @@ public class SubscriptionPolicy {
 //    public static List<SubscriptionPolicy> SubscriptionPolicy.findAllProgramsByTenant(Long programId) {
 //        return entityManager().createQuery("SELECT o FROM SubscriptionPolicy o where o.programId.id = :programId", SubscriptionPolicy.class).setParameter("programId", programId).getResultList();
 //    }
+    public static long countSubscriptionPolicysByProgram(Long programId) {
+        return entityManager().createQuery("SELECT COUNT(o) FROM SubscriptionPolicy o where o.programId.id = :programId", Long.class).setParameter("programId", programId).getSingleResult();
+    }
+    
+    public static List<SubscriptionPolicy> findSubscriptionPolicyEntriesByProgram(Long programId, int firstResult, int maxResults) {
+        return entityManager().createQuery("SELECT o FROM SubscriptionPolicy o where o.programId.id = :programId", SubscriptionPolicy.class).setParameter("programId", programId).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
+    
+    public static List<SubscriptionPolicy> findAllSubscriptionPolicysByProgram(Long programId){
+    	return entityManager().createQuery("SELECT o FROM SubscriptionPolicy o where o.programId.id = :programId", SubscriptionPolicy.class).setParameter("programId", programId).getResultList();
+    }
 }
