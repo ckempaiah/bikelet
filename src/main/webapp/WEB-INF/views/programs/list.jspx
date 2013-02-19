@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:programtable="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:list id="pl_com_sjsu_bikelet_domain_Program" items="${programs}" z="Thp9u5iFl3aU18gq02XgieMbFZM=">
-        <programtable:programtable data="${programs}" id="l_com_sjsu_bikelet_domain_Program" path="/programs" z="3ZZy7bEFyOtuOlmJ3i7EZMMRzv0=">
-            <programtable:column id="c_com_sjsu_bikelet_domain_Program_programName" property="programName" z="hIrvHUjgz9NvjhRC1T2twz+bgTg="/>
-            <programtable:column id="c_com_sjsu_bikelet_domain_Program_description" property="description" z="TRydsdT5iGtFf+T4AkHfKnDS1V0="/>
-            <programtable:column id="c_com_sjsu_bikelet_domain_Program_tenantId" property="tenantId" z="70GshSXnWzc98Ej6Vsl0r7Zeo70="/>
-            <programtable:column id="c_com_sjsu_bikelet_domain_Program_orgName" property="orgName" z="9vA/9ayF4Wg1YGGHsfDF/SXZU+A="/>
-            <programtable:column id="c_com_sjsu_bikelet_domain_Program_contactId" property="contactId" z="n3Wzoc3FFuFq2m/c0itUjrDkh+0="/>
-            <programtable:column id="c_com_sjsu_bikelet_domain_Program_min_threshold" property="min_threshold" z="KMY3kE1C1QV0+eiWkWmPkd5eIlQ="/>
-        </programtable:programtable>
+        <table:table data="${programs}" id="l_com_sjsu_bikelet_domain_Program" path="/programs" z="3ZZy7bEFyOtuOlmJ3i7EZMMRzv0=">
+            <table:column id="c_com_sjsu_bikelet_domain_Program_programName" property="programName" z="hIrvHUjgz9NvjhRC1T2twz+bgTg="/>
+            <table:column id="c_com_sjsu_bikelet_domain_Program_description" property="description" z="TRydsdT5iGtFf+T4AkHfKnDS1V0="/>
+            <table:column id="c_com_sjsu_bikelet_domain_Program_tenantId" property="tenantId" z="70GshSXnWzc98Ej6Vsl0r7Zeo70="/>
+            <table:column id="c_com_sjsu_bikelet_domain_Program_orgName" property="orgName" z="9vA/9ayF4Wg1YGGHsfDF/SXZU+A="/>
+            <table:column id="c_com_sjsu_bikelet_domain_Program_contactId" property="contactId" z="n3Wzoc3FFuFq2m/c0itUjrDkh+0="/>
+            <table:column id="c_com_sjsu_bikelet_domain_Program_min_threshold" property="min_threshold" z="KMY3kE1C1QV0+eiWkWmPkd5eIlQ="/>
+        </table:table>
     </page:list>
 </div>

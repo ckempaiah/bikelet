@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_sjsu_bikelet_domain_SubscriptionRate" items="${subscriptionrates}" z="hebzqvO+SnuG5klucBoxOXM90PE=">
+        <table:table data="${subscriptionrates}" id="l_com_sjsu_bikelet_domain_SubscriptionRate" path="/programs/${programId}/subscriptionpolicys/${policyId}/subscriptionrates" z="nJ0vQYIoheJPE2SqGgA+SCY5Ivc=">
+            <table:column id="c_com_sjsu_bikelet_domain_SubscriptionRate_membershipPerMonth" property="membershipPerMonth" z="Rw0EwnOJGMt2fkjiCoXD8CYLZng="/>
+            <table:column id="c_com_sjsu_bikelet_domain_SubscriptionRate_organizationShare" property="organizationShare" z="NQCXnaK1Yr3PRsENKtUhPnLTtrY="/>
+            <table:column id="c_com_sjsu_bikelet_domain_SubscriptionRate_userShare" property="userShare" z="73U2GVeD/yyktOW9BtNi5wWkWAk="/>
+            <table:column id="c_com_sjsu_bikelet_domain_SubscriptionRate_freeMinsPerDay" property="freeMinsPerDay" z="mWJpiuyMVIO3+fEsgVBAs+s6ChI="/>
+            <table:column id="c_com_sjsu_bikelet_domain_SubscriptionRate_excessChargePerMin" property="excessChargePerMin" z="HjYID2rDLO7Mh14eL35vxDMbjEc="/>
+            <table:column date="true" dateTimePattern="${subscriptionRate_policystartdate_date_format}" id="c_com_sjsu_bikelet_domain_SubscriptionRate_policyStartDate" property="policyStartDate" z="PchuWI4z4DMso4TILmIaUCq8nXI="/>
+            <table:column date="true" dateTimePattern="${subscriptionRate_policyenddate_date_format}" id="c_com_sjsu_bikelet_domain_SubscriptionRate_policyEndDate" property="policyEndDate" z="PchuWI4z4DMso4TILmIaUCq8nXI="/>
+        </table:table>
+    </page:list>
+</div>

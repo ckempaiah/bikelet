@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_sjsu_bikelet_domain_SubscriptionPolicy" object="${subscriptionpolicy}" path="/programs/${programId}/subscriptionpolicys" z="ySyvkAgjhTSV44Ce+c4WOjgBeHs=">
+        <field:display field="policyName" id="s_com_sjsu_bikelet_domain_SubscriptionPolicy_policyName" object="${subscriptionpolicy}" z="xkp+uuo4W9WSHiZhnfWK7iiodo0="/>
+        <field:display field="policyDescription" id="s_com_sjsu_bikelet_domain_SubscriptionPolicy_policyDescription" object="${subscriptionpolicy}" z="aCUIn9NTVSezeA2k1cqV1PXiEjY="/>
+        <field:display field="programId" id="s_com_sjsu_bikelet_domain_SubscriptionPolicy_programId" object="${subscriptionpolicy}" z="rNYQloI9+wkq3Do4xsI3pdsMGws="/>
+    </page:show>
+</div>

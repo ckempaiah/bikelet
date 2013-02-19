@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_sjsu_bikelet_domain_SubscriptionPolicy" items="${subscriptionpolicys}" z="KSjaxNJTcoyX5gq870mKA9jgmBU=">
+        <table:table data="${subscriptionpolicys}" id="l_com_sjsu_bikelet_domain_SubscriptionPolicy" path="/programs/${programId}/subscriptionpolicys" z="ChwELE5vJ8uR0aYTDUyMYC8eZJQ=">
+            <table:column id="c_com_sjsu_bikelet_domain_SubscriptionPolicy_policyName" property="policyName" z="CE2fYwERAjg1s+q2jF3DvDydkzM="/>
+            <table:column id="c_com_sjsu_bikelet_domain_SubscriptionPolicy_policyDescription" property="policyDescription" z="/7Oa+YkLra0OYXuHcmXX0g1ZYRE="/>
+            <table:column id="c_com_sjsu_bikelet_domain_SubscriptionPolicy_programId" property="programId" z="cI6l9rsViaQFgyHDpT3pLEUWEDU="/>
+        </table:table>
+    </page:list>
+    </div>

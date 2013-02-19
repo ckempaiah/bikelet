@@ -73,17 +73,76 @@
             name="body"
             value="/WEB-INF/views/programs/bikeletusers/update.jspx" />
     </definition>
-     <definition extends="default" name="programs/showpolicy">
-        <put-attribute name="body" value="/WEB-INF/views/programs/showpolicy.jspx"/>
+     <definition
+        name="programs/subscriptionpolicys/list"
+        extends="default" >
+
+        <put-attribute
+            name="body"
+            value="/WEB-INF/views/programs/subscriptionpolicys/list.jspx" />
     </definition>
-<definition extends="default" name="programs/subscriptionpolicys/show">
-        <put-attribute name="body" value="/WEB-INF/views/programs/subscriptionpolicys/show.jspx"/>
+
+    <definition
+        name="programs/subscriptionpolicys/create"
+        extends="default" >
+
+        <put-attribute
+            name="body"
+            value="/WEB-INF/views/programs/subscriptionpolicys/create.jspx" />
     </definition>
-<definition extends="default" name="programs/subscriptionpolicys/create">
-        <put-attribute name="body" value="/WEB-INF/views/programs/subscriptionpolicys/create.jspx"/>
+
+    <definition
+        name="programs/subscriptionpolicys/show"
+        extends="default" >
+
+        <put-attribute
+            name="body"
+            value="/WEB-INF/views/programs/subscriptionpolicys/show.jspx" />
     </definition>
-<definition extends="default" name="programs/subscriptionpolicys/update">
-        <put-attribute name="body" value="/WEB-INF/views/programs/subscriptionpolicys/update.jspx"/>
+
+    <definition
+        name="programs/subscriptionpolicys/update"
+        extends="default" >
+
+        <put-attribute
+            name="body"
+            value="/WEB-INF/views/programs/subscriptionpolicys/update.jspx" />
+    </definition>
+    
+    <definition
+        name="programs/subscriptionpolicys/subscriptionrates/list"
+        extends="default" >
+
+        <put-attribute
+            name="body"
+            value="/WEB-INF/views/programs/subscriptionpolicys/subscriptionrates/list.jspx" />
+    </definition>
+
+    <definition
+        name="programs/subscriptionpolicys/subscriptionrates/create"
+        extends="default" >
+
+        <put-attribute
+            name="body"
+            value="/WEB-INF/views/programs/subscriptionpolicys/subscriptionrates/create.jspx" />
+    </definition>
+
+    <definition
+        name="programs/subscriptionpolicys/subscriptionrates/show"
+        extends="default" >
+
+        <put-attribute
+            name="body"
+            value="/WEB-INF/views/programs/subscriptionpolicys/subscriptionrates/show.jspx" />
+    </definition>
+
+    <definition
+        name="programs/subscriptionpolicys/subscriptionrates/update"
+        extends="default" >
+
+        <put-attribute
+            name="body"
+            value="/WEB-INF/views/programs/subscriptionpolicys/subscriptionrates/update.jspx" />
     </definition>
 
 </tiles-definitions>
