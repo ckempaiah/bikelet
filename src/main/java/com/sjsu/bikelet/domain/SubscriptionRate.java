@@ -1,6 +1,8 @@
 package com.sjsu.bikelet.domain;
 
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,4 +36,16 @@ public class SubscriptionRate {
 
     @ManyToOne
     private SubscriptionPolicy policyId;
+    
+    public static long countSubscriptionRatesByPolicy(Long policyId) {
+        return entityManager().createQuery("SELECT COUNT(o) FROM SubscriptionRate o where o.policyId.id = :policyId", Long.class).setParameter("policyId", policyId).getSingleResult();
+    }
+    
+    public static List<SubscriptionRate> findSubscriptionRateEntriesByPolicy(Long policyId, int firstResult, int maxResults) {
+        return entityManager().createQuery("SELECT o FROM SubscriptionRate o where o.policyId.id = :policyId", SubscriptionRate.class).setParameter("policyId", policyId).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
+    
+    public static List<SubscriptionRate> findAllSubscriptionRatesByPolicy(Long policyId){
+    	return entityManager().createQuery("SELECT o FROM SubscriptionRate o where o.policyId.id = :policyId", SubscriptionRate.class).setParameter("policyId", policyId).getResultList();
+    }
 }
