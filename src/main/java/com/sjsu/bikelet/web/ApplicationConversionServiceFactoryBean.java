@@ -3,9 +3,11 @@ package com.sjsu.bikelet.web;
 import com.sjsu.bikelet.domain.LicensePolicy;
 import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.Tenant;
+import com.sjsu.bikelet.domain.SubscriptionPolicy;
 import com.sjsu.bikelet.service.LicensePolicyService;
 import com.sjsu.bikelet.service.ProgramService;
 import com.sjsu.bikelet.service.TenantService;
+import com.sjsu.bikelet.service.SubscriptionPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.FormatterRegistry;
@@ -26,6 +28,9 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
     
     @Autowired
     ProgramService programService;
+    
+    @Autowired
+    SubscriptionPolicyService subscriptionPolicyService;
 
 	@Override
 	protected void installFormatters(FormatterRegistry registry) {
@@ -77,6 +82,22 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
         return new org.springframework.core.convert.converter.Converter<java.lang.String, com.sjsu.bikelet.domain.Program>() {
             public com.sjsu.bikelet.domain.Program convert(String id) {
                 return programService.findProgram(Long.valueOf(id));
+            }
+        };
+    }
+    
+    public Converter<SubscriptionPolicy, String> getSubscriptionPolicyToStringConverter() {
+        return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.SubscriptionPolicy, java.lang.String>() {
+            public String convert(SubscriptionPolicy subscriptionPolicy) {
+                return new StringBuilder().append(subscriptionPolicy.getPolicyName()).toString();
+            }
+        };
+    }
+    
+    public Converter<String, SubscriptionPolicy> getStringToSubscriptionPolicyConverter() {
+        return new org.springframework.core.convert.converter.Converter<java.lang.String, com.sjsu.bikelet.domain.SubscriptionPolicy>() {
+            public com.sjsu.bikelet.domain.SubscriptionPolicy convert(String id) {
+                return subscriptionPolicyService.findSubscriptionPolicy(Long.valueOf(id));
             }
         };
     }

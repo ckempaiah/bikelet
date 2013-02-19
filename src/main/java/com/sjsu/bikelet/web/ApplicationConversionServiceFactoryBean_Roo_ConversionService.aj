@@ -97,10 +97,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     
     @Autowired
     StationService ApplicationConversionServiceFactoryBean.stationService;
-    
-    @Autowired
-    SubscriptionPolicyService ApplicationConversionServiceFactoryBean.subscriptionPolicyService;
-    
+
     @Autowired
     SubscriptionRateService ApplicationConversionServiceFactoryBean.subscriptionRateService;
     
@@ -467,14 +464,6 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         };
     }
     
-    public Converter<SubscriptionPolicy, String> ApplicationConversionServiceFactoryBean.getSubscriptionPolicyToStringConverter() {
-        return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.SubscriptionPolicy, java.lang.String>() {
-            public String convert(SubscriptionPolicy subscriptionPolicy) {
-                return new StringBuilder().append(subscriptionPolicy.getPolicyName()).append(' ').append(subscriptionPolicy.getPolicyDescription()).toString();
-            }
-        };
-    }
-    
     public Converter<Long, SubscriptionPolicy> ApplicationConversionServiceFactoryBean.getIdToSubscriptionPolicyConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.SubscriptionPolicy>() {
             public com.sjsu.bikelet.domain.SubscriptionPolicy convert(java.lang.Long id) {
@@ -482,14 +471,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
             }
         };
     }
-    
-    public Converter<String, SubscriptionPolicy> ApplicationConversionServiceFactoryBean.getStringToSubscriptionPolicyConverter() {
-        return new org.springframework.core.convert.converter.Converter<java.lang.String, com.sjsu.bikelet.domain.SubscriptionPolicy>() {
-            public com.sjsu.bikelet.domain.SubscriptionPolicy convert(String id) {
-                return getObject().convert(getObject().convert(id, Long.class), SubscriptionPolicy.class);
-            }
-        };
-    }
+
     
     public Converter<SubscriptionRate, String> ApplicationConversionServiceFactoryBean.getSubscriptionRateToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.SubscriptionRate, java.lang.String>() {

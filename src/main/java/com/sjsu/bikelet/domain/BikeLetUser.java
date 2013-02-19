@@ -2,6 +2,7 @@ package com.sjsu.bikelet.domain;
 
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -14,6 +15,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author chenglin
+ *
+ */
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord
@@ -57,4 +62,16 @@ public class BikeLetUser {
     public static List<BikeLetUser> findBikeLetUserEntriesByProgram(Long programId, int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM BikeLetUser o where o.programId.id = :programId", BikeLetUser.class).setParameter("programId", programId).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
+    
+    @Transient
+    private SubscriptionPolicy subscriptionPolicy;
+    
+    public SubscriptionPolicy getSubscriptionPolicy() {
+        return this.subscriptionPolicy;
+    }
+    
+    public void setSubscriptionPolicy(SubscriptionPolicy subscriptionPolicy) {
+        this.subscriptionPolicy = subscriptionPolicy;
+    }
+    
 }
