@@ -20,6 +20,8 @@ import com.sjsu.bikelet.web.ProgramController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -105,22 +107,28 @@ public class ProgramController {
 		subscriptionPolicyService.saveSubscriptionPolicy(subscriptionPolicy);
 		// Add the user role
 		SubscriptionPolicy policy = subscriptionPolicyService.findSubscriptionPolicy(subscriptionPolicy.getId());
-		return "redirect:/programs/" + subscriptionPolicy.getProgramId().getId() +  "/subscriptionpolicys/" + policy.getId().toString() + "/subscriptionrates";
+	    System.out.println("hello policy");
+		return "redirect:/programs/" + subscriptionPolicy.getProgramId().getId().toString() +  "/subscriptionpolicys/" + subscriptionPolicy.getId().toString() + "/subscriptionrates";
 	}
 	
 	@RequestMapping(value = "/{id}/subscriptionpolicys/{policyId}/subscriptionrates", method = RequestMethod.POST, produces = "text/html")
-	public String createPolicyRate(@Valid SubscriptionRate subscriptionRate, @PathVariable("policyId") Long policyId, BindingResult bindingResult, Model uiModel,
+	public String createPolicyRate(@Valid SubscriptionRate subscriptionRate, @PathVariable("id") Long id, @PathVariable("policyId") Long policyId, BindingResult bindingResult, Model uiModel,
 			HttpServletRequest httpServletRequest) {
+		System.out.println("hello ");
 		if (bindingResult.hasErrors()) {
-			populateEditPolicyRateForm(uiModel, subscriptionRate);
+			populateEditPolicyRateForm(uiModel, subscriptionRate, id);
 			return "programs/subscriptionpolicys/subscriptionrates/create";
 		}
+		System.out.println("hello ");
 		uiModel.asMap().clear();
 		SubscriptionPolicy subsPolicy = subscriptionPolicyService.findSubscriptionPolicy(policyId);
 		subscriptionRate.setPolicyId(subscriptionPolicyService.findSubscriptionPolicy(subscriptionRate.getPolicyId().getId()));
+		System.out.println("Program id "+id);
+		System.out.println("Start date"+subscriptionRate.getPolicyStartDate());
 		subscriptionRateService.saveSubscriptionRate(subscriptionRate);
 		//SubscriptionRate policy = subscriptionPolicyService.findSubscriptionPolicy(subscriptionPolicy.getId());
-		return "redirect:/programs/" + subsPolicy.getProgramId().getId() + "/subscriptionpolicys/" + subscriptionRate.getPolicyId().getId() + "/subscriptionrates/" + subscriptionRate.getId().toString();
+		//return "redirect:/programs/" + id + "/subscriptionpolicys/" + policyId + "/subscriptionrates/" + subscriptionRate.getId().toString();
+		return "redirect:/programs";
 	}
 
 	@RequestMapping(value = "/{id}/bikeletusers", params = "form", produces = "text/html")
@@ -161,7 +169,7 @@ public class ProgramController {
 		SubscriptionRate subrate = new SubscriptionRate();
 		subrate.setPolicyId(subscriptionPolicy);
 		//bikeLetUser.setTenantId(program.getTenantId());
-		populateEditPolicyRateForm(uiModel, subrate);
+		populateEditPolicyRateForm(uiModel, subrate, id);
 //		List<String[]> dependencies = new ArrayList<String[]>();
 //		if (tenantService.countAllTenants() == 0) {
 //			dependencies.add(new String[] { "tenant", "tenants" });
@@ -197,6 +205,7 @@ public class ProgramController {
 	   // uiModel.addAttribute("itemId", policyId);
 	    uiModel.addAttribute("policyId", policyId);
 	    uiModel.addAttribute("programId", id);
+	    addDateTimeFormatPatterns(uiModel);
 	    return "programs/subscriptionpolicys/subscriptionrates/show";
 	}
 	    
@@ -241,7 +250,7 @@ public class ProgramController {
     @RequestMapping(value = "/{programId}/subscriptionpolicys/{policyId}/subscriptionrates", method = RequestMethod.PUT, produces = "text/html")
     public String updatePolicyRate(@PathVariable("programId") Long programId, @PathVariable("policyId") Long policyId, @Valid SubscriptionRate subrate, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
-            populateEditPolicyRateForm(uiModel, subrate);
+            populateEditPolicyRateForm(uiModel, subrate, programId);
             return "programs/subscriptionpolicys/subscriptionrates/update";
         }
         uiModel.asMap().clear();
@@ -271,7 +280,7 @@ public class ProgramController {
 	
 	@RequestMapping(value = "/{id}/subscriptionpolicys/{policyId}/subscriptionrates/{rateId}", params = "form", produces = "text/html")
 	public String updatePolicyRateForm(@PathVariable("id") Long id, @PathVariable("policyId") Long policyId, @PathVariable("rateId") Long rateId, Model uiModel) {
-	    populateEditPolicyRateForm(uiModel, subscriptionRateService.findSubscriptionRate(rateId));
+	    populateEditPolicyRateForm(uiModel, subscriptionRateService.findSubscriptionRate(rateId), id);
 	    return "programs/subscriptionpolicys/subscriptionrates/update";
 	}
 	    
@@ -356,7 +365,7 @@ public class ProgramController {
 		 uiModel.addAttribute("programId", id);
 		 uiModel.addAttribute("policyId", policyId);
 		 // TODO: Cheng: There are missing checkin from subscriptionRateService, remove this comment later
-		 /*
+		 
 		 if (page != null || size != null) {
 	            int sizeNo = size == null ? 10 : size.intValue();
 	            final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
@@ -366,7 +375,8 @@ public class ProgramController {
 	        } else {
 	            uiModel.addAttribute("subscriptionrates", subscriptionRateService.findAllSubscriptionRatesByPolicy(policyId));
 	        }
-	        */
+		 addDateTimeFormatPatterns(uiModel);
+	        
 	        return "programs/subscriptionpolicys/subscriptionrates/list";
 	    }
 		
@@ -392,6 +402,11 @@ public class ProgramController {
 		}
 		return "programs/list";
 	}
+	
+	void addDateTimeFormatPatterns(Model uiModel) {
+        uiModel.addAttribute("subscriptionRate_policystartdate_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
+        uiModel.addAttribute("subscriptionRate_policyenddate_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
+    }
 
 
 	void populateEditUserForm(Model uiModel, BikeLetUser bikeLetUser) {
@@ -409,8 +424,10 @@ public class ProgramController {
 		//uiModel.addAttribute("tenants", tenantService.findAllTenants());
 	}
 	
-	void populateEditPolicyRateForm(Model uiModel, SubscriptionRate subscriptionRate){
+	void populateEditPolicyRateForm(Model uiModel, SubscriptionRate subscriptionRate, Long id){
 		uiModel.addAttribute("subscriptionRate", subscriptionRate);
+		addDateTimeFormatPatterns(uiModel);
+		uiModel.addAttribute("programId", id);
 		uiModel.addAttribute("policyId", subscriptionRate.getPolicyId().getId());
 	}
 }
