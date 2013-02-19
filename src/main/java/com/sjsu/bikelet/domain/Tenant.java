@@ -1,5 +1,7 @@
 package com.sjsu.bikelet.domain;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -16,4 +18,15 @@ public class Tenant {
     private String tenantName;
 
     private Integer contactId;
+
+    @Transient
+    private BikeLetUser tenantAdmin;
+
+    public BikeLetUser getTenantAdmin() {
+        return tenantAdmin;
+    }
+
+    public void setTenantAdmin(BikeLetUser tenantAdmin) {
+        this.tenantAdmin = tenantAdmin;
+    }
 }

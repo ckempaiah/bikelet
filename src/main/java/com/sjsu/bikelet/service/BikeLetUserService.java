@@ -17,4 +17,10 @@ public interface BikeLetUserService {
 			Long programId, int firstResult, int maxResults);
 
 	public abstract BikeLetUser findBikeLetUser(String userName, String password);
+
+    BikeLetUser createTenantAdminUser(BikeLetUser bikeLetUser);
+
+    boolean isDuplicateName(String userName, Long userId);
+
+    BikeLetUser getTenantAdmin(Long tenantId);
 }

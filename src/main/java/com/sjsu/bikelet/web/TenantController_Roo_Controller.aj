@@ -24,22 +24,8 @@ privileged aspect TenantController_Roo_Controller {
     @Autowired
     TenantService TenantController.tenantService;
     
-    @RequestMapping(method = RequestMethod.POST, produces = "text/html")
-    public String TenantController.create(@Valid Tenant tenant, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
-            populateEditForm(uiModel, tenant);
-            return "tenants/create";
-        }
-        uiModel.asMap().clear();
-        tenantService.saveTenant(tenant);
-        return "redirect:/tenants/" + encodeUrlPathSegment(tenant.getId().toString(), httpServletRequest);
-    }
-    
-    @RequestMapping(params = "form", produces = "text/html")
-    public String TenantController.createForm(Model uiModel) {
-        populateEditForm(uiModel, new Tenant());
-        return "tenants/create";
-    }
+
+
     
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String TenantController.show(@PathVariable("id") Long id, Model uiModel) {
@@ -48,20 +34,7 @@ privileged aspect TenantController_Roo_Controller {
         return "tenants/show";
     }
     
-    @RequestMapping(produces = "text/html")
-    public String TenantController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        if (page != null || size != null) {
-            int sizeNo = size == null ? 10 : size.intValue();
-            final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("tenants", tenantService.findTenantEntries(firstResult, sizeNo));
-            float nrOfPages = (float) tenantService.countAllTenants() / sizeNo;
-            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
-        } else {
-            uiModel.addAttribute("tenants", tenantService.findAllTenants());
-        }
-        return "tenants/list";
-    }
-    
+
     @RequestMapping(method = RequestMethod.PUT, produces = "text/html")
     public String TenantController.update(@Valid Tenant tenant, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -89,9 +62,7 @@ privileged aspect TenantController_Roo_Controller {
         return "redirect:/tenants";
     }
     
-    void TenantController.populateEditForm(Model uiModel, Tenant tenant) {
-        uiModel.addAttribute("tenant", tenant);
-    }
+
     
     String TenantController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {
         String enc = httpServletRequest.getCharacterEncoding();

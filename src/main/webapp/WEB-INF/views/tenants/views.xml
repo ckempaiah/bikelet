@@ -13,4 +13,13 @@
 <definition extends="default" name="tenants/update">
         <put-attribute name="body" value="/WEB-INF/views/tenants/update.jspx"/>
     </definition>
+    <definition extends="default" name="tenants/tenantadmin/create">
+        <put-attribute name="body" value="/WEB-INF/views/tenants/tenantadmin/create.jspx"/>
+    </definition>
+    <definition extends="default" name="tenants/tenantadmin/show">
+        <put-attribute name="body" value="/WEB-INF/views/tenants/tenantadmin/show.jspx"/>
+    </definition>
+    <definition extends="default" name="tenants/tenantadmin/update">
+        <put-attribute name="body" value="/WEB-INF/views/tenants/tenantadmin/update.jspx"/>
+    </definition>
 </tiles-definitions>

@@ -27,11 +27,11 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
     @Autowired
     ProgramService programService;
 
-//	@Override
-//	protected void installFormatters(FormatterRegistry registry) {
-//		super.installFormatters(registry);
-//		// Register application converters and formatters
-//	}
+	@Override
+	protected void installFormatters(FormatterRegistry registry) {
+		super.installFormatters(registry);
+		// Register application converters and formatters
+	}
 
     public Converter<LicensePolicy, String> getLicensePolicyToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.LicensePolicy, java.lang.String>() {
