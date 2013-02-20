@@ -94,9 +94,6 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     
     @Autowired
     RolePermissionService ApplicationConversionServiceFactoryBean.rolePermissionService;
-    
-    @Autowired
-    StationService ApplicationConversionServiceFactoryBean.stationService;
 
     @Autowired
     SubscriptionRateService ApplicationConversionServiceFactoryBean.subscriptionRateService;
@@ -440,26 +437,10 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         };
     }
     
-    public Converter<Station, String> ApplicationConversionServiceFactoryBean.getStationToStringConverter() {
-        return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Station, java.lang.String>() {
-            public String convert(Station station) {
-                return new StringBuilder().append(station.getLocation()).append(' ').append(station.getCapacity()).toString();
-            }
-        };
-    }
-    
     public Converter<Long, Station> ApplicationConversionServiceFactoryBean.getIdToStationConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.Station>() {
             public com.sjsu.bikelet.domain.Station convert(java.lang.Long id) {
                 return stationService.findStation(id);
-            }
-        };
-    }
-    
-    public Converter<String, Station> ApplicationConversionServiceFactoryBean.getStringToStationConverter() {
-        return new org.springframework.core.convert.converter.Converter<java.lang.String, com.sjsu.bikelet.domain.Station>() {
-            public com.sjsu.bikelet.domain.Station convert(String id) {
-                return getObject().convert(getObject().convert(id, Long.class), Station.class);
             }
         };
     }

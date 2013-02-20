@@ -98,6 +98,7 @@ public class StationController {
         }
         uiModel.asMap().clear();
         bike.setTenantId(tenantService.findTenant(bike.getTenantId().getId()));	
+        bike.setBikeStatus(BikeStatusEnum.Available.toString());
         bikeService.saveBike(bike);
         // Create BikeLocation
         Station station = stationService.findStation(id);

@@ -6,6 +6,8 @@ package com.sjsu.bikelet.web;
 import com.sjsu.bikelet.domain.Bike;
 import com.sjsu.bikelet.service.BikeService;
 import com.sjsu.bikelet.service.TenantService;
+import com.sjsu.bikelet.service.StationService;
+import com.sjsu.bikelet.service.BikeLocationService;
 import com.sjsu.bikelet.web.BikeController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
@@ -30,62 +32,14 @@ privileged aspect BikeController_Roo_Controller {
     @Autowired
     TenantService BikeController.tenantService;
     
-    @RequestMapping(method = RequestMethod.POST, produces = "text/html")
-    public String BikeController.create(@Valid Bike bike, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
-            populateEditForm(uiModel, bike);
-            return "bikes/create";
-        }
-        uiModel.asMap().clear();
-        bikeService.saveBike(bike);
-        return "redirect:/bikes/" + encodeUrlPathSegment(bike.getId().toString(), httpServletRequest);
-    }
+    @Autowired
+    StationService BikeController.stationService;
     
-    @RequestMapping(params = "form", produces = "text/html")
-    public String BikeController.createForm(Model uiModel) {
-        populateEditForm(uiModel, new Bike());
-        return "bikes/create";
-    }
+    @Autowired
+    BikeLocationService BikeController.bikeLocationService;
+
     
-    @RequestMapping(value = "/{id}", produces = "text/html")
-    public String BikeController.show(@PathVariable("id") Long id, Model uiModel) {
-        addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("bike", bikeService.findBike(id));
-        uiModel.addAttribute("itemId", id);
-        return "bikes/show";
-    }
-    
-    @RequestMapping(produces = "text/html")
-    public String BikeController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        if (page != null || size != null) {
-            int sizeNo = size == null ? 10 : size.intValue();
-            final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("bikes", bikeService.findBikeEntries(firstResult, sizeNo));
-            float nrOfPages = (float) bikeService.countAllBikes() / sizeNo;
-            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
-        } else {
-            uiModel.addAttribute("bikes", bikeService.findAllBikes());
-        }
-        addDateTimeFormatPatterns(uiModel);
-        return "bikes/list";
-    }
-    
-    @RequestMapping(method = RequestMethod.PUT, produces = "text/html")
-    public String BikeController.update(@Valid Bike bike, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
-            populateEditForm(uiModel, bike);
-            return "bikes/update";
-        }
-        uiModel.asMap().clear();
-        bikeService.updateBike(bike);
-        return "redirect:/bikes/" + encodeUrlPathSegment(bike.getId().toString(), httpServletRequest);
-    }
-    
-    @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
-    public String BikeController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, bikeService.findBike(id));
-        return "bikes/update";
-    }
+ 
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String BikeController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
@@ -99,12 +53,6 @@ privileged aspect BikeController_Roo_Controller {
     
     void BikeController.addDateTimeFormatPatterns(Model uiModel) {
         uiModel.addAttribute("bike_lastservicedate_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
-    }
-    
-    void BikeController.populateEditForm(Model uiModel, Bike bike) {
-        uiModel.addAttribute("bike", bike);
-        addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("tenants", tenantService.findAllTenants());
     }
     
     String BikeController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

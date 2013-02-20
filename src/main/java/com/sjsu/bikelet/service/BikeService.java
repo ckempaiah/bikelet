@@ -11,4 +11,8 @@ public interface BikeService {
     public abstract List<Bike> findAllBikesByStation(Long stationId);    
     public abstract List<Bike> findBikeEntriesByStation(Long stationId, int firstResult, int maxResults);  
     public abstract List<Bike> findAvailableBikesByStation(Long stationId);
+    
+    public abstract long countAllBikesByTenant(Long tenantId);    
+    public abstract List<Bike> findAllBikesByTenant(Long tenantId);    
+    public abstract List<Bike> findBikeEntriesByTenant(Long tenantId, int firstResult, int maxResults);  
 }

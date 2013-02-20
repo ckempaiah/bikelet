@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -47,7 +48,18 @@ public class Bike {
     @ManyToOne
     private Tenant tenantId;
     
-    public static long countBikesByStation(Long stationId) {
+    @Transient
+    private Station station;
+
+    public Station getStation() {
+		return station;
+	}
+
+	public void setStation(Station station) {
+		this.station = station;
+	}
+
+	public static long countBikesByStation(Long stationId) {
         return entityManager().createQuery("SELECT COUNT(o) FROM BikeLocation o where o.stationId.id = :stationId and o.bikeStatus = :bikeStatus", Long.class).setParameter("stationId", stationId).setParameter("bikeStatus", BikeStatusEnum.Available.toString()).getSingleResult();
     }
     
@@ -59,6 +71,17 @@ public class Bike {
         return entityManager().createQuery("SELECT o.bikeId FROM BikeLocation o where o.stationId.id = :stationId and o.bikeStatus = :bikeStatus", Bike.class).setParameter("stationId", stationId).setParameter("bikeStatus", BikeStatusEnum.Available.toString()).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
 
+    public static long countBikesByTenant(Long tenantId) {
+        return entityManager().createQuery("SELECT COUNT(o) FROM Bike o where o.tenantId.id = :tenantId", Long.class).setParameter("tenantId", tenantId).getSingleResult();
+    }
+    
+    public static List<Bike> findAllBikesByTenant(Long tenantId) {
+        return entityManager().createQuery("SELECT o FROM Bike o where o.tenantId.id = :tenantId", Bike.class).setParameter("tenantId", tenantId).getResultList();
+    }
+    
+    public static List<Bike> findBikeEntriesByTenant(Long tenantId, int firstResult, int maxResults) {
+        return entityManager().createQuery("SELECT o FROM Bike o where o.tenantId.id = :tenantId", Bike.class).setParameter("tenantId", tenantId).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
     public static List<Bike> findAvailableBikesByStation(Long stationId)
     {
     	String status = "Available";

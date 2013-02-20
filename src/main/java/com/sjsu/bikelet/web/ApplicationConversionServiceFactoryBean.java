@@ -3,10 +3,12 @@ package com.sjsu.bikelet.web;
 import com.sjsu.bikelet.domain.LicensePolicy;
 import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.Tenant;
+import com.sjsu.bikelet.domain.Station;
 import com.sjsu.bikelet.domain.SubscriptionPolicy;
 import com.sjsu.bikelet.service.LicensePolicyService;
 import com.sjsu.bikelet.service.ProgramService;
 import com.sjsu.bikelet.service.TenantService;
+import com.sjsu.bikelet.service.StationService;
 import com.sjsu.bikelet.service.SubscriptionPolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
@@ -28,6 +30,9 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
     
     @Autowired
     ProgramService programService;
+    
+    @Autowired
+    StationService stationService;
     
     @Autowired
     SubscriptionPolicyService subscriptionPolicyService;
@@ -102,4 +107,19 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
         };
     }
    
+    public Converter<Station, String> getStationToStringConverter() {
+        return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Station, java.lang.String>() {
+            public String convert(Station station) {
+                return new StringBuilder().append(station.getLocation()).toString();
+            }
+        };
+    }
+    
+    public Converter<String, Station> getStringToStationConverter() {
+        return new org.springframework.core.convert.converter.Converter<java.lang.String, com.sjsu.bikelet.domain.Station>() {
+            public com.sjsu.bikelet.domain.Station convert(String id) {
+                return stationService.findStation(Long.valueOf(id));
+            }
+        };
+    }
 }
