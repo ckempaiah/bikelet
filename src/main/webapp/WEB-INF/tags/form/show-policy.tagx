@@ -35,8 +35,8 @@
       <c:set var="delete" value="true" />
     </c:if>
 
-    <c:if test="${empty managePolicy}">
-      <c:set var="managePolicy" value="true" />
+    <c:if test="${empty manageRate}">
+      <c:set var="manageRate" value="true" />
     </c:if>
 
     <spring:message var="typeName" code="menu_item_${fn:toLowerCase(fn:split(id,'_')[fn:length(fn:split(id,'_')) - 1])}_new_label" htmlEscape="false" />
@@ -49,13 +49,13 @@
           <jsp:doBody />
           <div class="quicklinks">
             <span>
-              <c:if test="${managePolicy}">
-                <spring:url value="${path}/${itemId}/policies" var="manage_policy_form_url">
+              <c:if test="${manageRate}">
+                <spring:url value="${path}/${itemId}/subscriptionrates" var="manage_rate_form_url">
                 </spring:url>
-                <spring:url value="/resources/images/rateicon.png" var="manage_policy_image_url" />
-                <spring:message arguments="${typeName}" code="entity_manage_rate" var="manage_policy_label" htmlEscape="false" />
-                <a href="${manage_policy_form_url}" alt="${fn:escapeXml(manage_policy_label)}" title="${fn:escapeXml(manage_policy_label)}">
-                  <img alt="${fn:escapeXml(manage_policy_label)}" class="image" src="${manage_policy_image_url}" title="${fn:escapeXml(manage_policy_label)}" />
+                <spring:url value="/resources/images/rateicon.png" var="manage_rate_image_url" />
+                <spring:message arguments="${typeName}" code="entity_manage_rate" var="manage_rate_label" htmlEscape="false" />
+                <a href="${manage_rate_form_url}" alt="${fn:escapeXml(manage_rate_label)}" title="${fn:escapeXml(manage_rate_label)}">
+                  <img alt="${fn:escapeXml(manage_rate_label)}" class="image" src="${manage_rate_image_url}" title="${fn:escapeXml(manage_rate_label)}" />
                 </a>
               </c:if>
             </span>
