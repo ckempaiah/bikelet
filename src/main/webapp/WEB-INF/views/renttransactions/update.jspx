@@ -13,5 +13,6 @@
         <field:textarea field="comments" id="c_com_sjsu_bikelet_domain_RentTransaction_comments" required="true" z="hreqm4MyHtE3gdnGQ+WsUnCGAZU="/>
         <field:select field="userId" render="false" id="c_com_sjsu_bikelet_domain_RentTransaction_userId" itemValue="id" items="${bikeletusers}" path="/bikeletusers" z="vsANGREhlH5DRMAbobukhBd4J3M="/>
         <field:display field="bikeId" id="s_com_sjsu_bikelet_domain_RentTransaction_bikeId" object="${renttransaction}" z="hL06buqsEmJYGSmElzQ0XsaF3Ns="/>
+        <field:hidden field="accessKey" id="c_com_sjsu_bikelet_domain_RentTransaction_accessKey" z="v8xyRg/aaSry7cJGanBv2FGnJ98="/>
     </form:update-transaction>
 </div>

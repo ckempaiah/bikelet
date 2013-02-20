@@ -14,6 +14,7 @@
         <field:hidden field="comments" id="c_com_sjsu_bikelet_domain_RentTransaction_comments" z="hreqm4MyHtE3gdnGQ+WsUnCGAZU="/>
         <field:select field="userId" render="false" id="c_com_sjsu_bikelet_domain_RentTransaction_userId" itemValue="id" items="${bikeletusers}" path="/bikeletusers" z="vsANGREhlH5DRMAbobukhBd4J3M="/>
         <field:select field="bikeId" render="false" id="c_com_sjsu_bikelet_domain_RentTransaction_bikeId" itemValue="id" items="${bikes}" path="/bikes" z="upguISD0hDpHct+QRbTWgYgcCSY="/>
+        <field:hidden field="accessKey" id="c_com_sjsu_bikelet_domain_RentTransaction_accessKey" z="v8xyRg/aaSry7cJGanBv2FGnJ98="/>
     </form:create-transaction>
     
     <B style="color: red;">No bikes available at the station. Please select another station.</B>
