@@ -12,6 +12,6 @@
         <field:input field="status" id="c_com_sjsu_bikelet_domain_RentTransaction_status" max="10" required="true" z="S02+YIPK57+9VZFR4UfIbNSdZlE="/>
         <field:textarea field="comments" id="c_com_sjsu_bikelet_domain_RentTransaction_comments" required="true" z="hreqm4MyHtE3gdnGQ+WsUnCGAZU="/>
         <field:select field="userId" render="false" id="c_com_sjsu_bikelet_domain_RentTransaction_userId" itemValue="id" items="${bikeletusers}" path="/bikeletusers" z="vsANGREhlH5DRMAbobukhBd4J3M="/>
-        <field:hidden field="bikeId" id="c_com_sjsu_bikelet_domain_RentTransaction_bikeId" z="upguISD0hDpHct+QRbTWgYgcCSY="/>
+        <field:display field="bikeId" id="s_com_sjsu_bikelet_domain_RentTransaction_bikeId" object="${renttransaction}" z="hL06buqsEmJYGSmElzQ0XsaF3Ns="/>
     </form:update>
 </div>

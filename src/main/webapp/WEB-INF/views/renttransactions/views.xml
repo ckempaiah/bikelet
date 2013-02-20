@@ -30,4 +30,8 @@
     <definition extends="default" name="renttransactions/checkoutexists">
         <put-attribute name="body" value="/WEB-INF/views/renttransactions/checkoutexists.jspx"/>
     </definition>
+    
+    <definition extends="default" name="renttransactions/checkoutfirst">
+        <put-attribute name="body" value="/WEB-INF/views/renttransactions/checkoutfirst.jspx"/>
+    </definition>
 </tiles-definitions>
