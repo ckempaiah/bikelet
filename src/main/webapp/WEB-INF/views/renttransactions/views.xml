@@ -13,4 +13,21 @@
 <definition extends="default" name="renttransactions/update">
         <put-attribute name="body" value="/WEB-INF/views/renttransactions/update.jspx"/>
     </definition>
+<definition extends="default" name="renttransactions/checkout">
+        <put-attribute name="body" value="/WEB-INF/views/renttransactions/checkout.jspx"/>
+    </definition>
+<definition extends="default" name="renttransactions/liststations">
+        <put-attribute name="body" value="/WEB-INF/views/renttransactions/fromstation.jspx"/>
+    </definition>
+    <definition extends="default" name="renttransactions/liststationsnobikes">
+        <put-attribute name="body" value="/WEB-INF/views/renttransactions/fromstationnobikes.jspx"/>
+    </definition>
+    
+    <definition extends="default" name="renttransactions/nopolicy">
+        <put-attribute name="body" value="/WEB-INF/views/renttransactions/nopolicy.jspx"/>
+    </definition>
+    
+    <definition extends="default" name="renttransactions/checkoutexists">
+        <put-attribute name="body" value="/WEB-INF/views/renttransactions/checkoutexists.jspx"/>
+    </definition>
 </tiles-definitions>

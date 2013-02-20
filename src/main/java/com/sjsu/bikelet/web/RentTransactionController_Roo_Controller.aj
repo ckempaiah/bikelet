@@ -34,17 +34,6 @@ privileged aspect RentTransactionController_Roo_Controller {
     @Autowired
     BikeLetUserService RentTransactionController.bikeLetUserService;
     
-    @RequestMapping(method = RequestMethod.POST, produces = "text/html")
-    public String RentTransactionController.create(@Valid RentTransaction rentTransaction, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
-            populateEditForm(uiModel, rentTransaction);
-            return "renttransactions/create";
-        }
-        uiModel.asMap().clear();
-        rentTransactionService.saveRentTransaction(rentTransaction);
-        return "redirect:/renttransactions/" + encodeUrlPathSegment(rentTransaction.getId().toString(), httpServletRequest);
-    }
-    
     @RequestMapping(params = "form", produces = "text/html")
     public String RentTransactionController.createForm(Model uiModel) {
         populateEditForm(uiModel, new RentTransaction());
@@ -72,23 +61,6 @@ privileged aspect RentTransactionController_Roo_Controller {
         }
         addDateTimeFormatPatterns(uiModel);
         return "renttransactions/list";
-    }
-    
-    @RequestMapping(method = RequestMethod.PUT, produces = "text/html")
-    public String RentTransactionController.update(@Valid RentTransaction rentTransaction, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
-            populateEditForm(uiModel, rentTransaction);
-            return "renttransactions/update";
-        }
-        uiModel.asMap().clear();
-        rentTransactionService.updateRentTransaction(rentTransaction);
-        return "redirect:/renttransactions/" + encodeUrlPathSegment(rentTransaction.getId().toString(), httpServletRequest);
-    }
-    
-    @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
-    public String RentTransactionController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, rentTransactionService.findRentTransaction(id));
-        return "renttransactions/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
