@@ -43,12 +43,6 @@ privileged aspect ProgramController_Roo_Controller {
 	@Autowired
 	BikeLetRoleService ProgramController.bikeLetRoleService;
 
-	@RequestMapping(params = "form", produces = "text/html")
-	public String ProgramController.createForm(Model uiModel) {
-		populateEditForm(uiModel, new Program());
-		return "programs/create";
-	}
-
 	@RequestMapping(value = "/{id}", produces = "text/html")
 	public String ProgramController.show(@PathVariable("id") Long id, Model uiModel) {
 		uiModel.addAttribute("program", programService.findProgram(id));
@@ -70,11 +64,7 @@ privileged aspect ProgramController_Roo_Controller {
 						httpServletRequest);
 	}
 
-	@RequestMapping(value = "/{id}", params = "form", produces = "text/html")
-	public String ProgramController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-		populateEditForm(uiModel, programService.findProgram(id));
-		return "programs/update";
-	}
+	
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
 	public String ProgramController.delete(@PathVariable("id") Long id,

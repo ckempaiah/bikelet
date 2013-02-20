@@ -5,7 +5,10 @@
     <form:update-program id="fu_com_sjsu_bikelet_domain_Program" modelAttribute="program" path="/programs" versionField="Version" programId="${program.id}" z="2uQRCCVF212izVxXmD92EO72rGo=">
         <field:textarea field="programName" id="c_com_sjsu_bikelet_domain_Program_programName" z="uJaNbSDRp2Ba+QaZEi9cXwo2lzA="/>
         <field:textarea field="description" id="c_com_sjsu_bikelet_domain_Program_description" z="rjRyOrw+xcrav+WkZaMGff0p35M="/>
-        <field:select field="tenantId" id="c_com_sjsu_bikelet_domain_Program_tenantId" itemValue="id" items="${tenants}" path="/tenants" z="6QK2RVBQ9Q8VCTSOs1Ex5NdN5pc="/>
+        
+        <field:simple field="tenantId.tenantName" id="c_com_sjsu_bikelet_domain_Program_tenantId" text="${program.tenantId.tenantName}" z="user-managed"/>
+        <field:hidden field="tenantId.id" id="c_com_sjsu_bikelet_domain_Program_tenantId_id" z="gUUpJvUsX9GBCYywrY2lJyX026M="/>
+        
         <field:input field="orgName" id="c_com_sjsu_bikelet_domain_Program_orgName" max="30" required="true" z="yIeZ1vqbpvru0M1U7ixxyvnRB7I="/>
         <field:input field="contactId" id="c_com_sjsu_bikelet_domain_Program_contactId" validationMessageCode="field_invalid_integer" z="WBJIp5w27eIYlI9dhzxd4K0iELY="/>
         <field:input field="min_threshold" id="c_com_sjsu_bikelet_domain_Program_min_threshold" validationMessageCode="field_invalid_integer" z="IrgTQE4QunwIuE91fTUHun7+UqI="/>

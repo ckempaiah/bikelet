@@ -61,6 +61,7 @@ public class ProgramController {
 			return "programs/create";
 		}
 		uiModel.asMap().clear();
+		program.setTenantId(tenantService.findTenant(Utils.getLogonTenantId()));
 		programService.saveProgram(program);
 		return "redirect:/programs/"+program.getId().toString()
 						+"/subscriptionpolicys";
@@ -139,6 +140,16 @@ public class ProgramController {
 		//return "redirect:/programs/" + id + "/subscriptionpolicys/" + policyId + "/subscriptionrates/" + subscriptionRate.getId().toString();
 		return "redirect:/programs";
 	}
+	
+	@RequestMapping(params = "form", produces = "text/html")
+	public String createForm(Model uiModel) {
+		Long tid = Utils.getLogonTenantId();
+		Tenant tenant = tenantService.findTenant(tid);
+		Program prog = new Program();
+		prog.setTenantId(tenant);
+		populateEditForm(uiModel, prog);
+		return "programs/create";
+	}
 
 	@RequestMapping(value = "/{id}/bikeletusers", params = "form", produces = "text/html")
 	public String createUserForm(@PathVariable("id") Long id, Model uiModel) {
@@ -216,6 +227,17 @@ public class ProgramController {
 	    uiModel.addAttribute("programId", id);
 	    addDateTimeFormatPatterns(uiModel);
 	    return "programs/subscriptionpolicys/subscriptionrates/show";
+	}
+	
+	@RequestMapping(value = "/{id}", params = "form", produces = "text/html")
+	public String updateForm(@PathVariable("id") Long id, Model uiModel) {
+		Long tid = Utils.getLogonTenantId();
+		Tenant tenant = tenantService.findTenant(tid);
+		Program prog = new Program();
+		prog.setTenantId(tenant);
+		populateEditForm(uiModel, prog);
+		//populateEditForm(uiModel, programService.findProgram(id));
+		return "programs/update";
 	}
 	    
     @RequestMapping(value = "/{programId}/bikeletusers", method = RequestMethod.PUT, produces = "text/html")
