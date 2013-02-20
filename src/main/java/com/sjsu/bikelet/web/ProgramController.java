@@ -20,6 +20,7 @@ import com.sjsu.bikelet.web.ProgramController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.validation.ObjectError;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,8 +124,16 @@ public class ProgramController {
 		uiModel.asMap().clear();
 		SubscriptionPolicy subsPolicy = subscriptionPolicyService.findSubscriptionPolicy(policyId);
 		subscriptionRate.setPolicyId(subscriptionPolicyService.findSubscriptionPolicy(subscriptionRate.getPolicyId().getId()));
-		System.out.println("Program id "+id);
-		System.out.println("Start date"+subscriptionRate.getPolicyStartDate());
+//		System.out.println("Program id "+id);
+//		System.out.println("Start date"+subscriptionRate.getPolicyStartDate());
+		boolean check = subscriptionRateService.checkOtherPolicyRates(subscriptionRate.getPolicyId().getId(), subscriptionRate);
+		if (check == true){
+			bindingResult.addError(new ObjectError("subscriptionRate", "Subscription Rate for the specified time period already exists"));
+			if (bindingResult.hasErrors()) {
+				populateEditPolicyRateForm(uiModel, subscriptionRate, id);
+				return "programs/subscriptionpolicys/subscriptionrates/create";
+			}
+		}
 		subscriptionRateService.saveSubscriptionRate(subscriptionRate);
 		//SubscriptionRate policy = subscriptionPolicyService.findSubscriptionPolicy(subscriptionPolicy.getId());
 		//return "redirect:/programs/" + id + "/subscriptionpolicys/" + policyId + "/subscriptionrates/" + subscriptionRate.getId().toString();
@@ -385,20 +394,22 @@ public class ProgramController {
 			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "size", required = false) Integer size,
 			Model uiModel) {
+		Long tenantId = Utils.getLogonTenantId();
+		System.out.println("tenant id is "+tenantId);
 		if (page != null || size != null) {
 			int sizeNo = size == null ? 10 : size.intValue();
 			final int firstResult = page == null ? 0 : (page.intValue() - 1)
 					* sizeNo;
 			uiModel.addAttribute("programs",
-					programService.findProgramEntries(firstResult, sizeNo));
-			float nrOfPages = (float) programService.countAllPrograms()
+					programService.findProgramEntriesByTenant(tenantId, firstResult, sizeNo));
+			float nrOfPages = (float) programService.countAllProgramsByTenant(tenantId)
 					/ sizeNo;
 			uiModel.addAttribute(
 					"maxPages",
 					(int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1
 							: nrOfPages));
 		} else {
-			uiModel.addAttribute("programs", programService.findAllPrograms());
+			uiModel.addAttribute("programs", programService.findAllProgramsByTenant(tenantId));
 		}
 		return "programs/list";
 	}
