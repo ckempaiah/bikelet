@@ -13,4 +13,5 @@ public interface SubscriptionRateService {
 	public abstract List<SubscriptionRate> findAllSubscriptionRatesByPolicy(Long policyId);
 	public abstract long countSubscriptionRatesByPolicy(Long policyId);
 	public abstract List<SubscriptionRate> findSubscriptionRateEntriesByPolicy(Long policyId, int firstResult, int maxResults);
+	public abstract boolean isValidSubscriptionPolicy(Long policyId);
 }

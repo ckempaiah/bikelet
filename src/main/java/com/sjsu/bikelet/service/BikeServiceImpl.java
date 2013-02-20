@@ -18,4 +18,9 @@ public class BikeServiceImpl implements BikeService {
     public List<Bike> findBikeEntriesByStation(Long stationId, int firstResult, int maxResults) {
         return Bike.findBikeEntriesByStation(stationId, firstResult, maxResults);
     }
+    
+	public List<Bike> findAvailableBikesByStation(Long stationId) {
+		return Bike.findAvailableBikesByStation(stationId);
+	}
+
 }

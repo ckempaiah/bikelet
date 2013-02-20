@@ -23,4 +23,6 @@ public interface BikeLetUserService {
     boolean isDuplicateName(String userName, Long userId);
 
     BikeLetUser getTenantAdmin(Long tenantId);
+    
+	public abstract BikeLetUser findUserFromId(Long userId);
 }

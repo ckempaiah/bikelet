@@ -72,4 +72,8 @@ public class BikeLetUserServiceImpl implements BikeLetUserService {
             return result.get(0);
         }
     }
+    
+    public BikeLetUser findUserFromId(Long userId){
+    	return BikeLetUser.getUserFromId(userId);
+    }
 }

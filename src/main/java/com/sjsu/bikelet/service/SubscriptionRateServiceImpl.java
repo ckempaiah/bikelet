@@ -26,4 +26,10 @@ public class SubscriptionRateServiceImpl implements SubscriptionRateService {
 		// TODO Auto-generated method stub
 		return SubscriptionRate.findSubscriptionRateEntriesByPolicy(policyId,firstResult,maxResults);
 	}
+	
+	@Override
+	public boolean isValidSubscriptionPolicy(Long policyId) {
+		// TODO Auto-generated method stub
+		return SubscriptionRate.isValidSubscription(policyId);
+	}
 }
