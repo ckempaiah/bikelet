@@ -48,6 +48,27 @@ public class SubscriptionRate {
     public static List<SubscriptionRate> findAllSubscriptionRatesByPolicy(Long policyId){
     	return entityManager().createQuery("SELECT o FROM SubscriptionRate o where o.policyId.id = :policyId", SubscriptionRate.class).setParameter("policyId", policyId).getResultList();
     }
+
+	public static boolean checkOtherPolicyRates(Long policyId, SubscriptionRate subscriptionRate) {
+		// TODO Auto-generated method stub
+		// count the number of rows in subscriptionrate table where policy id
+		List<SubscriptionRate> abd = findAllSubscriptionRatesByPolicy(policyId);
+		if(!abd.equals(null)){
+			for(int i=0; i < abd.size(); i++){
+				SubscriptionRate sv = new SubscriptionRate();
+				sv = abd.get(i);
+//				System.out.println("Policy Rate"+sv.toString());
+//				boolean c = ((subscriptionRate.getPolicyStartDate().compareTo(sv.getPolicyEndDate())) <= 0);
+//				System.out.println("value of "+c);
+				if(((subscriptionRate.getPolicyStartDate().compareTo(sv.getPolicyEndDate())) <= 0)&&((subscriptionRate.getPolicyEndDate().compareTo(sv.getPolicyStartDate())) >= 0)){
+					System.out.println("returning true");
+					return true;
+				}
+			}
+		}
+		System.out.println("returing false");
+		return false;
+	}
     
     public static boolean isValidSubscription(Long policyId)
     {
