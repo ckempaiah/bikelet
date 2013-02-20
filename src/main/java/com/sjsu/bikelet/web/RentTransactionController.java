@@ -179,14 +179,12 @@ public class RentTransactionController {
         BikeLetUser user = new BikeLetUser();
 		user = bikeLetUserService.findUserFromId(Utils.getLogonUser().getUserId());
 		RentTransaction transaction = rentTransactionService.findRentTransactionForCheckin(Utils.getLogonUser().getUserId(), RentTransactionStatusEnum.InProgress.toString());		
-
-		rentTransaction.setUserId(user);
-        rentTransaction.setTenantId(Utils.getLogonTenantId());
-        rentTransaction.setBikeId(transaction.getBikeId());
-        rentTransaction.setRentEndDate(new Date());
-        rentTransaction.setStatus(RentTransactionStatusEnum.Complete.toString());
-        
-        RentTransaction rt = rentTransactionService.updateRentTransaction(rentTransaction);
+		transaction.setRentEndDate(new Date());
+		transaction.setStatus(RentTransactionStatusEnum.Complete.toString());
+		transaction.setToStationId(rentTransaction.getToStationId());
+		transaction.setComments(rentTransaction.getComments());
+		
+        RentTransaction rt = rentTransactionService.updateRentTransaction(transaction);
         bikeLocationService.updateBikeLocation(rt.getBikeId().getId(), BikeStatusEnum.Available.toString(), rt.getToStationId());
         return "redirect:/renttransactions/" + encodeUrlPathSegment(rentTransaction.getId().toString(), httpServletRequest);
     }
