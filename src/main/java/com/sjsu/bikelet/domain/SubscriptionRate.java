@@ -48,4 +48,13 @@ public class SubscriptionRate {
     public static List<SubscriptionRate> findAllSubscriptionRatesByPolicy(Long policyId){
     	return entityManager().createQuery("SELECT o FROM SubscriptionRate o where o.policyId.id = :policyId", SubscriptionRate.class).setParameter("policyId", policyId).getResultList();
     }
+    
+    public static boolean isValidSubscription(Long policyId)
+    {
+    	Long count = entityManager().createQuery("SELECT count(o) from SubscriptionRate o where o.policyStartDate > NOW() and o.policyEndDate < NOW() and policyId.id = :policyId", Long.class).setParameter("policyId", policyId).getSingleResult();
+    	if(count>0)
+    		return true;
+    	else
+    		return false;
+    }
 }

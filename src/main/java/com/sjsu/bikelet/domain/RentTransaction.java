@@ -45,4 +45,14 @@ public class RentTransaction {
 
     @ManyToOne
     private Bike bikeId;
+    
+    
+    public static RentTransaction findRentTransactionForCheckin(Long userId, String status)
+    {
+    	return entityManager().createQuery("SELECT o FROM RentTransaction o where o.userId.id = :userId and o.status = :status", RentTransaction.class).
+    						   setParameter("userId", userId).
+    						   setParameter("status", status).
+    						   getSingleResult(); 
+    }
+    
 }

@@ -73,5 +73,8 @@ public class BikeLetUser {
     public void setSubscriptionPolicy(SubscriptionPolicy subscriptionPolicy) {
         this.subscriptionPolicy = subscriptionPolicy;
     }
-    
+
+    public static BikeLetUser getUserFromId(Long userId){
+    	return entityManager().createQuery("SELECT o FROM BikeLetUser o where o.id = :userId", BikeLetUser.class).setParameter("userId", userId).getSingleResult();
+    }
 }
