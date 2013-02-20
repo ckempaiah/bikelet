@@ -2,7 +2,7 @@
 <div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <page:show id="ps_com_sjsu_bikelet_domain_RentTransaction" object="${renttransaction}" path="/renttransactions" z="mA1t/hgjU9IHVwMqYA7fDt4dvBk=">
+    <page:show id="ps_com_sjsu_bikelet_domain_RentTransaction" create="false" update="false" delete="false" object="${renttransaction}" path="/renttransactions" z="mA1t/hgjU9IHVwMqYA7fDt4dvBk=">
         <field:display field="fromStationId" id="s_com_sjsu_bikelet_domain_RentTransaction_fromStationId" object="${renttransaction}" z="6rbzZdpeV18gk4FmzkI0dFEZpO4="/>
         <field:display field="toStationId" id="s_com_sjsu_bikelet_domain_RentTransaction_toStationId" object="${renttransaction}" z="x19LSK4v06FzLgKFY413aeJk/fA="/>
         <field:display field="tenantId" id="s_com_sjsu_bikelet_domain_RentTransaction_tenantId" object="${renttransaction}" z="yccdTVa+KTCWKYpCivKmoGBkXZQ="/>
