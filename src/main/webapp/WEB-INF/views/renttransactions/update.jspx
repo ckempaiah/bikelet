@@ -3,10 +3,8 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:update id="fu_com_sjsu_bikelet_domain_RentTransaction" modelAttribute="rentTransaction" path="/renttransactions" versionField="Version" z="TrPywgDmUwxkdIduTNpg2eFJfwk=">
-    	<field:select field="fromStationId" id="c_com_sjsu_bikelet_domain_RentTransaction_fromStationId" itemValue="id" items="${stations}" path="/stations" z="upguISD0hDpHct+QRbTWgYgcCSY="/>
         <field:select field="toStationId" id="c_com_sjsu_bikelet_domain_RentTransaction_toStationId" itemValue="id" items="${tostations}" path="/stations" z="wHh+YcviFD0knL2Q0lVBmxoLuOk="/>
-<!--         <field:input field="fromStationId" id="c_com_sjsu_bikelet_domain_RentTransaction_fromStationId" validationMessageCode="field_invalid_integer" z="uqrsoIQvWuHh3Pq5+Gj6ZH55rpE="/> -->
-<!--         <field:input field="toStationId" id="c_com_sjsu_bikelet_domain_RentTransaction_toStationId" validationMessageCode="field_invalid_integer" z="wHh+YcviFD0knL2Q0lVBmxoLuOk="/> -->
+        <field:input field="fromStationId" id="c_com_sjsu_bikelet_domain_RentTransaction_fromStationId" validationMessageCode="field_invalid_integer" z="uqrsoIQvWuHh3Pq5+Gj6ZH55rpE="/>
         <field:input field="tenantId" render="false" id="c_com_sjsu_bikelet_domain_RentTransaction_tenantId" validationMessageCode="field_invalid_integer" z="v8xyRg/aaSry7cJGanBv2FGnJ98="/>
         <field:datetime dateTimePattern="${rentTransaction_rentstartdate_date_format}" field="rentStartDate" id="c_com_sjsu_bikelet_domain_RentTransaction_rentStartDate" z="+SLl/Q58wQ57DMChBHbX1p18q24="/>
         <field:datetime dateTimePattern="${rentTransaction_rentenddate_date_format}" field="rentEndDate" id="c_com_sjsu_bikelet_domain_RentTransaction_rentEndDate" z="d8GJSdtzPFwSmePxsLzctOzyKHk="/>
@@ -14,6 +12,6 @@
         <field:input field="status" id="c_com_sjsu_bikelet_domain_RentTransaction_status" max="10" required="true" z="S02+YIPK57+9VZFR4UfIbNSdZlE="/>
         <field:textarea field="comments" id="c_com_sjsu_bikelet_domain_RentTransaction_comments" required="true" z="hreqm4MyHtE3gdnGQ+WsUnCGAZU="/>
         <field:select field="userId" render="false" id="c_com_sjsu_bikelet_domain_RentTransaction_userId" itemValue="id" items="${bikeletusers}" path="/bikeletusers" z="vsANGREhlH5DRMAbobukhBd4J3M="/>
-        <field:select field="bikeId" render="false" id="c_com_sjsu_bikelet_domain_RentTransaction_bikeId" itemValue="id" items="${bikes}" path="/bikes" z="upguISD0hDpHct+QRbTWgYgcCSY="/>
+        <field:hidden field="bikeId" id="c_com_sjsu_bikelet_domain_RentTransaction_bikeId" z="upguISD0hDpHct+QRbTWgYgcCSY="/>
     </form:update>
 </div>

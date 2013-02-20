@@ -10,11 +10,13 @@ import com.sjsu.bikelet.domain.RentTransaction;
 import com.sjsu.bikelet.domain.Station;
 import com.sjsu.bikelet.domain.UserSubscriptionPolicy;
 import com.sjsu.bikelet.model.BikeStatusEnum;
+import com.sjsu.bikelet.model.RentTransactionStatusEnum;
 import com.sjsu.bikelet.service.BikeLocationService;
 import com.sjsu.bikelet.service.ProgramService;
 import com.sjsu.bikelet.service.StationService;
 import com.sjsu.bikelet.service.SubscriptionRateService;
 import com.sjsu.bikelet.service.UserSubscriptionPolicyService;
+import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
@@ -60,18 +62,18 @@ public class RentTransactionController {
             return "renttransactions/create";
         }
         uiModel.asMap().clear();
-        System.out.println("In create method ............ ");
         BikeLetUser user = new BikeLetUser();
 		user = bikeLetUserService.findUserFromId(Utils.getLogonUser().getUserId());
-        rentTransaction.setRentStartDate(new Date());
+
+		rentTransaction.setRentStartDate(new Date());
         rentTransaction.setUserId(user);
-        System.out.println("Station Id is ...................  "+rentTransaction.getFromStationId());
         rentTransactionService.saveRentTransaction(rentTransaction);
+        
         BikeLocation bikeLocation = new BikeLocation();
         bikeLocation = bikeLocationService.findBikeLocationOfBike(rentTransaction.getBikeId().getId());
-        bikeLocation.setBikeStatus("Checkedout");
+        bikeLocation.setBikeStatus(BikeStatusEnum.CheckedOut.toString());
         bikeLocationService.updateBikeLocation(bikeLocation);
-        System.out.println("Rent Transaction is .............. "+rentTransaction);
+        
         return "redirect:/renttransactions/" + encodeUrlPathSegment(rentTransaction.getId().toString(), httpServletRequest);
     }
 	
@@ -83,8 +85,6 @@ public class RentTransactionController {
             return "renttransactions/create";
         }
         uiModel.asMap().clear();
-//        rentTransactionService.saveRentTransaction(rentTransaction);
-        System.out.println("Rent Transaction is .............. "+rentTransaction);
         long stationId = rentTransaction.getFromStationId();
         return "redirect:/renttransactions/"+stationId+"/checkoutbike?form";
     }
@@ -92,12 +92,11 @@ public class RentTransactionController {
 	/* CHECKOUT */
 	@RequestMapping(value = "/{stationId}/checkoutbike", params = "form", produces = "text/html")
     public String checkout(@PathVariable("stationId") Long stationId, Model uiModel) {
+
 		RentTransaction rentTransaction = new RentTransaction();
 		rentTransaction.setFromStationId(stationId.intValue());
-		rentTransaction.setStatus("checkedout");
-		System.out.println("Tenant Id is ............... "+Utils.getLogonTenantId());
+		rentTransaction.setStatus(RentTransactionStatusEnum.InProgress.toString());
         rentTransaction.setTenantId(Utils.getLogonTenantId());
-//		rentTransaction.setRateId(Integer);
 
         if(bikeLocationService.countAvailableBikesByStation(stationId)!=0){
         	populateCheckoutForm(uiModel, rentTransaction, stationId);
@@ -113,10 +112,10 @@ public class RentTransactionController {
     @RequestMapping(value = "/selectstation/{value}", params = "form", produces = "text/html")
     public String listStations(@PathVariable("value") Integer value, Model uiModel) {
     	
-    	long programId = (long) 82;
     	Long userId = (long) 0;
     	List<Station> stations = new ArrayList<Station>();
-    	stations = stationService.findAllStationsByProgram(programId);
+    	System.out.println("Program Id is .............. "+Utils.getLogonUser().getProgramId());
+    	stations = stationService.findAllStationsByProgram(Utils.getLogonUser().getProgramId());
     	uiModel.addAttribute("rentTransaction", new RentTransaction());
 		uiModel.addAttribute("stations", stations);
 		if(value==1)
@@ -126,14 +125,11 @@ public class RentTransactionController {
 			policy = userPolicyService.findUserSubscriptionPolicyByUser(userId);
 			
 			RentTransaction rentTransaction = new RentTransaction(); 
-			System.out.println("User Id is ............ "+userId);
-			rentTransaction = rentTransactionService.findRentTransactionForCheckin(userId, "checkedout");
-			System.out.println("Transaction is .............. "+rentTransaction);
+			rentTransaction = rentTransactionService.findRentTransactionForCheckin(userId, RentTransactionStatusEnum.InProgress.toString());
 			if(rentTransaction!=null)
 				return "renttransactions/checkoutexists";
 			else if(policy!=null)
 			{
-				System.out.println("Policy Id is ................. "+policy.getPolicyId().getId());
 				if(userRateService.isValidSubscriptionPolicy(policy.getPolicyId().getId()))
 					return "renttransactions/liststations";
 				else
@@ -150,11 +146,10 @@ public class RentTransactionController {
     @RequestMapping(value = "/checkoutbike", method = RequestMethod.PUT, produces = "text/html")
     public String checkoutBike(@Valid RentTransaction rentTransaction, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
-//            populateEditForm(uiModel, station);
+            populateEditForm(uiModel, rentTransaction);
             return "renttransactions/update";
         }
         uiModel.asMap().clear();
-        System.out.println("Location is ........... "+rentTransaction.getFromStationId());
         return "redirect:/renttransactions/"+ rentTransaction.getFromStationId() +"/checkout?form"; //redirect:/
     }
     
@@ -163,10 +158,8 @@ public class RentTransactionController {
 	/* CHECKIN */
     @RequestMapping(value = "/checkin", params = "form", produces = "text/html")
     public String updateForm(Model uiModel) {
-    	
-    	long userId = (long) 3;
-		String status="checkedout";		
-		RentTransaction rentTransaction = rentTransactionService.findRentTransactionForCheckin(userId, status);
+		RentTransaction rentTransaction = rentTransactionService.findRentTransactionForCheckin(Utils.getLogonUser().getUserId(), RentTransactionStatusEnum.InProgress.toString());
+		System.out.println("Bike Id is ............ "+rentTransaction.getBikeId().getId());
         populateUpdateForm(uiModel, rentTransaction);
         return "renttransactions/update";
     }
@@ -180,8 +173,21 @@ public class RentTransactionController {
             return "renttransactions/update";
         }
         uiModel.asMap().clear();
+        BikeLetUser user = new BikeLetUser();
+		user = bikeLetUserService.findUserFromId(Utils.getLogonUser().getUserId());
+        rentTransaction.setUserId(user);
+        rentTransaction.setTenantId(Utils.getLogonTenantId());
+//        rentTransaction.setStatus(RentTransactionStatusEnum.Complete.toString());
+//        System.out.println("Bike Id is ............ "+rentTransaction.getBikeId().getId());
+        System.out.println("To Station Id ................ "+rentTransaction.getToStationId());
+        
         RentTransaction rt = rentTransactionService.updateRentTransaction(rentTransaction);
-        bikeLocationService.updateBikeLocation(rt.getBikeId().getId(), "Available", rt.getToStationId());
+        System.out.println("Rent Transaction Updated...............");
+        
+        System.out.println("Bike Id is ............ "+rt.getBikeId().getId());
+        System.out.println("To Station Id is ............"+rt.getToStationId());
+        bikeLocationService.updateBikeLocation(rt.getBikeId().getId(), BikeStatusEnum.Available.toString(), rt.getToStationId());
+        System.out.println("Bike Location updated...............");
         return "redirect:/renttransactions/" + encodeUrlPathSegment(rentTransaction.getId().toString(), httpServletRequest);
     }
     
@@ -189,8 +195,6 @@ public class RentTransactionController {
     void populateCheckoutForm(Model uiModel, RentTransaction rentTransaction, Long stationId) {
         uiModel.addAttribute("rentTransaction", rentTransaction);
         addDateTimeFormatPatterns(uiModel);
-        System.out.println("Station Id is ............... "+stationId);
-        System.out.println("Bikes are ... "+bikeService.findAvailableBikesByStation(stationId));
         uiModel.addAttribute("bikes", bikeService.findAvailableBikesByStation(stationId));
     }
     
@@ -199,22 +203,10 @@ public class RentTransactionController {
     void populateUpdateForm(Model uiModel, RentTransaction rentTransaction) {
         uiModel.addAttribute("rentTransaction", rentTransaction);
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("bikes", bikeService.findAllBikes());
+//        uiModel.addAttribute("bikes", bikeService.findAllBikes());
         uiModel.addAttribute("bikeletusers", bikeLetUserService.findAllBikeLetUsers());
-        try{
-        	if(stationService.findAllStations()!=null)
-        	{
-        		System.out.println("Stations are ... "+stationService.findAllStations());
-        		uiModel.addAttribute("stations", stationService.findAllStations());
-        		uiModel.addAttribute("tostations", stationService.findAllStations());
-        	}
-        	else
-        		System.out.println("Result is null ... ");
-        }
-        catch(Exception e)
-        {
-        	e.printStackTrace();
-        }
+//   		uiModel.addAttribute("stations", stationService.findAllStations());
+		uiModel.addAttribute("tostations", stationService.findAllStationsByProgram(Utils.getLogonUser().getProgramId()));
     }
     
 }
