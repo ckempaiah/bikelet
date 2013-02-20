@@ -49,6 +49,15 @@ public class RentTransaction {
     @ManyToOne
     private Bike bikeId;
     
+    private String accessKey;
+    
+    public String getAccessKey() {
+		return accessKey;
+	}
+
+	public void setAccessKey(String accessKey) {
+		this.accessKey = accessKey;
+	}
     
     public static RentTransaction findRentTransactionForCheckin(Long userId, String status)
     {
