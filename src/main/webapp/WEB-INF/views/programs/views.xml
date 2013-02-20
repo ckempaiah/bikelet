@@ -37,7 +37,11 @@
             name="body"
             value="/WEB-INF/views/programs/update.jspx" />
     </definition>
-
+    
+	<definition extends="default" name="programs/programsuccess">
+        <put-attribute name="body" value="/WEB-INF/views/programs/programsuccess.jspx"/>
+    </definition>
+    
     <definition
         name="programs/bikeletusers/list"
         extends="default" >

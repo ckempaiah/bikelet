@@ -35,5 +35,18 @@ public class Program {
     public static List<Program> findAllProgramsByTenant(Long tenantId) {
         return entityManager().createQuery("SELECT o FROM Program o where o.tenantId.id = :tenantId", Program.class).setParameter("tenantId", tenantId).getResultList();
     }
+    
+    public static long countProgramsByTenant(Long tenantId) {
+    	if (tenantId == null)
+    		return countPrograms();
+        return entityManager().createQuery("SELECT COUNT(o) FROM Program o where o.tenantId.id = :tenantId", Long.class).setParameter("tenantId", tenantId).getSingleResult();
+    }
+    
+        
+    public static List<Program> findProgramEntriesByTenant(Long tenantId, int firstResult, int maxResults) {
+    	if (tenantId == null)
+    		return findProgramEntries(firstResult, maxResults);
+        return entityManager().createQuery("SELECT o FROM Program o where o.tenantId.id = :tenantId", Program.class).setParameter("tenantId", tenantId).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
 
 }
