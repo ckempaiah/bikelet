@@ -68,6 +68,8 @@
         <menu:category id="c_renttransaction" z="BGuN2sddzsVHMYErENkw9q4F1k0=">
             <menu:item id="i_renttransaction_new" messageCode="global_menu_new" url="/renttransactions?form" z="diE9w/SH/PD595htckSsyPnKjYE="/>
             <menu:item id="i_renttransaction_list" messageCode="global_menu_list" url="/renttransactions?page=1&amp;size=${empty param.size ? 10 : param.size}" z="dwpdzFQm+jv5XUDzGtrxnOJu6jA="/>
+            <menu:item id="i_renttransaction_bike" messageCode="global_menu_checkin" url="/renttransactions/checkin?form" z="diE9w/SH/PD595htckSsyPnKjYE="/>
+            <menu:item id="i_renttransaction_bike" messageCode="global_menu_checkin" url="/renttransactions/selectstation/1?form" z="diE9w/SH/PD595htckSsyPnKjYE="/>
         </menu:category>
         <menu:category id="c_bikeletrole" z="JODVa6LbphAfAV8NOpFRaMO3bHA=">
             <menu:item id="i_bikeletrole_new" messageCode="global_menu_new" url="/bikeletroles?form" z="CBe8Fxd+j2FI4KPXqXusxMY0Nf4="/>

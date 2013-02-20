@@ -1,6 +1,9 @@
 package com.sjsu.bikelet.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -49,10 +52,15 @@ public class RentTransaction {
     
     public static RentTransaction findRentTransactionForCheckin(Long userId, String status)
     {
-    	return entityManager().createQuery("SELECT o FROM RentTransaction o where o.userId.id = :userId and o.status = :status", RentTransaction.class).
+    	List<RentTransaction> transactions = new ArrayList<RentTransaction>();
+    	transactions = entityManager().createQuery("SELECT o FROM RentTransaction o where o.userId.id = :userId and o.status = :status", RentTransaction.class).
     						   setParameter("userId", userId).
     						   setParameter("status", status).
-    						   getSingleResult(); 
+    						   getResultList();
+    	if(transactions.isEmpty())
+    		return null;
+    	else
+    		return transactions.get(0);
     }
     
 }
