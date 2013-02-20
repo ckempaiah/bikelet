@@ -26,4 +26,8 @@
     <definition extends="default" name="renttransactions/nopolicy">
         <put-attribute name="body" value="/WEB-INF/views/renttransactions/nopolicy.jspx"/>
     </definition>
+    
+    <definition extends="default" name="renttransactions/checkoutexists">
+        <put-attribute name="body" value="/WEB-INF/views/renttransactions/checkoutexists.jspx"/>
+    </definition>
 </tiles-definitions>
