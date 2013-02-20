@@ -68,7 +68,7 @@ public class BikeletAuthenticationProvider extends AbstractUserDetailsAuthentica
             	tenantId = user.getTenantId().getId();
             }
             if (user.getProgramId() != null) {
-            	tenantId = user.getProgramId().getId();
+            	programId = user.getProgramId().getId();
             }
         } catch (EmptyResultDataAccessException e) {
             throw new BadCredentialsException("Invalid username or password");
