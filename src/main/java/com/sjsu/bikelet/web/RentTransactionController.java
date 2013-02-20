@@ -3,6 +3,7 @@ package com.sjsu.bikelet.web;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import com.sjsu.bikelet.domain.BikeLetUser;
 import com.sjsu.bikelet.domain.BikeLocation;
@@ -64,9 +65,11 @@ public class RentTransactionController {
         uiModel.asMap().clear();
         BikeLetUser user = new BikeLetUser();
 		user = bikeLetUserService.findUserFromId(Utils.getLogonUser().getUserId());
-
+		String accessKey = RandomStringUtils.randomNumeric(6);
+		
 		rentTransaction.setRentStartDate(new Date());
         rentTransaction.setUserId(user);
+        rentTransaction.setAccessKey(accessKey);
         rentTransactionService.saveRentTransaction(rentTransaction);
         
         BikeLocation bikeLocation = new BikeLocation();
