@@ -17,5 +17,11 @@ public class StationServiceImpl implements StationService {
 	public List<Station> findStationEntriesByTenant(Long tenantId, int firstResult, int maxResults) {
 	    return Station.findStationEntriesByTenant(tenantId, firstResult, maxResults);
 	}
+
+	@Override
+	public List<Station> findAllStationsByProgram(Long programId) {
+		// TODO Auto-generated method stub
+		return Station.findAllStationsByProgram(programId);
+	}
    
 }

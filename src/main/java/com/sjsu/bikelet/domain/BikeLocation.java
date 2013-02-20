@@ -21,4 +21,30 @@ public class BikeLocation {
 
     @OneToOne
     private Bike bikeId;
+    
+    public static long countAvailableBikesByStation(Long stationId) {
+    	String status = "Available";
+//    	if (stationId == null)
+//    		return countBikes();
+        return entityManager().createQuery("SELECT COUNT(o) FROM BikeLocation o where o.stationId.id = :stationId and o.bikeStatus = :status", Long.class)
+        					  .setParameter("stationId", stationId)
+        					  .setParameter("status", status)
+        					  .getSingleResult();
+    }
+    
+    public static void updateBikeLocation(Long bikeId, String status, Long stationId)
+    {
+    	entityManager().createQuery("update BikeLocation o set o.bikeStatus = :status, o.stationId.id = :stationId where o.bikeId.id = :bikeId")
+    				   .setParameter("status", status)
+    				   .setParameter("stationId", stationId)					  
+    				   .setParameter("bikeId", bikeId)
+    				   .executeUpdate();
+    }
+    
+    public static BikeLocation findBikeLocationOfBike(Long bikeId)
+    {
+    	return entityManager().createQuery("SELECT o FROM BikeLocation o where o.bikeId.id = :bikeId",BikeLocation.class)
+    				   .setParameter("bikeId",bikeId)
+    				   .getSingleResult();
+    }
 }

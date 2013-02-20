@@ -15,4 +15,5 @@ public interface StationService {
 	public abstract List<Station> findStationEntriesByTenant(Long tenantId, int firstResult,
 			int maxResults);
 
+	public abstract List<Station> findAllStationsByProgram(Long programId);
 }

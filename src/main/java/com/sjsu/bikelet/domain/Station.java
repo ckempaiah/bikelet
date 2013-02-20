@@ -47,4 +47,11 @@ public class Station {
         return entityManager().createQuery("SELECT o FROM Station o where o.tenantId.id = :tenantId", Station.class).setParameter("tenantId", tenantId).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
+    public static List<Station> findAllStationsByProgram(Long programId) {
+    	if (programId == null)
+    		return findAllStations();
+        return entityManager().createQuery("SELECT o FROM Station o where o.programId.id = :programId", Station.class)
+        					  .setParameter("programId", programId)
+        					  .getResultList();
+    }
 }
