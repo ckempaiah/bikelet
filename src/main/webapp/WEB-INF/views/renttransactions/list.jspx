@@ -6,10 +6,10 @@
         <table:table data="${renttransactions}" id="l_com_sjsu_bikelet_domain_RentTransaction" create="false" delete="false" update="false" path="/renttransactions" z="EHeTn8r0w3VWD3Qf/n+STrBgz2g=">
             <table:column id="c_com_sjsu_bikelet_domain_RentTransaction_fromStationId" property="fromStationId" z="l1I3yy1Bk10zrCA/FHkiIZ1XoYI="/>
             <table:column id="c_com_sjsu_bikelet_domain_RentTransaction_toStationId" property="toStationId" z="5Z30I915M7s3+d95alKsb86FQI4="/>
-            <table:column id="c_com_sjsu_bikelet_domain_RentTransaction_tenantId" property="tenantId" z="vkPBAaML+Rf6M/7BLV7wa8+tREc="/>
+<!--             <table:column id="c_com_sjsu_bikelet_domain_RentTransaction_tenantId" property="tenantId" z="vkPBAaML+Rf6M/7BLV7wa8+tREc="/> -->
             <table:column date="true" dateTimePattern="${rentTransaction_rentstartdate_date_format}" id="c_com_sjsu_bikelet_domain_RentTransaction_rentStartDate" property="rentStartDate" z="xBeGWTiYQnJkiKfcDSfkovjP+K4="/>
             <table:column date="true" dateTimePattern="${rentTransaction_rentenddate_date_format}" id="c_com_sjsu_bikelet_domain_RentTransaction_rentEndDate" property="rentEndDate" z="U4MofsAv+a91L38Xun7woeLcqFM="/>
-            <table:column id="c_com_sjsu_bikelet_domain_RentTransaction_rateId" property="rateId" z="xuChz/GbFofleNVAL5ElAcwcRBE="/>
+            <table:column id="c_com_sjsu_bikelet_domain_RentTransaction_status" property="status" z="xuChz/GbFofleNVAL5ElAcwcRBE="/>
         </table:table>
     </page:list>
 </div>

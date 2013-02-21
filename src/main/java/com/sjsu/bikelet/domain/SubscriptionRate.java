@@ -1,5 +1,6 @@
 package com.sjsu.bikelet.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -77,5 +78,16 @@ public class SubscriptionRate {
     		return true;
     	else
     		return false;
+    }
+    
+    public static Integer findActiveRateIdForPolicy(Long policyId){
+    	List<SubscriptionRate> rate = new ArrayList<SubscriptionRate>();
+    	rate = entityManager().createQuery("SELECT o FROM SubscriptionRate o where o.policyId.id = :policyId and o.policyEndDate > NOW()", SubscriptionRate.class)
+    						  .setParameter("policyId", policyId)
+    						  .getResultList();
+    	if(rate.isEmpty())
+    		return 0;
+    	else
+    		return rate.get(0).getId().intValue();
     }
 }

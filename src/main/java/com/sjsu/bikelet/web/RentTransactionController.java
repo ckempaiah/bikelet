@@ -66,7 +66,10 @@ public class RentTransactionController {
         BikeLetUser user = new BikeLetUser();
 		user = bikeLetUserService.findUserFromId(Utils.getLogonUser().getUserId());
 		String accessKey = RandomStringUtils.randomNumeric(6);
+		UserSubscriptionPolicy policy = new UserSubscriptionPolicy();
+		policy = userPolicyService.findUserSubscriptionPolicyByUser(user.getId());
 		
+		rentTransaction.setRateId(userRateService.getActiveRateIdForPolicy(policy.getPolicyId().getId()));
 		rentTransaction.setRentStartDate(new Date());
         rentTransaction.setUserId(user);
         rentTransaction.setAccessKey(accessKey);
