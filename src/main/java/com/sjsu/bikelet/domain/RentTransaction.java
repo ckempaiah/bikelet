@@ -72,4 +72,19 @@ public class RentTransaction {
     		return transactions.get(0);
     }
     
+    public static List<RentTransaction> findRentTransactionsByUser(int firstResult, int maxResults, Long userId)
+    {
+        return entityManager().createQuery("SELECT o FROM RentTransaction o where o.userId.id = :userId", RentTransaction.class)
+        					  .setParameter("userId", userId)
+        					  .setFirstResult(firstResult)
+        					  .setMaxResults(maxResults)
+        					  .getResultList();    	
+    }
+    
+    public static List<RentTransaction> findAllRentTransactionsByUser(Long userId){
+    	return entityManager().createQuery("SELECT o FROM RentTransaction o where o.userId.id = :userId", RentTransaction.class)
+    						  .setParameter("userId",userId)
+    						  .getResultList();
+    }
+    
 }

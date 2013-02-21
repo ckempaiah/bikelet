@@ -48,21 +48,6 @@ privileged aspect RentTransactionController_Roo_Controller {
         return "renttransactions/show";
     }
     
-    @RequestMapping(produces = "text/html")
-    public String RentTransactionController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        if (page != null || size != null) {
-            int sizeNo = size == null ? 10 : size.intValue();
-            final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("renttransactions", rentTransactionService.findRentTransactionEntries(firstResult, sizeNo));
-            float nrOfPages = (float) rentTransactionService.countAllRentTransactions() / sizeNo;
-            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
-        } else {
-            uiModel.addAttribute("renttransactions", rentTransactionService.findAllRentTransactions());
-        }
-        addDateTimeFormatPatterns(uiModel);
-        return "renttransactions/list";
-    }
-    
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String RentTransactionController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
         RentTransaction rentTransaction = rentTransactionService.findRentTransaction(id);
