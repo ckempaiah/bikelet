@@ -62,6 +62,14 @@ public class ProgramController {
 		}
 		uiModel.asMap().clear();
 		program.setTenantId(tenantService.findTenant(Utils.getLogonTenantId()));
+		boolean check = program.getMin_threshold() >= program.getMax_threshold();
+		if (check == true){
+			bindingResult.addError(new ObjectError("program", "Min treshhold is greater than max threshhold"));
+			if (bindingResult.hasErrors()) {
+				populateEditForm(uiModel, program);
+				return "programs/create";
+			}
+		}
 		programService.saveProgram(program);
 		return "redirect:/programs/"+program.getId().toString()
 						+"/subscriptionpolicys";
