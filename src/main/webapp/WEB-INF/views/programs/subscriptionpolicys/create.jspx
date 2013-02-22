@@ -3,7 +3,7 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:create-program id="fc_com_sjsu_bikelet_domain_SubscriptionPolicy" modelAttribute="subscriptionPolicy" path="/programs/${programId}/subscriptionpolicys" render="${empty dependencies}" z="n2SI6E8rZ5Pkvis5ejV0GwZfm8c=">
-        <field:input field="policyName" id="c_com_sjsu_bikelet_domain_SubscriptionPolicy_policyName" min="2" required="true" z="OeUAXR7mB8kbe8gsPA2536ME3jI="/>
+        <field:input field="policyName" id="c_com_sjsu_bikelet_domain_SubscriptionPolicy_policyName" min="2" max="20" required="true" z="OeUAXR7mB8kbe8gsPA2536ME3jI="/>
         <field:textarea field="policyDescription" id="c_com_sjsu_bikelet_domain_SubscriptionPolicy_policyDescription" z="7KhZLioSM6NZJzHTETOsKln8F5M="/>
 
         <field:simple field="programId.name" id="c_com_sjsu_bikelet_domain_SubscriptionPolicy_programId" text="${subscriptionPolicy.programId.programName}" z="user-managed"/>
