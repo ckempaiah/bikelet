@@ -22,4 +22,11 @@ public class PaymentInfo {
 
     @ManyToOne
     private BikeLetUser userId;
+    
+    public static PaymentInfo findPaymentInfoByUser(Long userId)
+    {
+    	return entityManager().createQuery("SELECT o FROM PaymentInfo o where o.userId.id = :userId", PaymentInfo.class)
+    				   .setParameter("userId",userId)
+    				   .getSingleResult();
+    }
 }
