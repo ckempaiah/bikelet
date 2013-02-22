@@ -42,7 +42,7 @@ public class Bike {
     @Size(max = 10)
     private String wheelSize;
 
-    @Size(max = 10)
+    @Size(max = 30)
     private String bikeStatus;
 
     @ManyToOne

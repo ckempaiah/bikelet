@@ -10,6 +10,6 @@
         <field:display field="wheelSize" id="s_com_sjsu_bikelet_domain_Bike_wheelSize" object="${bike}" z="oVg6MHLpM6tLEEVS6Bv33yXD2mU="/>
         <field:display field="bikeStatus" id="s_com_sjsu_bikelet_domain_Bike_bikeStatus" object="${bike}" z="zS0doW0cgS1Aj7hAzTAo7MZ948Q="/>
         <field:display field="tenantId" id="s_com_sjsu_bikelet_domain_Bike_tenantId" object="${bike}" z="rncbrorI3byXjIsPW/BxRVTz2uI="/>
-        <field:display field="station" id="c_com_sjsu_bikelet_domain_Bike_station" object="${bike}" />  
+        <field:display field="station" id="c_com_sjsu_bikelet_domain_Bike_station" object="${bike}" />         
     </page:show>
 </div>
