@@ -79,6 +79,18 @@ public class ProgramController {
 			populateEditUserForm(uiModel, bikeLetUser);
 			return "programs/bikeletusers/create";
 		}
+		
+        if (bikeLetUserService.isDuplicateName(bikeLetUser.getUserName(), bikeLetUser.getId())){
+            bindingResult.addError(new ObjectError("bikeLetUser.userName", "User name must be Unique"));
+            
+            Program program = programService.findProgram(programId);
+    		bikeLetUser.setProgramId(program);
+    		bikeLetUser.setTenantId(program.getTenantId());
+
+    		populateEditUserForm(uiModel, bikeLetUser);
+    		return "programs/bikeletusers/create";
+        }
+		
 		uiModel.asMap().clear();
 		bikeLetUser.setProgramId(programService.findProgram(bikeLetUser.getProgramId().getId()));
 		bikeLetUser.setTenantId(tenantService.findTenant(bikeLetUser.getTenantId().getId()));	
