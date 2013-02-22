@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_com_sjsu_bikelet_domain_PaymentInfo" modelAttribute="paymentInfo" path="/profile/paymentinfo" versionField="Version" z="0HZyxQKHI2h5yEnHiYQH1vs1Vzc=">
+        <field:input field="cardNumber" id="c_com_sjsu_bikelet_domain_PaymentInfo_cardNumber" max="19" min="12" required="true" z="mXn2TZXzP/9UNyq8JpfDDI7p3Rc="/>
+        <field:input field="cardUserName" id="c_com_sjsu_bikelet_domain_PaymentInfo_cardUserName" min="2" required="true" z="Shn6Fp2SCcDjbA+PL1bAoHClOUA="/>
+        <field:simple field="userId.userName" id="c_com_sjsu_bikelet_domain_PaymentInfo_userId" text="${paymentInfo.userId.userName}" z="user-managed"/>
+        <field:hidden field="userId.id" id="c_com_sjsu_bikelet_domain_PaymentInfo_userId_id" z="Pse9om/YmXNqFgcxfe3Cz/FDjWI="/>
+    </form:update>
+</div>

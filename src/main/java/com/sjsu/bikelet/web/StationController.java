@@ -11,6 +11,7 @@ import com.sjsu.bikelet.model.BikeStatusEnum;
 import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.web.Utils;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import com.sjsu.bikelet.web.Utils;
 import com.sjsu.bikelet.service.ProgramService;
@@ -98,14 +99,13 @@ public class StationController {
         }
         uiModel.asMap().clear();
         bike.setTenantId(tenantService.findTenant(bike.getTenantId().getId()));	
-        bike.setBikeStatus(BikeStatusEnum.Available.toString());
         bikeService.saveBike(bike);
         // Create BikeLocation
         Station station = stationService.findStation(id);
         BikeLocation bikeLocation = new BikeLocation();
         bikeLocation.setBikeId(bike);
         bikeLocation.setStationId(station);
-        bikeLocation.setBikeStatus(BikeStatusEnum.Available.toString());
+        bikeLocation.setBikeStatus(bike.getBikeStatus());
         bikeLocationService.saveBikeLocation(bikeLocation);
 
         return "redirect:/stations/" + id + "/bikes/" + encodeUrlPathSegment(bike.getId().toString(), httpServletRequest);
@@ -157,6 +157,11 @@ public class StationController {
         uiModel.asMap().clear();
         bike.setTenantId(tenantService.findTenant(bike.getTenantId().getId()));
         bikeService.updateBike(bike);
+        // Update BikeLocation
+        BikeLocation bikeLocation = bikeLocationService.findBikeLocationOfBike(bike.getId());
+        bikeLocation.setBikeStatus(bike.getBikeStatus());
+        bikeLocationService.updateBikeLocation(bikeLocation);
+        
         return "redirect:/stations/" + stationId + "/bikes/" + encodeUrlPathSegment(bike.getId().toString(), httpServletRequest);
     }
     
@@ -183,6 +188,8 @@ public class StationController {
     
     void populateEditBikeForm(Model uiModel, Bike bike) {
         uiModel.addAttribute("bike", bike);
+        List<BikeStatusEnum> statuses = Arrays.asList(BikeStatusEnum.values());  
+        uiModel.addAttribute("statuses", statuses);
         addDateTimeFormatPatterns(uiModel);
     }
 }

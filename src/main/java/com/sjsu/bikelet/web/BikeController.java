@@ -1,5 +1,6 @@
 package com.sjsu.bikelet.web;
 
+
 import com.sjsu.bikelet.domain.Bike;
 import com.sjsu.bikelet.domain.BikeLocation;
 import com.sjsu.bikelet.domain.Station;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.sjsu.bikelet.web.Utils;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -46,7 +50,7 @@ public class BikeController {
         BikeLocation bikeLocation = new BikeLocation();
         bikeLocation.setBikeId(bike);
         bikeLocation.setStationId(station);
-        bikeLocation.setBikeStatus(BikeStatusEnum.Available.toString());
+        bikeLocation.setBikeStatus(bike.getBikeStatus());
         bikeLocationService.saveBikeLocation(bikeLocation);
 
         return "redirect:/bikes/" + encodeUrlPathSegment(bike.getId().toString(), httpServletRequest);
@@ -76,7 +80,8 @@ public class BikeController {
         Station station = stationService.findStation(bike.getStation().getId());
         BikeLocation bikeLocation = bikeLocationService.findBikeLocationOfBike(bike.getId());
         bikeLocation.setStationId(station);
-        bikeLocationService.saveBikeLocation(bikeLocation);
+        bikeLocation.setBikeStatus(bike.getBikeStatus());
+        bikeLocationService.updateBikeLocation(bikeLocation);
         return "redirect:/bikes/" + encodeUrlPathSegment(bike.getId().toString(), httpServletRequest);
     }
     
@@ -111,6 +116,8 @@ public class BikeController {
         uiModel.addAttribute("bike", bike);
         addDateTimeFormatPatterns(uiModel);
         uiModel.addAttribute("stations", stationService.findAllStationsByTenant(tenantId));
+        List<BikeStatusEnum> statuses = Arrays.asList(BikeStatusEnum.values());  
+        uiModel.addAttribute("statuses", statuses);
     }
     
     @RequestMapping(value = "/{id}", produces = "text/html")
@@ -120,7 +127,7 @@ public class BikeController {
         BikeLocation bikeLocation = bikeLocationService.findBikeLocationOfBike(id);
         if (bikeLocation != null) {
         	bike.setStation(bikeLocation.getStationId());
-        }
+       }
         uiModel.addAttribute("bike", bikeService.findBike(id));
         uiModel.addAttribute("itemId", id);
         return "bikes/show";

@@ -10,6 +10,11 @@ public class Utils {
 		BikeletUserPrinciple user = getLogonUser();
 		return user.getTenantId();
 	}
+	
+	public static Long getLogonUserId() {
+		BikeletUserPrinciple user = getLogonUser();
+		return user.getUserId();
+	}
 
     public static BikeletUserPrinciple getLogonUser() {
     	BikeletUserPrinciple principal = (BikeletUserPrinciple) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -76,13 +76,29 @@ public class ProgramController {
 	}
 	
 	@RequestMapping(value = "/{id}/bikeletusers", method = RequestMethod.POST, produces = "text/html")
-	public String createUser(@Valid BikeLetUser bikeLetUser,
+	public String createUser(@PathVariable("id") Long programId, @Valid BikeLetUser bikeLetUser,
 			BindingResult bindingResult, Model uiModel,
 			HttpServletRequest httpServletRequest) {
 		if (bindingResult.hasErrors()) {
+        	Program program = programService.findProgram(programId);
+    		bikeLetUser.setProgramId(program);
+    		bikeLetUser.setTenantId(program.getTenantId());
+    		
 			populateEditUserForm(uiModel, bikeLetUser);
 			return "programs/bikeletusers/create";
 		}
+		
+        if (bikeLetUserService.isDuplicateName(bikeLetUser.getUserName(), bikeLetUser.getId())){
+            bindingResult.addError(new ObjectError("bikeLetUser.userName", "User name must be Unique"));
+            
+            Program program = programService.findProgram(programId);
+    		bikeLetUser.setProgramId(program);
+    		bikeLetUser.setTenantId(program.getTenantId());
+
+    		populateEditUserForm(uiModel, bikeLetUser);
+    		return "programs/bikeletusers/create";
+        }
+		
 		uiModel.asMap().clear();
 		bikeLetUser.setProgramId(programService.findProgram(bikeLetUser.getProgramId().getId()));
 		bikeLetUser.setTenantId(tenantService.findTenant(bikeLetUser.getTenantId().getId()));	
@@ -241,16 +257,20 @@ public class ProgramController {
 	public String updateForm(@PathVariable("id") Long id, Model uiModel) {
 		Long tid = Utils.getLogonTenantId();
 		Tenant tenant = tenantService.findTenant(tid);
-		Program prog = new Program();
-		prog.setTenantId(tenant);
-		populateEditForm(uiModel, prog);
-		//populateEditForm(uiModel, programService.findProgram(id));
+		//Program prog = new Program();
+		//prog.setTenantId(tenant);
+		//populateEditForm(uiModel, prog);
+		populateEditForm(uiModel, programService.findProgram(id));
 		return "programs/update";
 	}
 	    
     @RequestMapping(value = "/{programId}/bikeletusers", method = RequestMethod.PUT, produces = "text/html")
     public String updateUser(@PathVariable("programId") Long programId, @Valid BikeLetUser bikeLetUser, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
+        	Program program = programService.findProgram(programId);
+    		bikeLetUser.setProgramId(program);
+    		bikeLetUser.setTenantId(program.getTenantId());
+
             populateEditUserForm(uiModel, bikeLetUser);
             return "programs/bikeletusers/update";
         }

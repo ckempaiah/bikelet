@@ -9,7 +9,7 @@
         <field:input field="tenantId" render="false" id="c_com_sjsu_bikelet_domain_RentTransaction_tenantId" validationMessageCode="field_invalid_integer" z="v8xyRg/aaSry7cJGanBv2FGnJ98="/>
         <field:datetime dateTimePattern="${rentTransaction_rentstartdate_date_format}" render="false" field="rentStartDate" id="c_com_sjsu_bikelet_domain_RentTransaction_rentStartDate" z="+SLl/Q58wQ57DMChBHbX1p18q24="/>
         <field:datetime dateTimePattern="${rentTransaction_rentenddate_date_format}" render="false" field="rentEndDate" id="c_com_sjsu_bikelet_domain_RentTransaction_rentEndDate" z="d8GJSdtzPFwSmePxsLzctOzyKHk="/>
-        <field:input field="rateId" render="false" id="c_com_sjsu_bikelet_domain_RentTransaction_rateId" validationMessageCode="field_invalid_integer" z="kJvtu5Wn2DK9k1gbOpVv9tHb9Ps="/>
+        <field:hidden field="rateId" id="c_com_sjsu_bikelet_domain_RentTransaction_rateId" z="kJvtu5Wn2DK9k1gbOpVv9tHb9Ps="/>
         <field:hidden field="status" id="c_com_sjsu_bikelet_domain_RentTransaction_status" z="S02+YIPK57+9VZFR4UfIbNSdZlE="/>
         <field:hidden field="comments" id="c_com_sjsu_bikelet_domain_RentTransaction_comments" z="hreqm4MyHtE3gdnGQ+WsUnCGAZU="/>
         <field:select field="userId" render="false" id="c_com_sjsu_bikelet_domain_RentTransaction_userId" itemValue="id" items="${bikeletusers}" path="/bikeletusers" z="vsANGREhlH5DRMAbobukhBd4J3M="/>
