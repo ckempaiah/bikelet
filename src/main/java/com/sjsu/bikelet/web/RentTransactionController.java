@@ -8,7 +8,7 @@ import com.sjsu.bikelet.domain.*;
 import com.sjsu.bikelet.service.*;
 import org.apache.commons.lang3.RandomStringUtils;
 
-import com.sjsu.bikelet.model.BikeStatusEnum;
+import com.sjsu.bikelet.model.BikeAvailabilityStatusEnum;
 import com.sjsu.bikelet.model.RentTransactionStatusEnum;
 import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 
@@ -71,7 +71,7 @@ public class RentTransactionController {
         
         BikeLocation bikeLocation = new BikeLocation();
         bikeLocation = bikeLocationService.findBikeLocationOfBike(rentTransaction.getBikeId().getId());
-        bikeLocation.setBikeStatus(BikeStatusEnum.CheckedOut.toString());
+        bikeLocation.setBikeStatus(BikeAvailabilityStatusEnum.CheckedOut.toString());
         bikeLocationService.updateBikeLocation(bikeLocation);
         
         return "redirect:/renttransactions/" + encodeUrlPathSegment(rentTransaction.getId().toString(), httpServletRequest);
@@ -208,7 +208,7 @@ public class RentTransactionController {
             transaction.setUserId(user);
             
         	RentTransaction rt = rentTransactionService.updateRentTransaction(transaction);
-        	bikeLocationService.updateBikeLocation(rt.getBikeId().getId(), BikeStatusEnum.Available.toString(), rt.getToStationId());
+        	bikeLocationService.updateBikeLocation(rt.getBikeId().getId(), BikeAvailabilityStatusEnum.Available.toString(), rt.getToStationId());
         	billTransactionService.createBillTransactionForRentTransaction(transaction);
         	return "redirect:/renttransactions/" + encodeUrlPathSegment(rentTransaction.getId().toString(), httpServletRequest);
         }

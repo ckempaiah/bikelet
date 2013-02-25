@@ -7,6 +7,7 @@ import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.Bike;
 import com.sjsu.bikelet.domain.BikeLocation;
 import com.sjsu.bikelet.domain.UserRole;
+import com.sjsu.bikelet.model.BikeAvailabilityStatusEnum;
 import com.sjsu.bikelet.model.BikeStatusEnum;
 import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.web.Utils;
@@ -105,7 +106,7 @@ public class StationController {
         BikeLocation bikeLocation = new BikeLocation();
         bikeLocation.setBikeId(bike);
         bikeLocation.setStationId(station);
-        bikeLocation.setBikeStatus(bike.getBikeStatus());
+        bikeLocation.setBikeStatus(bike.getLocationStatus());
         bikeLocationService.saveBikeLocation(bikeLocation);
 
         return "redirect:/stations/" + id + "/bikes/" + encodeUrlPathSegment(bike.getId().toString(), httpServletRequest);
@@ -125,7 +126,14 @@ public class StationController {
     @RequestMapping(value = "/{id}/bikes/{bikeId}", produces = "text/html")
     public String showBike(@PathVariable("id") Long id, @PathVariable("bikeId") Long bikeId, Model uiModel) {
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("bike", bikeService.findBike(bikeId));
+        
+    	Bike bike = bikeService.findBike(bikeId);
+    	BikeLocation bikeLocation = bikeLocationService.findBikeLocationOfBike(bikeId);
+    	if (bikeLocation != null)
+    		bike.setStation(bikeLocation.getStationId());
+    	    bike.setLocationStatus(bikeLocation.getBikeStatus());
+    	
+        uiModel.addAttribute("bike", bike);
         uiModel.addAttribute("itemId", bikeId);
         uiModel.addAttribute("stationId", id);
         return "stations/bikes/show";
@@ -159,7 +167,7 @@ public class StationController {
         bikeService.updateBike(bike);
         // Update BikeLocation
         BikeLocation bikeLocation = bikeLocationService.findBikeLocationOfBike(bike.getId());
-        bikeLocation.setBikeStatus(bike.getBikeStatus());
+        bikeLocation.setBikeStatus(bike.getLocationStatus());
         bikeLocationService.updateBikeLocation(bikeLocation);
         
         return "redirect:/stations/" + stationId + "/bikes/" + encodeUrlPathSegment(bike.getId().toString(), httpServletRequest);
@@ -167,8 +175,14 @@ public class StationController {
     
     @RequestMapping(value = "/{id}/bikes/{bikeId}", params = "form", produces = "text/html")
     public String updateBikeForm(@PathVariable("id") Long id, @PathVariable("bikeId") Long bikeId, Model uiModel) {
+    	Bike bike = bikeService.findBike(bikeId);
+    	BikeLocation bikeLocation = bikeLocationService.findBikeLocationOfBike(bikeId);
+    	if (bikeLocation != null)
+    		bike.setStation(bikeLocation.getStationId());
+    	    bike.setLocationStatus(bikeLocation.getBikeStatus());
+    	populateEditBikeForm(uiModel, bike);
+    	
     	uiModel.addAttribute("stationId", id);
-        populateEditBikeForm(uiModel, bikeService.findBike(bikeId));
         return "stations/bikes/update";
     }
     
@@ -189,7 +203,10 @@ public class StationController {
     void populateEditBikeForm(Model uiModel, Bike bike) {
         uiModel.addAttribute("bike", bike);
         List<BikeStatusEnum> statuses = Arrays.asList(BikeStatusEnum.values());  
+        List<BikeAvailabilityStatusEnum> locationStatuses = Arrays.asList(BikeAvailabilityStatusEnum.values());  
+        
         uiModel.addAttribute("statuses", statuses);
+        uiModel.addAttribute("locationStatuses", locationStatuses);
         addDateTimeFormatPatterns(uiModel);
     }
 }

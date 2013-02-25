@@ -8,7 +8,7 @@ import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
-import com.sjsu.bikelet.model.BikeStatusEnum;
+import com.sjsu.bikelet.model.BikeAvailabilityStatusEnum;
 
 @RooJavaBean
 @RooToString
@@ -27,7 +27,7 @@ public class BikeLocation {
     public static Long countAvailableBikesByStation(Long stationId) {
         return entityManager().createQuery("SELECT COUNT(o) FROM BikeLocation o where o.stationId.id = :stationId and o.bikeStatus = :status", Long.class)
         					  .setParameter("stationId", stationId)
-        					  .setParameter("status", BikeStatusEnum.Available.toString())
+        					  .setParameter("status", BikeAvailabilityStatusEnum.Available.toString())
         					  .getSingleResult();
     }
     

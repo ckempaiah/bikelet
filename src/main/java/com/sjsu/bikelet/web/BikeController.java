@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import javax.validation.Valid;
 
 import com.sjsu.bikelet.model.BikeStatusEnum;
+import com.sjsu.bikelet.model.BikeAvailabilityStatusEnum;
 import com.sjsu.bikelet.service.BikeService;
 import com.sjsu.bikelet.service.TenantService;
 import com.sjsu.bikelet.service.StationService;
@@ -50,7 +51,7 @@ public class BikeController {
         BikeLocation bikeLocation = new BikeLocation();
         bikeLocation.setBikeId(bike);
         bikeLocation.setStationId(station);
-        bikeLocation.setBikeStatus(bike.getBikeStatus());
+        bikeLocation.setBikeStatus(bike.getLocationStatus());
         bikeLocationService.saveBikeLocation(bikeLocation);
 
         return "redirect:/bikes/" + encodeUrlPathSegment(bike.getId().toString(), httpServletRequest);
@@ -80,7 +81,7 @@ public class BikeController {
         Station station = stationService.findStation(bike.getStation().getId());
         BikeLocation bikeLocation = bikeLocationService.findBikeLocationOfBike(bike.getId());
         bikeLocation.setStationId(station);
-        bikeLocation.setBikeStatus(bike.getBikeStatus());
+        bikeLocation.setBikeStatus(bike.getLocationStatus());
         bikeLocationService.updateBikeLocation(bikeLocation);
         return "redirect:/bikes/" + encodeUrlPathSegment(bike.getId().toString(), httpServletRequest);
     }
@@ -91,6 +92,7 @@ public class BikeController {
     	BikeLocation bikeLocation = bikeLocationService.findBikeLocationOfBike(id);
     	if (bikeLocation != null)
     		bike.setStation(bikeLocation.getStationId());
+    	    bike.setLocationStatus(bikeLocation.getBikeStatus());
         populateEditForm(uiModel, bike);
         return "bikes/update";
     }
@@ -117,7 +119,10 @@ public class BikeController {
         addDateTimeFormatPatterns(uiModel);
         uiModel.addAttribute("stations", stationService.findAllStationsByTenant(tenantId));
         List<BikeStatusEnum> statuses = Arrays.asList(BikeStatusEnum.values());  
+        List<BikeAvailabilityStatusEnum> locationStatuses = Arrays.asList(BikeAvailabilityStatusEnum.values());  
+        
         uiModel.addAttribute("statuses", statuses);
+        uiModel.addAttribute("locationStatuses", locationStatuses);
     }
     
     @RequestMapping(value = "/{id}", produces = "text/html")
@@ -127,8 +132,9 @@ public class BikeController {
         BikeLocation bikeLocation = bikeLocationService.findBikeLocationOfBike(id);
         if (bikeLocation != null) {
         	bike.setStation(bikeLocation.getStationId());
+        	bike.setLocationStatus(bikeLocation.getBikeStatus());
        }
-        uiModel.addAttribute("bike", bikeService.findBike(id));
+        uiModel.addAttribute("bike", bike);
         uiModel.addAttribute("itemId", id);
         return "bikes/show";
     }

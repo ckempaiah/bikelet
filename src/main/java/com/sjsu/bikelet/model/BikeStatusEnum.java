@@ -3,5 +3,5 @@ package com.sjsu.bikelet.model;
 
 public enum BikeStatusEnum {
 
-	Available, CheckedOut, Serviced;
+	Available, Serviced;
 }

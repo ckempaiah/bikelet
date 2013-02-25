@@ -9,6 +9,7 @@
         <field:display date="true" dateTimePattern="${bike_lastservicedate_date_format}" field="lastServiceDate" id="s_com_sjsu_bikelet_domain_Bike_lastServiceDate" object="${bike}" z="avCT2c4kNMdkFa9bewXzG2YDKIE="/>
         <field:display field="wheelSize" id="s_com_sjsu_bikelet_domain_Bike_wheelSize" object="${bike}" z="oVg6MHLpM6tLEEVS6Bv33yXD2mU="/>
         <field:display field="bikeStatus" id="s_com_sjsu_bikelet_domain_Bike_bikeStatus" object="${bike}" z="zS0doW0cgS1Aj7hAzTAo7MZ948Q="/>
+        <field:display field="locationStatus" id="s_com_sjsu_bikelet_domain_Bike_locationStatus" object="${bike}" />
         <field:display field="tenantId" id="s_com_sjsu_bikelet_domain_Bike_tenantId" object="${bike}" z="rncbrorI3byXjIsPW/BxRVTz2uI="/>
     </page:show>
 </div>

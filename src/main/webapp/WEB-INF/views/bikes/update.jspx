@@ -12,5 +12,6 @@
         <field:simple field="tenantId.tenantName" id="c_com_sjsu_bikelet_domain_Bike_tenantId" text="${bike.tenantId.tenantName}" z="user-managed"/>
         <field:hidden field="tenantId.id" id="c_com_sjsu_bikelet_domain_Bike_tenantId_id" z="PtpoxBGgULwvI6dTsuBQfzY7ZBM="/>
         <field:select field="station" id="c_com_sjsu_bikelet_domain_Bike_station" itemValue="id" items="${stations}" path="/stations"/>
+        <field:select field="locationStatus" id="c_com_sjsu_bikelet_domain_Bike_locationStatus" path="/statuses" items="${locationStatuses}"/>
     </form:update>
 </div>

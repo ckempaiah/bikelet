@@ -18,7 +18,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sjsu.bikelet.model.BikeStatusEnum;
+import com.sjsu.bikelet.model.BikeAvailabilityStatusEnum;
 
 
 @RooJavaBean
@@ -58,17 +58,29 @@ public class Bike {
 	public void setStation(Station station) {
 		this.station = station;
 	}
+	
+    @Transient
+    private String locationStatus;
+
+
+	public String getLocationStatus() {
+		return locationStatus;
+	}
+
+	public void setLocationStatus(String locationStatus) {
+		this.locationStatus = locationStatus;
+	}
 
 	public static long countBikesByStation(Long stationId) {
-        return entityManager().createQuery("SELECT COUNT(o) FROM BikeLocation o where o.stationId.id = :stationId and o.bikeStatus = :bikeStatus", Long.class).setParameter("stationId", stationId).setParameter("bikeStatus", BikeStatusEnum.Available.toString()).getSingleResult();
+        return entityManager().createQuery("SELECT COUNT(o) FROM BikeLocation o where o.stationId.id = :stationId ", Long.class).setParameter("stationId", stationId).getSingleResult();
     }
     
     public static List<Bike> findAllBikesByStation(Long stationId) {
-        return entityManager().createQuery("SELECT o.bikeId FROM BikeLocation o where o.stationId.id = :stationId and o.bikeStatus = :bikeStatus", Bike.class).setParameter("stationId", stationId).setParameter("bikeStatus", BikeStatusEnum.Available.toString()).getResultList();
+        return entityManager().createQuery("SELECT o.bikeId FROM BikeLocation o where o.stationId.id = :stationId ", Bike.class).setParameter("stationId", stationId).getResultList();
     }
     
     public static List<Bike> findBikeEntriesByStation(Long stationId, int firstResult, int maxResults) {
-        return entityManager().createQuery("SELECT o.bikeId FROM BikeLocation o where o.stationId.id = :stationId and o.bikeStatus = :bikeStatus", Bike.class).setParameter("stationId", stationId).setParameter("bikeStatus", BikeStatusEnum.Available.toString()).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+        return entityManager().createQuery("SELECT o.bikeId FROM BikeLocation o where o.stationId.id = :stationId ", Bike.class).setParameter("stationId", stationId).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
 
     public static long countBikesByTenant(Long tenantId) {
@@ -84,7 +96,7 @@ public class Bike {
     }
     public static List<Bike> findAvailableBikesByStation(Long stationId)
     {
-    	String status = "Available";
+    	String status = BikeAvailabilityStatusEnum.Available.toString();
     	if(stationId==null)
     		return findAllBikes();
     	return entityManager().createQuery("SELECT o FROM Bike o WHERE o.id IN (SELECT bl.bikeId.id FROM BikeLocation bl WHERE bl.stationId.id = :stId and bl.bikeStatus = :status)", Bike.class)
