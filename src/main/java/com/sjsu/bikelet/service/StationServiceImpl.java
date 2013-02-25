@@ -23,5 +23,11 @@ public class StationServiceImpl implements StationService {
 		// TODO Auto-generated method stub
 		return Station.findAllStationsByProgram(programId);
 	}
+
+	@Override
+	public boolean isStationFull(Long stationId) {
+		// TODO Auto-generated method stub
+		return Station.isStationFull(stationId);
+	}
    
 }

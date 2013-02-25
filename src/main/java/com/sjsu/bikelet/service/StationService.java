@@ -16,4 +16,6 @@ public interface StationService {
 			int maxResults);
 
 	public abstract List<Station> findAllStationsByProgram(Long programId);
+	
+	public boolean isStationFull(Long stationId);
 }
