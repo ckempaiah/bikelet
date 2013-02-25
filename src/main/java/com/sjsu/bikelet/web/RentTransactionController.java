@@ -3,20 +3,13 @@ package com.sjsu.bikelet.web;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.sjsu.bikelet.domain.*;
+import com.sjsu.bikelet.service.*;
 import org.apache.commons.lang3.RandomStringUtils;
 
-import com.sjsu.bikelet.domain.BikeLetUser;
-import com.sjsu.bikelet.domain.BikeLocation;
-import com.sjsu.bikelet.domain.RentTransaction;
-import com.sjsu.bikelet.domain.Station;
-import com.sjsu.bikelet.domain.UserSubscriptionPolicy;
 import com.sjsu.bikelet.model.BikeStatusEnum;
 import com.sjsu.bikelet.model.RentTransactionStatusEnum;
-import com.sjsu.bikelet.service.BikeLocationService;
-import com.sjsu.bikelet.service.ProgramService;
-import com.sjsu.bikelet.service.StationService;
-import com.sjsu.bikelet.service.SubscriptionRateService;
-import com.sjsu.bikelet.service.UserSubscriptionPolicyService;
 import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
@@ -53,7 +46,8 @@ public class RentTransactionController {
 	
 	@Autowired
 	SubscriptionRateService userRateService;
-	
+    @Autowired
+    BillTransactionService billTransactionService;
 	
 	/* CHECKOUT */
 	@RequestMapping(method = RequestMethod.POST, produces = "text/html")
@@ -182,19 +176,22 @@ public class RentTransactionController {
             return "renttransactions/update";
         }
         uiModel.asMap().clear();
-        BikeLetUser user = new BikeLetUser();
+        BikeLetUser user;
 		user = bikeLetUserService.findUserFromId(Utils.getLogonUser().getUserId());
 		RentTransaction transaction = rentTransactionService.findRentTransactionForCheckin(Utils.getLogonUser().getUserId(), RentTransactionStatusEnum.InProgress.toString());		
 		transaction.setRentEndDate(new Date());
 		transaction.setStatus(RentTransactionStatusEnum.Complete.toString());
 		transaction.setToStationId(rentTransaction.getToStationId());
 		transaction.setComments(rentTransaction.getComments());
-		
+        transaction.setUserId(user);
         RentTransaction rt = rentTransactionService.updateRentTransaction(transaction);
+
         bikeLocationService.updateBikeLocation(rt.getBikeId().getId(), BikeStatusEnum.Available.toString(), rt.getToStationId());
+        billTransactionService.createBillTransactionForRentTransaction(transaction);
         return "redirect:/renttransactions/" + encodeUrlPathSegment(rentTransaction.getId().toString(), httpServletRequest);
     }
-    
+
+
     /* CHECKOUT */
     void populateCheckoutForm(Model uiModel, RentTransaction rentTransaction, Long stationId) {
         uiModel.addAttribute("rentTransaction", rentTransaction);
