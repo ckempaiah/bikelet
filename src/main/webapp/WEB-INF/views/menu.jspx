@@ -18,30 +18,11 @@
             </menu:category>
         </sec:authorize>
         <sec:authorize ifAllGranted="ROLE_TENANT">
-            <menu:category id="c_profile" >
-                <menu:item id="i_paymentinfo_update" messageCode="global_menu_update" url="/profile/paymentinfo?form" />
-                <menu:item id="i_address_update" messageCode="global_menu_update" url="/profile/address?form" />
-            </menu:category>
             <menu:category id="c_program" z="YGxVV4/fAoI1UpA5Qj+HrGbzkYw=">
                 <menu:item id="i_program_new" messageCode="global_menu_new" url="/programs?form" z="zDcnKu0MxAKfjglkepWRPV+CgbM="/>
                 <menu:item id="i_program_list" messageCode="global_menu_list" url="/programs?page=1&amp;size=${empty param.size ? 10 : param.size}" z="Wo9hPjCt4LuJjE285foaXnjcGTM="/>
-            </menu:category>
-            <menu:category id="c_bikelocation" z="KlEGq6lhBXAsC3XRu0DUC6TFv9I=">
-                <menu:item id="i_bikelocation_new" messageCode="global_menu_new" url="/bikelocations?form" z="j9pPAvVcGB9oRXsB95lvDb0+8wg="/>
-                <menu:item id="i_bikelocation_list" messageCode="global_menu_list" url="/bikelocations?page=1&amp;size=${empty param.size ? 10 : param.size}" z="uKJ67g8rk6hNpuZUeTezYUbR4fg="/>
-            </menu:category>
-
-            <menu:category id="c_subscriptionrate" z="Ejj9MWXd+HObhk1rAVL/DU74iH8=">
-                <menu:item id="i_subscriptionrate_new" messageCode="global_menu_new" url="/subscriptionrates?form" z="PlVDmQTJbyTkdpxL255jK9m0poE="/>
-                <menu:item id="i_subscriptionrate_list" messageCode="global_menu_list" url="/subscriptionrates?page=1&amp;size=${empty param.size ? 10 : param.size}" z="Gi6LjcScBy97krr9XXp7UenL1Nk="/>
-            </menu:category>
-            <menu:category id="c_subscriptionpolicy" z="jCc5P+QUoLTG7dIv3clrhESy8WU=">
                 <menu:item id="i_subscriptionpolicy_new" messageCode="global_menu_new" url="/subscriptionpolicys?form" z="HIpeeUH+2fKWng9H4uPx6eBrOLo="/>
                 <menu:item id="i_subscriptionpolicy_list" messageCode="global_menu_list" url="/subscriptionpolicys?page=1&amp;size=${empty param.size ? 10 : param.size}" z="i2gmgIKGouaYquTzF0MISDChQIY="/>
-            </menu:category>
-            <menu:category id="c_usersubscriptionpolicy" z="2K2E8bDZhqUZRim7l/RLttghU5I=">
-                <menu:item id="i_usersubscriptionpolicy_new" messageCode="global_menu_new" url="/usersubscriptionpolicys?form" z="UIBU089Ofgwo25skZpWKF5H6xMM="/>
-                <menu:item id="i_usersubscriptionpolicy_list" messageCode="global_menu_list" url="/usersubscriptionpolicys?page=1&amp;size=${empty param.size ? 10 : param.size}" z="sY59B5/QIAWRfuUcKe+lL8h0yWI="/>
             </menu:category>
             <menu:category id="c_bike" z="pf9l7GuazB4KidXK/n+gRNP16qY=">
                 <menu:item id="i_bike_new" messageCode="global_menu_new" url="/bikes?form" z="xLBfffbYtDL2aJIGO745KPN2XbE="/>
@@ -51,10 +32,18 @@
                 <menu:item id="i_station_new" messageCode="global_menu_new" url="/stations?form" z="jL0gH9x4u0kH/1huz0bZM5+ua8g="/>
                 <menu:item id="i_station_list" messageCode="global_menu_list" url="/stations?page=1&amp;size=${empty param.size ? 10 : param.size}" z="2lGPeju7TsAqlchQ1e/Yga2lg/4="/>
             </menu:category>
-            <menu:category id="c_billtransaction" z="oyg+3opPZPL1afbUGHBwSGH5CzQ=">
-                <menu:item id="i_billtransaction_new" messageCode="global_menu_new" url="/billtransactions?form" z="BVnlxbiQ6KVX4JtOovJymiiahsU="/>
-                <menu:item id="i_billtransaction_list" messageCode="global_menu_list" url="/billtransactions?page=1&amp;size=${empty param.size ? 10 : param.size}" z="l5HaW2wfxXT77NmZR4eBP/jfhF0="/>
+            <menu:category id="c_profile" >
+                <menu:item id="i_paymentinfo_update" messageCode="global_menu_update" url="/profile/paymentinfo?form" />
+                <menu:item id="i_address_update" messageCode="global_menu_update" url="/profile/address?form" />
             </menu:category>
+            <menu:category id="c_bill" z="hAQcl5fPVV+gFU4o9uZs4YSdxCs=">
+                <menu:item id="i_bill_new" messageCode="global_menu_new" url="/bills?form" z="cVovhzw6GT+ic6ihf14TyR5AdJ8="/>
+                <menu:item id="i_bill_list" messageCode="global_menu_list" url="/bills?page=1&amp;size=${empty param.size ? 10 : param.size}" z="g/dBi1S+sB2EQX5WLDhE56E6Tr8="/>
+            </menu:category>
+            <!--<menu:category id="c_billtransaction" z="oyg+3opPZPL1afbUGHBwSGH5CzQ=">-->
+                <!--<menu:item id="i_billtransaction_new" messageCode="global_menu_new" url="/billtransactions?form" z="BVnlxbiQ6KVX4JtOovJymiiahsU="/>-->
+                <!--<menu:item id="i_billtransaction_list" messageCode="global_menu_list" url="/billtransactions?page=1&amp;size=${empty param.size ? 10 : param.size}" z="l5HaW2wfxXT77NmZR4eBP/jfhF0="/>-->
+            <!--</menu:category>-->
         </sec:authorize>
         <sec:authorize ifAllGranted="ROLE_USER">
         <menu:category id="c_profile" >
