@@ -13,7 +13,7 @@ public class BikeLocationServiceImpl implements BikeLocationService {
 	}
 
 	@Override
-	public long countAvailableBikesByStation(Long stationId) {
+	public Long countAvailableBikesByStation(Long stationId) {
 		// TODO Auto-generated method stub
 		return BikeLocation.countAvailableBikesByStation(stationId);
 	}

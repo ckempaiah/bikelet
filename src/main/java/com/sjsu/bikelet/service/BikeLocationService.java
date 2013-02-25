@@ -9,7 +9,7 @@ public interface BikeLocationService {
 	
 	public abstract void updateBikeLocation(Long bikeId, String status, Long stationId);
 	
-	public abstract long countAvailableBikesByStation(Long stationId);
+	public abstract Long countAvailableBikesByStation(Long stationId);
 	
 	public abstract BikeLocation findBikeLocationOfBike(Long bikeId);
 }
