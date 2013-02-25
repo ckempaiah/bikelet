@@ -169,6 +169,20 @@ public class RentTransactionController {
     
     
     /* CHECKIN */
+    @RequestMapping(value = "/checkin/full", params = "form", produces = "text/html")
+    public String updateStationFullForm(Model uiModel) {
+		RentTransaction rentTransaction = rentTransactionService.findRentTransactionForCheckin(Utils.getLogonUser().getUserId(), RentTransactionStatusEnum.InProgress.toString());
+		if(rentTransaction!=null)
+		{
+			populateUpdateForm(uiModel, rentTransaction);
+	        return "renttransactions/checkinstationfull";
+		}
+		else
+			return "renttransactions/checkoutfirst";
+    }
+
+    
+    /* CHECKIN */
     @RequestMapping(method = RequestMethod.PUT, produces = "text/html")
     public String update(@Valid RentTransaction rentTransaction, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -176,19 +190,28 @@ public class RentTransactionController {
             return "renttransactions/update";
         }
         uiModel.asMap().clear();
-        BikeLetUser user;
-		user = bikeLetUserService.findUserFromId(Utils.getLogonUser().getUserId());
-		RentTransaction transaction = rentTransactionService.findRentTransactionForCheckin(Utils.getLogonUser().getUserId(), RentTransactionStatusEnum.InProgress.toString());		
-		transaction.setRentEndDate(new Date());
-		transaction.setStatus(RentTransactionStatusEnum.Complete.toString());
-		transaction.setToStationId(rentTransaction.getToStationId());
-		transaction.setComments(rentTransaction.getComments());
-        transaction.setUserId(user);
-        RentTransaction rt = rentTransactionService.updateRentTransaction(transaction);
-
-        bikeLocationService.updateBikeLocation(rt.getBikeId().getId(), BikeStatusEnum.Available.toString(), rt.getToStationId());
-        billTransactionService.createBillTransactionForRentTransaction(transaction);
-        return "redirect:/renttransactions/" + encodeUrlPathSegment(rentTransaction.getId().toString(), httpServletRequest);
+        	
+        if(stationService.isStationFull(rentTransaction.getToStationId()))
+		{
+			return "redirect:/renttransactions/checkin/full?form";
+		}
+        
+        else
+        {
+        	BikeLetUser user;
+    		user = bikeLetUserService.findUserFromId(Utils.getLogonUser().getUserId());
+    		RentTransaction transaction = rentTransactionService.findRentTransactionForCheckin(Utils.getLogonUser().getUserId(), RentTransactionStatusEnum.InProgress.toString());		
+    		transaction.setRentEndDate(new Date());
+    		transaction.setStatus(RentTransactionStatusEnum.Complete.toString());
+    		transaction.setToStationId(rentTransaction.getToStationId());
+    		transaction.setComments(rentTransaction.getComments());
+            transaction.setUserId(user);
+            
+        	RentTransaction rt = rentTransactionService.updateRentTransaction(transaction);
+        	bikeLocationService.updateBikeLocation(rt.getBikeId().getId(), BikeStatusEnum.Available.toString(), rt.getToStationId());
+        	billTransactionService.createBillTransactionForRentTransaction(transaction);
+        	return "redirect:/renttransactions/" + encodeUrlPathSegment(rentTransaction.getId().toString(), httpServletRequest);
+        }
     }
 
 
