@@ -24,7 +24,7 @@ public class BikeLocation {
     @OneToOne
     private Bike bikeId;
     
-    public static long countAvailableBikesByStation(Long stationId) {
+    public static Long countAvailableBikesByStation(Long stationId) {
         return entityManager().createQuery("SELECT COUNT(o) FROM BikeLocation o where o.stationId.id = :stationId and o.bikeStatus = :status", Long.class)
         					  .setParameter("stationId", stationId)
         					  .setParameter("status", BikeStatusEnum.Available.toString())

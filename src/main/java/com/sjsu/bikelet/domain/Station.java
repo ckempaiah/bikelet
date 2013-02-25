@@ -8,6 +8,10 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
 
 import com.sjsu.bikelet.domain.Station;
+import com.sjsu.bikelet.service.BikeLocationService;
+import com.sjsu.bikelet.service.StationService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,7 +32,7 @@ public class Station {
     private Program programId;
 
     private Integer capacity;
-
+    
     public static long countStationsByTenant(Long tenantId) {
     	if (tenantId == null)
     		return countStations();
@@ -53,5 +57,16 @@ public class Station {
         return entityManager().createQuery("SELECT o FROM Station o where o.programId.id = :programId", Station.class)
         					  .setParameter("programId", programId)
         					  .getResultList();
+    }
+    
+    public static boolean isStationFull(Long stationId) {
+    	Integer count = BikeLocation.countAvailableBikesByStation(stationId).intValue();
+    	Integer capacity = entityManager().createQuery("SELECT o.capacity FROM Station o where o.id = :stationId", Integer.class)
+    									  .setParameter("stationId",stationId)
+    									  .getSingleResult();
+    	if(count==capacity)
+ 			return true;   
+    	else
+    		return false;
     }
 }
