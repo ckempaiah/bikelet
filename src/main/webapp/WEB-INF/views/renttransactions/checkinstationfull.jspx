@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update-transaction id="c_com_sjsu_bikelet_domain_CheckinBike" modelAttribute="rentTransaction" path="/renttransactions" versionField="Version" z="TrPywgDmUwxkdIduTNpg2eFJfwk=">
+        <field:select field="toStationId" id="c_com_sjsu_bikelet_domain_RentTransaction_toStationId" itemValue="id" items="${tostations}" path="/stations" z="wHh+YcviFD0knL2Q0lVBmxoLuOk="/>
+        <field:input field="fromStationId" id="c_com_sjsu_bikelet_domain_RentTransaction_fromStationId" validationMessageCode="field_invalid_integer" z="uqrsoIQvWuHh3Pq5+Gj6ZH55rpE="/>
+        <field:input field="tenantId" render="false" id="c_com_sjsu_bikelet_domain_RentTransaction_tenantId" validationMessageCode="field_invalid_integer" z="v8xyRg/aaSry7cJGanBv2FGnJ98="/>
+        <field:datetime dateTimePattern="${rentTransaction_rentstartdate_date_format}" field="rentStartDate" id="c_com_sjsu_bikelet_domain_RentTransaction_rentStartDate" z="+SLl/Q58wQ57DMChBHbX1p18q24="/>
+        <field:datetime dateTimePattern="${rentTransaction_rentenddate_date_format}" field="rentEndDate" id="c_com_sjsu_bikelet_domain_RentTransaction_rentEndDate" z="d8GJSdtzPFwSmePxsLzctOzyKHk="/>
+        <field:hidden field="rateId" id="c_com_sjsu_bikelet_domain_RentTransaction_rateId" z="kJvtu5Wn2DK9k1gbOpVv9tHb9Ps="/>
+        <field:input field="status" id="c_com_sjsu_bikelet_domain_RentTransaction_status" max="10" required="true" z="S02+YIPK57+9VZFR4UfIbNSdZlE="/>
+        <field:textarea field="comments" id="c_com_sjsu_bikelet_domain_RentTransaction_comments" required="true" z="hreqm4MyHtE3gdnGQ+WsUnCGAZU="/>
+        <field:select field="userId" render="false" id="c_com_sjsu_bikelet_domain_RentTransaction_userId" itemValue="id" items="${bikeletusers}" path="/bikeletusers" z="vsANGREhlH5DRMAbobukhBd4J3M="/>
+        <field:display field="bikeId" id="s_com_sjsu_bikelet_domain_RentTransaction_bikeId" object="${renttransaction}" z="hL06buqsEmJYGSmElzQ0XsaF3Ns="/>
+        <field:hidden field="accessKey" id="c_com_sjsu_bikelet_domain_RentTransaction_accessKey" z="v8xyRg/aaSry7cJGanBv2FGnJ98="/>
+    </form:update-transaction>
+    
+    <br/>
+    <br/>
+    
+    <B style="color: red;">Station is Full. Please select another station.</B>
+    
+</div>
