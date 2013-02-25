@@ -68,8 +68,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     @Autowired
     BikeLetRoleService ApplicationConversionServiceFactoryBean.bikeLetRoleService;
     
-    @Autowired
-    BikeLetUserService ApplicationConversionServiceFactoryBean.bikeLetUserService;
+
     
     @Autowired
     BikeLocationService ApplicationConversionServiceFactoryBean.bikeLocationService;
@@ -217,14 +216,6 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.BikeLetUser>() {
             public com.sjsu.bikelet.domain.BikeLetUser convert(java.lang.Long id) {
                 return bikeLetUserService.findBikeLetUser(id);
-            }
-        };
-    }
-    
-    public Converter<String, BikeLetUser> ApplicationConversionServiceFactoryBean.getStringToBikeLetUserConverter() {
-        return new org.springframework.core.convert.converter.Converter<java.lang.String, com.sjsu.bikelet.domain.BikeLetUser>() {
-            public com.sjsu.bikelet.domain.BikeLetUser convert(String id) {
-                return getObject().convert(getObject().convert(id, Long.class), BikeLetUser.class);
             }
         };
     }

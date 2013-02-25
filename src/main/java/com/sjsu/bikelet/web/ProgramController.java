@@ -62,6 +62,14 @@ public class ProgramController {
 		}
 		uiModel.asMap().clear();
 		program.setTenantId(tenantService.findTenant(Utils.getLogonTenantId()));
+		boolean check = program.getMin_threshold() >= program.getMax_threshold();
+		if (check == true){
+			bindingResult.addError(new ObjectError("program", "Min treshhold is greater than max threshhold"));
+			if (bindingResult.hasErrors()) {
+				populateEditForm(uiModel, program);
+				return "programs/create";
+			}
+		}
 		programService.saveProgram(program);
 		return "redirect:/programs/"+program.getId().toString()
 						+"/subscriptionpolicys";
@@ -79,6 +87,18 @@ public class ProgramController {
 			populateEditUserForm(uiModel, bikeLetUser);
 			return "programs/bikeletusers/create";
 		}
+		
+        if (bikeLetUserService.isDuplicateName(bikeLetUser.getUserName(), bikeLetUser.getId())){
+            bindingResult.addError(new ObjectError("bikeLetUser.userName", "User name must be Unique"));
+            
+            Program program = programService.findProgram(programId);
+    		bikeLetUser.setProgramId(program);
+    		bikeLetUser.setTenantId(program.getTenantId());
+
+    		populateEditUserForm(uiModel, bikeLetUser);
+    		return "programs/bikeletusers/create";
+        }
+		
 		uiModel.asMap().clear();
 		bikeLetUser.setProgramId(programService.findProgram(bikeLetUser.getProgramId().getId()));
 		bikeLetUser.setTenantId(tenantService.findTenant(bikeLetUser.getTenantId().getId()));	

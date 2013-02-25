@@ -3,13 +3,13 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:create id="fc_com_sjsu_bikelet_domain_SubscriptionRate" modelAttribute="subscriptionRate" path="/programs/${programId}/subscriptionpolicys/${policyId}/subscriptionrates" render="${empty dependencies}" z="PZLXG0aibflmiXwrrGCXSzdpuVk=">
-        <field:input field="membershipPerMonth" id="c_com_sjsu_bikelet_domain_SubscriptionRate_membershipPerMonth" validationMessageCode="field_invalid_number" z="rRLRKj6tk6unpQCQw3CuZxvwz/s="/>
-        <field:input field="organizationShare" id="c_com_sjsu_bikelet_domain_SubscriptionRate_organizationShare" validationMessageCode="field_invalid_number" z="+R4EaP3NUiBSCO4EJG/sh1iv3Iw="/>
-        <field:input field="userShare" id="c_com_sjsu_bikelet_domain_SubscriptionRate_userShare" validationMessageCode="field_invalid_number" z="cIiZDemds23h7OQpqiq5UjL80Zk="/>
-        <field:input field="freeMinsPerDay" id="c_com_sjsu_bikelet_domain_SubscriptionRate_freeMinsPerDay" validationMessageCode="field_invalid_integer" z="UIqsZQGLS1vOkXudX+MeS4zkQp8="/>
-        <field:input field="excessChargePerMin" id="c_com_sjsu_bikelet_domain_SubscriptionRate_excessChargePerMin" validationMessageCode="field_invalid_number" z="9ajq2WkMkCYPGrqQB4eojtg2CRY="/>
-        <field:datetime dateTimePattern="${subscriptionRate_policystartdate_date_format}" field="policyStartDate" id="c_com_sjsu_bikelet_domain_SubscriptionRate_policyStartDate" z="6rzLpMAz2JUNM9LDAKN/7pze2J0="/>
-        <field:datetime dateTimePattern="${subscriptionRate_policyenddate_date_format}" field="policyEndDate" id="c_com_sjsu_bikelet_domain_SubscriptionRate_policyEndDate" z="NFQvT5b0xMbJus/gVg3f3n5pw4k="/>
+        <field:input field="membershipPerMonth" id="c_com_sjsu_bikelet_domain_SubscriptionRate_membershipPerMonth" required="true" validationMessageCode="field_invalid_number" z="rRLRKj6tk6unpQCQw3CuZxvwz/s="/>
+        <field:input field="organizationShare" id="c_com_sjsu_bikelet_domain_SubscriptionRate_organizationShare" required="true" validationMessageCode="field_invalid_number" z="+R4EaP3NUiBSCO4EJG/sh1iv3Iw="/>
+        <field:input field="userShare" id="c_com_sjsu_bikelet_domain_SubscriptionRate_userShare" required="true" validationMessageCode="field_invalid_number" z="cIiZDemds23h7OQpqiq5UjL80Zk="/>
+        <field:input field="freeMinsPerDay" id="c_com_sjsu_bikelet_domain_SubscriptionRate_freeMinsPerDay" required="true" validationMessageCode="field_invalid_integer" z="UIqsZQGLS1vOkXudX+MeS4zkQp8="/>
+        <field:input field="excessChargePerMin" id="c_com_sjsu_bikelet_domain_SubscriptionRate_excessChargePerMin" required="true" validationMessageCode="field_invalid_number" z="9ajq2WkMkCYPGrqQB4eojtg2CRY="/>
+        <field:datetime dateTimePattern="${subscriptionRate_policystartdate_date_format}" field="policyStartDate" required="true" id="c_com_sjsu_bikelet_domain_SubscriptionRate_policyStartDate" z="6rzLpMAz2JUNM9LDAKN/7pze2J0="/>
+        <field:datetime dateTimePattern="${subscriptionRate_policyenddate_date_format}" field="policyEndDate" required="true" id="c_com_sjsu_bikelet_domain_SubscriptionRate_policyEndDate" z="NFQvT5b0xMbJus/gVg3f3n5pw4k="/>
         
         <field:simple field="policyId.name" id="c_com_sjsu_bikelet_domain_SubscriptionRate_policyId" text="${subscriptionRate.policyId.policyName}" z="user-managed"/>
         <field:hidden field="policyId.id" id="c_com_sjsu_bikelet_domain_SubscriptionRate_policyId_id" z="Sk71Uhtbc3CaBMQ8R9OEYUwPqzc="/>

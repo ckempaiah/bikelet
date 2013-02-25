@@ -50,4 +50,11 @@ public class Address {
 
     @ManyToOne
     private BikeLetUser userId;
+    
+    public static Address findAddressByUser(Long userId)
+    {
+    	return entityManager().createQuery("SELECT o FROM Address o where o.userId.id = :userId", Address.class)
+    				   .setParameter("userId",userId)
+    				   .getSingleResult();
+    }
 }
