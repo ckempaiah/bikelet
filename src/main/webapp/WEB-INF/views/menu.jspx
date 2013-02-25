@@ -46,10 +46,10 @@
             <!--</menu:category>-->
         </sec:authorize>
         <sec:authorize ifAllGranted="ROLE_USER">
-        <menu:category id="c_profile" >
-            <menu:item id="i_paymentinfo_update" messageCode="global_menu_update" url="/profile/paymentinfo" />
-            <menu:item id="i_address_update" messageCode="global_menu_update" url="/profile/addresses" />
-        </menu:category>
+            <menu:category id="c_profile" >
+                <menu:item id="i_paymentinfo_update" messageCode="global_menu_update" url="/profile/paymentinfo?form" />
+                <menu:item id="i_address_update" messageCode="global_menu_update" url="/profile/address?form" />
+            </menu:category>
         <!--<menu:category id="c_address" z="my5R1aInTRohGzWz9TL4j8LX/vE=">-->
             <!--<menu:item id="i_address_new" messageCode="global_menu_new" url="/addresses?form" z="vg+UZ0neKcizSzKiVzXeI3oY1BA="/>-->
             <!--<menu:item id="i_address_list" messageCode="global_menu_list" url="/addresses?page=1&amp;size=${empty param.size ? 10 : param.size}" z="u8ooCATbc0N+VHl1spo80t0zy+k="/>-->
