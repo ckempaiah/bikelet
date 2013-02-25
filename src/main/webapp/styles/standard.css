@@ -64,8 +64,9 @@ body {
 }
 
 #menu h2 {
-	color: #fff;
-	background: #648C1D;
+    background: url(../images/bikelet-button-bk.png) transparent;
+    color: #fff;
+	background: #9B7670;
 	text-transform: uppercase;
 	font-weight:bold;
 	font-size: 12px;
@@ -189,6 +190,7 @@ a {
 a img {
 	border: 0 none;
 	vertical-align: middle;
+    max-width: 100%;
 }
 
 tr:nth-child(odd) {
