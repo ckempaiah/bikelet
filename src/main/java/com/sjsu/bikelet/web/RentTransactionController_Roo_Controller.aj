@@ -58,11 +58,6 @@ privileged aspect RentTransactionController_Roo_Controller {
         return "redirect:/renttransactions";
     }
     
-    void RentTransactionController.addDateTimeFormatPatterns(Model uiModel) {
-        uiModel.addAttribute("rentTransaction_rentstartdate_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
-        uiModel.addAttribute("rentTransaction_rentenddate_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
-    }
-    
     void RentTransactionController.populateEditForm(Model uiModel, RentTransaction rentTransaction) {
         uiModel.addAttribute("rentTransaction", rentTransaction);
         addDateTimeFormatPatterns(uiModel);
