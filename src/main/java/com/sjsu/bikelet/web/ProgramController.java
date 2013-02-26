@@ -67,7 +67,7 @@ public class ProgramController {
 			bindingResult.addError(new ObjectError("program", "Min treshhold is greater than max threshhold"));
 			if (bindingResult.hasErrors()) {
 				populateEditForm(uiModel, program);
-				return "programs/create";
+				return "programs/threshold";
 			}
 		}
 		programService.saveProgram(program);
@@ -156,7 +156,7 @@ public class ProgramController {
 			bindingResult.addError(new ObjectError("subscriptionRate", "Subscription Rate for the specified time period already exists"));
 			if (bindingResult.hasErrors()) {
 				populateEditPolicyRateForm(uiModel, subscriptionRate, id);
-				return "programs/subscriptionpolicys/subscriptionrates/create";
+				return "programs/subscriptionpolicys/subscriptionrates/policydate";
 			}
 		}
 		subscriptionRateService.saveSubscriptionRate(subscriptionRate);
