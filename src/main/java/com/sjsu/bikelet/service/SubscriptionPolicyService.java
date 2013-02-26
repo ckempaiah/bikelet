@@ -14,4 +14,5 @@ public interface SubscriptionPolicyService {
 	public abstract long countSubscriptionPolicysByProgram(Long programId);
 	public abstract List<SubscriptionPolicy> findSubscriptionPolicyEntriesByProgram(Long programId, int firstResult, int maxResults);
 
+	public abstract List<SubscriptionPolicy> findActiveSubscriptionPolicysByProgram(Long programId);
 }

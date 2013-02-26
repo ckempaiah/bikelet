@@ -475,7 +475,7 @@ public class ProgramController {
 		uiModel.addAttribute("programId", bikeLetUser.getProgramId().getId());
 		uiModel.addAttribute("programs", programService.findAllPrograms());
 		uiModel.addAttribute("tenants", tenantService.findAllTenants());
-	    uiModel.addAttribute("subscriptionPolicies", subscriptionPolicyService.findAllSubscriptionPolicysByProgram(bikeLetUser.getProgramId().getId()));  
+	    uiModel.addAttribute("subscriptionPolicies", subscriptionPolicyService.findActiveSubscriptionPolicysByProgram(bikeLetUser.getProgramId().getId()));  
 	}
 	
 	void populateEditPolicyForm(Model uiModel, SubscriptionPolicy subscriptionPolicy) {
