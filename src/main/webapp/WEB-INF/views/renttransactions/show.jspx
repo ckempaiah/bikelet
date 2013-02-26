@@ -8,7 +8,7 @@
         <field:display field="tenantId" id="s_com_sjsu_bikelet_domain_RentTransaction_tenantId" object="${renttransaction}" z="yccdTVa+KTCWKYpCivKmoGBkXZQ="/>
         <field:display date="true" dateTimePattern="${rentTransaction_rentstartdate_date_format}" field="rentStartDate" id="s_com_sjsu_bikelet_domain_RentTransaction_rentStartDate" object="${renttransaction}" z="TuZvKEds5Jd25T+gCpy3+kUHSpw="/>
         <field:display date="true" dateTimePattern="${rentTransaction_rentenddate_date_format}" field="rentEndDate" id="s_com_sjsu_bikelet_domain_RentTransaction_rentEndDate" object="${renttransaction}" z="7i2dgHh9Nbfwn1hnqXc+Uk7ExMQ="/>
-        <field:display field="rateId" id="s_com_sjsu_bikelet_domain_RentTransaction_rateId" object="${renttransaction}" z="LBNmCL7lXTEJ9jvLdvnkCRl2XkA="/>
+        <field:display field="rateId" render="false" id="s_com_sjsu_bikelet_domain_RentTransaction_rateId" object="${renttransaction}" z="LBNmCL7lXTEJ9jvLdvnkCRl2XkA="/>
         <field:display field="status" id="s_com_sjsu_bikelet_domain_RentTransaction_status" object="${renttransaction}" z="UBaXwNpabv9zOXdWFHB8nmddms0="/>
         <field:display field="comments" id="s_com_sjsu_bikelet_domain_RentTransaction_comments" object="${renttransaction}" z="w1aTUry8XYnuuir5kaPImnQYB8c="/>
         <field:display field="userId" id="s_com_sjsu_bikelet_domain_RentTransaction_userId" object="${renttransaction}" z="gtVvRFn9+KA9ZxKUHqSQUiwW9PU="/>
