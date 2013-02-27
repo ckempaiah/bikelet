@@ -16,8 +16,8 @@ body {
 }
 
 #wrapper {
-	width:1080px;
-	min-width: 1080px;
+	width:900px;
+	min-width: 900px;
 	max-width: 1200px;
 	margin-right: auto;
 	margin-left: auto;
@@ -95,7 +95,7 @@ body {
 	float:left;
 }
 
-#footer a:link {color: #7db223;}
+#footer a:link {color: #9B7670;}
 
 .quicklinks {
 	clear:both; 
@@ -151,7 +151,7 @@ a.menu, a.menu:link, a.menu:visited {display:block; width:150px; height:25px;}
 
 h1,h2,h3 {
 	font-family: Helvetica, sans-serif;
-	color: #7db223;
+	color: #9B7670;
 }
 
 h1 {
@@ -202,7 +202,7 @@ tr:nth-child(even) {
 }
 
 a:link {
-	color: #7db223;
+	color: #9B7670;
 }
 
 a:hover {
@@ -210,11 +210,11 @@ a:hover {
 }
 
 a:active {
-	color: #7db223;
+	color: #9B7670;
 }
 
 a:visited {
-	color: #7db223;
+	color: #9B7670;
 }
 
 li {
@@ -233,13 +233,20 @@ table {
 	margin: 2px 0 0 0;
 	border: 1px solid #BBBBBB;
 	border-collapse: collapse;
-	width: 100%
+	width: 100%;
+    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    white-space: pre-wrap;       /* css-3 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    word-break: break-all;
+    white-space: normal;
 }
 
 table table {
 	margin: -5px 0;
 	border: 0px solid #e0e7d3;
 	width: 100%;
+
 }
 
 table td,table th {
@@ -372,4 +379,13 @@ fieldset th {
 .flag {
 	height: 11px;
 	width: 16px;
+}
+
+.wrapword {
+    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    white-space: pre-wrap;       /* css-3 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    word-break: break-all;
+    white-space: normal;
 }

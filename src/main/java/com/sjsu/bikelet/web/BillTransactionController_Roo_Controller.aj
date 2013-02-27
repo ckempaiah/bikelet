@@ -97,10 +97,7 @@ privileged aspect BillTransactionController_Roo_Controller {
         return "redirect:/billtransactions";
     }
     
-    void BillTransactionController.addDateTimeFormatPatterns(Model uiModel) {
-        uiModel.addAttribute("billTransaction_startdate_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
-        uiModel.addAttribute("billTransaction_enddate_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
-    }
+
     
     void BillTransactionController.populateEditForm(Model uiModel, BillTransaction billTransaction) {
         uiModel.addAttribute("billTransaction", billTransaction);

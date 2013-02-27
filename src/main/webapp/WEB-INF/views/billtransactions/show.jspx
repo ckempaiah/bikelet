@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:c-core="http://java.sun.com/jsp/jstl/core" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:sec="http://www.springframework.org/security/tags" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <page:show id="ps_com_sjsu_bikelet_domain_BillTransaction" object="${billtransaction}" path="/billtransactions" z="9OS/IbCCHogLmSm+zb0U8N7pKrA=">
+    <sec:authorize ifAllGranted="ROLE_USER">
+        <c-core:set var="modify" value="false" />
+    </sec:authorize>
+    <sec:authorize ifAllGranted="ROLE_TENANT">
+        <c-core:set var="modify" value="true" />
+    </sec:authorize>
+
+    <page:show id="ps_com_sjsu_bikelet_domain_BillTransaction" object="${billtransaction}" path="/billtransactions" z="9OS/IbCCHogLmSm+zb0U8N7pKrA=" create="${modify}" update="${modify}" delete="${modify}">
         <field:display field="totalCost" id="s_com_sjsu_bikelet_domain_BillTransaction_totalCost" object="${billtransaction}" z="98y8mB2v9SgUZPjM66Br8wM5pHM="/>
         <field:display field="transactionType" id="s_com_sjsu_bikelet_domain_BillTransaction_transactionType" object="${billtransaction}" z="2nKxM+/qgJth/84KV4AlXBjvbDA="/>
         <field:display date="true" dateTimePattern="${billTransaction_startdate_date_format}" field="startDate" id="s_com_sjsu_bikelet_domain_BillTransaction_startDate" object="${billtransaction}" z="XwIdhlChgNKx09IabKg8MFsbAtc="/>
