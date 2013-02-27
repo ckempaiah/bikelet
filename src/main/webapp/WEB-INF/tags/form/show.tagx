@@ -75,7 +75,7 @@
                 <spring:url value="${path}/${itemId}/subscriptionpolicys" var="manage_policy_form_url">
                 </spring:url>
                 <spring:url value="/resources/images/policyicon.png" var="manage_policy_image_url" />
-                <spring:message arguments="${typeName}" code="entity_manage_rate" var="manage_policy_label" htmlEscape="false" />
+                <spring:message arguments="${typeName}" code="entity_manage_policy" var="manage_policy_label" htmlEscape="false" />
                 <a href="${manage_policy_form_url}" alt="${fn:escapeXml(manage_policy_label)}" title="${fn:escapeXml(manage_policy_label)}">
                   <img alt="${fn:escapeXml(manage_policy_label)}" class="image" src="${manage_policy_image_url}" title="${fn:escapeXml(manage_policy_label)}" />
                 </a>

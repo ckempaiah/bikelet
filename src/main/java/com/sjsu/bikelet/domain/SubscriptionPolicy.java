@@ -38,4 +38,8 @@ public class SubscriptionPolicy {
     public static List<SubscriptionPolicy> findAllSubscriptionPolicysByProgram(Long programId){
     	return entityManager().createQuery("SELECT o FROM SubscriptionPolicy o where o.programId.id = :programId", SubscriptionPolicy.class).setParameter("programId", programId).getResultList();
     }
+    
+    public static List<SubscriptionPolicy> findActiveSubscriptionPolicysByProgram(Long programId){
+    	return entityManager().createQuery("SELECT o FROM SubscriptionPolicy o where o.programId.id = :programId and EXISTS ( SELECT 1 from SubscriptionRate r where r.policyStartDate < NOW() and r.policyEndDate > NOW() and r.policyId.id = o.id)", SubscriptionPolicy.class).setParameter("programId", programId).getResultList();
+    }
 }

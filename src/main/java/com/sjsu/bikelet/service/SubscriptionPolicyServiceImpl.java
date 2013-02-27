@@ -29,6 +29,14 @@ public class SubscriptionPolicyServiceImpl implements SubscriptionPolicyService 
 		return SubscriptionPolicy.findSubscriptionPolicyEntriesByProgram(programId,firstResult,maxResults);
 	}
 	
+	@Override
+	public List<SubscriptionPolicy> findActiveSubscriptionPolicysByProgram(
+			Long programId) {
+		// TODO Auto-generated method stub
+		return SubscriptionPolicy.findActiveSubscriptionPolicysByProgram(programId);
+		
+	}
+	
 //	public List<SubscriptionPolicy> SubscriptionPolicyServiceImpl.findAllPoliciesByProgram(Long programId) {
 //        return SubscriptionPolicy.findAllPoliciesByProgram(programId);
 //    }

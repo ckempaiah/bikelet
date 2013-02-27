@@ -19,6 +19,15 @@
             name="body"
             value="/WEB-INF/views/programs/show.jspx" />
     </definition>
+    
+    <definition
+        name="programs/threshold"
+        extends="default" >
+
+        <put-attribute
+            name="body"
+            value="/WEB-INF/views/programs/threshold.jspx" />
+    </definition>
 
     <definition
         name="programs/create"
@@ -147,6 +156,15 @@
         <put-attribute
             name="body"
             value="/WEB-INF/views/programs/subscriptionpolicys/subscriptionrates/update.jspx" />
+    </definition>
+    
+    <definition
+        name="programs/subscriptionpolicys/subscriptionrates/policydate"
+        extends="default" >
+
+        <put-attribute
+            name="body"
+            value="/WEB-INF/views/programs/subscriptionpolicys/subscriptionrates/policydate.jspx" />
     </definition>
 
 </tiles-definitions>

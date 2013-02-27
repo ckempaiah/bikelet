@@ -28,6 +28,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 
 @RequestMapping("/renttransactions")
@@ -247,5 +248,10 @@ public class RentTransactionController {
         }
         addDateTimeFormatPatterns(uiModel);
         return "renttransactions/list";
+    }
+    
+    void addDateTimeFormatPatterns(Model uiModel) {
+        uiModel.addAttribute("rentTransaction_rentstartdate_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
+        uiModel.addAttribute("rentTransaction_rentenddate_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
     }
 }
