@@ -51,8 +51,8 @@ public class RentTransactionController {
     BillTransactionService billTransactionService;
 	
 	/* CHECKOUT */
-	@RequestMapping(method = RequestMethod.POST, produces = "text/html")
-    public String create(@Valid RentTransaction rentTransaction, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+	@RequestMapping(value="/{stationId}", method = RequestMethod.POST, produces = "text/html")
+    public String create(@PathVariable("stationId") Integer stationId, @Valid RentTransaction rentTransaction, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
             populateEditForm(uiModel, rentTransaction);
             return "renttransactions/create";
@@ -63,7 +63,9 @@ public class RentTransactionController {
 		String accessKey = RandomStringUtils.randomNumeric(6);
 		UserSubscriptionPolicy policy = new UserSubscriptionPolicy();
 		policy = userPolicyService.findUserSubscriptionPolicyByUser(user.getId());
+		System.out.println("Station Id is ........... "+stationId);
 		
+		rentTransaction.setFromStationId(stationId);
 		rentTransaction.setRateId(userRateService.getActiveRateIdForPolicy(policy.getPolicyId().getId()));
 		rentTransaction.setRentStartDate(new Date());
         rentTransaction.setUserId(user);
@@ -221,6 +223,8 @@ public class RentTransactionController {
         uiModel.addAttribute("rentTransaction", rentTransaction);
         addDateTimeFormatPatterns(uiModel);
         uiModel.addAttribute("bikes", bikeService.findAvailableBikesByStation(stationId));
+        uiModel.addAttribute("stationId", stationId);
+        uiModel.addAttribute("station", stationService.getStationById(stationId));
     }
     
     
