@@ -18,4 +18,6 @@ public interface StationService {
 	public abstract List<Station> findAllStationsByProgram(Long programId);
 	
 	public boolean isStationFull(Long stationId);
+	
+	public abstract Station getStationById(Long stationId);
 }

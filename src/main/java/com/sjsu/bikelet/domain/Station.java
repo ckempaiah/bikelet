@@ -69,4 +69,10 @@ public class Station {
     	else
     		return false;
     }
+    
+    public static Station getStationById(Long stationId){
+    	return entityManager().createQuery("SELECT o FROM Station o where o.id = :stationId", Station.class)
+    						  .setParameter("stationId", stationId)
+    						  .getSingleResult();
+    }
 }
