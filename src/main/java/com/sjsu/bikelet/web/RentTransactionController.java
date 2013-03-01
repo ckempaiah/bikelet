@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.sjsu.bikelet.bean.TransactionDetails;
 import com.sjsu.bikelet.domain.*;
 import com.sjsu.bikelet.service.*;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -257,5 +258,29 @@ public class RentTransactionController {
     void addDateTimeFormatPatterns(Model uiModel) {
         uiModel.addAttribute("rentTransaction_rentstartdate_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
         uiModel.addAttribute("rentTransaction_rentenddate_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
+    }
+    
+ // /renttransactions/gettransaction.json
+    @RequestMapping(value = "gettransaction", produces = "application/json")
+    public String getTransactionDetails(Model uiModel)
+    {
+    	Long userId = Utils.getLogonUserId();
+    	List<RentTransaction> rents = new ArrayList<RentTransaction>();
+    	TransactionDetails transaction = new TransactionDetails();
+    	RentTransaction renttransaction = rentTransactionService.findRentTransactionForCheckin(Utils.getLogonUser().getUserId(), RentTransactionStatusEnum.InProgress.toString());
+    	rents.add(renttransaction);
+    	System.out.println("Rent Transaction is ......... "+renttransaction);
+    	transaction.setId(renttransaction.getId());
+    	transaction.setBike(renttransaction.getBikeId().toString());
+    	transaction.setComments(renttransaction.getComments());
+    	transaction.setFromStation(renttransaction.getFromStationId().toString());
+    	transaction.setRentEndDate(renttransaction.getRentEndDate());
+    	transaction.setRentStartDate(renttransaction.getRentStartDate());
+    	transaction.setStatus(renttransaction.getStatus());
+    	transaction.setAccessKey(renttransaction.getAccessKey());
+    	transaction.setBike(renttransaction.getBikeId().toString());
+    	System.out.println("Transaction is ...... "+transaction);
+    	uiModel.addAttribute("transaction",transaction);
+    	return "renttransactions/list";
     }
 }
