@@ -13,7 +13,6 @@ privileged aspect BillTransactionService_Roo_Service {
     public abstract void BillTransactionService.deleteBillTransaction(BillTransaction billTransaction);    
     public abstract BillTransaction BillTransactionService.findBillTransaction(Long id);    
     public abstract List<BillTransaction> BillTransactionService.findAllBillTransactions();    
-    public abstract List<BillTransaction> BillTransactionService.findBillTransactionEntries(int firstResult, int maxResults);    
-    public abstract void BillTransactionService.saveBillTransaction(BillTransaction billTransaction);    
+    public abstract void BillTransactionService.saveBillTransaction(BillTransaction billTransaction);
     public abstract BillTransaction BillTransactionService.updateBillTransaction(BillTransaction billTransaction);    
 }

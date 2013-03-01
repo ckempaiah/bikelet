@@ -1,6 +1,7 @@
 package com.sjsu.bikelet.domain;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,4 +35,30 @@ public class BillTransaction {
     private Bill bill;
 
     private Long referenceEntityId;
+    @ManyToOne
+    @JoinColumn(name="tenant_id")
+    private Tenant tenantId;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private BikeLetUser bikeLetUserId;
+
+    public static List<BillTransaction> findBillTransactionEntriesByUser(BikeLetUser bikeLetUser, int firstResult, int maxResults) {
+
+        return entityManager().createQuery("SELECT o FROM BillTransaction o where o.bikeLetUserId.id=:userId", BillTransaction.class)
+                .setParameter("userId", bikeLetUser.getId())
+                .setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
+
+    public static long countBillTransactionsByUser(BikeLetUser bikeLetUser) {
+        return entityManager().createQuery("SELECT COUNT(o) FROM BillTransaction o where o.bikeLetUserId.id=:userId", Long.class)
+                .setParameter("userId", bikeLetUser.getId())
+                .getSingleResult();
+    }
+
+    public static List<BillTransaction> findBillTransactionEntriesByUser(BikeLetUser bikeLetUser) {
+        return entityManager().createQuery("SELECT o FROM BillTransaction o where o.bikeLetUserId.id=:userId", BillTransaction.class)
+                .setParameter("userId", bikeLetUser.getId())
+                .getResultList();
+    }
 }

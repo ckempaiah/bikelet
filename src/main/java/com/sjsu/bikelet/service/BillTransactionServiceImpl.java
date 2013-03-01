@@ -1,9 +1,7 @@
 package com.sjsu.bikelet.service;
 
 
-import com.sjsu.bikelet.domain.BillTransaction;
-import com.sjsu.bikelet.domain.RentTransaction;
-import com.sjsu.bikelet.domain.SubscriptionRate;
+import com.sjsu.bikelet.domain.*;
 import com.sjsu.bikelet.model.BillTransactionTypeEnum;
 import com.sjsu.bikelet.model.RentTransactionStatusEnum;
 import org.apache.commons.lang3.StringUtils;
@@ -62,6 +60,9 @@ public class BillTransactionServiceImpl implements BillTransactionService {
         billTransaction.setDescription(billMessage);
         billTransaction.setTransactionType(BillTransactionTypeEnum.RentalCharges.name());
         billTransaction.setTotalCost(transactionCost);
+        billTransaction.setBikeLetUserId(rentTransaction.getUserId());
+        Tenant tenant = Tenant.findTenant(rentTransaction.getTenantId());
+        billTransaction.setTenantId(tenant);
         billTransaction.persist();
     }
     //(Ck,17FEB2012 to be used if the free minutes should be used per day basis
@@ -76,4 +77,25 @@ public class BillTransactionServiceImpl implements BillTransactionService {
         return new Integer((int) (total / DateUtils.MILLIS_PER_MINUTE));
     }
 
+    public BillTransaction findBillTransactionByMemberId(Long memberId) {
+        //TODO: provide implementation
+        //BillTransaction.entityManager().createQuery("from BillTransaction bt where bt.")
+        return null;
+    }
+
+    @Override
+    public List<BillTransaction> findBillTransactionEntriesByUserId(BikeLetUser bikeLetUser, int firstResult, int maxResults) {
+        return BillTransaction.findBillTransactionEntriesByUser(bikeLetUser, firstResult, maxResults);
+    }
+
+    @Override
+    public long countAllBillTransactionsByUserId(BikeLetUser bikeLetUser){
+        return BillTransaction.countBillTransactionsByUser(bikeLetUser);
+    }
+
+    @Override
+    public List<BillTransaction> findAllBillTransactionsByUserId(BikeLetUser bikeLetUser){
+         return BillTransaction.findBillTransactionEntriesByUser(bikeLetUser);
+
+    }
 }

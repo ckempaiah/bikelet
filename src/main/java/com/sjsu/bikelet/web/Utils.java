@@ -2,7 +2,7 @@ package com.sjsu.bikelet.web;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.sjsu.bikelet.model.BikeletUserPrinciple;;
+import com.sjsu.bikelet.model.BikeletUserPrinciple;
 
 public class Utils {
 	

@@ -31,10 +31,7 @@ privileged aspect BillTransactionServiceImpl_Roo_Service {
         return BillTransaction.findAllBillTransactions();
     }
     
-    public List<BillTransaction> BillTransactionServiceImpl.findBillTransactionEntries(int firstResult, int maxResults) {
-        return BillTransaction.findBillTransactionEntries(firstResult, maxResults);
-    }
-    
+
     public void BillTransactionServiceImpl.saveBillTransaction(BillTransaction billTransaction) {
         billTransaction.persist();
     }

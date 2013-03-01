@@ -64,5 +64,20 @@ privileged aspect BillTransaction_Roo_JavaBean {
     public void BillTransaction.setReferenceEntityId(Long referenceEntityId) {
         this.referenceEntityId = referenceEntityId;
     }
-    
+
+    public Tenant BillTransaction.getTenantId() {
+        return this.tenantId;
+    }
+
+    public void BillTransaction.setTenantId(Tenant tenant) {
+        this.tenantId = tenant;
+    }
+
+    public BikeLetUser BillTransaction.getBikeLetUserId() {
+        return this.bikeLetUserId;
+    }
+
+    public void BillTransaction.setBikeLetUserId(BikeLetUser bikeLetUser) {
+        this.bikeLetUserId = bikeLetUser;
+    }
 }

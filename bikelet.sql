@@ -136,6 +136,8 @@ CREATE TABLE bill_transaction
    transaction_type varchar(100),
    bill_id bigint,
    reference_entity_id bigint,
+   tenant_id bigint not null,
+   user_id bigint,
    version int
 )
 ;
@@ -307,6 +309,8 @@ ALTER TABLE tenant_license_policy ADD INDEX FKtenant_lic996616 (license_id), ADD
 ALTER TABLE tenant_license_policy ADD INDEX FKtenant_lic646131 (tenant_id), ADD CONSTRAINT FKtenant_lic646131 FOREIGN KEY (tenant_id) REFERENCES tenant (id);
 ALTER TABLE subscription_rate ADD INDEX FKsubscripti703864 (policy_id), ADD CONSTRAINT FKsubscripti703864 FOREIGN KEY (policy_id) REFERENCES subscription_policy (id);
 ALTER TABLE bill_transaction ADD INDEX FKbill_trans447579 (bill_id), ADD CONSTRAINT FKbill_trans447579 FOREIGN KEY (bill_id) REFERENCES bill (id);
+ALTER TABLE bill_transaction ADD INDEX FKbill_trans_tenant_id (tenant_id), ADD CONSTRAINT FKbill_trans_tenant_id FOREIGN KEY (tenant_id) REFERENCES tenant (id);
+ALTER TABLE bill_transaction ADD INDEX FKbill_trans_user_id (user_id), ADD CONSTRAINT FKbill_trans447579 FOREIGN KEY (user_id) REFERENCES bike_let_user(id);
 ALTER TABLE bill ADD INDEX FKbill642927 (user_id), ADD CONSTRAINT FKbill642927 FOREIGN KEY (user_id) REFERENCES bike_let_user (id);
 ALTER TABLE address_association ADD INDEX FKaddress_as240280 (address_id), ADD CONSTRAINT FKaddress_as240280 FOREIGN KEY (address_id) REFERENCES address (id);
 ALTER TABLE address ADD INDEX FKaddress360001 (user_id), ADD CONSTRAINT FKaddress360001 FOREIGN KEY (user_id) REFERENCES bike_let_user (id);
