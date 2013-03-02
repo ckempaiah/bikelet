@@ -4,6 +4,8 @@
     <jsp:output omit-xml-declaration="yes"/>
     <page:list id="pl_com_sjsu_bikelet_domain_Bike" items="${bikes}" z="+Mz2y79BM4IthjoAEPkiG3PTz5c=">
         <table:table data="${bikes}" id="l_com_sjsu_bikelet_domain_Bike" path="/stations/${stationId}/bikes" z="4BGhcoGr7nBluYExL0Tl6CcasMg=">
+            <table:column id="c_com_sjsu_bikelet_domain_Bike_station" property="station"/>
+            <table:column id="c_com_sjsu_bikelet_domain_Bike_locationStatus" property="locationStatus"/>
             <table:column id="c_com_sjsu_bikelet_domain_Bike_bikeHeight" property="bikeHeight" z="M/XStoF9qEZHMs+49veymidcfdw="/>
             <table:column id="c_com_sjsu_bikelet_domain_Bike_bikeColor" property="bikeColor" z="92/P5kX3T2JRVALBStHFsrxgpmg="/>
             <table:column id="c_com_sjsu_bikelet_domain_Bike_bikeType" property="bikeType" z="la+j+2q2RmxIAkZdKu/oU9yslh8="/>
