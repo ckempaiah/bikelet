@@ -260,13 +260,13 @@ public class RentTransactionController {
         uiModel.addAttribute("rentTransaction_rentenddate_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
     }
     
- // /renttransactions/gettransaction.json
     @RequestMapping(value = "gettransaction", produces = "application/json")
     public String getTransactionDetails(Model uiModel)
     {
     	Long userId = Utils.getLogonUserId();
     	List<RentTransaction> rents = new ArrayList<RentTransaction>();
     	TransactionDetails transaction = new TransactionDetails();
+    	System.out.println("Logon user id is ......... "+Utils.getLogonUser().getUserId());
     	RentTransaction renttransaction = rentTransactionService.findRentTransactionForCheckin(Utils.getLogonUser().getUserId(), RentTransactionStatusEnum.InProgress.toString());
     	rents.add(renttransaction);
     	System.out.println("Rent Transaction is ......... "+renttransaction);

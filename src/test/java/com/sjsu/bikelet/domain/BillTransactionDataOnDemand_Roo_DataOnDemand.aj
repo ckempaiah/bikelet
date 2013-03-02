@@ -34,6 +34,7 @@ privileged aspect BillTransactionDataOnDemand_Roo_DataOnDemand {
     @Autowired
     BillTransactionService BillTransactionDataOnDemand.billTransactionService;
     
+    /*
     public BillTransaction BillTransactionDataOnDemand.getNewTransientBillTransaction(int index) {
         BillTransaction obj = new BillTransaction();
         setDescription(obj, index);
@@ -133,5 +134,5 @@ privileged aspect BillTransactionDataOnDemand_Roo_DataOnDemand {
             data.add(obj);
         }
     }
-    
+    */
 }
