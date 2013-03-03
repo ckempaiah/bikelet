@@ -3,8 +3,10 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:show id="ps_com_sjsu_bikelet_domain_RentTransaction" create="false" update="false" delete="false" object="${renttransaction}" path="/renttransactions" z="mA1t/hgjU9IHVwMqYA7fDt4dvBk=">
-        <field:display field="fromStationId" id="s_com_sjsu_bikelet_domain_RentTransaction_fromStationId" object="${renttransaction}" z="6rbzZdpeV18gk4FmzkI0dFEZpO4="/>
-        <field:display field="toStationId" id="s_com_sjsu_bikelet_domain_RentTransaction_toStationId" object="${renttransaction}" z="x19LSK4v06FzLgKFY413aeJk/fA="/>
+        <field:display field="fromStationId" render="false" id="s_com_sjsu_bikelet_domain_RentTransaction_fromStationId" object="${renttransaction}" z="6rbzZdpeV18gk4FmzkI0dFEZpO4="/>
+        <field:display field="toStationId" render="false" id="s_com_sjsu_bikelet_domain_RentTransaction_toStationId" object="${renttransaction}" z="x19LSK4v06FzLgKFY413aeJk/fA="/>
+        <field:display field="location" id="c_com_sjsu_bikelet_domain_RentTransaction_fromStationId" object="${fromstation}" z="uqrsoIQvWuHh3Pq5+Gj6ZH55rpE="/>
+        <field:display field="location" id="c_com_sjsu_bikelet_domain_RentTransaction_toStationId" object="${tostation}" z="uqrsoIQvWuHh3Pq5+Gj6ZH55rpE="/>
         <field:display field="tenantId" id="s_com_sjsu_bikelet_domain_RentTransaction_tenantId" object="${renttransaction}" z="yccdTVa+KTCWKYpCivKmoGBkXZQ="/>
         <field:display date="true" dateTimePattern="${rentTransaction_rentstartdate_date_format}" field="rentStartDate" id="s_com_sjsu_bikelet_domain_RentTransaction_rentStartDate" object="${renttransaction}" z="TuZvKEds5Jd25T+gCpy3+kUHSpw="/>
         <field:display date="true" dateTimePattern="${rentTransaction_rentenddate_date_format}" field="rentEndDate" id="s_com_sjsu_bikelet_domain_RentTransaction_rentEndDate" object="${renttransaction}" z="7i2dgHh9Nbfwn1hnqXc+Uk7ExMQ="/>

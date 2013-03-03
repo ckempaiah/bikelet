@@ -35,7 +35,10 @@
         <put-attribute name="body" value="/WEB-INF/views/renttransactions/checkoutfirst.jspx"/>
     </definition>
     
-        <definition extends="default" name="renttransactions/checkinstationfull">
+    <definition extends="default" name="renttransactions/checkinstationfull">
         <put-attribute name="body" value="/WEB-INF/views/renttransactions/checkinstationfull.jspx"/>
+    </definition>
+    <definition extends="default" name="renttransactions/showinprogress">
+        <put-attribute name="body" value="/WEB-INF/views/renttransactions/show-incomplete.jspx"/>
     </definition>
 </tiles-definitions>

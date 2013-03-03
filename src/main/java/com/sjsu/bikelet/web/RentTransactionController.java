@@ -236,6 +236,7 @@ public class RentTransactionController {
         uiModel.addAttribute("renttransaction",rentTransaction);
         uiModel.addAttribute("bikeletusers", bikeLetUserService.findAllBikeLetUsers());
 		uiModel.addAttribute("tostations", stationService.findAllStationsByProgram(Utils.getLogonUser().getProgramId()));
+		uiModel.addAttribute("fromstation", stationService.getStationById(rentTransaction.getFromStationId().longValue()));
     }
     
     @RequestMapping(produces = "text/html")
@@ -253,6 +254,24 @@ public class RentTransactionController {
         }
         addDateTimeFormatPatterns(uiModel);
         return "renttransactions/list";
+    }
+    
+    @RequestMapping(value = "/{id}", produces = "text/html")
+    public String show(@PathVariable("id") Long id, Model uiModel) {
+        addDateTimeFormatPatterns(uiModel);
+        RentTransaction rentTransaction = rentTransactionService.findRentTransaction(id);
+        uiModel.addAttribute("renttransaction", rentTransaction);
+        uiModel.addAttribute("itemId", id);
+        uiModel.addAttribute("fromstation", stationService.getStationById(rentTransaction.getFromStationId().longValue()));
+        if(rentTransaction.getToStationId() != null){
+        	uiModel.addAttribute("tostation", stationService.getStationById(rentTransaction.getToStationId().longValue()));
+        	return "renttransactions/show";
+        }
+        else{
+//        	uiModel.addAttribute("station1", null);
+        	return "renttransactions/showinprogress";
+        }
+//        return "renttransactions/show";
     }
     
     void addDateTimeFormatPatterns(Model uiModel) {
