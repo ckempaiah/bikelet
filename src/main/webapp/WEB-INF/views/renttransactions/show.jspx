@@ -13,7 +13,7 @@
         <field:display field="rateId" render="false" id="s_com_sjsu_bikelet_domain_RentTransaction_rateId" object="${renttransaction}" z="LBNmCL7lXTEJ9jvLdvnkCRl2XkA="/>
         <field:display field="status" id="s_com_sjsu_bikelet_domain_RentTransaction_status" object="${renttransaction}" z="UBaXwNpabv9zOXdWFHB8nmddms0="/>
         <field:display field="comments" id="s_com_sjsu_bikelet_domain_RentTransaction_comments" object="${renttransaction}" z="w1aTUry8XYnuuir5kaPImnQYB8c="/>
-        <field:display field="userId" id="s_com_sjsu_bikelet_domain_RentTransaction_userId" object="${renttransaction}" z="gtVvRFn9+KA9ZxKUHqSQUiwW9PU="/>
+        <field:display field="userId" render="false" id="s_com_sjsu_bikelet_domain_RentTransaction_userId" object="${renttransaction}" z="gtVvRFn9+KA9ZxKUHqSQUiwW9PU="/>
         <field:display field="bikeId" id="s_com_sjsu_bikelet_domain_RentTransaction_bikeId" object="${renttransaction}" z="hL06buqsEmJYGSmElzQ0XsaF3Ns="/>
         <field:display field="accessKey" id="s_com_sjsu_bikelet_domain_RentTransaction_accessKey" object="${renttransaction}" z="hL06buqsEmJYGSmElzQ0XsaF3Ns="/>
     </page:show>
