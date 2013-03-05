@@ -63,7 +63,7 @@
             <!--<menu:item id="i_permission_list" messageCode="global_menu_list" url="/permissions?page=1&amp;size=${empty param.size ? 10 : param.size}" z="8ZPeUK3SRla1thJvoC2c+MOpaZU="/>-->
         <!--</menu:category>-->
         <menu:category id="c_bill" z="hAQcl5fPVV+gFU4o9uZs4YSdxCs=">
-            <menu:item id="i_bill_new" messageCode="global_menu_new" url="/bills?form" z="cVovhzw6GT+ic6ihf14TyR5AdJ8="/>
+            <!--<menu:item id="i_bill_new" messageCode="global_menu_new" url="/bills?form" z="cVovhzw6GT+ic6ihf14TyR5AdJ8="/> -->
             <menu:item id="i_bill_list" messageCode="global_menu_list" url="/bills?page=1&amp;size=${empty param.size ? 10 : param.size}" z="g/dBi1S+sB2EQX5WLDhE56E6Tr8="/>
         </menu:category>
         <!--<menu:category id="c_userrole" z="C4C1ZBdes4PUIjEM3Ajwwhn1EwA=">-->
