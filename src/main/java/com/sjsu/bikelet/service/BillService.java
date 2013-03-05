@@ -1,6 +1,10 @@
 package com.sjsu.bikelet.service;
 
+import java.util.List;
+
 import org.springframework.roo.addon.layers.service.RooService;
+
+import com.sjsu.bikelet.domain.Bill;
 
 @RooService(domainTypes = { com.sjsu.bikelet.domain.Bill.class })
 public interface BillService {
