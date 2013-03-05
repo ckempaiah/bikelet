@@ -82,6 +82,7 @@ CREATE TABLE bike
    wheel_size varchar(50) NOT NULL,
    bike_status varchar(60) NOT NULL,
    tenant_id bigint,
+   create_station_id bigint,
    version int
 )
 ;

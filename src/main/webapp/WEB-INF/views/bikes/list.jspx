@@ -12,6 +12,7 @@
             <table:column date="true" dateTimePattern="${bike_lastservicedate_date_format}" id="c_com_sjsu_bikelet_domain_Bike_lastServiceDate" property="lastServiceDate" z="wJbgOvvT2rC++3TpeO7RaGn+xjw="/>
             <table:column id="c_com_sjsu_bikelet_domain_Bike_wheelSize" property="wheelSize" z="o4SsV12MM1ZXz8qTuiEn2Dc+qHk="/>
             <table:column id="c_com_sjsu_bikelet_domain_Bike_bikeStatus" property="bikeStatus" z="rV/7ji5Iwlkp7Az4PRku+ep8l1M="/>
+            <table:column id="c_com_sjsu_bikelet_domain_Bike_createStationId" property="createStationId"/>
         </table:table>
     </page:list>
 </div>

@@ -56,11 +56,14 @@ public class BikeController {
         }
         
         uiModel.asMap().clear();
-        bike.setTenantId(tenantService.findTenant(bike.getTenantId().getId()));	
+        Station station = stationService.findStation(bike.getStation().getId());
+        
+        bike.setTenantId(tenantService.findTenant(bike.getTenantId().getId()));
+        bike.setCreateStationId(station);
         bikeService.saveBike(bike);
         
         // Create BikeLocation
-        Station station = stationService.findStation(bike.getStation().getId());
+        
         BikeLocation bikeLocation = new BikeLocation();
         bikeLocation.setBikeId(bike);
         bikeLocation.setStationId(station);
@@ -87,7 +90,10 @@ public class BikeController {
             return "bikes/update";
         }
         uiModel.asMap().clear();
-        bike.setTenantId(tenantService.findTenant(bike.getTenantId().getId()));	
+        bike.setTenantId(tenantService.findTenant(bike.getTenantId().getId()));
+
+        Station createStation = stationService.findStation(bike.getCreateStationId().getId());
+        bike.setCreateStationId(createStation);
         bikeService.updateBike(bike);
         
         // Update BikeLocation

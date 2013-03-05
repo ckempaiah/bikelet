@@ -21,6 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sjsu.bikelet.model.BikeAvailabilityStatusEnum;
 
 
+/**
+ * @author chenglin
+ *
+ */
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord
@@ -69,6 +73,17 @@ public class Bike {
 
 	public void setLocationStatus(String locationStatus) {
 		this.locationStatus = locationStatus;
+	}
+	
+    @ManyToOne
+    private Station createStationId;
+
+	public Station getCreateStationId() {
+		return createStationId;
+	}
+
+	public void setCreateStationId(Station createStationId) {
+		this.createStationId = createStationId;
 	}
 
 	public static long countBikesByStation(Long stationId) {
