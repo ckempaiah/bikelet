@@ -2,6 +2,7 @@ package com.sjsu.bikelet.bean;
 
 
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,9 +16,9 @@ public class TransactionDetails {
 
     private String toStation;
 
-    private Date rentStartDate;
+    private String rentStartDate;
 
-    private Date rentEndDate;
+    private String rentEndDate;
 
     private String status;
 
@@ -26,6 +27,16 @@ public class TransactionDetails {
 	private String bike;
 	
 	private String accessKey;
+	
+	private List<StationDetails> stationList;
+
+	public List<StationDetails> getStationList() {
+		return stationList;
+	}
+
+	public void setStationList(List<StationDetails> stationList) {
+		this.stationList = stationList;
+	}
 
 	public String getAccessKey() {
 		return accessKey;
@@ -59,19 +70,19 @@ public class TransactionDetails {
 		this.toStation = toStation;
 	}
 
-	public Date getRentStartDate() {
+	public String getRentStartDate() {
 		return rentStartDate;
 	}
 
-	public void setRentStartDate(Date rentStartDate) {
+	public void setRentStartDate(String rentStartDate) {
 		this.rentStartDate = rentStartDate;
 	}
 
-	public Date getRentEndDate() {
+	public String getRentEndDate() {
 		return rentEndDate;
 	}
 
-	public void setRentEndDate(Date rentEndDate) {
+	public void setRentEndDate(String rentEndDate) {
 		this.rentEndDate = rentEndDate;
 	}
 

@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.sjsu.bikelet.bean.TransactionDetails;
+import com.sjsu.bikelet.bean.StationDetails;
+
 import com.sjsu.bikelet.domain.*;
 import com.sjsu.bikelet.service.*;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -293,12 +295,33 @@ public class RentTransactionController {
     	transaction.setBike(renttransaction.getBikeId().toString());
     	transaction.setComments(renttransaction.getComments());
     	transaction.setFromStation(renttransaction.getFromStationId().toString());
-    	transaction.setRentEndDate(renttransaction.getRentEndDate());
-    	transaction.setRentStartDate(renttransaction.getRentStartDate());
+    	
+    	//transaction.setRentEndDate(renttransaction.getRentEndDate().toString());
+    	transaction.setRentStartDate(renttransaction.getRentStartDate().toString());
     	transaction.setStatus(renttransaction.getStatus());
     	transaction.setAccessKey(renttransaction.getAccessKey());
-    	transaction.setBike(renttransaction.getBikeId().toString());
-    	System.out.println("Transaction is ...... "+transaction);
+    	transaction.setBike(renttransaction.getBikeId().getBikeType());
+    	
+    	Long programId = Utils.getLogonUser().getProgramId();
+    	Long tenantId = Utils.getLogonTenantId();
+    	 List<Station> stations = stationService.findAllStationsByProgram(programId);
+         
+         List<StationDetails> stationss = new ArrayList<StationDetails>();
+         for(Station station: stations)
+         {
+          StationDetails sd = new StationDetails();
+          sd.setLocation(station.getLocation());
+          sd.setProgramId(programId.toString());
+          sd.setTenantId(tenantId.toString());
+          sd.setCapacity(station.getCapacity());
+          sd.setNumberOfBikesAvailable(bikeLocationService.countAvailableBikesByStation(station.getId()).intValue());
+          stationss.add(sd);
+         }
+         
+         transaction.setStationList(stationss);
+         
+        
+    	System.out.println("Transaction is ...... "+transaction.getStationList());
     	uiModel.addAttribute("transaction",transaction);
     	return "renttransactions/list";
     }
