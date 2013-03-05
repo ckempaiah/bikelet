@@ -91,7 +91,7 @@ public class RentTransactionController {
             return "renttransactions/create";
         }
         uiModel.asMap().clear();
-        long stationId = rentTransaction.getFromStationId();
+        Long stationId = rentTransaction.getFromStationId().longValue();
         return "redirect:/renttransactions/"+stationId+"/checkoutbike?form";
     }
 	
@@ -206,10 +206,12 @@ public class RentTransactionController {
         {
         	BikeLetUser user;
     		user = bikeLetUserService.findUserFromId(Utils.getLogonUser().getUserId());
+    		Long toStationId = rentTransaction.getToStationId();
+    		String toStation = stationService.getStationById(toStationId).getLocation();
     		RentTransaction transaction = rentTransactionService.findRentTransactionForCheckin(Utils.getLogonUser().getUserId(), RentTransactionStatusEnum.InProgress.toString());		
     		transaction.setRentEndDate(new Date());
     		transaction.setStatus(RentTransactionStatusEnum.Complete.toString());
-    		transaction.setToStationId(rentTransaction.getToStationId());
+    		transaction.setToStationId(toStationId);
     		transaction.setComments(rentTransaction.getComments());
             transaction.setUserId(user);
             
@@ -248,7 +250,10 @@ public class RentTransactionController {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("renttransactions", rentTransactionService.findRentTransactionsByUser(firstResult, sizeNo, userId));
+            List<RentTransaction> rentTransactions = new ArrayList<RentTransaction>();
+            rentTransactions = rentTransactionService.findRentTransactionsByUser(firstResult, sizeNo, userId);
+            loadStationNames(rentTransactions);
+            uiModel.addAttribute("renttransactions", rentTransactions);
             float nrOfPages = (float) rentTransactionService.countAllRentTransactions() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
@@ -256,6 +261,21 @@ public class RentTransactionController {
         }
         addDateTimeFormatPatterns(uiModel);
         return "renttransactions/list";
+    }
+    
+    private void loadStationNames(List<RentTransaction> rentTransactions) {
+    	for (RentTransaction trans: rentTransactions) {
+    		Long fromStationId = trans.getFromStationId().longValue();
+    		Long toStationId = trans.getToStationId();
+    		if(fromStationId != null){
+    			Station fromStation = stationService.getStationById(fromStationId);
+    			trans.setFromStation(fromStation.getLocation());
+    		}
+        	if (toStationId != null){
+        	 	Station toStation = stationService.getStationById(toStationId);
+        	 	trans.setToStation(toStation.getLocation());
+        	}
+    	}
     }
     
     @RequestMapping(value = "/{id}", produces = "text/html")

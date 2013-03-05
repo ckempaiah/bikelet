@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Transient;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -54,6 +55,13 @@ public class RentTransaction {
     
     private String accessKey;
     
+    @Transient
+    private String fromStation;
+    
+    @Transient
+    private String toStation;
+    
+    
     public String getAccessKey() {
 		return accessKey;
 	}
@@ -62,6 +70,23 @@ public class RentTransaction {
 		this.accessKey = accessKey;
 	}
     
+	public String getFromStation() {
+		return fromStation;
+	}
+
+	public void setFromStation(String fromStation) {
+		this.fromStation = fromStation;
+	}
+
+	public String getToStation() {
+		return toStation;
+	}
+
+	public void setToStation(String toStation) {
+		this.toStation = toStation;
+	}
+
+	
     public static RentTransaction findRentTransactionForCheckin(Long userId, String status)
     {
     	List<RentTransaction> transactions = new ArrayList<RentTransaction>();
