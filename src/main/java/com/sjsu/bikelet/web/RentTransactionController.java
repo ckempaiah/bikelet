@@ -252,8 +252,7 @@ public class RentTransactionController {
     
     @RequestMapping(produces = "text/html")
     public String list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-    	Long userId;
-    	userId = Utils.getLogonUser().getUserId();
+    	Long userId = Utils.getLogonUser().getUserId();
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
@@ -261,7 +260,7 @@ public class RentTransactionController {
             rentTransactions = rentTransactionService.findRentTransactionsByUser(firstResult, sizeNo, userId);
             loadStationNames(rentTransactions);
             uiModel.addAttribute("renttransactions", rentTransactions);
-            float nrOfPages = (float) rentTransactionService.countAllRentTransactions() / sizeNo;
+            float nrOfPages = (float) rentTransactionService.countAllRentTransactionsForUser(userId);
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
             uiModel.addAttribute("renttransactions", rentTransactionService.findAllRentTransactionsByUser(userId));
