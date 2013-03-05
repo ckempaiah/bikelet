@@ -52,6 +52,9 @@ public class RentTransactionController {
 	SubscriptionRateService userRateService;
     @Autowired
     BillTransactionService billTransactionService;
+    
+    @Autowired
+    PaymentInfoService paymentInfoService;
 	
 	/* CHECKOUT */
 	@RequestMapping(value="/{stationId}", method = RequestMethod.POST, produces = "text/html")
@@ -133,15 +136,19 @@ public class RentTransactionController {
 			rentTransaction = rentTransactionService.findRentTransactionForCheckin(userId, RentTransactionStatusEnum.InProgress.toString());
 			if(rentTransaction!=null)
 				return "renttransactions/checkoutexists";
-			else if(policy!=null)
-			{
-				if(userRateService.isValidSubscriptionPolicy(policy.getPolicyId().getId()))
-					return "renttransactions/liststations";
-				else
+			else if(policy!=null && !userRateService.isValidSubscriptionPolicy(policy.getPolicyId().getId()))
 					return "renttransactions/nopolicy";
-			}
-			else
+			else if(policy == null)
 				return "renttransactions/nopolicy";
+			else{
+				try {
+		    		paymentInfoService.findPaymentInfoByUser(userId);
+		    		
+		    	} catch (Exception e) {
+		    		return "renttransactions/nopaymentinfo";
+		    	}
+				return "renttransactions/liststations";
+			}
 		}
 		else
 			return "renttransactions/liststationsnobikes";

@@ -41,4 +41,7 @@
     <definition extends="default" name="renttransactions/showinprogress">
         <put-attribute name="body" value="/WEB-INF/views/renttransactions/show-incomplete.jspx"/>
     </definition>
+    <definition extends="default" name="renttransactions/nopaymentinfo">
+        <put-attribute name="body" value="/WEB-INF/views/renttransactions/nopaymentinfo.jspx"/>
+    </definition>
 </tiles-definitions>
