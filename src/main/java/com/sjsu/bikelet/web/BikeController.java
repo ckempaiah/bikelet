@@ -3,6 +3,7 @@ package com.sjsu.bikelet.web;
 
 import com.sjsu.bikelet.domain.Bike;
 import com.sjsu.bikelet.domain.BikeLocation;
+import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.Station;
 import com.sjsu.bikelet.domain.Tenant;
 
@@ -25,6 +26,7 @@ import com.sjsu.bikelet.service.BikeService;
 import com.sjsu.bikelet.service.TenantService;
 import com.sjsu.bikelet.service.StationService;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,6 +44,17 @@ public class BikeController {
             populateEditForm(uiModel, bike);
             return "bikes/create";
         }
+        
+        if (bike.getStation() == null || bike.getStation().getId() == null){
+            bindingResult.addError(new ObjectError("bike.station", "Enter Station (required)"));
+            
+    		Long tenantId = Utils.getLogonTenantId();
+        	Tenant tenant = tenantService.findTenant(tenantId);
+        	bike.setTenantId(tenant);
+            populateEditForm(uiModel, bike);
+            return "bikes/create";
+        }
+        
         uiModel.asMap().clear();
         bike.setTenantId(tenantService.findTenant(bike.getTenantId().getId()));	
         bikeService.saveBike(bike);
@@ -145,10 +158,17 @@ public class BikeController {
     
     private void loadBikeStations(List<Bike> bikes) {
     	for (Bike bike: bikes) {
-    	 	BikeLocation bikeLocation = bikeLocationService.findBikeLocationOfBike(bike.getId());
-        	if (bikeLocation != null)
+    		BikeLocation bikeLocation = null;
+    		try {
+    			bikeLocation = bikeLocationService.findBikeLocationOfBike(bike.getId());
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    			System.out.println(e.getMessage());
+    		}
+        	if (bikeLocation != null) {;
         		bike.setStation(bikeLocation.getStationId());
         	    bike.setLocationStatus(bikeLocation.getBikeStatus());
+        	}
     	}
     }
 }
