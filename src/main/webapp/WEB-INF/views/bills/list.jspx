@@ -5,11 +5,11 @@
     <page:list id="pl_com_sjsu_bikelet_domain_Bill" items="${bills}" z="yXNBLiVytMzbj1Ag5FjN6o1GVQM=">
         <table:table data="${bills}" id="l_com_sjsu_bikelet_domain_Bill" path="/bills" z="CrUwnfxK0V1t0AZs5Onnrg+aMpI=">
             <table:column id="c_com_sjsu_bikelet_domain_Bill_totalcharges" property="totalcharges" z="APQAPpSo8OUcDmFt2pzzNw7V+6Y="/>
-            <table:column id="c_com_sjsu_bikelet_domain_Bill_description" property="description" z="8yV56mDyaYm4MB+XvLgq+ep+G+w="/>
+<!--            <table:column id="c_com_sjsu_bikelet_domain_Bill_description" property="description" z="8yV56mDyaYm4MB+XvLgq+ep+G+w="/> -->
             <table:column date="true" dateTimePattern="${bill_createddate_date_format}" id="c_com_sjsu_bikelet_domain_Bill_createdDate" property="createdDate" z="BXA+r+TZ1GBditaTYGj8/Urc24k="/>
             <table:column date="true" dateTimePattern="${bill_billstartdate_date_format}" id="c_com_sjsu_bikelet_domain_Bill_billStartDate" property="billStartDate" z="J0Nx86Y8UtRWBb0MsQGUk44ErK4="/>
             <table:column date="true" dateTimePattern="${bill_billenddate_date_format}" id="c_com_sjsu_bikelet_domain_Bill_billEndDate" property="billEndDate" z="0kewD1oR07DA5+rWk1ljzbtyQPo="/>
-            <table:column id="c_com_sjsu_bikelet_domain_Bill_userId" property="userId" z="W3o4KTZgtD00MdVM5+dOXHvaQK0="/>
+            <table:column id="c_com_sjsu_bikelet_domain_Bill_userId" property="user" z="W3o4KTZgtD00MdVM5+dOXHvaQK0="/>
         </table:table>
     </page:list>
 </div>
