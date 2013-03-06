@@ -62,7 +62,10 @@ public class BikeLetUser {
     public static List<BikeLetUser> findBikeLetUserEntriesByProgram(Long programId, int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM BikeLetUser o where o.programId.id = :programId", BikeLetUser.class).setParameter("programId", programId).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
-    
+
+    public static List<BikeLetUser> findBikeLetUserEntriesByTenantId(Long tenantId) {
+        return entityManager().createQuery("SELECT o FROM BikeLetUser o where o.tenantId.id = :tenantId", BikeLetUser.class).setParameter("tenantId", tenantId).getResultList();
+    }
     @Transient
     private SubscriptionPolicy subscriptionPolicy;
     

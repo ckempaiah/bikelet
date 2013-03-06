@@ -40,10 +40,10 @@
                 <menu:item id="i_bill_new" messageCode="global_menu_new" url="/bills?form" z="cVovhzw6GT+ic6ihf14TyR5AdJ8="/>
                 <menu:item id="i_bill_list" messageCode="global_menu_list" url="/bills?page=1&amp;size=${empty param.size ? 10 : param.size}" z="g/dBi1S+sB2EQX5WLDhE56E6Tr8="/>
             </menu:category>
-            <!--<menu:category id="c_billtransaction" z="oyg+3opPZPL1afbUGHBwSGH5CzQ=">-->
-                <!--<menu:item id="i_billtransaction_new" messageCode="global_menu_new" url="/billtransactions?form" z="BVnlxbiQ6KVX4JtOovJymiiahsU="/>-->
-                <!--<menu:item id="i_billtransaction_list" messageCode="global_menu_list" url="/billtransactions?page=1&amp;size=${empty param.size ? 10 : param.size}" z="l5HaW2wfxXT77NmZR4eBP/jfhF0="/>-->
-            <!--</menu:category>-->
+            <menu:category id="c_billtransaction" z="oyg+3opPZPL1afbUGHBwSGH5CzQ=">
+                <menu:item id="i_billtransaction_new" messageCode="global_menu_new" url="/billtransactions?form" z="BVnlxbiQ6KVX4JtOovJymiiahsU="/>
+                <menu:item id="i_billtransaction_list" messageCode="global_menu_list" url="/billtransactions?page=1&amp;size=${empty param.size ? 10 : param.size}" z="l5HaW2wfxXT77NmZR4eBP/jfhF0="/>
+            </menu:category>
         </sec:authorize>
         <sec:authorize ifAllGranted="ROLE_USER">
             <menu:category id="c_profile" >

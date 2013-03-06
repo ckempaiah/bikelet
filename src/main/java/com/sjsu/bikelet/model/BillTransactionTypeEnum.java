@@ -8,5 +8,5 @@ package com.sjsu.bikelet.model;
  * To change this template use File | Settings | File Templates.
  */
 public enum BillTransactionTypeEnum {
-    RentalCharges, DamageCharges, MaintenanceCharges, MiscCharges, InsuranceCharges;
+    RentalCharges, DamageCharges, MaintenanceCharges, MiscCharges, InsuranceCharges, Other;
 }

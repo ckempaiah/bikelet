@@ -12,9 +12,9 @@ public interface BillTransactionService {
 
     public void createBillTransactionForRentTransaction(RentTransaction rentTransaction);
 
-    List<BillTransaction> findBillTransactionEntriesByUserId(BikeLetUser bikeLetUser, int firstResult, int maxResults);
+    List<BillTransaction> findBillTransactionEntriesByUserId(BikeLetUser bikeLetUser, String roleName, int firstResult, int maxResults);
 
     long countAllBillTransactionsByUserId(BikeLetUser bikeLetUser);
 
-    List<BillTransaction> findAllBillTransactionsByUserId(BikeLetUser bikeLetUser);
+    List<BillTransaction> findAllBillTransactionsByUserId(BikeLetUser bikeLetUser, String roleName);
 }

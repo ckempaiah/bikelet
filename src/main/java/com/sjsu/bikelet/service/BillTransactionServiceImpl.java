@@ -2,6 +2,7 @@ package com.sjsu.bikelet.service;
 
 
 import com.sjsu.bikelet.domain.*;
+import com.sjsu.bikelet.model.BikeletRoleName;
 import com.sjsu.bikelet.model.BillTransactionTypeEnum;
 import com.sjsu.bikelet.model.RentTransactionStatusEnum;
 import org.apache.commons.lang3.StringUtils;
@@ -84,8 +85,14 @@ public class BillTransactionServiceImpl implements BillTransactionService {
     }
 
     @Override
-    public List<BillTransaction> findBillTransactionEntriesByUserId(BikeLetUser bikeLetUser, int firstResult, int maxResults) {
-        return BillTransaction.findBillTransactionEntriesByUser(bikeLetUser, firstResult, maxResults);
+    public List<BillTransaction> findBillTransactionEntriesByUserId(BikeLetUser bikeLetUser, String roleName, int firstResult, int maxResults) {
+        if (BikeletRoleName.ROLE_TENANT.name().equalsIgnoreCase(roleName)){
+
+            return BillTransaction.findBillTransactionByTenantId(bikeLetUser.getTenantId().getId(), firstResult, maxResults);
+        }else if (BikeletRoleName.ROLE_USER.name().equalsIgnoreCase(roleName)){
+            return BillTransaction.findBillTransactionByTenantId(bikeLetUser.getId(), firstResult, maxResults);
+        }
+        throw new IllegalArgumentException("User role is invalid:" + roleName);
     }
 
     @Override
@@ -94,8 +101,12 @@ public class BillTransactionServiceImpl implements BillTransactionService {
     }
 
     @Override
-    public List<BillTransaction> findAllBillTransactionsByUserId(BikeLetUser bikeLetUser){
-         return BillTransaction.findBillTransactionEntriesByUser(bikeLetUser);
-
+    public List<BillTransaction> findAllBillTransactionsByUserId(BikeLetUser bikeLetUser, String roleName){
+        if (BikeletRoleName.ROLE_TENANT.name().equalsIgnoreCase(roleName)){
+            return BillTransaction.findBillTransactionEntriesByTenantId(bikeLetUser.getTenantId().getId());
+        }else if (BikeletRoleName.ROLE_USER.name().equalsIgnoreCase(roleName)){
+            return BillTransaction.findBillTransactionEntriesByUser(bikeLetUser);
+        }
+        throw new IllegalArgumentException("User role is invalid:" + roleName);
     }
 }

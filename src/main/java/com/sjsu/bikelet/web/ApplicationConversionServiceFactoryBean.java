@@ -71,7 +71,13 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
             }
         };
     }
-    
+    public Converter<Long , Tenant> getTenantIdToTenantConverter() {
+        return new org.springframework.core.convert.converter.Converter<Long , Tenant>() {
+            public Tenant convert(Long tenantId ) {
+                return tenantService.findTenant(tenantId);
+            }
+        };
+    }
     public Converter<String, Tenant> getStringToTenantConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.String, com.sjsu.bikelet.domain.Tenant>() {
             public com.sjsu.bikelet.domain.Tenant convert(String id) {

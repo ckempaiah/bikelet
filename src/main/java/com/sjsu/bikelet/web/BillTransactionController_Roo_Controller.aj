@@ -30,22 +30,8 @@ privileged aspect BillTransactionController_Roo_Controller {
     @Autowired
     BillService BillTransactionController.billService;
     
-    @RequestMapping(method = RequestMethod.POST, produces = "text/html")
-    public String BillTransactionController.create(@Valid BillTransaction billTransaction, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
-            populateEditForm(uiModel, billTransaction);
-            return "billtransactions/create";
-        }
-        uiModel.asMap().clear();
-        billTransactionService.saveBillTransaction(billTransaction);
-        return "redirect:/billtransactions/" + encodeUrlPathSegment(billTransaction.getId().toString(), httpServletRequest);
-    }
-    
-    @RequestMapping(params = "form", produces = "text/html")
-    public String BillTransactionController.createForm(Model uiModel) {
-        populateEditForm(uiModel, new BillTransaction());
-        return "billtransactions/create";
-    }
+
+
     
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String BillTransactionController.show(@PathVariable("id") Long id, Model uiModel) {
@@ -57,16 +43,7 @@ privileged aspect BillTransactionController_Roo_Controller {
     
 
     
-    @RequestMapping(method = RequestMethod.PUT, produces = "text/html")
-    public String BillTransactionController.update(@Valid BillTransaction billTransaction, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
-            populateEditForm(uiModel, billTransaction);
-            return "billtransactions/update";
-        }
-        uiModel.asMap().clear();
-        billTransactionService.updateBillTransaction(billTransaction);
-        return "redirect:/billtransactions/" + encodeUrlPathSegment(billTransaction.getId().toString(), httpServletRequest);
-    }
+
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String BillTransactionController.updateForm(@PathVariable("id") Long id, Model uiModel) {
@@ -86,11 +63,7 @@ privileged aspect BillTransactionController_Roo_Controller {
     
 
     
-    void BillTransactionController.populateEditForm(Model uiModel, BillTransaction billTransaction) {
-        uiModel.addAttribute("billTransaction", billTransaction);
-        addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("bills", billService.findAllBills());
-    }
+
     
     String BillTransactionController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {
         String enc = httpServletRequest.getCharacterEncoding();

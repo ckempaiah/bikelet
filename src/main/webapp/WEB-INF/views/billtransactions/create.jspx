@@ -3,13 +3,15 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:create id="fc_com_sjsu_bikelet_domain_BillTransaction" modelAttribute="billTransaction" path="/billtransactions" render="${empty dependencies}" z="HrgZb0itir/lCCHGRu+nkgiA59I=">
-        <field:input field="totalCost" id="c_com_sjsu_bikelet_domain_BillTransaction_totalCost" validationMessageCode="field_invalid_number" z="j4sAAGJg6LZSxuwKFUsolOG8Kps="/>
-        <field:textarea field="transactionType" id="c_com_sjsu_bikelet_domain_BillTransaction_transactionType" z="WUQwCqtJV+9HqtDX8q2srgdRCkk="/>
+        <field:select field="transactionType" id="c_com_sjsu_bikelet_domain_BillTransaction_transactionType" items="${billtransactiontypes}" path="billtransactiontypes" z="user-added"/>
         <field:datetime dateTimePattern="${billTransaction_startdate_date_format}" field="startDate" id="c_com_sjsu_bikelet_domain_BillTransaction_startDate" z="MLoiUAQ2H49x/D6tOc/LcUP1ohs="/>
         <field:datetime dateTimePattern="${billTransaction_enddate_date_format}" field="endDate" id="c_com_sjsu_bikelet_domain_BillTransaction_endDate" z="GIShJMECtSLLmNgPSKGdCXWljhc="/>
         <field:textarea field="description" id="c_com_sjsu_bikelet_domain_BillTransaction_description" z="fRv/IdI1B3F6f41G4gI0pRlOIcA="/>
-        <field:select field="bill" id="c_com_sjsu_bikelet_domain_BillTransaction_bill" itemValue="id" items="${bills}" path="/bills" z="4c3U/rui3PMirb7qjLnQHvJfu7U="/>
-        <field:input field="referenceEntityId" id="c_com_sjsu_bikelet_domain_BillTransaction_referenceEntityId" validationMessageCode="field_invalid_integer" z="YkXQTFsa7PM5+9ySP16w580WwMU="/>
+        <field:input field="totalCost" id="c_com_sjsu_bikelet_domain_BillTransaction_totalCost" validationMessageCode="field_invalid_number" z="j4sAAGJg6LZSxuwKFUsolOG8Kps="/>
+        <!--<field:select field="bill" id="c_com_sjsu_bikelet_domain_BillTransaction_bill" itemValue="id" items="${bills}" path="/bills" z="4c3U/rui3PMirb7qjLnQHvJfu7U="/>-->
+        <field:select field="bikeLetUserId" id="c_com_sjsu_bikelet_domain_BillTransaction_bikeletuser" itemValue="id" items="${bikeletusers}" path="/bikeletusers" z="user-added"/>
+        <field:hidden id="c_com_sjsu_bikelet_domain_BillTransaction_tenantId" field="tenantId.id" />
+        <!--<field:input field="referenceEntityId" id="c_com_sjsu_bikelet_domain_BillTransaction_referenceEntityId" validationMessageCode="field_invalid_integer" z="YkXQTFsa7PM5+9ySP16w580WwMU="/>-->
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_com_sjsu_bikelet_domain_BillTransaction" render="${not empty dependencies}" z="4hw1MY/RYF1SdpEQKyFjDZftGyg="/>
 </div>

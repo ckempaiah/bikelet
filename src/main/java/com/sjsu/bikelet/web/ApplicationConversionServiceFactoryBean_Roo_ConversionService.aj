@@ -616,6 +616,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         registry.addConverter(getUserSubscriptionPolicyToStringConverter());
         registry.addConverter(getIdToUserSubscriptionPolicyConverter());
         registry.addConverter(getStringToUserSubscriptionPolicyConverter());
+        registry.addConverter(getTenantIdToTenantConverter());
     }
     
     public void ApplicationConversionServiceFactoryBean.afterPropertiesSet() {
