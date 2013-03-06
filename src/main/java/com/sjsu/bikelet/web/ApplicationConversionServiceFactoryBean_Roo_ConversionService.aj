@@ -156,7 +156,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         };
     }
     
- 
+
     public Converter<Long, Bike> ApplicationConversionServiceFactoryBean.getIdToBikeConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.Bike>() {
             public com.sjsu.bikelet.domain.Bike convert(java.lang.Long id) {
