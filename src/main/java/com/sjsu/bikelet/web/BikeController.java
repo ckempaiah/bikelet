@@ -3,6 +3,7 @@ package com.sjsu.bikelet.web;
 
 import com.sjsu.bikelet.domain.Bike;
 import com.sjsu.bikelet.domain.BikeLocation;
+import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.Station;
 import com.sjsu.bikelet.domain.Tenant;
 
@@ -25,6 +26,7 @@ import com.sjsu.bikelet.service.BikeService;
 import com.sjsu.bikelet.service.TenantService;
 import com.sjsu.bikelet.service.StationService;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,12 +44,26 @@ public class BikeController {
             populateEditForm(uiModel, bike);
             return "bikes/create";
         }
+        
+        if (bike.getStation() == null || bike.getStation().getId() == null){
+            bindingResult.addError(new ObjectError("bike.station", "Enter Station (required)"));
+            
+    		Long tenantId = Utils.getLogonTenantId();
+        	Tenant tenant = tenantService.findTenant(tenantId);
+        	bike.setTenantId(tenant);
+            populateEditForm(uiModel, bike);
+            return "bikes/create";
+        }
+        
         uiModel.asMap().clear();
-        bike.setTenantId(tenantService.findTenant(bike.getTenantId().getId()));	
+        Station station = stationService.findStation(bike.getStation().getId());
+        
+        bike.setTenantId(tenantService.findTenant(bike.getTenantId().getId()));
+        bike.setCreateStationId(station);
         bikeService.saveBike(bike);
         
         // Create BikeLocation
-        Station station = stationService.findStation(bike.getStation().getId());
+        
         BikeLocation bikeLocation = new BikeLocation();
         bikeLocation.setBikeId(bike);
         bikeLocation.setStationId(station);
@@ -74,7 +90,10 @@ public class BikeController {
             return "bikes/update";
         }
         uiModel.asMap().clear();
-        bike.setTenantId(tenantService.findTenant(bike.getTenantId().getId()));	
+        bike.setTenantId(tenantService.findTenant(bike.getTenantId().getId()));
+
+        Station createStation = stationService.findStation(bike.getCreateStationId().getId());
+        bike.setCreateStationId(createStation);
         bikeService.updateBike(bike);
         
         // Update BikeLocation
@@ -103,11 +122,15 @@ public class BikeController {
     	if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("bikes", bikeService.findBikeEntriesByTenant(tenantId, firstResult, sizeNo));
+            List<Bike> bikes = bikeService.findBikeEntriesByTenant(tenantId, firstResult, sizeNo);
+            loadBikeStations(bikes);
+            uiModel.addAttribute("bikes", bikes);
             float nrOfPages = (float) bikeService.countAllBikesByTenant(tenantId) / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("bikes", bikeService.findAllBikesByTenant(tenantId));
+            List<Bike> bikes = bikeService.findAllBikesByTenant(tenantId);
+            loadBikeStations(bikes);
+            uiModel.addAttribute("bikes", bikes);
         }
         addDateTimeFormatPatterns(uiModel);
         return "bikes/list";
@@ -137,5 +160,21 @@ public class BikeController {
         uiModel.addAttribute("bike", bike);
         uiModel.addAttribute("itemId", id);
         return "bikes/show";
+    }
+    
+    private void loadBikeStations(List<Bike> bikes) {
+    	for (Bike bike: bikes) {
+    		BikeLocation bikeLocation = null;
+    		try {
+    			bikeLocation = bikeLocationService.findBikeLocationOfBike(bike.getId());
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    			System.out.println(e.getMessage());
+    		}
+        	if (bikeLocation != null) {;
+        		bike.setStation(bikeLocation.getStationId());
+        	    bike.setLocationStatus(bikeLocation.getBikeStatus());
+        	}
+    	}
     }
 }

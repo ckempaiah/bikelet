@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Transient;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
@@ -17,6 +20,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord
+@XmlRootElement(name="RentTransaction")
 public class RentTransaction {
 
     private Integer fromStationId;
@@ -51,6 +55,13 @@ public class RentTransaction {
     
     private String accessKey;
     
+    @Transient
+    private String fromStation;
+    
+    @Transient
+    private String toStation;
+    
+    
     public String getAccessKey() {
 		return accessKey;
 	}
@@ -59,6 +70,27 @@ public class RentTransaction {
 		this.accessKey = accessKey;
 	}
     
+	public String getFromStation() {
+		return fromStation;
+	}
+
+	public void setFromStation(String fromStation) {
+		this.fromStation = fromStation;
+	}
+
+	public String getToStation() {
+		return toStation;
+	}
+
+	public void setToStation(String toStation) {
+		this.toStation = toStation;
+	}
+
+	
+	public static long countRentTransactionsForUser(Long userId) {
+        return entityManager().createQuery("SELECT COUNT(o) FROM RentTransaction o where o.userId.id = :userId", Long.class).setParameter("userId", userId).getSingleResult();
+    }
+	
     public static RentTransaction findRentTransactionForCheckin(Long userId, String status)
     {
     	List<RentTransaction> transactions = new ArrayList<RentTransaction>();

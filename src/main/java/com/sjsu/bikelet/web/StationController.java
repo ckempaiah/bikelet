@@ -99,10 +99,13 @@ public class StationController {
             return "stations/bikes/create";
         }
         uiModel.asMap().clear();
-        bike.setTenantId(tenantService.findTenant(bike.getTenantId().getId()));	
+        Station station = stationService.findStation(id);
+        
+        bike.setTenantId(tenantService.findTenant(bike.getTenantId().getId()));
+        bike.setCreateStationId(station);
         bikeService.saveBike(bike);
         // Create BikeLocation
-        Station station = stationService.findStation(id);
+        
         BikeLocation bikeLocation = new BikeLocation();
         bikeLocation.setBikeId(bike);
         bikeLocation.setStationId(station);
@@ -144,11 +147,15 @@ public class StationController {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("bikes", bikeService.findBikeEntriesByStation(stationId, firstResult, sizeNo));
+            List<Bike> bikes = bikeService.findBikeEntriesByStation(stationId, firstResult, sizeNo);
+            loadBikeStations(bikes);
+            uiModel.addAttribute("bikes", bikes);
             float nrOfPages = (float) bikeService.countAllBikesByStation(stationId) / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("bikes", bikeService.findAllBikesByStation(stationId));
+            List<Bike> bikes = bikeService.findAllBikesByStation(stationId);
+            loadBikeStations(bikes);
+            uiModel.addAttribute("bikes", bikes);
         }
         uiModel.addAttribute("stationId", stationId);
         addDateTimeFormatPatterns(uiModel);
@@ -164,6 +171,9 @@ public class StationController {
         }
         uiModel.asMap().clear();
         bike.setTenantId(tenantService.findTenant(bike.getTenantId().getId()));
+
+        Station createStation = stationService.findStation(bike.getCreateStationId().getId());
+        bike.setCreateStationId(createStation);        
         bikeService.updateBike(bike);
         // Update BikeLocation
         BikeLocation bikeLocation = bikeLocationService.findBikeLocationOfBike(bike.getId());
@@ -208,5 +218,14 @@ public class StationController {
         uiModel.addAttribute("statuses", statuses);
         uiModel.addAttribute("locationStatuses", locationStatuses);
         addDateTimeFormatPatterns(uiModel);
+    }
+    
+    private void loadBikeStations(List<Bike> bikes) {
+    	for (Bike bike: bikes) {
+    	 	BikeLocation bikeLocation = bikeLocationService.findBikeLocationOfBike(bike.getId());
+        	if (bikeLocation != null)
+        		bike.setStation(bikeLocation.getStationId());
+        	    bike.setLocationStatus(bikeLocation.getBikeStatus());
+    	}
     }
 }

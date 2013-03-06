@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.sjsu.bikelet.bean.TransactionDetails;
+import com.sjsu.bikelet.bean.StationDetails;
+
 import com.sjsu.bikelet.domain.*;
 import com.sjsu.bikelet.service.*;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -49,6 +52,9 @@ public class RentTransactionController {
 	SubscriptionRateService userRateService;
     @Autowired
     BillTransactionService billTransactionService;
+    
+    @Autowired
+    PaymentInfoService paymentInfoService;
 	
 	/* CHECKOUT */
 	@RequestMapping(value="/{stationId}", method = RequestMethod.POST, produces = "text/html")
@@ -88,7 +94,7 @@ public class RentTransactionController {
             return "renttransactions/create";
         }
         uiModel.asMap().clear();
-        long stationId = rentTransaction.getFromStationId();
+        Long stationId = rentTransaction.getFromStationId().longValue();
         return "redirect:/renttransactions/"+stationId+"/checkoutbike?form";
     }
 	
@@ -130,15 +136,19 @@ public class RentTransactionController {
 			rentTransaction = rentTransactionService.findRentTransactionForCheckin(userId, RentTransactionStatusEnum.InProgress.toString());
 			if(rentTransaction!=null)
 				return "renttransactions/checkoutexists";
-			else if(policy!=null)
-			{
-				if(userRateService.isValidSubscriptionPolicy(policy.getPolicyId().getId()))
-					return "renttransactions/liststations";
-				else
+			else if(policy!=null && !userRateService.isValidSubscriptionPolicy(policy.getPolicyId().getId()))
 					return "renttransactions/nopolicy";
-			}
-			else
+			else if(policy == null)
 				return "renttransactions/nopolicy";
+			else{
+				try {
+		    		paymentInfoService.findPaymentInfoByUser(userId);
+		    		
+		    	} catch (Exception e) {
+		    		return "renttransactions/nopaymentinfo";
+		    	}
+				return "renttransactions/liststations";
+			}
 		}
 		else
 			return "renttransactions/liststationsnobikes";
@@ -203,10 +213,12 @@ public class RentTransactionController {
         {
         	BikeLetUser user;
     		user = bikeLetUserService.findUserFromId(Utils.getLogonUser().getUserId());
+    		Long toStationId = rentTransaction.getToStationId();
+    		String toStation = stationService.getStationById(toStationId).getLocation();
     		RentTransaction transaction = rentTransactionService.findRentTransactionForCheckin(Utils.getLogonUser().getUserId(), RentTransactionStatusEnum.InProgress.toString());		
     		transaction.setRentEndDate(new Date());
     		transaction.setStatus(RentTransactionStatusEnum.Complete.toString());
-    		transaction.setToStationId(rentTransaction.getToStationId());
+    		transaction.setToStationId(toStationId);
     		transaction.setComments(rentTransaction.getComments());
             transaction.setUserId(user);
             
@@ -235,17 +247,20 @@ public class RentTransactionController {
         uiModel.addAttribute("renttransaction",rentTransaction);
         uiModel.addAttribute("bikeletusers", bikeLetUserService.findAllBikeLetUsers());
 		uiModel.addAttribute("tostations", stationService.findAllStationsByProgram(Utils.getLogonUser().getProgramId()));
+		uiModel.addAttribute("fromstation", stationService.getStationById(rentTransaction.getFromStationId().longValue()));
     }
     
     @RequestMapping(produces = "text/html")
     public String list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-    	Long userId;
-    	userId = Utils.getLogonUser().getUserId();
+    	Long userId = Utils.getLogonUser().getUserId();
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("renttransactions", rentTransactionService.findRentTransactionsByUser(firstResult, sizeNo, userId));
-            float nrOfPages = (float) rentTransactionService.countAllRentTransactions() / sizeNo;
+            List<RentTransaction> rentTransactions = new ArrayList<RentTransaction>();
+            rentTransactions = rentTransactionService.findRentTransactionsByUser(firstResult, sizeNo, userId);
+            loadStationNames(rentTransactions);
+            uiModel.addAttribute("renttransactions", rentTransactions);
+            float nrOfPages = (float) rentTransactionService.countAllRentTransactionsForUser(userId);
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
             uiModel.addAttribute("renttransactions", rentTransactionService.findAllRentTransactionsByUser(userId));
@@ -254,8 +269,86 @@ public class RentTransactionController {
         return "renttransactions/list";
     }
     
+    private void loadStationNames(List<RentTransaction> rentTransactions) {
+    	for (RentTransaction trans: rentTransactions) {
+    		Long fromStationId = trans.getFromStationId().longValue();
+    		Long toStationId = trans.getToStationId();
+    		if(fromStationId != null){
+    			Station fromStation = stationService.getStationById(fromStationId);
+    			trans.setFromStation(fromStation.getLocation());
+    		}
+        	if (toStationId != null){
+        	 	Station toStation = stationService.getStationById(toStationId);
+        	 	trans.setToStation(toStation.getLocation());
+        	}
+    	}
+    }
+    
+    @RequestMapping(value = "/{id}", produces = "text/html")
+    public String show(@PathVariable("id") Long id, Model uiModel) {
+        addDateTimeFormatPatterns(uiModel);
+        RentTransaction rentTransaction = rentTransactionService.findRentTransaction(id);
+        uiModel.addAttribute("renttransaction", rentTransaction);
+        uiModel.addAttribute("itemId", id);
+        uiModel.addAttribute("fromstation", stationService.getStationById(rentTransaction.getFromStationId().longValue()));
+        if(rentTransaction.getToStationId() != null){
+        	uiModel.addAttribute("tostation", stationService.getStationById(rentTransaction.getToStationId().longValue()));
+        	return "renttransactions/show";
+        }
+        else{
+//        	uiModel.addAttribute("station1", null);
+        	return "renttransactions/showinprogress";
+        }
+//        return "renttransactions/show";
+    }
+    
     void addDateTimeFormatPatterns(Model uiModel) {
         uiModel.addAttribute("rentTransaction_rentstartdate_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
         uiModel.addAttribute("rentTransaction_rentenddate_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
+    }
+    
+    @RequestMapping(value = "gettransaction", produces = "application/json")
+    public String getTransactionDetails(Model uiModel)
+    {
+    	Long userId = Utils.getLogonUserId();
+    	List<RentTransaction> rents = new ArrayList<RentTransaction>();
+    	TransactionDetails transaction = new TransactionDetails();
+    	System.out.println("Logon user id is ......... "+Utils.getLogonUser().getUserId());
+    	RentTransaction renttransaction = rentTransactionService.findRentTransactionForCheckin(Utils.getLogonUser().getUserId(), RentTransactionStatusEnum.InProgress.toString());
+    	rents.add(renttransaction);
+    	System.out.println("Rent Transaction is ......... "+renttransaction);
+    	transaction.setId(renttransaction.getId());
+    	transaction.setBike(renttransaction.getBikeId().toString());
+    	transaction.setComments(renttransaction.getComments());
+    	transaction.setFromStation(renttransaction.getFromStationId().toString());
+    	
+    	//transaction.setRentEndDate(renttransaction.getRentEndDate().toString());
+    	transaction.setRentStartDate(renttransaction.getRentStartDate().toString());
+    	transaction.setStatus(renttransaction.getStatus());
+    	transaction.setAccessKey(renttransaction.getAccessKey());
+    	transaction.setBike(renttransaction.getBikeId().getBikeType());
+    	
+    	Long programId = Utils.getLogonUser().getProgramId();
+    	Long tenantId = Utils.getLogonTenantId();
+    	 List<Station> stations = stationService.findAllStationsByProgram(programId);
+         
+         List<StationDetails> stationss = new ArrayList<StationDetails>();
+         for(Station station: stations)
+         {
+          StationDetails sd = new StationDetails();
+          sd.setLocation(station.getLocation());
+          sd.setProgramId(programId.toString());
+          sd.setTenantId(tenantId.toString());
+          sd.setCapacity(station.getCapacity());
+          sd.setNumberOfBikesAvailable(bikeLocationService.countAvailableBikesByStation(station.getId()).intValue());
+          stationss.add(sd);
+         }
+         
+         transaction.setStationList(stationss);
+         
+        
+    	System.out.println("Transaction is ...... "+transaction.getStationList());
+    	uiModel.addAttribute("transaction",transaction);
+    	return "renttransactions/list";
     }
 }

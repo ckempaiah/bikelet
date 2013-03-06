@@ -13,5 +13,7 @@
         <field:hidden field="tenantId.id" id="c_com_sjsu_bikelet_domain_Bike_tenantId_id" z="PtpoxBGgULwvI6dTsuBQfzY7ZBM="/>
         <field:select field="station" id="c_com_sjsu_bikelet_domain_Bike_station" itemValue="id" items="${stations}" path="/stations"/>
         <field:select field="locationStatus" id="c_com_sjsu_bikelet_domain_Bike_locationStatus" path="/statuses" items="${locationStatuses}"/>
+        <field:simple field="createStationId.location" id="c_com_sjsu_bikelet_domain_Bike_createStationId" text="${bike.createStationId.location}" z="user-managed"/>
+        <field:hidden field="createStationId.id" id="c_com_sjsu_bikelet_domain_Bike_createStationId_id" />
     </form:update>
 </div>

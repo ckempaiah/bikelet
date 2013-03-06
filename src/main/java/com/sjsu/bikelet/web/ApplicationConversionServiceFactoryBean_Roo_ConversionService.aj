@@ -156,14 +156,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         };
     }
     
-    public Converter<Bike, String> ApplicationConversionServiceFactoryBean.getBikeToStringConverter() {
-        return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Bike, java.lang.String>() {
-            public String convert(Bike bike) {
-                return new StringBuilder().append(bike.getBikeHeight()).append(' ').append(bike.getBikeColor()).append(' ').append(bike.getBikeType()).append(' ').append(bike.getLastServiceDate()).toString();
-            }
-        };
-    }
-    
+ 
     public Converter<Long, Bike> ApplicationConversionServiceFactoryBean.getIdToBikeConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.sjsu.bikelet.domain.Bike>() {
             public com.sjsu.bikelet.domain.Bike convert(java.lang.Long id) {

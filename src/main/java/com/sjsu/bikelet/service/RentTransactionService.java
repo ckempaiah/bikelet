@@ -13,6 +13,6 @@ public interface RentTransactionService {
 	public abstract RentTransaction findRentTransactionForCheckin(Long userId, String status);
 	public abstract List<RentTransaction> findRentTransactionsByUser(int firstResult, int maxResults, Long userId);
 	public abstract List<RentTransaction> findAllRentTransactionsByUser(Long userId);
-
+	public abstract long countAllRentTransactionsForUser(Long userId);
     List<RentTransaction> findTransactionsForToday(Long userId, RentTransactionStatusEnum statusEnum);
 }

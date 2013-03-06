@@ -29,6 +29,7 @@ privileged aspect BillTransactionIntegrationTest_Roo_IntegrationTest {
     @Autowired
     BillTransactionService BillTransactionIntegrationTest.billTransactionService;
     
+    /*
     @Test
     public void BillTransactionIntegrationTest.testCountAllBillTransactions() {
         Assert.assertNotNull("Data on demand for 'BillTransaction' failed to initialize correctly", dod.getRandomBillTransaction());
@@ -120,5 +121,5 @@ privileged aspect BillTransactionIntegrationTest_Roo_IntegrationTest {
         obj.flush();
         Assert.assertNull("Failed to remove 'BillTransaction' with identifier '" + id + "'", billTransactionService.findBillTransaction(id));
     }
-    
+    */
 }

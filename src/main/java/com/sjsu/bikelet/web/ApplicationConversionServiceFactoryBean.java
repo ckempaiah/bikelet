@@ -5,6 +5,7 @@ import com.sjsu.bikelet.domain.LicensePolicy;
 import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.Station;
+import com.sjsu.bikelet.domain.Bike;
 import com.sjsu.bikelet.domain.SubscriptionPolicy;
 import com.sjsu.bikelet.service.BikeLetUserService;
 import com.sjsu.bikelet.service.LicensePolicyService;
@@ -141,4 +142,13 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
             }
         };
     }
+    
+    public Converter<Bike, String> getBikeToStringConverter() {
+        return new org.springframework.core.convert.converter.Converter<com.sjsu.bikelet.domain.Bike, java.lang.String>() {
+            public String convert(Bike bike) {
+                return new StringBuilder().append(bike.getBikeHeight()).append("inch ").append(bike.getBikeColor()).append(' ').append(bike.getBikeType()).toString();
+            }
+        };
+    }
+    
 }

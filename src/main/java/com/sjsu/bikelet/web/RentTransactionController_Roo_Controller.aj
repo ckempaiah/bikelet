@@ -40,14 +40,6 @@ privileged aspect RentTransactionController_Roo_Controller {
         return "renttransactions/create";
     }
     
-    @RequestMapping(value = "/{id}", produces = "text/html")
-    public String RentTransactionController.show(@PathVariable("id") Long id, Model uiModel) {
-        addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("renttransaction", rentTransactionService.findRentTransaction(id));
-        uiModel.addAttribute("itemId", id);
-        return "renttransactions/show";
-    }
-    
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String RentTransactionController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
         RentTransaction rentTransaction = rentTransactionService.findRentTransaction(id);

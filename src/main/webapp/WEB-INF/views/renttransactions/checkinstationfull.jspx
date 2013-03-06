@@ -4,16 +4,16 @@
     <jsp:output omit-xml-declaration="yes"/>
     <form:update-transaction id="c_com_sjsu_bikelet_domain_CheckinBike" modelAttribute="rentTransaction" path="/renttransactions" versionField="Version" z="TrPywgDmUwxkdIduTNpg2eFJfwk=">
         <field:select field="toStationId" id="c_com_sjsu_bikelet_domain_RentTransaction_toStationId" itemValue="id" items="${tostations}" path="/stations" z="wHh+YcviFD0knL2Q0lVBmxoLuOk="/>
-        <field:input field="fromStationId" id="c_com_sjsu_bikelet_domain_RentTransaction_fromStationId" validationMessageCode="field_invalid_integer" z="uqrsoIQvWuHh3Pq5+Gj6ZH55rpE="/>
+        <field:display field="location" id="c_com_sjsu_bikelet_domain_RentTransaction_fromStationId" object="${fromstation}" z="uqrsoIQvWuHh3Pq5+Gj6ZH55rpE="/>
         <field:input field="tenantId" render="false" id="c_com_sjsu_bikelet_domain_RentTransaction_tenantId" validationMessageCode="field_invalid_integer" z="v8xyRg/aaSry7cJGanBv2FGnJ98="/>
         <field:display date="true" dateTimePattern="${rentTransaction_rentstartdate_date_format}" field="rentStartDate" id="s_com_sjsu_bikelet_domain_RentTransaction_rentStartDate" object="${rentTransaction}" z="TuZvKEds5Jd25T+gCpy3+kUHSpw="/>
         <field:datetime dateTimePattern="${rentTransaction_rentenddate_date_format}" render="false" field="rentEndDate" id="c_com_sjsu_bikelet_domain_RentTransaction_rentEndDate" z="d8GJSdtzPFwSmePxsLzctOzyKHk="/>
         <field:hidden field="rateId" id="c_com_sjsu_bikelet_domain_RentTransaction_rateId" z="kJvtu5Wn2DK9k1gbOpVv9tHb9Ps="/>
-        <field:input field="status" id="c_com_sjsu_bikelet_domain_RentTransaction_status" max="10" required="true" z="S02+YIPK57+9VZFR4UfIbNSdZlE="/>
-        <field:textarea field="comments" id="c_com_sjsu_bikelet_domain_RentTransaction_comments" required="true" z="hreqm4MyHtE3gdnGQ+WsUnCGAZU="/>
+        <field:hidden field="status" id="c_com_sjsu_bikelet_domain_RentTransaction_status" z="S02+YIPK57+9VZFR4UfIbNSdZlE="/>
         <field:select field="userId" render="false" id="c_com_sjsu_bikelet_domain_RentTransaction_userId" itemValue="id" items="${bikeletusers}" path="/bikeletusers" z="vsANGREhlH5DRMAbobukhBd4J3M="/>
         <field:display field="bikeId" id="s_com_sjsu_bikelet_domain_RentTransaction_bikeId" object="${renttransaction}" z="hL06buqsEmJYGSmElzQ0XsaF3Ns="/>
-        <field:hidden field="accessKey" id="c_com_sjsu_bikelet_domain_RentTransaction_accessKey" z="v8xyRg/aaSry7cJGanBv2FGnJ98="/>
+        <field:display field="accessKey" object="${rentTransaction}" id="c_com_sjsu_bikelet_domain_RentTransaction_accessKey" z="v8xyRg/aaSry7cJGanBv2FGnJ98="/>
+        <field:textarea field="comments" id="c_com_sjsu_bikelet_domain_RentTransaction_comments" required="true" z="hreqm4MyHtE3gdnGQ+WsUnCGAZU="/>
     </form:update-transaction>
     
     <br/>
