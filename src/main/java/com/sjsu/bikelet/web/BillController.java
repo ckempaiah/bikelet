@@ -84,6 +84,24 @@ public class BillController {
         return "bills/show";
     }
     
+    @RequestMapping(value = "/latestbill", produces = "text/html")
+    public String showLatestBill(Model uiModel) {
+        addDateTimeFormatPatterns(uiModel);
+        Long userId = Utils.getLogonUserId();
+        Bill bill = billService.findLatestBill(userId);
+        if(bill != null) {
+        	String userName = bill.getUserId().getFirstName()+" "+bill.getUserId().getLastName();
+            bill.setUser(userName);
+            uiModel.addAttribute("bill", bill);
+            uiModel.addAttribute("itemId", bill.getId());
+            return "bills/show";
+        }
+        else {
+            return "bills/nobillfound";
+        }
+        
+    }
+    
     private void loadUserNames(List<Bill> bills) {
     	for (Bill bill: bills) {
     		String userName = bill.getUserId().getFirstName()+" "+bill.getUserId().getLastName();

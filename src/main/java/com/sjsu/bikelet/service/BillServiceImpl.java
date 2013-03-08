@@ -1,6 +1,7 @@
 package com.sjsu.bikelet.service;
 
 import java.util.List;
+
 import com.sjsu.bikelet.domain.Bill;
 
 
@@ -42,6 +43,12 @@ public class BillServiceImpl implements BillService {
 	public long countAllBillsForTenant(Long tenantId) {
 		// TODO Auto-generated method stub
 		return Bill.countBillsByTenant(tenantId);
+	}
+
+	@Override
+	public Bill findLatestBill(Long userId) {
+		// TODO Auto-generated method stub
+		return Bill.findLatestBill(userId);
 	}
 
 }

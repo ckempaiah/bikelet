@@ -20,4 +20,6 @@ public interface BillService {
 	public abstract List<Bill> findAllBillsByTenant(Long tenantId);
 	
 	public abstract long countAllBillsForTenant(Long tenantId);
+	
+	public abstract Bill findLatestBill(Long userId);
 }
