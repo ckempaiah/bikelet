@@ -87,6 +87,10 @@ public class RentTransaction {
 	}
 
 	
+	public static long countRentTransactionsForUser(Long userId) {
+        return entityManager().createQuery("SELECT COUNT(o) FROM RentTransaction o where o.userId.id = :userId", Long.class).setParameter("userId", userId).getSingleResult();
+    }
+	
     public static RentTransaction findRentTransactionForCheckin(Long userId, String status)
     {
     	List<RentTransaction> transactions = new ArrayList<RentTransaction>();

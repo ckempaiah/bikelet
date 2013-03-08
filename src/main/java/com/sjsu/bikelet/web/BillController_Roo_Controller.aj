@@ -47,29 +47,6 @@ privileged aspect BillController_Roo_Controller {
         return "bills/create";
     }
     
-    @RequestMapping(value = "/{id}", produces = "text/html")
-    public String BillController.show(@PathVariable("id") Long id, Model uiModel) {
-        addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("bill", billService.findBill(id));
-        uiModel.addAttribute("itemId", id);
-        return "bills/show";
-    }
-    
-    @RequestMapping(produces = "text/html")
-    public String BillController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        if (page != null || size != null) {
-            int sizeNo = size == null ? 10 : size.intValue();
-            final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("bills", billService.findBillEntries(firstResult, sizeNo));
-            float nrOfPages = (float) billService.countAllBills() / sizeNo;
-            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
-        } else {
-            uiModel.addAttribute("bills", billService.findAllBills());
-        }
-        addDateTimeFormatPatterns(uiModel);
-        return "bills/list";
-    }
-    
     @RequestMapping(method = RequestMethod.PUT, produces = "text/html")
     public String BillController.update(@Valid Bill bill, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {

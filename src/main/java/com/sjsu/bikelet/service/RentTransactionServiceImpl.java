@@ -48,4 +48,10 @@ public class RentTransactionServiceImpl implements RentTransactionService {
         query.setParameter("status", statusEnum.name());
         return query.getResultList();
     }
+    
+    	@Override
+	public long countAllRentTransactionsForUser(Long userId) {
+		// TODO Auto-generated method stub
+		return RentTransaction.countRentTransactionsForUser(userId);
+	}
 }

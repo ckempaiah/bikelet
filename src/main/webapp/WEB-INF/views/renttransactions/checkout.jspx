@@ -11,9 +11,9 @@
         <field:datetime dateTimePattern="${rentTransaction_rentenddate_date_format}" render="false" field="rentEndDate" id="c_com_sjsu_bikelet_domain_RentTransaction_rentEndDate" z="d8GJSdtzPFwSmePxsLzctOzyKHk="/>
         <field:hidden field="rateId" id="c_com_sjsu_bikelet_domain_RentTransaction_rateId" z="kJvtu5Wn2DK9k1gbOpVv9tHb9Ps="/>
         <field:hidden field="status" id="c_com_sjsu_bikelet_domain_RentTransaction_status" z="S02+YIPK57+9VZFR4UfIbNSdZlE="/>
-        <field:textarea field="comments" id="c_com_sjsu_bikelet_domain_RentTransaction_comments" z="hreqm4MyHtE3gdnGQ+WsUnCGAZU="/>
         <field:select field="userId" render="false" id="c_com_sjsu_bikelet_domain_RentTransaction_userId" itemValue="id" items="${bikeletusers}" path="/bikeletusers" z="vsANGREhlH5DRMAbobukhBd4J3M="/>
         <field:select field="bikeId" id="c_com_sjsu_bikelet_domain_RentTransaction_bikeId" itemValue="id" items="${bikes}" path="/bikes" z="upguISD0hDpHct+QRbTWgYgcCSY="/>
         <field:hidden field="accessKey" id="c_com_sjsu_bikelet_domain_RentTransaction_accessKey" z="v8xyRg/aaSry7cJGanBv2FGnJ98="/>
+        <field:textarea field="comments" id="c_com_sjsu_bikelet_domain_RentTransaction_comments" z="hreqm4MyHtE3gdnGQ+WsUnCGAZU="/>
     </form:create-transaction>
 </div>

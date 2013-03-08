@@ -8,6 +8,6 @@
         <field:display date="true" dateTimePattern="${bill_createddate_date_format}" field="createdDate" id="s_com_sjsu_bikelet_domain_Bill_createdDate" object="${bill}" z="zCc1/JzPcPGhX8YlBQ++XwfoR6o="/>
         <field:display date="true" dateTimePattern="${bill_billstartdate_date_format}" field="billStartDate" id="s_com_sjsu_bikelet_domain_Bill_billStartDate" object="${bill}" z="cfgQZMnKK1RZvjAmeFuGqjDbhVI="/>
         <field:display date="true" dateTimePattern="${bill_billenddate_date_format}" field="billEndDate" id="s_com_sjsu_bikelet_domain_Bill_billEndDate" object="${bill}" z="VuwKWnB5ryBGRNDVdoPeU0GgtzA="/>
-        <field:display field="userId" id="s_com_sjsu_bikelet_domain_Bill_userId" object="${bill}" z="uYgbkwXoA+sKbVVSlNiY+D1sSPI="/>
+        <field:display field="user" id="s_com_sjsu_bikelet_domain_Bill_userId" object="${bill}" z="uYgbkwXoA+sKbVVSlNiY+D1sSPI="/>
     </page:show>
 </div>

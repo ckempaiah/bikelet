@@ -9,6 +9,7 @@
         <field:datetime dateTimePattern="${billTransaction_enddate_date_format}" field="endDate" id="c_com_sjsu_bikelet_domain_BillTransaction_endDate" z="GIShJMECtSLLmNgPSKGdCXWljhc="/>
         <field:textarea field="description" id="c_com_sjsu_bikelet_domain_BillTransaction_description" z="fRv/IdI1B3F6f41G4gI0pRlOIcA="/>
         <field:select field="bill" id="c_com_sjsu_bikelet_domain_BillTransaction_bill" itemValue="id" items="${bills}" path="/bills" z="4c3U/rui3PMirb7qjLnQHvJfu7U="/>
+        <field:hidden id="c_com_sjsu_bikelet_domain_BillTransaction_tenantId" field="tenantId.id" />
         <field:input field="referenceEntityId" id="c_com_sjsu_bikelet_domain_BillTransaction_referenceEntityId" validationMessageCode="field_invalid_integer" z="YkXQTFsa7PM5+9ySP16w580WwMU="/>
     </form:update>
 </div>

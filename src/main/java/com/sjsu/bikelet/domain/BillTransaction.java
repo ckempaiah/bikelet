@@ -3,6 +3,7 @@ package com.sjsu.bikelet.domain;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -35,6 +36,7 @@ public class BillTransaction {
     private Bill bill;
 
     private Long referenceEntityId;
+    @NotNull
     @ManyToOne
     @JoinColumn(name="tenant_id")
     private Tenant tenantId;
@@ -50,6 +52,13 @@ public class BillTransaction {
                 .setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
 
+    public static List<BillTransaction> findBillTransactionByTenantId(Long tenantId, int firstResult, int maxResults) {
+
+        return entityManager().createQuery("SELECT o FROM BillTransaction o where o.tenantId.id=:tenantId", BillTransaction.class)
+                .setParameter("tenantId", tenantId)
+                .setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
+
     public static long countBillTransactionsByUser(BikeLetUser bikeLetUser) {
         return entityManager().createQuery("SELECT COUNT(o) FROM BillTransaction o where o.bikeLetUserId.id=:userId", Long.class)
                 .setParameter("userId", bikeLetUser.getId())
@@ -59,6 +68,12 @@ public class BillTransaction {
     public static List<BillTransaction> findBillTransactionEntriesByUser(BikeLetUser bikeLetUser) {
         return entityManager().createQuery("SELECT o FROM BillTransaction o where o.bikeLetUserId.id=:userId", BillTransaction.class)
                 .setParameter("userId", bikeLetUser.getId())
+                .getResultList();
+    }
+
+    public static List<BillTransaction> findBillTransactionEntriesByTenantId( Long tenantId) {
+        return entityManager().createQuery("SELECT o FROM BillTransaction o where o.tenantId.id=:tenantId", BillTransaction.class)
+                .setParameter("tenantId", tenantId)
                 .getResultList();
     }
 }
