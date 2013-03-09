@@ -158,6 +158,9 @@ CREATE TABLE payment_info
    id bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
    card_number varchar(19) NOT NULL,
    card_user_name varchar(255) NOT NULL,
+   cvv int,
+   card_exp_month int,
+   card_exp_year int,
    user_id bigint null,
    payment_id bigint,
    version int
@@ -211,6 +214,7 @@ CREATE TABLE rent_transaction
    status varchar(10) NOT NULL,
    tenant_id bigint,
    to_station_id bigint,
+   access_key varchar(6) NOT NULL,
    version int
 )
 ;
