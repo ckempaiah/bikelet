@@ -4,15 +4,34 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "TransactionDetails")
 public class User {
-	 private String firstName;
+	private String userName;
+	private String role;
 
-     private String lastName;
+	private String firstName;
 
-	 private String email;
+	private String lastName;
 
-	 private Long tenantId;
+	private String email;
 
-     private Long programId;
+	private Long tenantId;
+
+	private Long programId;
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -54,21 +73,21 @@ public class User {
 		this.programId = programId;
 	}
 
-	
 	public static User convert(com.sjsu.bikelet.domain.BikeLetUser bikeletuser) {
 		User user = null;
-		
+
 		if (bikeletuser != null) {
 			user = new User();
+			user.setUserName(bikeletuser.getUserName());
 			user.setFirstName(bikeletuser.getFirstName());
 			user.setLastName(bikeletuser.getLastName());
 			user.setEmail(bikeletuser.getEmail());
 			if (bikeletuser.getProgramId() != null)
-			    user.setProgramId(bikeletuser.getProgramId().getId());
+				user.setProgramId(bikeletuser.getProgramId().getId());
 			if (bikeletuser.getTenantId() != null)
-				  user.setTenantId(bikeletuser.getTenantId().getId());
+				user.setTenantId(bikeletuser.getTenantId().getId());
 		}
-		
+
 		return user;
 	}
 }
