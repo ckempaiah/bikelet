@@ -11,8 +11,6 @@ import java.util.Date;
  */
 public interface BikeletBillProcessor {
 
-    public void generateMonthlyBill();
-
-    public void generateOneTimeBill(Long memberId,Date fromDate, Date toDate);
+    public void processBill();
 
 }

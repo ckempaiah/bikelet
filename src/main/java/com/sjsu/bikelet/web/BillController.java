@@ -87,8 +87,9 @@ public class BillController {
     private void loadUserNames(List<Bill> bills) {
     	for (Bill bill: bills) {
     		String userName = bill.getUserId().getFirstName()+" "+bill.getUserId().getLastName();
-    		if(userName != null)
+    		if(userName != null)   {
     			bill.setUser(userName);
+            }
     	}
     }
 }

@@ -1,5 +1,6 @@
 package com.sjsu.bikelet.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.roo.addon.layers.service.RooService;
@@ -20,4 +21,6 @@ public interface BillService {
 	public abstract List<Bill> findAllBillsByTenant(Long tenantId);
 	
 	public abstract long countAllBillsForTenant(Long tenantId);
+
+    Bill findBillByStartDate(Long userId, Date startDate, Date endDate);
 }

@@ -68,7 +68,7 @@ privileged aspect BillDataOnDemand_Roo_DataOnDemand {
     }
     
     public void BillDataOnDemand.setTotalcharges(Bill obj, int index) {
-        Integer totalcharges = new Integer(index);
+        Double totalcharges = new Double(index);
         obj.setTotalcharges(totalcharges);
     }
     

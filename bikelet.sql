@@ -122,7 +122,7 @@ CREATE TABLE bill
    bill_start_date timestamp,
    created_date timestamp,
    description varchar(100),
-   total_charges int,
+   total_charges double,
    user_id bigint,
    version int
 )

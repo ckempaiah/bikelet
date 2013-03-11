@@ -1,10 +1,13 @@
 package com.sjsu.bikelet.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.sjsu.bikelet.model.PendingBillProjection;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
@@ -43,6 +46,7 @@ public class BillTransaction {
 
     @ManyToOne
     @JoinColumn(name="user_id")
+    @NotNull
     private BikeLetUser bikeLetUserId;
 
     public static List<BillTransaction> findBillTransactionEntriesByUser(BikeLetUser bikeLetUser, int firstResult, int maxResults) {
@@ -76,4 +80,13 @@ public class BillTransaction {
                 .setParameter("tenantId", tenantId)
                 .getResultList();
     }
+
+    public static List<PendingBillProjection> findPendingMonths(){
+        Query query = entityManager().createNativeQuery(" select month_id, user_id from (\n" +
+                "select month(end_date) as month_id, user_id from bill_transaction where bill_id is null and user_id is not null) btm\n" +
+                "group by month_id, user_id", PendingBillProjection.class);
+
+        return query.getResultList();
+    }
+
 }

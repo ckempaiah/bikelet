@@ -4,6 +4,7 @@ package com.sjsu.bikelet.service;
 import com.sjsu.bikelet.domain.*;
 import com.sjsu.bikelet.model.BikeletRoleName;
 import com.sjsu.bikelet.model.BillTransactionTypeEnum;
+import com.sjsu.bikelet.model.PendingBillProjection;
 import com.sjsu.bikelet.model.RentTransactionStatusEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -13,6 +14,9 @@ import org.omg.IOP.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import java.util.Date;
 import java.util.List;
 
 public class BillTransactionServiceImpl implements BillTransactionService {
@@ -108,5 +112,19 @@ public class BillTransactionServiceImpl implements BillTransactionService {
             return BillTransaction.findBillTransactionEntriesByUser(bikeLetUser);
         }
         throw new IllegalArgumentException("User role is invalid:" + roleName);
+    }
+
+    @Override
+    public List<BillTransaction> findPendingBillTransactions(Long userId, Date startDate, Date endDate){
+
+        TypedQuery<BillTransaction> query = BillTransaction.entityManager().createQuery("select bt from BillTransaction bt " +
+                "where bt.bikeLetUserId.id=:userId and bt.startDate >=:startDate and bt.endDate <=:endDate and bill.id is null", BillTransaction.class);
+
+        query.setParameter("userId", userId);
+        query.setParameter("startDate", startDate);
+        query.setParameter("endDate", endDate);
+
+        return query.getResultList();
+
     }
 }
