@@ -22,5 +22,7 @@ public interface BillService {
 	
 	public abstract long countAllBillsForTenant(Long tenantId);
 
+    public abstract Bill findLatestBill(Long userId);
+    
     Bill findBillByStartDate(Long userId, Date startDate, Date endDate);
 }

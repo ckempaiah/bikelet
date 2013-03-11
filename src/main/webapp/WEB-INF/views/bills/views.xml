@@ -13,4 +13,7 @@
 <definition extends="default" name="bills/update">
         <put-attribute name="body" value="/WEB-INF/views/bills/update.jspx"/>
     </definition>
+<definition extends="default" name="bills/nobillfound">
+        <put-attribute name="body" value="/WEB-INF/views/bills/nobillfound.jspx"/>
+    </definition>
 </tiles-definitions>

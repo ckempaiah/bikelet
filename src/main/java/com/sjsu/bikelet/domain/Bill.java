@@ -81,4 +81,16 @@ public class Bill {
     public static long countBillsByTenant(Long tenantId) {
         return entityManager().createQuery("SELECT COUNT(o) FROM Bill o where o.userId.id IN (SELECT bu.id FROM BikeLetUser bu where bu.tenantId.id = :tenantId)", Long.class).setParameter("tenantId", tenantId).getSingleResult();
     }
+
+    public static Bill findLatestBill(Long userId){
+    	List<Bill> bills = entityManager().createQuery("SELECT o FROM Bill o where o.userId.id = :userId ORDER BY o.id DESC limit 1", Bill.class).setParameter("userId", userId).getResultList();
+    	if(bills.size() > 0){
+    		return bills.get(0);
+    	}
+    	else{
+    		return null;
+    	}
+
+    }
+
 }

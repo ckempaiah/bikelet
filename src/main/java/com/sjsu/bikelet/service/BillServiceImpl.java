@@ -2,6 +2,7 @@ package com.sjsu.bikelet.service;
 
 import java.util.Date;
 import java.util.List;
+
 import com.sjsu.bikelet.domain.Bill;
 import org.springframework.dao.EmptyResultDataAccessException;
 
@@ -44,6 +45,12 @@ public class BillServiceImpl implements BillService {
 	@Override
 	public long countAllBillsForTenant(Long tenantId) {
 		return Bill.countBillsByTenant(tenantId);
+	}
+
+	@Override
+	public Bill findLatestBill(Long userId) {
+		// TODO Auto-generated method stub
+		return Bill.findLatestBill(userId);
 	}
 
     @Override
