@@ -351,4 +351,5 @@ public class RentTransactionController {
     	uiModel.addAttribute("transaction",transaction);
     	return "renttransactions/list";
     }
+    
 }

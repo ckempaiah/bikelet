@@ -1,14 +1,19 @@
 package com.sjsu.bikelet.web;
 
+import com.sjsu.bikelet.bean.BikeDetails;
+import com.sjsu.bikelet.bean.StationDetails;
 import com.sjsu.bikelet.domain.BikeLetRole;
 import com.sjsu.bikelet.domain.BikeLetUser;
+import com.sjsu.bikelet.domain.RentTransaction;
 import com.sjsu.bikelet.domain.Station;
 import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.Bike;
 import com.sjsu.bikelet.domain.BikeLocation;
 import com.sjsu.bikelet.domain.UserRole;
+import com.sjsu.bikelet.domain.UserSubscriptionPolicy;
 import com.sjsu.bikelet.model.BikeAvailabilityStatusEnum;
 import com.sjsu.bikelet.model.BikeStatusEnum;
+import com.sjsu.bikelet.model.RentTransactionStatusEnum;
 import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.web.Utils;
 import java.util.ArrayList;
@@ -227,5 +232,51 @@ public class StationController {
         		bike.setStation(bikeLocation.getStationId());
         	    bike.setLocationStatus(bikeLocation.getBikeStatus());
     	}
+    }
+    
+    @RequestMapping(value = "listStationByProgram", produces = "application/json")
+    public String listStationByProgram(Model uiModel) {
+    	
+    	Long userId = (long) 0;
+    	List<Station> stations = new ArrayList<Station>();
+    	Long programId = Utils.getLogonUser().getProgramId();
+    	Long tenantId = Utils.getLogonUser().getTenantId();
+    	stations = stationService.findAllStationsByProgram(programId);
+
+    	List<StationDetails> stationDetails = new ArrayList<StationDetails>();
+        for(Station station: stations) {
+            StationDetails sd = new StationDetails();
+            sd.setLocation(station.getLocation());
+            sd.setProgramId(programId.toString());
+            sd.setTenantId(tenantId.toString());
+            sd.setCapacity(station.getCapacity());
+            sd.setNumberOfBikesAvailable(bikeLocationService.countAvailableBikesByStation(station.getId()).intValue());
+            stationDetails.add(sd);
+        }
+		uiModel.addAttribute("stations", stationDetails);
+		return "stations/list";
+    }
+    
+    @RequestMapping(value = "listBikeByStation", produces = "application/json")
+    public String listStations(@RequestParam(value = "stationId", required = true) Long stationId, Model uiModel) {
+    	
+    	Long programId = Utils.getLogonUser().getProgramId();
+    	Long tenantId = Utils.getLogonUser().getTenantId();
+    	List<Bike> bikes = bikeService.findAllBikesByStation(stationId);
+
+    	List<BikeDetails> bikeDetails = new ArrayList<BikeDetails>();
+        for(Bike bike: bikes) {
+        	BikeDetails bd = new BikeDetails();
+        	bd.setBikeColor(bike.getBikeColor());
+        	bd.setBikeHeight(bike.getBikeHeight());
+        	bd.setBikeStatus(bike.getBikeStatus());
+        	bd.setBikeType(bike.getBikeType());
+        	bd.setStationId(stationId);
+        	bd.setTenantId(tenantId);
+        	bd.setWheelSize(bike.getWheelSize());
+            bikeDetails.add(bd);
+        }
+		uiModel.addAttribute("bikes", bikeDetails);
+		return "stations/bikes/list";
     }
 }
