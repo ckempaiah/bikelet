@@ -3,11 +3,8 @@ package com.sjsu.bikelet.domain;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.Transient;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -20,7 +17,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 public class Bill {
 
     @Column(name = "total_charges")
-    private Integer totalcharges;
+    private Double totalcharges;
 
     @Size(max = 100)
     private String description;
@@ -37,12 +34,14 @@ public class Bill {
     @DateTimeFormat(style = "M-")
     private Date billEndDate;
 
-    @ManyToOne
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
+    @NotNull
     private BikeLetUser userId;
     
-        @Transient
+    @Transient
     private String user;
-    
+
     public String getUser() {
     	return user;
 	}
@@ -50,6 +49,14 @@ public class Bill {
 	public void setUser(String user) {
 		this.user = user;
 	}
+
+    public BikeLetUser getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(BikeLetUser userId) {
+        this.userId = userId;
+    }
 
 	public static List<Bill> findBillEntriesByUser(int firstResult, int maxResults, Long userId) {
         return entityManager().createQuery("SELECT o FROM Bill o where o.userId.id = :userId", Bill.class).setParameter("userId", userId).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
@@ -74,7 +81,7 @@ public class Bill {
     public static long countBillsByTenant(Long tenantId) {
         return entityManager().createQuery("SELECT COUNT(o) FROM Bill o where o.userId.id IN (SELECT bu.id FROM BikeLetUser bu where bu.tenantId.id = :tenantId)", Long.class).setParameter("tenantId", tenantId).getSingleResult();
     }
-    
+
     public static Bill findLatestBill(Long userId){
     	List<Bill> bills = entityManager().createQuery("SELECT o FROM Bill o where o.userId.id = :userId ORDER BY o.id DESC limit 1", Bill.class).setParameter("userId", userId).getResultList();
     	if(bills.size() > 0){
@@ -83,7 +90,7 @@ public class Bill {
     	else{
     		return null;
     	}
-    		
+
     }
-    
+
 }

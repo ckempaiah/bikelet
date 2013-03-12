@@ -1,8 +1,8 @@
+
 package com.sjsu.bikelet.bean;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "TransactionDetails")
 public class User {
 	private String userName;
 	private String role;
