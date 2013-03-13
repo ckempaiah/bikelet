@@ -142,7 +142,16 @@ public class RentTransactionController {
 				return "renttransactions/nopolicy";
 			else{
 				try {
-		    		paymentInfoService.findPaymentInfoByUser(userId);
+		    		PaymentInfo pinfo = paymentInfoService.findPaymentInfoByUser(userId);
+		    		Date date = new Date();
+		        	int month = pinfo.getCardExpMonth();
+		        	int year = pinfo.getCardExpYear();
+		        	int cmonth = date.getMonth()+1;
+		        	int cyear = date.getYear()+1900;
+		        	
+		        	if ((month < cmonth && year == cyear) || (year < cyear)) {
+		                return "renttransactions/nopaymentinfo";
+		            }
 		    		
 		    	} catch (Exception e) {
 		    		return "renttransactions/nopaymentinfo";

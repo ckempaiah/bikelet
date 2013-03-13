@@ -38,7 +38,6 @@ public class PaymentInfo {
     private Integer cardExpMonth;
     
     @NotNull
-    @Min(2013)
     private Integer cardExpYear;
     
     public Integer getCvv() {
