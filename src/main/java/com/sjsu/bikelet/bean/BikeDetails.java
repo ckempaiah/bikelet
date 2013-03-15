@@ -3,6 +3,9 @@ package com.sjsu.bikelet.bean;
 import java.util.Date;
 
 public class BikeDetails {
+	
+	private Long id;
+
 	private Integer bikeHeight;
 
 	private String bikeColor;
@@ -19,6 +22,14 @@ public class BikeDetails {
 
 	private Long stationId;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public Integer getBikeHeight() {
 		return bikeHeight;
 	}

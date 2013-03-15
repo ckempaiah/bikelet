@@ -246,6 +246,7 @@ public class StationController {
     	List<StationDetails> stationDetails = new ArrayList<StationDetails>();
         for(Station station: stations) {
             StationDetails sd = new StationDetails();
+            sd.setId(station.getId());
             sd.setLocation(station.getLocation());
             sd.setProgramId(programId.toString());
             sd.setTenantId(tenantId.toString());
@@ -267,6 +268,7 @@ public class StationController {
     	List<BikeDetails> bikeDetails = new ArrayList<BikeDetails>();
         for(Bike bike: bikes) {
         	BikeDetails bd = new BikeDetails();
+        	bd.setId(bike.getId());
         	bd.setBikeColor(bike.getBikeColor());
         	bd.setBikeHeight(bike.getBikeHeight());
         	bd.setBikeStatus(bike.getBikeStatus());

@@ -56,6 +56,9 @@ public class RentTransactionController {
     @Autowired
     PaymentInfoService paymentInfoService;
 	
+    @Autowired
+    BikeService bikeService;
+
 	/* CHECKOUT */
 	@RequestMapping(value="/{stationId}", method = RequestMethod.POST, produces = "text/html")
     public String create(@PathVariable("stationId") Integer stationId, @Valid RentTransaction rentTransaction, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
@@ -436,4 +439,50 @@ public class RentTransactionController {
     	return "renttransactions/list";
     }
     
+
+    /* CHECKOUT */
+       @RequestMapping(value = "checkoutBike", produces = "application/json")
+       public String checkoutBike(
+       		@RequestParam(value = "fromStationId", required = true) Integer fromStationId,
+       		@RequestParam(value = "bikeId", required = true) Long bikeId,
+       		@RequestParam(value = "comments", required = true) String comments,
+       		Model uiModel, HttpServletRequest httpServletRequest) {
+
+       	BikeLetUser user = new BikeLetUser();
+   		user = bikeLetUserService.findUserFromId(Utils.getLogonUser().getUserId());
+   		String accessKey = RandomStringUtils.randomNumeric(6);
+   		UserSubscriptionPolicy policy = new UserSubscriptionPolicy();
+   		policy = userPolicyService.findUserSubscriptionPolicyByUser(user.getId());
+   		
+   		Bike bike = bikeService.findBike(bikeId);
+   		
+   		RentTransaction rentTransaction = new RentTransaction();
+   		rentTransaction.setBikeId(bike);
+   		rentTransaction.setComments(comments);
+   		rentTransaction.setFromStationId(fromStationId);
+   		rentTransaction.setRateId(userRateService.getActiveRateIdForPolicy(policy.getPolicyId().getId()));
+   		rentTransaction.setRentStartDate(new Date());
+           rentTransaction.setUserId(user);
+           rentTransaction.setAccessKey(accessKey);
+           rentTransactionService.saveRentTransaction(rentTransaction);
+           
+           BikeLocation bikeLocation = new BikeLocation();
+           bikeLocation = bikeLocationService.findBikeLocationOfBike(rentTransaction.getBikeId().getId());
+           bikeLocation.setBikeStatus(BikeAvailabilityStatusEnum.CheckedOut.toString());
+           bikeLocationService.updateBikeLocation(bikeLocation);
+           
+           
+           TransactionDetails transaction = new TransactionDetails();
+       	transaction.setId(rentTransaction.getId());
+       	transaction.setComments(rentTransaction.getComments());
+       	transaction.setFromStation(rentTransaction.getFromStationId().toString());
+       	
+       	transaction.setRentStartDate(rentTransaction.getRentStartDate().toString());
+       	transaction.setStatus(rentTransaction.getStatus());
+       	transaction.setAccessKey(rentTransaction.getAccessKey());
+       	transaction.setBike(rentTransaction.getBikeId().getBikeType());
+           
+       	uiModel.addAttribute("transaction",transaction);
+       	return "renttransactions/list";
+       }
 }

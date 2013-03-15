@@ -1,8 +1,12 @@
 package com.sjsu.bikelet.bean;
 
 public class StationDetails {
-private Integer numberOfBikesAvailable;
 	
+	private Long id;
+	
+		private Integer numberOfBikesAvailable;
+	
+
 	public Integer getNumberOfBikesAvailable() {
 		return numberOfBikesAvailable;
 	}
@@ -21,6 +25,13 @@ private Integer numberOfBikesAvailable;
     
 	private Integer capacity;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
     public String getLocation() {
 		return location;
