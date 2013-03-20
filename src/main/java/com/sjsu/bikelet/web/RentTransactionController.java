@@ -465,10 +465,9 @@ public class RentTransactionController {
         	transaction.setAccessKey(renttransaction.getAccessKey());
         	transaction.setBike(renttransaction.getBikeId().getBikeType());
         	
-        	if (renttransaction.getStatus() == "Complete"){
+        	if (transaction.getStatus().equalsIgnoreCase("Complete")){
         		transaction.setToStation(renttransaction.getToStationId().toString());
         		transaction.setRentEndDate(renttransaction.getRentEndDate().toString());
-            	//transaction.setRentEndDate(renttransaction.getRentEndDate().toString());
         	}
         	
         	Long programId = Utils.getLogonUser().getProgramId();
