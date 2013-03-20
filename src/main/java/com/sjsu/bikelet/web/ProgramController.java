@@ -1,13 +1,17 @@
 package com.sjsu.bikelet.web;
 
+import com.sjsu.bikelet.domain.PaymentInfo;
 import com.sjsu.bikelet.domain.Program;
 import com.sjsu.bikelet.domain.BikeLetUser;
+import com.sjsu.bikelet.domain.RentTransaction;
 import com.sjsu.bikelet.domain.SubscriptionPolicy;
 import com.sjsu.bikelet.domain.SubscriptionRate;
 import com.sjsu.bikelet.domain.UserRole;
 import com.sjsu.bikelet.domain.BikeLetRole;
 import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.UserSubscriptionPolicy;
+import com.sjsu.bikelet.model.RentTransactionStatusEnum;
+import com.sjsu.bikelet.service.PaymentInfoService;
 import com.sjsu.bikelet.service.ProgramService;
 import com.sjsu.bikelet.service.BikeLetUserService;
 import com.sjsu.bikelet.service.SubscriptionPolicyService;
@@ -36,6 +40,8 @@ import org.springframework.web.util.WebUtils;
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 import java.lang.Long;
@@ -53,6 +59,9 @@ public class ProgramController {
 	@Autowired
 	UserSubscriptionPolicyService userSubscriptionPolicyService;
 	
+    @Autowired
+    PaymentInfoService paymentInfoService;
+    
 	@RequestMapping(method = RequestMethod.POST, produces = "text/html")
 	public String create(@Valid Program program, BindingResult bindingResult,
 			Model uiModel, HttpServletRequest httpServletRequest) {
@@ -167,6 +176,24 @@ public class ProgramController {
 	
 	@RequestMapping(params = "form", produces = "text/html")
 	public String createForm(Model uiModel) {
+		// Validation that the tenant payment is setup by Tenant Admin and the card is not expired
+		Long userId = Utils.getLogonUser().getUserId();
+		try {
+	    	PaymentInfo pinfo = paymentInfoService.findPaymentInfoByUser(userId);
+	    	Date date = new Date();
+	      	int month = pinfo.getCardExpMonth();
+	       	int year = pinfo.getCardExpYear();
+	       	int cmonth = date.getMonth()+1;
+	       	int cyear = date.getYear()+1900;
+	       	
+	       	if ((month < cmonth && year == cyear) || (year < cyear)) {
+	               return "renttransactions/nopaymentinfo";
+	        }
+	    		
+	    } catch (Exception e) {
+	    	return "renttransactions/nopaymentinfo";
+	    }
+		
 		Long tid = Utils.getLogonTenantId();
 		Tenant tenant = tenantService.findTenant(tid);
 		Program prog = new Program();
@@ -445,7 +472,7 @@ public class ProgramController {
 			@RequestParam(value = "size", required = false) Integer size,
 			Model uiModel) {
 		Long tenantId = Utils.getLogonTenantId();
-		System.out.println("tenant id is "+tenantId);
+		
 		if (page != null || size != null) {
 			int sizeNo = size == null ? 10 : size.intValue();
 			final int firstResult = page == null ? 0 : (page.intValue() - 1)
