@@ -444,6 +444,62 @@ public class RentTransactionController {
     	return "renttransactions/list";
     }
     
+    @RequestMapping(value = "/viewtransaction", produces = "application/json")
+    public String getLastTransactionDetails(Model uiModel)
+    {
+    	Long userId = Utils.getLogonUserId();
+    	TransactionDetails transaction = new TransactionDetails();
+    	System.out.println("Logon user id is ......... "+Utils.getLogonUser().getUserId());
+    	RentTransaction renttransaction = rentTransactionService.findLastTransactionsByUser(Utils.getLogonUser().getUserId());
+    	System.out.println("Rent Transaction is ......... "+renttransaction);
+    	if(renttransaction != null)
+    	{
+    		transaction.setId(renttransaction.getId());
+        	transaction.setBike(renttransaction.getBikeId().toString());
+        	transaction.setComments(renttransaction.getComments());
+        	transaction.setFromStation(renttransaction.getFromStationId().toString());
+        	
+        	transaction.setRentStartDate(renttransaction.getRentStartDate().toString());
+        	
+        	transaction.setStatus(renttransaction.getStatus());
+        	transaction.setAccessKey(renttransaction.getAccessKey());
+        	transaction.setBike(renttransaction.getBikeId().getBikeType());
+        	
+        	if (renttransaction.getStatus() == "Complete"){
+        		transaction.setToStation(renttransaction.getToStationId().toString());
+        		transaction.setRentEndDate(renttransaction.getRentEndDate().toString());
+            	//transaction.setRentEndDate(renttransaction.getRentEndDate().toString());
+        	}
+        	
+        	Long programId = Utils.getLogonUser().getProgramId();
+        	Long tenantId = Utils.getLogonTenantId();
+        	 List<Station> stations = stationService.findAllStationsByProgram(programId);
+             
+             List<StationDetails> stationss = new ArrayList<StationDetails>();
+             for(Station station: stations)
+             {
+              StationDetails sd = new StationDetails();
+              sd.setLocation(station.getLocation());
+              sd.setProgramId(programId.toString());
+              sd.setTenantId(tenantId.toString());
+              sd.setCapacity(station.getCapacity());
+              sd.setNumberOfBikesAvailable(bikeLocationService.countAvailableBikesByStation(station.getId()).intValue());
+              stationss.add(sd);
+             }
+             
+             transaction.setStationList(stationss);
+             
+            
+        	System.out.println("Transaction is ...... "+transaction.getStationList());
+
+    	}
+    	
+    	else
+    		transaction = null;
+    	uiModel.addAttribute("transaction",transaction);
+    	return "renttransactions/list";
+    }
+    
 
     /* CHECKOUT */
     @RequestMapping(value = "checkoutBike", produces = "application/json")

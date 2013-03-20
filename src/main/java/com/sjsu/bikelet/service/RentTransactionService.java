@@ -15,4 +15,5 @@ public interface RentTransactionService {
 	public abstract List<RentTransaction> findAllRentTransactionsByUser(Long userId);
 	public abstract long countAllRentTransactionsForUser(Long userId);
     List<RentTransaction> findTransactionsForToday(Long userId, RentTransactionStatusEnum statusEnum);
+    public abstract RentTransaction findLastTransactionsByUser(Long userId);
 }
