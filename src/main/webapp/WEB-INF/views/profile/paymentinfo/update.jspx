@@ -6,7 +6,7 @@
         <field:input field="cardNumber" id="c_com_sjsu_bikelet_domain_PaymentInfo_cardNumber" max="19" min="12" required="true" z="mXn2TZXzP/9UNyq8JpfDDI7p3Rc="/>
         <field:input field="cardUserName" id="c_com_sjsu_bikelet_domain_PaymentInfo_cardUserName" min="2" required="true" z="Shn6Fp2SCcDjbA+PL1bAoHClOUA="/>
         <field:simple field="userId.userName" id="c_com_sjsu_bikelet_domain_PaymentInfo_userId" text="${paymentInfo.userId.userName}" z="user-managed"/>
-        <field:input field="cvv" id="c_com_sjsu_bikelet_domain_PaymentInfo_cvv" required="true" validationMessageCode="field_invalid_integer" z="Shn6Fp2SCcDjbA+PL1bAoHClOUA="/>
+        <field:input field="cvv" type="password" id="c_com_sjsu_bikelet_domain_PaymentInfo_cvv" required="true" validationMessageCode="field_invalid_integer" z="Shn6Fp2SCcDjbA+PL1bAoHClOUA="/>
         <field:input field="cardExpMonth" id="c_com_sjsu_bikelet_domain_PaymentInfo_expmonth" required="true" validationMessageCode="field_invalid_integer" z="Shn6Fp2SCcDjbA+PL1bAoHClOUA="/>
         <field:input field="cardExpYear" id="c_com_sjsu_bikelet_domain_PaymentInfo_expyear" required="true" validationMessageCode="field_invalid_integer" z="Shn6Fp2SCcDjbA+PL1bAoHClOUA="/>
         <field:hidden field="userId.id" id="c_com_sjsu_bikelet_domain_PaymentInfo_userId_id" z="Pse9om/YmXNqFgcxfe3Cz/FDjWI="/>

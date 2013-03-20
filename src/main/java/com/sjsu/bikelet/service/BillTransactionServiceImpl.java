@@ -94,7 +94,7 @@ public class BillTransactionServiceImpl implements BillTransactionService {
 
             return BillTransaction.findBillTransactionByTenantId(bikeLetUser.getTenantId().getId(), firstResult, maxResults);
         }else if (BikeletRoleName.ROLE_USER.name().equalsIgnoreCase(roleName)){
-            return BillTransaction.findBillTransactionByTenantId(bikeLetUser.getId(), firstResult, maxResults);
+            return BillTransaction.findBillTransactionEntriesByUser(bikeLetUser, firstResult, maxResults);
         }
         throw new IllegalArgumentException("User role is invalid:" + roleName);
     }
