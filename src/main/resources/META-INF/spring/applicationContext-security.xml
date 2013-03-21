@@ -10,7 +10,15 @@
         <logout logout-url="/resources/j_spring_security_logout" />
         <!-- Configure these elements to secure URIs in your application -->
         <intercept-url pattern="/choices/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/tenants/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/licensepolicys/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/tenantlicensepolicys/**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/member/**" access="isAuthenticated()" />
+        <intercept-url pattern="/bikes/**" access="hasRole('ROLE_TENANT')" />
+        <intercept-url pattern="/programs/**" access="hasRole('ROLE_TENANT')" />
+        <intercept-url pattern="/subscriptionpolicys/**" access="hasRole('ROLE_TENANT')" />
+        <intercept-url pattern="/stations/**" access="hasRole('ROLE_TENANT')" />
+        <intercept-url pattern="/bills\?form" access="hasRole('ROLE_TENANT')" />
         <intercept-url pattern="/resources/**" access="permitAll" />
         <intercept-url pattern="/identity/*" access="permitAll" />
         <intercept-url pattern="/login" access="permitAll" />

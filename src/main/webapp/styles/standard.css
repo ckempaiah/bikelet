@@ -1,8 +1,8 @@
 /* main elements */
 
 body,div,td {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	font-family: "Open Sans","lucida grande","Segoe UI",arial,verdana,"lucida sans unicode",tahoma,sans-serif;
+	font-size: 14px;
 	color: #666;
 }
 
@@ -64,12 +64,22 @@ body {
 }
 
 #menu h2 {
-    background: url(../images/bikelet-button-bk.png) transparent;
+    /*background: url(../images/bikelet-button-bk.png) transparent;*/
+    /*background: none repeat scroll 0 0 #A61F12;*/
     color: #fff;
-	background: #9B7670;
+    border-radius: 2px 2px 2px 2px;
+	/*background: #9B7670;*/
 	text-transform: uppercase;
 	font-weight:bold;
-	font-size: 12px;
+	font-size: 14px;
+    /*background: -moz-linear-gradient(center top , #961F12, #B61010) repeat scroll 0 0 transparent;*/
+    background: -moz-linear-gradient(center top , #BD4B39, #B14836);
+    /*background-color: #B14836;*/
+    /*border-style: solid;*/
+    /*border-bottom-color: #333333;*/
+    /*border-right-color: #555555;*/
+    /*border-left-color: #BBBBBB;*/
+    /*border-top-color: #DDDDDD;*/
 }
 
 #menu a {
@@ -97,6 +107,10 @@ body {
 
 #footer a:link {color: #9B7670;}
 
+#banner h1 {
+    background: -moz-linear-gradient(center top , #961F12, #B61010) repeat scroll 0 0 transparent;
+    border: 1px;
+}
 .quicklinks {
 	clear:both; 
 	padding-bottom: 15px
@@ -150,7 +164,7 @@ a.menu, a.menu:link, a.menu:visited {display:block; width:150px; height:25px;}
 /* text styles */
 
 h1,h2,h3 {
-	font-family: Helvetica, sans-serif;
+	font-family: "Open Sans","lucida grande","Segoe UI",arial,verdana,"lucida sans unicode",tahoma,sans-serif;
 	color: #9B7670;
 }
 
@@ -184,7 +198,7 @@ h4 {
 
 a {
 	text-decoration: underline;
-	font-size: 12px;
+	font-size: 14px;
 }
 
 a img {
@@ -282,7 +296,7 @@ caption {
 	caption-side: top;
 	width: auto;
 	text-align: left;
-	font-size: 12px;
+	font-size: 14px;
 	color: #848f73;
 	padding-bottom: 4px;
 }
@@ -331,6 +345,7 @@ fieldset th {
 .table-buttons {
 	background-color:#fff;
 	border:none;
+    border-radius: 3px 3px 3px 3px;
 }
 
 .table-buttons td {
@@ -339,24 +354,26 @@ fieldset th {
 
 .submit input {
 	border: 1px solid #BBBBBB;
-	color:#777777;
+	color:#FFFFFF;
 	padding:2px 7px;
-	font-size:11px;
+	font-size:13px;
 	text-transform:uppercase;
 	font-weight:bold;
 	height:24px;
+    background: #B14836;
+    border-radius: 3px 3px 3px 3px !important;
 }
 
 .updated {
 	background:#ecf1e5;
-	font-size:11px;
+	font-size:13px;
 	margin-left:2px;
 	border:4px solid #ecf1e5;
 }
 
 .updated td {
 	padding:2px 8px;
-	font-size:11px;
+	font-size:13px;
 	color:#888888;
 }
 
