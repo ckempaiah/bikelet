@@ -3,11 +3,11 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:show id="ps_com_sjsu_bikelet_domain_Bill" object="${bill}" path="/bills" z="8cgG6QdnpqLdAvXZEo+7DHQ7Kpw=">
-        <field:display field="totalcharges" id="s_com_sjsu_bikelet_domain_Bill_totalcharges" object="${bill}" z="hQMQV9fiFtTPRovFlEgOCz/+hn4="/>
-        <field:display field="description" id="s_com_sjsu_bikelet_domain_Bill_description" object="${bill}" z="Z57OfPWTEcoQCBSYqdO7bxLQGqw="/>
         <field:display date="true" dateTimePattern="${bill_createddate_date_format}" field="createdDate" id="s_com_sjsu_bikelet_domain_Bill_createdDate" object="${bill}" z="zCc1/JzPcPGhX8YlBQ++XwfoR6o="/>
         <field:display date="true" dateTimePattern="${bill_billstartdate_date_format}" field="billStartDate" id="s_com_sjsu_bikelet_domain_Bill_billStartDate" object="${bill}" z="cfgQZMnKK1RZvjAmeFuGqjDbhVI="/>
         <field:display date="true" dateTimePattern="${bill_billenddate_date_format}" field="billEndDate" id="s_com_sjsu_bikelet_domain_Bill_billEndDate" object="${bill}" z="VuwKWnB5ryBGRNDVdoPeU0GgtzA="/>
         <field:display field="user" id="s_com_sjsu_bikelet_domain_Bill_userId" object="${bill}" z="uYgbkwXoA+sKbVVSlNiY+D1sSPI="/>
+        <field:display field="description" id="s_com_sjsu_bikelet_domain_Bill_description" object="${bill}" z="Z57OfPWTEcoQCBSYqdO7bxLQGqw="/>
+        <field:display field="totalcharges" id="s_com_sjsu_bikelet_domain_Bill_totalcharges" object="${bill}" z="hQMQV9fiFtTPRovFlEgOCz/+hn4="/>
     </page:show>
 </div>

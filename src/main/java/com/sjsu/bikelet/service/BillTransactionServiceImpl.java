@@ -59,7 +59,7 @@ public class BillTransactionServiceImpl implements BillTransactionService {
 
         }
         log.debug("Charges for this transaction:" + transactionCost);
-        String billMessage = String.format("Rent Transaction Information \n Minutes Used=%s, Minutes Charged=%s, Charge Per Minute=%s, Total Cost=%s,"
+        String billMessage = String.format("Rent Info (Minutes Used=%s, Minutes Charged=%s, Charge Per Minute=%s, Total Cost=%s),"
                 , transactionMinutes, minutesToCharge, subscriptionRate.getExcessChargePerMin(), transactionCost);
         billMessage = StringUtils.abbreviate(billMessage, 99);
         billTransaction.setDescription(billMessage);

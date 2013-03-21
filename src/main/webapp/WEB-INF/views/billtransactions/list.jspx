@@ -16,7 +16,7 @@
             <table:column date="true" dateTimePattern="${billTransaction_startdate_date_format}" id="c_com_sjsu_bikelet_domain_BillTransaction_startDate" property="startDate" z="7UqIThpFSJGv7QLrYvb9dACN1OI=" />
             <table:column date="true" dateTimePattern="${billTransaction_enddate_date_format}" id="c_com_sjsu_bikelet_domain_BillTransaction_endDate" property="endDate" z="N2QL0RNbjAv2ncxAnAz0ypp2mSU="/>
             <table:column id="c_com_sjsu_bikelet_domain_BillTransaction_description" property="description" z="bvqJ1o2W6mlJ1fVkKC9fxCPeaNo="/>
-            <table:column id="c_com_sjsu_bikelet_domain_BillTransaction_bill" property="bill" z="iMXBoIA0fttrJ5lVJd+VQLVPGHM="/>
+            <!--<table:column id="c_com_sjsu_bikelet_domain_BillTransaction_bill" property="bill" z="iMXBoIA0fttrJ5lVJd+VQLVPGHM="/>-->
             <table:column id="c_com_sjsu_bikelet_domain_BillTransaction_totalCost" property="totalCost" z="DMD7l6tPgBcEmvEkc2LOr9pYs8o="/>
         </table:table>
     </page:list>
