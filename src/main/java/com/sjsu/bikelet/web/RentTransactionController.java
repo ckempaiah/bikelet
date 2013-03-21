@@ -457,7 +457,9 @@ public class RentTransactionController {
     		transaction.setId(renttransaction.getId());
         	transaction.setBike(renttransaction.getBikeId().toString());
         	transaction.setComments(renttransaction.getComments());
-        	transaction.setFromStation(renttransaction.getFromStationId().toString());
+        	Long sid = renttransaction.getFromStationId().longValue();
+        	Station s = stationService.getStationById(sid);
+        	transaction.setFromStation(s.getLocation());
         	
         	transaction.setRentStartDate(renttransaction.getRentStartDate().toString());
         	
@@ -465,9 +467,18 @@ public class RentTransactionController {
         	transaction.setAccessKey(renttransaction.getAccessKey());
         	transaction.setBike(renttransaction.getBikeId().getBikeType());
         	
+        	BikeLetUser user = new BikeLetUser();
+    		user = bikeLetUserService.findUserFromId(Utils.getLogonUser().getUserId());
+        	
+        	BillTransaction bt = billTransactionService.findLastBillTransactionByUserId(user);
+        	System.out.println("CHECKING BILL TRANSACTION.................@@@@@@@@@@@@@@ "+bt.getTotalCost());
+        	
         	if (transaction.getStatus().equalsIgnoreCase("Complete")){
-        		transaction.setToStation(renttransaction.getToStationId().toString());
+        		sid = renttransaction.getToStationId().longValue();
+        		s = stationService.getStationById(sid);
+        		transaction.setToStation(s.getLocation());
         		transaction.setRentEndDate(renttransaction.getRentEndDate().toString());
+        		transaction.setBillDetails(bt.getTotalCost().toString());
         	}
         	
         	Long programId = Utils.getLogonUser().getProgramId();

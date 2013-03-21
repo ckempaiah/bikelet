@@ -127,4 +127,9 @@ public class BillTransactionServiceImpl implements BillTransactionService {
         return query.getResultList();
 
     }
+	@Override
+	public BillTransaction findLastBillTransactionByUserId(BikeLetUser userid) {
+		// TODO Auto-generated method stub
+		return BillTransaction.findLastBillTransactionByUserId(userid);
+	}
 }

@@ -62,6 +62,19 @@ public class BillTransaction {
                 .setParameter("tenantId", tenantId)
                 .setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
+    
+    public static BillTransaction findLastBillTransactionByUserId(BikeLetUser bikeLetUser) {
+
+    	List<BillTransaction> billTransactions = entityManager().createQuery("SELECT o FROM BillTransaction o where o.bikeLetUserId.id=:userId", BillTransaction.class)
+                .setParameter("userId", bikeLetUser.getId()).getResultList();
+    	BillTransaction billTrans = billTransactions.get(0);
+    	for (BillTransaction bt : billTransactions){
+    		if (bt.getEndDate().compareTo(billTrans.getEndDate()) > 0){
+    			billTrans = bt;
+    		}
+    	}
+    	return billTrans;
+    }
 
     public static long countBillTransactionsByUser(BikeLetUser bikeLetUser) {
         return entityManager().createQuery("SELECT COUNT(o) FROM BillTransaction o where o.bikeLetUserId.id=:userId", Long.class)
