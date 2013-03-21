@@ -65,15 +65,18 @@ body {
 
 #menu h2 {
     /*background: url(../images/bikelet-button-bk.png) transparent;*/
-    /*background: none repeat scroll 0 0 #A61F12;*/
+    /*background: none repeat scroll 0 0 #BD4B39;*/
     color: #fff;
     border-radius: 2px 2px 2px 2px;
 	/*background: #9B7670;*/
 	text-transform: uppercase;
 	font-weight:bold;
 	font-size: 14px;
+    background-color: #BD4B39;
     /*background: -moz-linear-gradient(center top , #961F12, #B61010) repeat scroll 0 0 transparent;*/
-    background: -moz-linear-gradient(center top , #BD4B39, #B14836);
+    background-image: -moz-linear-gradient(center top , #BD4B39, #B14836);
+    border: 1px solid transparent;
+    box-shadow: none;
     /*background-color: #B14836;*/
     /*border-style: solid;*/
     /*border-bottom-color: #333333;*/
