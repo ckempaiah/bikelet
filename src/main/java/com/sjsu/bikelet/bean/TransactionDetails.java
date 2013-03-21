@@ -26,6 +26,16 @@ public class TransactionDetails {
 
 	private String bike;
 	
+	private String billDetails;
+	
+	public String getBillDetails() {
+		return billDetails;
+	}
+
+	public void setBillDetails(String billDetails) {
+		this.billDetails = billDetails;
+	}
+
 	private String accessKey;
 	
 	private List<StationDetails> stationList;

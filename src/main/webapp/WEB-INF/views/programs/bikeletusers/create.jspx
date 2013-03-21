@@ -7,7 +7,7 @@
         <field:input field="firstName" id="c_com_sjsu_bikelet_domain_BikeLetUser_firstName" max="30" min="2" required="true" z="VLEypxbwaF03b0ocQLKX4lNjOso="/>
         <field:input field="lastName" id="c_com_sjsu_bikelet_domain_BikeLetUser_lastName" max="30" min="2" required="true" z="WpqA1PSesVdvamoeHr+T5CKjyQ8="/>
         <field:textarea field="email" id="c_com_sjsu_bikelet_domain_BikeLetUser_email" required="true" validationMessageCode="field_invalid_email" z="Eh7PSWUOGEMn40lfOGLlAJ0+F0g="/>
-        <field:input field="password" id="c_com_sjsu_bikelet_domain_BikeLetUser_password" max="15" min="6" required="true" z="ZQrxDVOmEQHim7TikqDh2H42mIw="/>
+        <field:input field="password" type="password" id="c_com_sjsu_bikelet_domain_BikeLetUser_password" max="15" min="6" required="true" z="ZQrxDVOmEQHim7TikqDh2H42mIw="/>
               
         <field:simple field="tenantId.tenantName" id="c_com_sjsu_bikelet_domain_BikeLetUser_tenantId" text="${bikeLetUser.tenantId.tenantName}" z="user-managed"/>
         <field:hidden field="tenantId.id" id="c_com_sjsu_bikelet_domain_BikeLetUser_tenantId_id" z="gUUpJvUsX9GBCYywrY2lJyX026M="/>

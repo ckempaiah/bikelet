@@ -86,11 +86,11 @@ public class RentTransaction {
 		this.toStation = toStation;
 	}
 
-	
+
 	public static long countRentTransactionsForUser(Long userId) {
         return entityManager().createQuery("SELECT COUNT(o) FROM RentTransaction o where o.userId.id = :userId", Long.class).setParameter("userId", userId).getSingleResult();
     }
-	
+
     public static RentTransaction findRentTransactionForCheckin(Long userId, String status)
     {
     	List<RentTransaction> transactions = new ArrayList<RentTransaction>();
@@ -119,4 +119,23 @@ public class RentTransaction {
     						  .getResultList();
     }
     
+    public static RentTransaction findLastTransactionsByUser(Long userId){
+    	List<RentTransaction> transactions = new ArrayList<RentTransaction>();
+    	transactions =  entityManager().createQuery("SELECT o FROM RentTransaction o where o.userId.id = :userId", RentTransaction.class)
+    						  .setParameter("userId",userId)
+    						  .getResultList();
+    	if ( transactions.isEmpty()){
+    		return null;
+    	}
+    	else {
+    		RentTransaction renttran = transactions.get(0);
+    		for (RentTransaction rt : transactions){
+    			
+    			if (rt.getId() >= renttran.getId()){
+    				renttran = rt;
+    			}
+    		}
+    		return renttran;
+    	}
+    }
 }

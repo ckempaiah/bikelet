@@ -12,9 +12,13 @@ import com.sjsu.bikelet.service.AddressService;
 import com.sjsu.bikelet.service.BikeLetUserService;
 import com.sjsu.bikelet.service.PaymentInfoService;
 import com.sjsu.bikelet.web.PaymentInfoController;
+
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -83,19 +87,27 @@ public class ProfileController {
         uiModel.addAttribute("address", address);
     }
     
-    @RequestMapping(value = "/paymentinfo", method = RequestMethod.PUT, produces = "text/html")
+    @SuppressWarnings("deprecation")
+	@RequestMapping(value = "/paymentinfo", method = RequestMethod.PUT, produces = "text/html")
     public String updatePaymentInfo(@Valid PaymentInfo paymentInfo, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
     	Long userId = Utils.getLogonUserId();
     	if (bindingResult.hasErrors()) {
-    		System.out.println("errro");
-    		for (ObjectError err : bindingResult.getAllErrors()) {
-    			System.out.println(err.getDefaultMessage() + err.getObjectName());
-    		}
-    		
     		paymentInfo.setUserId(bikeLetUserService.findBikeLetUser(userId));
             populateEditPaymentInfoForm(uiModel, paymentInfo);
             return "profile/paymentinfo/update";
         }
+    	
+    	Date date = new Date();
+    	int month = paymentInfo.getCardExpMonth();
+    	int year = paymentInfo.getCardExpYear();
+    	int cmonth = date.getMonth()+1;
+    	int cyear = date.getYear()+1900;
+    	
+    	if ((month < cmonth && year == cyear) || (year < cyear)) {
+            bindingResult.addError(new ObjectError("paymentInfo", "Expiration date cannot be before current date"));
+            return "profile/paymentinfo/update";
+        }
+    	
         uiModel.asMap().clear();
     	
     	paymentInfo.setUserId(bikeLetUserService.findBikeLetUser(userId));

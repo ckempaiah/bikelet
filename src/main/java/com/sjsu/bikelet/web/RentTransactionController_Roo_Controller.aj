@@ -29,9 +29,6 @@ privileged aspect RentTransactionController_Roo_Controller {
     RentTransactionService RentTransactionController.rentTransactionService;
     
     @Autowired
-    BikeService RentTransactionController.bikeService;
-    
-    @Autowired
     BikeLetUserService RentTransactionController.bikeLetUserService;
     
     @RequestMapping(params = "form", produces = "text/html")

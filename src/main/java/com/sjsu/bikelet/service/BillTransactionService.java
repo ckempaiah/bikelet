@@ -20,4 +20,6 @@ public interface BillTransactionService {
     List<BillTransaction> findAllBillTransactionsByUserId(BikeLetUser bikeLetUser, String roleName);
 
     List<BillTransaction> findPendingBillTransactions(Long userId, Date startDate, Date endDate);
+    
+    public BillTransaction findLastBillTransactionByUserId(BikeLetUser userid);
 }

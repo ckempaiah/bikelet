@@ -166,5 +166,7 @@
             name="body"
             value="/WEB-INF/views/programs/subscriptionpolicys/subscriptionrates/policydate.jspx" />
     </definition>
-
+    <definition extends="default" name="programs/nopaymentinfo">
+        <put-attribute name="body" value="/WEB-INF/views/programs/nopaymentinfo.jspx"/>
+    </definition>
 </tiles-definitions>
