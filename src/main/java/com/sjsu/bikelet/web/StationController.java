@@ -281,4 +281,13 @@ public class StationController {
 		uiModel.addAttribute("bikes", bikeDetails);
 		return "stations/bikes/list";
     }
+    
+    @RequestMapping(value = "checkstationfull", produces = "application/json")
+    public String checkStationFull(@RequestParam(value = "stationId", required = true) Long stationId, Model uiModel) {
+    	Boolean isStationFull = stationService.isStationFull(stationId);
+    	String stationFull = isStationFull.toString();
+    	uiModel.addAttribute("isStationFull",stationFull);
+    	return "stations/bikes/list";
+    }
+
 }

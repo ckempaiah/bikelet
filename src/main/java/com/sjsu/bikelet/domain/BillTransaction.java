@@ -67,13 +67,19 @@ public class BillTransaction {
 
     	List<BillTransaction> billTransactions = entityManager().createQuery("SELECT o FROM BillTransaction o where o.bikeLetUserId.id=:userId", BillTransaction.class)
                 .setParameter("userId", bikeLetUser.getId()).getResultList();
-    	BillTransaction billTrans = billTransactions.get(0);
-    	for (BillTransaction bt : billTransactions){
-    		if (bt.getEndDate().compareTo(billTrans.getEndDate()) > 0){
-    			billTrans = bt;
-    		}
+    	if(billTransactions.size()==0)
+    		return null;
+    	else
+    	{
+    		BillTransaction billTrans = billTransactions.get(0);
+        	for (BillTransaction bt : billTransactions){
+        		if (bt.getEndDate().compareTo(billTrans.getEndDate()) > 0){
+        			billTrans = bt;
+        		}
+        	}
+        	return billTrans;
     	}
-    	return billTrans;
+    	
     }
 
     public static long countBillTransactionsByUser(BikeLetUser bikeLetUser) {
