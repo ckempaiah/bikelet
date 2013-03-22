@@ -1,0 +1,133 @@
+Download and install Ruby Installer from http://www.rubyinstaller.org/downloads/
+Run ruby command prompt  Windows Start menu (All Programs ? Ruby <version> ? Start Command Prompt with Ruby).
+prompt> gem update --system
+prompt> gem install vmc
+prompt>vmc target https://api.cloudfoundry.com
+prompt>vmc target
+prompt>vmc login
+
+--Raname the war file in the target directory with the possible application name
+--Move the war directory out of target directory to different directory
+--change directory to the directory having war file
+
+C:\project\cmpe295b\bikelet_git>vmc push
+Name> bikelet
+
+Instances> 1
+
+1: spring
+2: other
+Framework> spring
+
+1: java
+2: java7
+3: other
+Runtime> 1
+
+1: 64M
+2: 128M
+3: 256M
+4: 512M
+5: 1G
+6: 2G
+Memory Limit> 512M
+
+Creating bikelet... OK
+
+1: bikelet.cloudfoundry.com
+2: none
+Domain> bikelet.cloudfoundry.com
+
+Updating bikelet... OK
+
+Create services for application?> y
+
+1: mongodb 2.0
+2: mysql 5.1
+3: postgresql 9.0
+4: rabbitmq 2.4
+5: redis 2.2
+6: redis 2.6
+7: redis 2.4
+What kind?> 2
+
+Name?> mysql-bikelet
+
+Creating service mysql-bikelet... OK
+Binding mysql-bikelet to bikelet... OK
+Create another service?> n
+
+Bind other services to application?> n
+
+Save configuration?> y
+
+Saving to manifest.yml... OK
+Uploading bikelet... OK
+Starting bikelet... OK
+Checking bikelet...
+  0/1 instances: 1 starting
+  0/1 instances: 1 starting
+  0/1 instances: 1 starting
+  0/1 instances: 1 starting
+  0/1 instances: 1 starting
+  1/1 instances: 1 running
+
+  
+ --Log files
+ vmc files hotels logs
+ vmc files hotels logs/stderr.log
+ 
+ --VMC app lifecycle
+prompt$ vmc start <appname>
+
+Restart a currently running deployment:
+
+prompt$ vmc restart <appname>
+
+Delete an application:
+
+prompt$ vmc delete <appname>
+
+Rename an application:
+
+prompt$ vmc rename <appname> <new-appname>
+
+
+
+Caldecott
+dk.rb init
+ruby dk.rb review
+ruby dk.rb install
+--install json gem
+gem install json --platform=ruby
+--validate
+ruby -rubygems -e "require 'json'; puts JSON.load('[42]').inspect
+http://docs.cloudfoundry.com/tools/vmc/caldecott.html
+
+
+C:\project\devkit>vmc login
+Terminate batch job (Y/N)? y
+
+C:\project\devkit>vmc target api.cloudfoundry.com
+Setting target to https://api.cloudfoundry.com... OK
+
+C:\project\devkit>vmc login
+target: https://api.cloudfoundry.com
+
+Email> chandu_ck@yahoo.com
+
+Password> ********
+
+Authenticating... OK
+
+C:\project\devkit>vmc services
+Getting services... OK
+
+name            service   version
+mysql-bikelet   mysql     5.1
+
+mysql>C:\project\devkit>vmc tunnel mysql-bikelet
+show databases;
+mysql> use dcfe4d3b1ae4d4ffd81430f0d14121a67;
+mysql> source C:\project\cmpe295b\bikelet_git\bikelet.sql
+mysql> source C:\project\cmpe295b\bikelet_git\bikelet-data.sql
