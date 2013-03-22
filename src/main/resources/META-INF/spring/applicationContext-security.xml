@@ -17,6 +17,7 @@
         <intercept-url pattern="/bikes/**" access="hasRole('ROLE_TENANT')" />
         <intercept-url pattern="/programs/**" access="hasRole('ROLE_TENANT')" />
         <intercept-url pattern="/subscriptionpolicys/**" access="hasRole('ROLE_TENANT')" />
+        <intercept-url pattern="/stations/*.json" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/stations/**" access="hasRole('ROLE_TENANT')" />
         <intercept-url pattern="/bills\?form" access="hasRole('ROLE_TENANT')" />
         <intercept-url pattern="/resources/**" access="permitAll" />
