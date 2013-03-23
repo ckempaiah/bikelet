@@ -18,7 +18,6 @@ public class RentTransactionServiceImpl implements RentTransactionService {
 	@Override
 	public RentTransaction findRentTransactionForCheckin(Long userId,
 			String status) {
-		System.out.println("user id "+userId + "status "+status);
 		// TODO Auto-generated method stub
 		return RentTransaction.findRentTransactionForCheckin(userId, status);
 	}
