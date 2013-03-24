@@ -1,6 +1,7 @@
 package com.sjsu.bikelet.service;
 
 import com.sjsu.bikelet.domain.BikeLetUser;
+import com.sjsu.bikelet.domain.Tenant;
 import com.sjsu.bikelet.domain.UserRole;
 import com.sjsu.bikelet.model.BikeletUserPrinciple;
 import org.apache.commons.lang3.StringUtils;
@@ -44,6 +45,7 @@ public class BikeletAuthenticationProvider extends AbstractUserDetailsAuthentica
         BikeLetUser user = null;
         Long tenantId = null;
         Long programId = null;
+        Tenant tenant = null;
         String password = (String) authenticationToken.getCredentials();
         if (StringUtils.isBlank(password)) {
             throw new BadCredentialsException("Please enter password");
@@ -66,6 +68,7 @@ public class BikeletAuthenticationProvider extends AbstractUserDetailsAuthentica
 
             if (user.getTenantId() != null) {
             	tenantId = user.getTenantId().getId();
+                tenant = user.getTenantId();
             }
             if (user.getProgramId() != null) {
             	programId = user.getProgramId().getId();
@@ -84,6 +87,7 @@ public class BikeletAuthenticationProvider extends AbstractUserDetailsAuthentica
                 true, // account not locked
                 authorities,
                 tenantId,
-                programId);
+                programId,
+                tenant);
     }
 }

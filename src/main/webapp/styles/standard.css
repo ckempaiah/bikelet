@@ -409,3 +409,17 @@ fieldset th {
     word-break: break-all;
     white-space: normal;
 }
+
+#tenantlogo image{
+    position: relative;
+    width: 100%; /* for IE 6 */
+}
+
+#tenantlogo h2{
+    position: absolute;
+    top: 35px;
+    left: 375px;
+    /*width: 100%;*/
+    color: #ffffff;
+    text-transform: uppercase;
+}

@@ -1,14 +1,27 @@
-<div id="header" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:spring="http://www.springframework.org/tags" version="2.0">
-  <jsp:directive.page contentType="text/html;charset=UTF-8" />
-  <jsp:output omit-xml-declaration="yes" />
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
-  <spring:url var="banner" value="/resources/images/bikelet-logo2.png" />
-  <!--<spring:url var="home" value="/" />-->
-  <!--<div id="banner">-->
-      <!--<h1>Bikelet</h1>-->
-  <!--</div>-->
-  <spring:message code="button_home" var="home_label" htmlEscape="false" />
-  <a href="${home}" name="${fn:escapeXml(home_label)}" title="${fn:escapeXml(home_label)}">
-    <img src="${banner}" />
-  </a>
+<div id="header" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:sec="http://www.springframework.org/security/tags"
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+
+    <spring:url var="banner" value="/resources/images/bikelet-logo4.png"/>
+    <sec:authorize access="isAuthenticated()">
+        <sec:authentication property="principal.tenant" var="tenant" scope="2"/>
+    </sec:authorize>
+
+
+    <div id="tenantlogo">
+        <spring:message code="button_home" var="home_label" htmlEscape="false"/>
+        <a href="${home}" name="${fn:escapeXml(home_label)}" title="${fn:escapeXml(home_label)}">
+            <img src="${banner}"/>
+        </a>
+        <sec:authorize ifAnyGranted="ROLE_TENANT,ROLE_USER">
+        <c:if test="${tenant != null}">
+            <h2><c:out value="${tenant.tenantName}"/></h2>
+        </c:if>
+        </sec:authorize>
+    </div>
 </div>

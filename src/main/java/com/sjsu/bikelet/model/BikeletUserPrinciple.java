@@ -1,5 +1,6 @@
 package com.sjsu.bikelet.model;
 
+import com.sjsu.bikelet.domain.Tenant;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import sun.security.util.BigInt;
@@ -17,12 +18,14 @@ public class BikeletUserPrinciple extends User {
     private Long userId;
     private Long tenantId;
     private Long programId;
+    private Tenant tenant;
 
-    public BikeletUserPrinciple(Long userId, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, Long tenantId, Long programId) {
+    public BikeletUserPrinciple(Long userId, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, Long tenantId, Long programId, Tenant tenant) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.userId = userId;
         this.tenantId = tenantId;
         this.programId = programId;
+        this.tenant = tenant;
     }
 
     public Long getUserId() {
@@ -48,5 +51,12 @@ public class BikeletUserPrinciple extends User {
 	public void setProgramId(Long programId) {
 		this.programId = programId;
 	}
-    
+
+    public Tenant getTenant() {
+        return tenant;
+    }
+
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
+    }
 }
