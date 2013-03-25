@@ -417,8 +417,8 @@ fieldset th {
 
 #tenantlogo h2{
     position: absolute;
-    top: 35px;
-    left: 375px;
+    top: 30pt;
+    left: 33%;
     /*width: 100%;*/
     color: #ffffff;
     text-transform: uppercase;
